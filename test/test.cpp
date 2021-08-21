@@ -17,3 +17,5 @@ int main(){
   cout<<RecursionFibonacci(n);
 return 0;
 }
+git config --global user.email "rubikshieutv@gmail.com"
+  git config --global user.name "rubikshieu"
