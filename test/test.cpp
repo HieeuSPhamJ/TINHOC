@@ -13,9 +13,7 @@ int RecursionFibonacci(int n){
 
 int main(){
   int n=6;
-  cin>>n;
+  //cin>>n;
   cout<<RecursionFibonacci(n);
 return 0;
 }
-git config --global user.email "rubikshieutv@gmail.com"
-  git config --global user.name "rubikshieu"
