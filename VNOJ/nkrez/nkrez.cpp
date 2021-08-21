@@ -1,14 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int a[10010][3];
 
 int main(){
     int n;
     cin>>n;
-    int a[1010];
-    int m=0;
     for (int i=1;i<=n;i++){
-        cin
+        cin>>a[i][0]>>a[i][2];
     }
 
 return 0;
