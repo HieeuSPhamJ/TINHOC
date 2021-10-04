@@ -1,19 +1,29 @@
-#include<bits/stdc++.h>
-
+#include <iostream>
+#include <cstring>
 using namespace std;
 
+int A[10005];
+int sum,N;
 
-int RecursionFibonacci(int n){
-  if (n==1 or n==2)
-    return 1;
-  return RecursionFibonacci(n-1)+RecursionFibonacci(n-2);
+void write(int M){
+    for(int j=1; j <= M; j++){
+        cout<< A[j];
+    }
+    cout << endl;
 }
 
-
+void CH(int K){
+	write(K);
+    for (int i = A[K]+1; i <= N; i++){
+        A[K+1] = i;
+        CH( K + 1 );
+    }
+}
 
 int main(){
-  int n=6;
-  //cin>>n;
-  cout<<RecursionFibonacci(n);
-return 0;
+    memset( A, 0, sizeof(A) );
+    cin >> N;
+    cout << endl;
+    CH(0);
+    return 0;
 }
