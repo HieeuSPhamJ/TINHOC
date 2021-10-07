@@ -18,8 +18,8 @@ int count(int b,int m){
 }
 
 int main(){
-    freopen("APPLES.inp","r",stdin);
-    freopen("APPLES.out","w",stdout);
+    // freopen("APPLES.inp","r",stdin);
+    // freopen("APPLES.out","w",stdout);
     cin>>n;
     for(int i=0;i<n;i++) cin>>a[i][0]>>a[i][1];
     // for(int i=0;i<n;i++) cout<<a[i][0]<<' '<<a[i][1];

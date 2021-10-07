@@ -1,7 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 int main(){
-	cout<<-1;
-    return 0;
+	char n;
+	cin>>n;
+	cout<<n;
+	return 0;
 }
