@@ -7,7 +7,7 @@ from cvzone.SerialModule import SerialObject
 
 cap = cv2.VideoCapture(0)
 detector = HandDetector(maxHands=1, detectionCon=0.7)
-Arduino_Serial = serial.Serial('COM4',9600)  
+Arduino_Serial = serial.Serial('COM3',9600)  
 # s = Arduino_Serial.readline()
 # Arduino_Serial.close()
 
@@ -18,13 +18,42 @@ while True:
     if lmList:
         # Arduino_Serial.open()
         fingers = detector.fingersUp()
-        print(fingers)
-        if fingers[0]==fingers[1]==fingers[2]==fingers[3]==fingers[4]==0:
-            print('0')
-            Arduino_Serial.write('0'.encode()) 
+        if fingers[0]:
+            transfer='1'
         else:
-            print('1')
-            Arduino_Serial.write('1'.encode()) 
+            transfer='6'
+        print(transfer)
+        Arduino_Serial.write(transfer.encode()) 
+        if fingers[1]:
+            transfer='2'
+        else:
+            transfer='7'
+        print(transfer)
+        Arduino_Serial.write(transfer.encode()) 
+        if fingers[2]:
+            transfer='3'
+        else:
+            transfer='8'
+        print(transfer)
+        Arduino_Serial.write(transfer.encode()) 
+        if fingers[3]:
+            transfer='4'
+        else:
+            transfer='9'
+        print(transfer)
+        Arduino_Serial.write(transfer.encode()) 
+        if fingers[4]:
+            transfer='5'
+        else:
+            transfer='0'
+        print(transfer)
+        Arduino_Serial.write(transfer.encode()) 
+        # if fingers[0]==fingers[1]==fingers[2]==fingers[3]==fingers[4]==0:
+        #     print('0')
+        #     Arduino_Serial.write(transfer.encode()) 
+        # else:
+        #     print('1')
+        #     Arduino_Serial.write(transfer.encode()) 
         # mySerial.sendData(fingers)
         
         # Arduino_Serial.close()
