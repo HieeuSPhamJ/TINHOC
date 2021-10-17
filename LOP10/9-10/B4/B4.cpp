@@ -1,8 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 int main(){
-    freopen("B4.inp","r",stdin);
-    freopen("B4.out","w",stdout);
+    // freopen("B4.inp","r",stdin);
+    // freopen("B4.out","w",stdout);
     double a,b,c;
     cin>>a>>b>>c;
     double p=(a+b+c)/2;
