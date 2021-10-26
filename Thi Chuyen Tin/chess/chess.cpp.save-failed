@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int a[10];
+int n;
+int cc[10],cp[10];
+
+void chess (int i){
+for (int j=1;j<=n;j++)
+    if ( a[j] == 0 and cc[i-j] == 0 and cp[i+j] == 0 ) {
+        a[i]=j; a[j] = cc[i-j] = cp[i+j] =1;
+    }
+    else chess(i+1);
+    a[j] = cc[i-j] = cp[i+j] = 0;
+}
+
+int main (){
+cin>>n;
+chess(1);
+//a[1]=2; a[2]=1; a[3]=4; a[4]=3;
+for (int i=1;i<=n;i++)
+    {
+    for (int e=1;e<=n;e++)
+        if (e==a[i]) cout<<'*'<<' ';
+            else cout<<'0'<<' ';
+    cout<<endl;
+    }
+return 0;
+}

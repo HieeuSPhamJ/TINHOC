@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"iostream": "cpp",
+			"ostream": "cpp",
+			"*.tcc": "cpp",
+			"algorithm": "cpp",
+			"codecvt": "cpp",
+			"cmath": "cpp",
+			"complex": "cpp"
+		}
+	}
+}

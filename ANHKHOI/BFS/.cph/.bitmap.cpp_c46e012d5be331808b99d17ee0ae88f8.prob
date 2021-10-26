@@ -1,0 +1,1 @@
+{"name":"Local: bitmap","url":"/media/hieupham/DATA/TIN/ANHKHOI/BFS/bitmap.cpp","tests":[{"id":1635049090862,"input":"12","output":"12"},{"id":1635049100630,"input":"13","output":"13"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/hieupham/DATA/TIN/ANHKHOI/BFS/bitmap.cpp","group":"local","local":true}

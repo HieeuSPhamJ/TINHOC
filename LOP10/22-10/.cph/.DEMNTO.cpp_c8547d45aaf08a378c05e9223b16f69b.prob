@@ -1,0 +1,1 @@
+{"name":"Local: DEMNTO","url":"/media/hieupham/DATA/TIN/LOP10/22-10/DEMNTO.cpp","tests":[{"id":1635165409775,"input":"4\n2 3 6 7","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/hieupham/DATA/TIN/LOP10/22-10/DEMNTO.cpp","group":"local","local":true}

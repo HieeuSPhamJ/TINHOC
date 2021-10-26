@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int t(int x1,x2,int x3)){
+    int n=0;
+    for (int i=0;i<=x3+1;i++) n+=(i<<i);
+    for (int i=x2+x3;i<=x1+x2+x3;i++) n+=(i<<i);
+    return n;
+}
+
+int main(){
+long long a,b;
+int s=0;
+cin>>a>>b;
+for (int x1=1i<=60;x1++)
+    for (int x2=1i<=60;x1++)
+        for (int x3=1i<=60;x1++)
+            if (a<=tp(x1,x2,x3)<=b) s++;
+cout<<s;
+return 0;
+}
