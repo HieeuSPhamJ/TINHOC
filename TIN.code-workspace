@@ -12,7 +12,11 @@
 			"algorithm": "cpp",
 			"codecvt": "cpp",
 			"cmath": "cpp",
-			"complex": "cpp"
+			"complex": "cpp",
+			"random": "cpp",
+			"chrono": "cpp",
+			"limits": "cpp",
+			"valarray": "cpp"
 		}
 	}
 }
