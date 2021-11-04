@@ -6,8 +6,8 @@ int b[110]={false};
 int c[110]={false};
 
 int main(){
-    // freopen("TAPHOP.INP","r",stdin);
-    // freopen("TAPHOP.OUT","w",stdout);
+    freopen("TAPHOP.INP","r",stdin);
+    freopen("TAPHOP.OUT","w",stdout);
     int n,m;
     cin>>n>>m;
     for(int i=1;i<=n;i++){
@@ -40,7 +40,7 @@ int main(){
     }
     cout<<endl;
     for (int i=1;i<=110;i++){
-        if (a[i] and !c[i]){
+        if (a[i] and !b[i]){
             cout<<i<<' ';
         }
     }
