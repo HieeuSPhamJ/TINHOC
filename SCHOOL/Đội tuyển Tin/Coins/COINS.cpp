@@ -4,8 +4,8 @@ using namespace std;
 int ans[1000000];
 
 int main() {
-    freopen("COINS.inp","r",stdin);
-    freopen("COINS.out","w",stdout);
+    // freopen("COINS.inp","r",stdin);
+    // freopen("COINS.out","w",stdout);
     int n;
     cin>>n;
 	ans[0]=n;
