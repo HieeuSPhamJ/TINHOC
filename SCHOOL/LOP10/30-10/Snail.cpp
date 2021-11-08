@@ -2,8 +2,8 @@
 using namespace std;
 
 int main(){
-    freopen("Snail.inp","r",stdin);
-    freopen("Snail.out","w",stdout);
+    // freopen("Snail.inp","r",stdin);
+    // freopen("Snail.out","w",stdout);
     long long a,b,s;
     cin>>a>>b>>s;
     if (a==s) cout<<1;

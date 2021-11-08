@@ -1,17 +1,17 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-long long ezCata(long long n){
-	if (n<=2) return 1; 
-	else return ezCata(n-1)+ezCata(n-2);	
-}
 
-long long ulCata(long long n){
-	double sqpi=sqrt(M_PI);
-	return pow(4,n)/(pow(n,3/2)*sqpi);
-	
+long long ulCata(unsigned int n){
+    if (n<=1){
+        return 1;
+	}
+    long long temp=0;
+    for(int i=0;i<n;i++){
+        temp+=ulCata(i)*ulCata(n-i-1);
+	}
+    return temp;
 }
-
 int main(){
 	int n;
 	cin>>n;
@@ -19,3 +19,4 @@ int main(){
 	cout<<ulCata(n);
 	return 0;
 }
+

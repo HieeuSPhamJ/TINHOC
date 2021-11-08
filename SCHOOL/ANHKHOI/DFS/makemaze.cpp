@@ -10,55 +10,6 @@ int dirX[5]={0,-1,1,0,0};
 int dirY[5]={0,0,0,-1,1};
 
 
-void setUp(){
-    bool check=false;
-        for (int i=1;i<=n;i++){
-            if (Maze[i][1]=='1' and check==false){
-                startp={i,1};
-                check=true;
-                
-            }
-            if (Maze[i][1]=='1' and check==true){
-                endp={i,1};
-                break;
-            }
-        }
-        for (int i=1;i<=n;i++){
-            if (Maze[i][m]=='1' and check==false){
-                startp={i,m};
-                check=true;
-                
-            }
-            if (Maze[i][m]=='1' and check==true){
-                endp={i,m};
-                break;
-            }
-        }
-        check=false;
-        for (int i=1;i<=m;i++){
-            if (Maze[1][i]=='1' and check==false){
-                startp={1,i};
-                check=true;
-                
-            }
-            if (Maze[1][i]=='1' and check==true){
-                endp={1,i};
-                break;
-            }
-        }
-        for (int i=1;i<=m;i++){
-            if (Maze[n][i]=='1' and check==false){
-                startp={n,i};
-                check=true;
-                
-            }
-            if (Maze[n][i]=='1' and check==true){
-                endp={n,i};
-                break;
-            }
-        }
-}
-
 int DFS(pair <int,int> ver){
     int x=ver.first;
     int y=ver.second;

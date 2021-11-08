@@ -1,71 +1,53 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int MAX_V=100010;
-vector <int> adj[MAX_V];
-int visited[MAX_V];
-int trace[MAX_V];
-queue <int> myqueue;
-int S,T,V,E;
+int e,v;
+vector <int> adj[100];
+int Start,End;
+queue <int> myQueue;
+int visited[100];
 
-void readInput(){
-	cin>>V>>E;
-	for (int i=1;i<=V;i++){
-		visited[i]=false;
-		adj[i].clear();
-		trace[i]=-1;
+
+void inputRead(){
+	cin>>v>>e;
+	for (int i=1;i<=e;i++){
+		int a,b;
+		cin>>a>>b;
+		adj[a].push_back(b);
+		adj[b].push_back(a);
+		visited[a]=-1;
+		visited[b]=-1;
 	}
-	cin>>S>>T;
-	for (int i=1;i<=E;i++){
-		int u,v;
-		cin>>u>>v;
-		adj[u].push_back(v);
-		adj[v].push_back(u);
-	}
+	cin>>Start>>End;
 }
 
-void BFS(int start,int end){
-	myqueue.push(start);
-	visited[start]=true;
-	while(!myqueue.empty()){
-		int u=myqueue.front();
-		myqueue.pop();
-		for (int i=0;i<(int) adj[u].size();i++){
-			int v=adj[u][i];
-			if (visited[v]==false){
-				myqueue.push(v);
-				visited[v]=true;
-				trace[v]=u;
+
+void BFS(){
+	myQueue.push(Start);
+	while(!myQueue.empty()){
+		int u=myQueue.front();
+		myQueue.pop();
+		for (int i=0;i<(int)adj[u].size();i++){
+			if (visited[adj[u][i]]==-1){
+				myQueue.push(adj[u][i]);
+				visited[adj[u][i]]=u;
 			}
 		}
 	}
-}
-
-void findPath(int end){
-	vector <int> ans;
-	int u=end;
-	while(u!=-1){
-		ans.push_back(u);
-		u=trace[u];
-	}
-	reverse(ans.begin(),ans.end());
-	for (int i=0;i<(int) ans.size();i++){
-		cout<<ans[i]<<' ';
-	}
 
 }
-void checkPath(){
-	for (int i=1;i<=V;i++){
-		cout<<trace[i]<<' ';
-	}
 
+
+void output(){
+	for (int i=1;i<=100;i++){
+		cout<<i<<' '<<visited[i]<<endl;
+	}
 }
 
 
 int main(){
-	readInput();
-	BFS(S,T);
-	findPath(T);
-
+	inputRead();
+	BFS();
+	output();
 	return 0;
 }

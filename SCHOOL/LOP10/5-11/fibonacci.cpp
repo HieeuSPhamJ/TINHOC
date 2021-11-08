@@ -15,7 +15,7 @@ long long ulFib(long long n){
 int main(){
 	int n;
 	cin>>n;
-	// cout<<ezFib(n);
-	cout<<ulFib(n);
+	cout<<ezFib(n);
+	// cout<<ulFib(n);
 	return 0;
 }
