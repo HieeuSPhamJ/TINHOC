@@ -1,0 +1,1 @@
+{"name":"Local: 10954-AddAll","url":"/media/hieupham/DATA/STUDY/TINHOC/SCHOOL/ANHKHOI/Heap/10954-AddAll.cpp","tests":[{"id":1636444672742,"input":"3\n1 2 3\n4\n1 2 3 4\n0","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/hieupham/DATA/STUDY/TINHOC/SCHOOL/ANHKHOI/Heap/10954-AddAll.cpp","group":"local","local":true}
