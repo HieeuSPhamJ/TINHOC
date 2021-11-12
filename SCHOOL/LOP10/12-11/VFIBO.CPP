@@ -11,7 +11,7 @@ int main() {
 	unsigned long long b=1;
 	unsigned long long count=0;
 	while(a<n){
-		int temp=a+b;
+		unsigned long long temp=a+b;
 		a=b;
 		b=temp;
 		count++;
