@@ -26,7 +26,11 @@ int main(){
             maxTemp=a[i];
         }
     }
-
-    cout<<maxTemp<<' '<<maxCount-1;
+    if (maxCount>1){
+        cout<<maxTemp<<' '<<maxCount-1;
+    }
+    else{
+        cout<<-1;
+    }
     return 0;
 }
