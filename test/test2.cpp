@@ -1,7 +1,6 @@
 #include <iostream>
-#include <map>
 using namespace std;
 
 int main() {
-    cout<<(3<<10);
+    cout<<endl<<"error: '10Ti' was not declared in this scope\nsuggest replacing with '10Tin'"<<endl;
 }
