@@ -3,6 +3,7 @@ using namespace std;
 
 const int maxN=1e5+10;
 
+
 int a[maxN];
 
 int main(){
