@@ -5,7 +5,6 @@ const int maxN=1e5+10;
 
 int a[maxN];
 
-
 int main(){
     freopen("STNNN.INP","r",stdin);
     freopen("STNNN.OUT","w",stdout);
