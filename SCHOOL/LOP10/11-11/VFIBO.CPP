@@ -3,8 +3,8 @@ using namespace std;
 
 
 int main() {
-	freopen("VFIBO.INP","r",stdin);
-	freopen("VFIBO.OUT","w",stdout);
+	// freopen("VFIBO.INP","r",stdin);
+	// freopen("VFIBO.OUT","w",stdout);
 	unsigned long long n;
 	cin>>n;
 	unsigned long long a=0;

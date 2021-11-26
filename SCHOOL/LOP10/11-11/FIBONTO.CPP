@@ -37,8 +37,8 @@ unsigned long long Fib(int n){
 }
 
 int main(){
-    freopen("FIBONTO.INP","r",stdin);
-    freopen("FIBONTO.OUT","w",stdout);
+    // freopen("FIBONTO.INP","r",stdin);
+    // freopen("FIBONTO.OUT","w",stdout);
     int n;
     cin>>n;
     Prime();

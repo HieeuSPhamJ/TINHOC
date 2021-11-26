@@ -13,7 +13,7 @@ int binarySearch(int left,int right,int x){
 	if (a[mid]>=x){
 		return binarySearch(left,mid-1,x);
 	}
-	return max(mid,binarySearch(mid+1,right,x));
+	return max(binarySearch(mid+1,right,x),mid);
 }
 
 int main(){

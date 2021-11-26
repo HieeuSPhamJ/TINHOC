@@ -5,8 +5,8 @@ int a[1003];
 
 
 int main(){
-    freopen("CHIAHET.INP","r",stdin);
-    freopen("CHIAHET.OUT","w",stdout);
+    // freopen("CHIAHET.INP","r",stdin);
+    // freopen("CHIAHET.OUT","w",stdout);
     int n;
     cin>>n;
     for (int i=1;i<=n;i++){
