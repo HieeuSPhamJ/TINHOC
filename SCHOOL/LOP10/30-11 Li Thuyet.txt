@@ -1,4 +1,0 @@
-#Tim Kiếm
-
-1. Bài toán tìm kiếm:
-kết quả sẽ trả về vị trí của phần tử trong dãy, nếu không có thì trả về giá trị 0 hoặc -1.

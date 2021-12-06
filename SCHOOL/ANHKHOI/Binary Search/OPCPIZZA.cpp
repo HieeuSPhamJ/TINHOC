@@ -3,6 +3,7 @@ using namespace std;
 
 long long a[100005];
 
+int binarySearch(int left, i)
 
 int main() {
 	freopen("TKNP.INP","r",stdin);
@@ -15,20 +16,7 @@ int main() {
 	}
 	int left=1;
 	int right=n;
-	while (left<=right){
-		int mid=(left+right)/2;
-		if (a[mid]==k){
-			cout<<mid;
-			return 0;
-		}
-		else if (k<a[mid]){
-			right=mid-1;
-		}
-		else {
-			left=mid+1;
-		}
-	}
-	cout<<-1;
+	
 
 	return 0;
 }

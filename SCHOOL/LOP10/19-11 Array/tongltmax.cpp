@@ -7,14 +7,17 @@ long long a[maxN];
 
 
 int main(){
-    freopen("tongltmax.inp","r",stdin);
-    freopen("tongltmax.out","w",stdout);
+    // freopen("tongltmax.inp","r",stdin);
+    // freopen("tongltmax.out","w",stdout);
     int n;
     cin>>n;
     int check=0;
-    long long maxNum=-(long long)(1e10+10);
-    cout<<maxNum;
-    for (int i=1;i<=n;i++){
+
+    // cout<<maxNum;
+    cin>>a[1];
+    // long long maxNum=LONG_LONG_MIN;
+    long long maxNum=a[1];
+    for (int i=2;i<=n;i++){
         cin>>a[i]; 
         check=((a[i]>0) or (check));
         maxNum=max(maxNum,a[i]);
@@ -38,3 +41,9 @@ int main(){
 
     return 0;
 }
+
+/*
+6
+1 -3 4 5 -6 8
+
+*/

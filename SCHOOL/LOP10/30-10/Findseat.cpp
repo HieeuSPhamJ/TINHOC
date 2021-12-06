@@ -2,8 +2,8 @@
 using namespace std;
 
 int main(){
-    freopen("Findseat.inp","r",stdin);
-    freopen("Findseat.out","w",stdout);
+    freopen("FINDSEAT.INP","r",stdin);
+    freopen("FINDSEAT.OUT","w",stdout);
     int n,m,t;
     cin>>n>>m>>t;
     if (t/m+bool(t%m)<=n){
