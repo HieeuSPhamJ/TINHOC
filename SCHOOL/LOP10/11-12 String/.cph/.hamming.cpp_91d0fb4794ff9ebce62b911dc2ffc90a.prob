@@ -1,0 +1,1 @@
+{"name":"Local: hamming","url":"/media/hieupham/DATA/STUDY/TINHOC/SCHOOL/LOP10/11-12 String/hamming.cpp","tests":[{"id":1639191447127,"input":"7 3 2\nGTAAXXT\nGAT\nTTT","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/hieupham/DATA/STUDY/TINHOC/SCHOOL/LOP10/11-12 String/hamming.cpp","group":"local","local":true}

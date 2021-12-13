@@ -1,48 +1,36 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-long long n,m;
-long long a[300005];
-
-long long countMarble(long long marble){
-	long long count=0;
-	for(long long i=1;i<=m;i++){
-		count+=(a[i]+marble-1)/marble;
-	}
-	return count;
-}
-
-
-void binarySearch(long long left,long long right){
-	long long mid=(left+right)/2;;
-	while(left<right){
-		// cout<<left<<' '<<right<<endl;
-		long long tempMarble=countMarble(mid);
-		if (tempMarble<=n){
-			right=mid;
-		}
-		else{
-			left=mid+1;
-		mid=(left+right)/2;
-		}
-		
-		// cout<<mid<<' '<<tempMarble<<endl;
-		// cout<<"-------"<<endl;
-	}
-	cout<<mid;
-
-}
+const int maxn=1e8;
+long long n,A[maxn],Y;
+long long m;
 
 
 int main(){
-	// freopen("MARBLE.INP","r",stdin);
-	// freopen("MARBLE.OUT","w",stdout);
+	freopen("MARBLE.INP","r",stdin);
+	freopen("MARBLE.OUT","w",stdout);
 	cin>>n>>m;
-	long long maxa=0;
-	for(long long i=1;i<=n;i++){
-		cin>>a[i];
-		maxa=max(maxa,a[i]);
+	long long l=0,r=0;
+	for(int i=1;i<=n;i++){
+		cin>>A[i];
+		if(A[i]>r){
+			r=A[i];
+		}
 	}
-	binarySearch(1,maxa);
+	Y=(l+r)/2;
+	while(l<r){
+		int n2=0;
+		for(int i=1;i<=m;i++){
+			n2=n2+(A[i]+Y-1)/Y;
+		}
+		if(n2>n){
+			l=Y+1;
+		}
+		else{
+			r=Y;
+		}
+		Y=(l+r)/2;
+	}
+	cout<<Y;
 	return 0;
 }
