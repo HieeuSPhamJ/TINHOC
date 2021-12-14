@@ -7,40 +7,64 @@ int n;
 
 
 bool check(long long time){
-    // cout<<time<<endl;
-    bool mapcheck[10004]={false};
+    priority_queue <pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> myArray;
     for (int i=1;i<=n;i++){
-        for (int e=0;e<=time/t[i];e++){
-            if (a[i]+e<=n){
-                mapcheck[a[i]+e]=1;
-            }
-            if (a[i]-e>0){
-                mapcheck[a[i]-e]=1;
-            }
+        int step=time/t[i];
+        int left=a[i]-step;
+        if (left<=0){
+            left=1;
         }
-        // for (int i=1;i<=n;i++){
-        //     cout<<mapcheck[i];
-        // }
-        // cout<<endl;
+        int right=a[i]+step;
+        if (right>n){
+            right=n;
+        }
+        // cout<<left<<' '<<right<<endl;
+        myArray.push(make_pair(left,right));
     }
+
+    priority_queue <int,vector<int>,greater<int>> myHeap;
     for (int i=1;i<=n;i++){
-        if (!mapcheck[i]){
+        int tempLeft=myArray.top().first;
+        while (!(myArray.empty())){
+            if (tempLeft>i){
+                break;
+            }
+            int right=myArray.top().second;
+            myArray.pop();
+            tempLeft=myArray.top().first;
+            // cout<<i<<','<<right<<' ';
+            myHeap.push(right);
+        }
+        // cout<<endl;
+        if (myHeap.empty()){
             return 0;
         }
+        int tempTop=myHeap.top();
+        while (tempTop<i){
+            myHeap.pop();
+            // cout<<tempTop<<' ';
+            tempTop=myHeap.top();
+            if (myHeap.empty()){
+            return 0;
+            }
+        }
+        // cout<<endl;
+        myHeap.pop();
     }
     return 1;
-
 }
+
 
 int main(){
     cin>>n;
     for (int i=1;i<=n;i++){
         cin>>a[i]>>t[i];
     }
-    long long left=1;
-    long long right=1e8+10;
+    int left=0;
+    int right=1e8;
     while(left<=right){
-        int mid=(left+right)/2;
+        long long mid=(left+right)/2;
+        // cout<<left<<' '<<right<<' '<<mid<<endl;
         if (check(mid)){
             right=mid-1;
         }
@@ -50,7 +74,13 @@ int main(){
         // cout<<mid<<endl;
     }
     cout<<left;
+    // cout<<check(9);
 }
 
-
-
+/*
+4 5
+3 3
+2 4
+2 2
+1 3
+*/
