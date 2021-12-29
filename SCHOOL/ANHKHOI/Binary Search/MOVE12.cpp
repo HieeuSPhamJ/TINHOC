@@ -21,17 +21,14 @@ bool check(long long time){
         // cout<<left<<' '<<right<<endl;
         myArray.push(make_pair(left,right));
     }
-
     priority_queue <int,vector<int>,greater<int>> myHeap;
     for (int i=1;i<=n;i++){
-        int tempLeft=myArray.top().first;
         while (!(myArray.empty())){
-            if (tempLeft>i){
+            if (myArray.top().first>i){
                 break;
             }
             int right=myArray.top().second;
             myArray.pop();
-            tempLeft=myArray.top().first;
             // cout<<i<<','<<right<<' ';
             myHeap.push(right);
         }
@@ -39,11 +36,8 @@ bool check(long long time){
         if (myHeap.empty()){
             return 0;
         }
-        int tempTop=myHeap.top();
-        while (tempTop<i){
+        while (myHeap.top()<i){
             myHeap.pop();
-            // cout<<tempTop<<' ';
-            tempTop=myHeap.top();
             if (myHeap.empty()){
             return 0;
             }

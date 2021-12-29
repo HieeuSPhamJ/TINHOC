@@ -1,0 +1,1 @@
+{"name":"Local: laser","url":"/media/hieupham/DATA/STUDY/TINHOC/SCHOOL/LOP10/11-12 String/laser.cpp","tests":[{"id":1639961502174,"input":"1\n571526\n748431\n145278\n424163\n252887\n178543","output":"87141"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/hieupham/DATA/STUDY/TINHOC/SCHOOL/LOP10/11-12 String/laser.cpp","group":"local","local":true}

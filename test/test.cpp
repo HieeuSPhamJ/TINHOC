@@ -1,13 +1,18 @@
-#include <iostream>
-#include <fstream>
+#include<bits/stdc++.h>
 using namespace std;
-unsigned long long k,m,n;
-int main()
-{
-    ifstream fi("TRUCNHAT.inp");
-	fi>>n>>m>>k;
-	int sonhom=min(min(n/3,m/2),(n+m-k)/5);
-	sonhom=max(0,sonhom);
-	ofstream fo("TRUCNHAT.out");
-	fo<<sonhom;
+
+long long Catalan(long long n) {
+	long double ans = 1;
+	for (int i = n + 2; i <= 2 * n; i++) {
+		ans *= double(i) / double(i - n - 1);
+	}
+	return ans / n + 0.01;
+}
+
+
+int main(){
+	long long n;
+	cin >> n;
+	cout << Catalan(n);
+	return 0;
 }

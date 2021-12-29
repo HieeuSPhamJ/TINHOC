@@ -2,18 +2,17 @@
 using namespace std;
 
 int main(){
-    int n;
-    cin>>n;
-    if (n==1){
-        cout<<"NO";
-        return 0;
+    long long testcase;
+    cin >> testcase;
+    long long a = 1;
+    long long b = 0;
+    cout << 1 << endl;
+    for (long long n = 2; n <= testcase; n++){
+        long long temp = a;
+        a += b;
+        b = temp;
+        cout << a;
+        cout << endl;
     }
-    for (int i=2;i*i<=n;i++){
-        if (!(n%i)){
-            cout<<"NO";
-            return 0;
-        }
-    }
-    cout<<"YES";
     return 0;
-}
+} 
