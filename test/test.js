@@ -1,1 +1,1 @@
-console.log('Hello world con CAC!!')
+console.log(0.1 + 0.2)

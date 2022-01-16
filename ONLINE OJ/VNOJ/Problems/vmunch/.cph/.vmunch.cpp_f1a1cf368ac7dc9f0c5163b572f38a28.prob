@@ -1,0 +1,1 @@
+{"name":"Local: vmunch","url":"d:\\STUDY\\TINHOC\\ONLINE OJ\\VNOJ\\Problems\\vmunch\\vmunch.cpp","tests":[{"id":1641568198121,"input":"5 6\nB...*.\n..*...\n.**.*.\n..***.\n*..*.C","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\STUDY\\TINHOC\\ONLINE OJ\\VNOJ\\Problems\\vmunch\\vmunch.cpp","group":"local","local":true}

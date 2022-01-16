@@ -1,58 +1,63 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n,m;
-int a[190][190];
-int ans[190][190];
-queue <pair<int,int>> myQueue;
-int dirX[5]={0,-1,1,0,0};
-int dirY[5]={0,0,0,-1,1};
 
-void readInput(){
-	cin>>n>>m;
-    for (int i=1;i<=n;i++){
-        string s;
-        cin>>s;
-        for (int e=1;e<=m;e++){
-            // cin>>a[i][e];
-            a[i][e]=s[e-1]-'0';
-            ans[i][e]=0;
-            if (a[i][e]==1){
-                myQueue.push({i,e});
-            }
-        }
+int n, m;
+int maze[200][200];
+int visited[200][200];
+queue <pair <int, int>> myQueue;
+int dirX[4] = {0, 0, -1, 1};
+int dirY[4] = {-1, 1, 0 ,0};
+
+bool checkCan(int x, int y){
+    if (1 <= x and 1 <= y and x <= n and y <= m and maze[x][y] == 0){
+        return true;
     }
-    // cout<<"-----"<<endl;
-
+    return false;
 }
 
 void BFS(){
     while(!myQueue.empty()){
-        pair <int,int> v={myQueue.front().first,myQueue.front().second};
+        pair <int, int> tempV = myQueue.front();
         myQueue.pop();
-        for (int i=1;i<=4;i++){
-            int x=v.first+dirX[i];
-            int y=v.second+dirY[i];
-            if (x>0 and y>0 and x<=n and y<=m){
-                if (a[x][y]==0 and ans[x][y]==0){
-                    ans[x][y]=ans[v.first][v.second]+1;
-                    myQueue.push({x,y});
-                }
+        for (int i = 0; i < 4; i++){
+            pair <int, int> newV = make_pair( tempV.first + dirX[i], tempV.second + dirY[i]);
+            if (checkCan(newV.first, newV.second)){
+                myQueue.push(newV);
+                visited[newV.first][newV.second] = visited[tempV.first][tempV.second] + 1;
+                maze[newV.first][newV.second] = 1;
             }
         }
-    }
-    for (int i=1;i<=n;i++){
-        for (int e=1;e<=m;e++)
-            cout<<ans[i][e]<<' ';
-        cout<<endl;
+
     }
 }
 
+
 int main(){
-    int test; cin>>test;
-    while(test--){
-        readInput();
+    int test;
+    cin >> test;
+    while (test--){
+        cin >> n >> m;
+        for (int i = 1; i <= n; i++){
+            string s;
+            cin >> s;
+            for (int e = 1; e <= m; e++){
+                maze[i][e] = s[e - 1] - '0';
+                if (maze[i][e] == 1){
+                myQueue.push(make_pair(i, e));
+            }
+            visited[i][e] = 0;
+            }
+            
+        }
         BFS();
+        for (int i = 1; i <= n; i++){
+            for (int e = 1; e <= m; e++){
+                cout << visited[i][e] << ' ';
+            }
+            cout << endl;
+        }
+        
     }
-	return 0;
+    return 0;
 }

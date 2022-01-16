@@ -1,0 +1,1 @@
+{"name":"Local: bitmap","url":"d:\\STUDY\\TINHOC\\SCHOOL\\ANHKHOI\\BFS\\bitmap.cpp","tests":[{"id":1641992083490,"input":"1\n3 4\n0001\n0011\n0110","output":"3 2 1 0\n2 1 0 0\n1 0 0 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\STUDY\\TINHOC\\SCHOOL\\ANHKHOI\\BFS\\bitmap.cpp","group":"local","local":true}
