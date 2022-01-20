@@ -1,8 +1,9 @@
-10010
+#include <iostream>
+using namespace std;
 
-01001
 
-10101
 
-10001
-
+int main(){
+    cout << INT_MAX;
+    return 0;
+}
