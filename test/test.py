@@ -1,38 +1,37 @@
-import matter
+listSign = ['+', '-', '*', '/', '*(', ')*', '', '^']
 
-def make_boxes():
-    Bodies = Matter.Bodies
-    # create two boxes and a ground
-    boxA = Bodies.rectangle(400, 200, 80, 80)
-    boxB = Bodies.rectangle(450, 50, 80, 80)
-    ground = Bodies.rectangle(400, 610, 810, 60, { 'isStatic': True })
-    return boxA, boxB, ground
+temp = '2+2+2+2+2+2+2+2'
+temp = list(temp)
 
-def drop():
-    # module aliases
-    Engine = Matter.Engine
-    Render = Matter.Render
-    World = Matter.World
+ansMax = 0
 
-    # create an engine
-    engine = Engine.create()
+for i1 in listSign:
+    temp[1] = i1;
+    for i2 in listSign:
+        temp[3] = i2;
+        for i3 in listSign:
+            temp[5] = i3;
+            for i4 in listSign:
+                temp[7] = i4;
+                for i5 in listSign:
+                    temp[9] = i5;
+                    for i6 in listSign:
+                        temp[11] = i6;
+                        for i7 in listSign:
+                            temp[13] = i7;
+                            thisStr = ''.join(temp)
+                            # print(thisStr)
+                            try:
+                                ans = eval(thisStr)
+                                print(ans)
+                                print(thisStr)
+                                # if int(ans) == 2022:
+                                    # print(ans)
+                                    # print(thisStr)
+                                ansMax = max(ansMax, ans)
+                            except:
+                                pass
+                            # if thisStr == '2+2+2+2+2+2+2+2'
 
-    # create a renderer
-    render = Render.create({
-        'element': document.body,
-        'engine': engine
-    })
 
-
-
-    # add all of the bodies to the world
-    World.add(engine.world, make_boxes())
-
-    # run the engine
-    Engine.run(engine)
-
-    # run the renderer
-    Render.run(render)
-
-if __name__ == '__main__':
-    matter.show([make_boxes, drop])
+print(ansMax)

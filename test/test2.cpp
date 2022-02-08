@@ -1,49 +1,17 @@
-#include <iostream>
-#include <vector>
-#include <cstring>
- 
+#include<bits/stdc++.h>
 using namespace std;
- 
-int t;
-int n;
-bool check[51];
- 
-bool ktra() {
-	for (int i = 1; i <= n; i++) {
-		if ( !check[i] ) {
-			return false;
-		}
+
+
+int main(){
+	long long xa, ya, xb, yb, xc, yc, m, n;
+	cin >> xa >> ya >> xb >> yb >> xc >> yc;
+	n = (xb - xa) / (xc -xa);
+	m = (yb - ya) / (yc - ya);
+	if (n == m){
+		cout << "YES";
 	}
-	return true;
-}
- 
-int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
- 
-	cin >> t;
-	while (t--) {
-		cin >> n;
-		memset(check, false, sizeof(check));
- 
-		for (int i = 1; i <= n; i++) {
-			long long x;
-			cin >> x;
-			while ( x ) {
-				if ( x <= n ) {
-					if ( !check[x] ) {
-						check[x] = true;
-						break;
-					}
-				}
-				x /= 2;
-			}
-		}
- 
-		cout << (ktra() ? "YES" : "NO" ) << "\n";
+	else{
+		cout << "NO";
 	}
- 
 	return 0;
 }
-
-
