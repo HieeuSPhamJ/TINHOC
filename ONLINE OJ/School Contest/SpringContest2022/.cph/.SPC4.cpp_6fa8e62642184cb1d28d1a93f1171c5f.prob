@@ -1,0 +1,1 @@
+{"name":"Local: SPC4","url":"/home/hieupham/Desktop/SPC2022/SPC4.cpp","tests":[{"id":1642576744283,"input":"1\n10\n6 8 91 2 4 98 324 85 432 123 \n9898 65 989 56 89 64 780 64 98 66","output":"2\n3\n12\n30"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/hieupham/Desktop/SPC2022/SPC4.cpp","group":"local","local":true}
