@@ -1,11 +1,30 @@
-#include <cmath>
-#include <cstdio>
-#include <vector>
-#include <iostream>
-#include <algorithm>
+#include<bits/stdc++.h>
 using namespace std;
 
 int main() {
-    cout << (int)1e9 + 7;
+    int n = 1234;
+    int sum = 0;
+    while(n > 0){
+        sum = sum + n % 10;
+        n = n / 10;
+    }
+    cout << sum;
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
