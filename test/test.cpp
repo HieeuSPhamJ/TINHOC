@@ -1,15 +1,11 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-int age(int n){
-    n = n / 2;
-    return n;
-}
-
-int main(){
-    int n = 10;
-    cout << age(n);
-    cout << endl;
-    cout << age(n);
+int main() {
+    cout << (int)1e9 + 7;
     return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: SC2","url":"d:\\STUDY\\TINHOC\\ONLINE OJ\\School Contest\\SummerContest2022\\SC2.cpp","tests":[{"id":1645515708893,"input":"5\n3\n5\n7\n357\n100000","output":"6\n9\n12\n657\n184210"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\STUDY\\TINHOC\\ONLINE OJ\\School Contest\\SummerContest2022\\SC2.cpp","group":"local","local":true}
