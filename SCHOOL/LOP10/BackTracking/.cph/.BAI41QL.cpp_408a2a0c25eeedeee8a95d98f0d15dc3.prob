@@ -1,0 +1,1 @@
+{"name":"Local: BAI41QL","url":"d:\\TINHOC\\SCHOOL\\LOP10\\BackTracking\\BAI41QL.cpp","tests":[{"id":1645754587853,"input":"1652222","output":"1223\n1232\n1322\n2123\n2132\n2213\n2231\n2312\n2321\n3122\n3212\n3221"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\LOP10\\BackTracking\\BAI41QL.cpp","group":"local","local":true}
