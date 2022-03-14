@@ -1,12 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int maxN  = 1e5;
 
 int main(){
-    long long a[maxN];
-    a[maxN - 10] = 10;
-    cout << a[maxN - 10];
+    int a = (3 << 2);
+    cout << a;
     return 0;
 }
 

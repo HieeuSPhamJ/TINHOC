@@ -1,12 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int n;
+int n, k;
 vector <int> vect;
 bool check[1000] = {0};
 
 void print(){
-    for (int x = 0; x < n; x++){
+    for (int x = 0; x < k; x++){
         cout << vect[x] << ' ';
     }
     cout << '\n';
@@ -14,7 +14,7 @@ void print(){
 }
 
 void backTracking(int i){
-    if (i > n){
+    if (i > k){
         print();
         return;
     }
@@ -34,9 +34,9 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    freopen("HVN.INP", "r", stdin);
-    freopen("HVN.OUT", "w", stdout);
-    cin >> n;
+    freopen("akn.INP", "r", stdin);
+    freopen("akn.OUT", "w", stdout);
+    cin >> n >> k;
     backTracking(1);
     return 0;
 }

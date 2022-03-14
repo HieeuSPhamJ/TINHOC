@@ -19,7 +19,7 @@ void backTracking(int i){
         return;
     }
     for (int j = 1; j <= n; j++){
-        if (check[j] == 0){
+        if (check[j] == 0 and j != i){
             check[j] = 1;
             vect.push_back(j);
             backTracking(i + 1);
@@ -34,8 +34,8 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    freopen("HVN.INP", "r", stdin);
-    freopen("HVN.OUT", "w", stdout);
+    freopen("HVTT.INP", "r", stdin);
+    freopen("HVTT.OUT", "w", stdout);
     cin >> n;
     backTracking(1);
     return 0;

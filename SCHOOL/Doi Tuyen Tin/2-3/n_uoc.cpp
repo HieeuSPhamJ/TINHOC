@@ -22,6 +22,8 @@ void backTracking(int d, long long temp, int nx){
 }
 
 int main(){
+    // freopen("n_uoc.inp", "r", stdin);
+    // freopen("n_uoc.out", "w", stdout);
     cin >> n;
     backTracking(0, 1, 1);
     cout << ans << endl;

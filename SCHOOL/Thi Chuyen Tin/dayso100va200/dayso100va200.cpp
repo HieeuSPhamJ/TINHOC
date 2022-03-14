@@ -23,7 +23,7 @@ void dayso(int i){
 
 int main(){
     cin>>n;
-    memse(ok,0,size(ok));
+    memset(ok,0,size(ok));
     for (int i=1;i<=n;i++){
         cin>>a[i]; s+=a[i];
     }
