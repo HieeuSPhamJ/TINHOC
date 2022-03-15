@@ -22,10 +22,18 @@ int main(){
     }
     int ans = 0;
     for (int i = 1; i <= n; i++){
-        for (int j = 0; j < i; j++){
-            if (sum[i] - sum[j] <= maxW){
-                ans = max(ans, i - j);
-                // cout << i - j << endl;
+        int temp = 0;
+        int left = 0;
+        int right = i;
+        while(left <= right){
+            int mid = (left + right) / 2;
+            if (check(mid, i) == 1){
+                // cout << check(mid, i) << ' ' << left << ' ' << right << endl;
+                ans = max(i - mid, ans);
+                right = mid - 1;
+            }
+            else{
+                left = mid + 1;
             }
         }
         

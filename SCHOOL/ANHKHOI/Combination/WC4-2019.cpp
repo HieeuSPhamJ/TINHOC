@@ -28,8 +28,7 @@ int main(){
             for (int j = 1; j <= n; j++){
                 dp[i][j] = dp[i - 1][j - 1];
                 if (j > i){
-                    dp[i][j] = dp[i][j] * 2 + 1
-                    ;
+                    dp[i][j] = dp[i][j] * 2 + 1;
                 }
                 check();
             }
