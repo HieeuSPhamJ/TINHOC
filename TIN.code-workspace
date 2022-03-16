@@ -80,7 +80,8 @@
 			"typeindex": "cpp",
 			"typeinfo": "cpp",
 			"variant": "cpp",
-			"xutility": "cpp"
+			"xutility": "cpp",
+			"xlocale": "cpp"
 		}
 	}
 }
