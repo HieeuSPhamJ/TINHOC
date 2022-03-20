@@ -1,31 +1,38 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
+
 using namespace std;
 
 string s;
-bool check[100] = {0};
-string ans = "";
-void backTracking(int index){
-    // cout << '#' << endl;
-    for (int i = 0; i < s.size(); i++){
-        if (check[i] == 0){
-            check[i] = 1;
-            ans += s[i];
-            backTracking(index + 1);
-            if (index >= s.size() - 1){
-                cout << ans << endl;
-            }
-            ans = ans.substr(0, ans.size() - 1);
-            check[i] = 0;
-        }
-    }
+int a[1001];
+bool check[1001];
+
+void backTracking(int d) {
+	if (d > (int) s.size()) {
+		for (int i = 1; i <= s.size(); i++) {
+			cout << s[a[i] - 1];
+		}
+		cout << "\n";
+	}
+	else {
+		for (int i = 1; i <= s.size(); i++) {
+			if (!check[i]) {
+				check[i] = true;
+				a[d] = i;
+				backTracking(d + 1);
+				check[i] = false;
+			}
+		}
+	}
 }
 
-int main(){
-    freopen("BAI43QL.INP", "r", stdin);
-    freopen("BAI43QL.OUT", "w", stdout);
-    
-    cin >> s;
-    backTracking(0);
-    // cout << s.substr(0, s.size() - 1);
-    return 0;
+int main() {
+	freopen("BAI43QL.INP", "r", stdin);
+	freopen("BAI43QL.OUT", "w", stdout);
+
+	cin >> s;
+
+	backTracking(1);
+
+	return 0;
 }

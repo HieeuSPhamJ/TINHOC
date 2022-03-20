@@ -1,33 +1,54 @@
-#include <bits/stdc++.h>
-using namespace std;
-int x=0, n;
-bool cn=false;
+#include <iostream>
 
-bool NTO(int a){
-	for (int i=2; i*i <=a; i++){
-		if (a % i == 0) return false;
+using namespace std;
+
+long long n;
+bool ok = false;
+
+bool prime(long long n) {
+	if (n == 1) {
+		return false;
 	}
-	return a>1;
+	for (long long i = 2; i * i <= n; i++) {
+		if (n % i == 0) {
+			return false;
+		}
+	}
+	return true;
 }
 
-void Try(int i){
-	for (int j = 0; j<=9; j++){
-		if (NTO(x*10+j)){
-			x = x * 10 + j;
-			if (i==n) {
-				cout << x << endl;
-				cn = true;
-			} else Try(i+1);
-			x=x/10;
+void backTracking(long long d, long long x) {
+	if (d == n) {
+		ok = true;
+		cout << x << endl;
+	}
+	else {
+		for (long long i = 1; i <= 9; i++) {
+			if (prime(x * 10 + i)) {
+				backTracking(d + 1, x * 10 + i);
+			}
 		}
 	}
 }
 
-int main(){
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
 	freopen("BAI40QL.INP", "r", stdin);
 	freopen("BAI40QL.OUT", "w", stdout);
+
 	cin >> n;
-	Try(1);
-	if (!cn) cout << -1;
+
+	for (int i = 2; i <= 9; i++) {
+		if (prime(i)) {
+			backTracking(1, i);
+		}
+	}
+
+	if (!ok) {
+		cout << -1;
+	}
+
 	return 0;
 }

@@ -3,15 +3,13 @@ using namespace std;
 
 
 int main(){
-    int a = 1e9;
-    long long b = (long long)INT_MAX + 1;
-    cout << a << ' ' << b << ' ';
-    if (a = b){
-        cout << 1;
+    int n;
+    cin >> n;
+    long long ans = 1;
+    for (int i = 1; i <= n / 2; i++){
+        ans = ans * 4;
     }
-    else{
-        cout <<
-    }
+    cout << ans;
     return 0;
 }
 

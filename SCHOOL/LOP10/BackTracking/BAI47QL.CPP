@@ -1,41 +1,56 @@
-// BAI47QL
-// input: n 
-// Output: liệt kê các dãy dấu '(' và ')' thỏa đk trong bt toán học
+#include <iostream>
 
-// Vector nghiệm: X[1], ..., X[2n];
-// Tập ứng cử viên S ={'(', ')'}
-// Đk: thỏa đk trong bt toán học
-//Hàm quay lui
-#include <bits/stdc++.h>
 using namespace std;
+
 int n;
-char X[50];
-bool NgoacDung(){
-	int d=0;
-	for (int i=1; i<=2*n; i++){
-		if (X[i]=='(') d+=1;
-		else d-=1;
-		if (d<0) return false;
+bool a[10001];
+string s;
+
+bool check() {
+	int open = 0;
+	int close = 0;
+	for (int i = 0; i < n; i++) {
+		if (close > open) {
+			return false;
+		}
+		open += (s[i] == '(');
+		close += (s[i] == ')');
 	}
-	return d==0;
+	return (close == open);
 }
-void GhiNghiem(){
-	if (!NgoacDung()) return;
-	for (int i=1; i<=2*n; i++) cout << X[i];
-	cout << endl;
-}
-void Try(int i){
-	for (char j = '('; j<=')'; j++){
-		X[i] = j;
-		if (i==2*n) GhiNghiem();
-		else Try(i+1);
+
+void backTracking(int d) {
+	if (d > n) {
+		s = "";
+		for (int i = 1; i <= n; i++) {
+			if (a[i]) {
+				s += ")";
+			}
+			else {
+				s += "(";
+			}
+		}
+
+		if (check()) {
+			cout << s << "\n";
+		}
+	}
+	else {
+		for (int i = 0; i <= 1; i++) {
+			a[d] = i;
+			backTracking(d + 1);
+		}
 	}
 }
-//Hàm main
-int main(){
+
+int main() {
 	freopen("BAI47QL.INP", "r", stdin);
 	freopen("BAI47QL.OUT", "w", stdout);
+
 	cin >> n;
-	Try(1);
+
+	n *= 2;
+	backTracking(1);
+
 	return 0;
 }

@@ -1,37 +1,43 @@
-#include<bits/stdc++.h>
+#include <iostream>
+
 using namespace std;
 
-const int maxN = 1e4 + 10;
-int a[maxN];
-int p[maxN];
-long long dp[maxN][maxN];
-vector <int> vect[maxN];
+int n, W;
+int dp[1001][1001];
+int w[1001], v[1001];
 
+void ddi(int x, int y) {
+	if (x && y) {
+		if (dp[x - 1][y] == dp[x][y]) {
+			ddi(x - 1, y);
+		}
+		else {
+			ddi(x - 1, y - w[x]);
+			cout << w[x] << " " << v[x] << "\n";
+		}
+	}
+}
 
-int main(){
-    int n, maxW;
-    cin >> n >> maxW;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i] >> p[i];
-    }
-    for (int i = 0; i <= n; i++){
-        for (int j = 0; j <= maxW; j++){
-            dp[i][j] = 0;
-        }
-    }
-    for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= maxW; j++){
-            dp[i][j] = dp[i - 1][j];
-            if (j >= a[i]){
-                if (dp[i][j] < dp[i - 1][j - a[i]] + p[i])
-                dp[i][j] = max(dp[i][j], dp[i - 1][j - a[i]] + p[i]);
+int main() {
+	freopen("BALO2.INP", "r", stdin);
+	freopen("BALO2.OUT", "w", stdout);
 
-            }
-            // cout << dp[i][j] << ' ';
-        }
-        // cout << endl;
-    }
-    cout << dp[n][maxW];
+	cin >> n >> W;
+	for (int i = 1; i <= n; i++) {
+		cin >> w[i] >> v[i];
+	}
 
-    return 0;
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= W; j++) {
+			if (j >= w[i]) {
+				dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + v[i]);
+			}
+			else {
+				dp[i][j] = dp[i - 1][j];
+			}
+		}
+	}
+
+	cout << dp[n][W] << "\n";
+	ddi(n, W);
 }

@@ -3,7 +3,7 @@
 using namespace std;
 
 int n;
-char a[50];
+bool a[20];
 
 void backTracking(int d) {
 	if (d > n) {
@@ -13,26 +13,20 @@ void backTracking(int d) {
 		cout << "\n";
 	}
 	else {
-		a[d] = 'A';
-		backTracking(d + 1);
-
-		if (a[d - 1] == 'A') {
-			a[d] = 'B';
+		for (int i = 0; i <= 1; i++) {
+			a[d] = i;
 			backTracking(d + 1);
 		}
 	}
 }
 
 int main() {
-	freopen("BAI44QL.INP", "r", stdin);
-	freopen("BAI44QL.OUT", "w", stdout);
+	freopen("BAI42QL.INP", "r", stdin);
+	freopen("BAI42QL.OUT", "w", stdout);
 
 	cin >> n;
 
-	a[1] = 'A';
-	backTracking(2);
-	a[1] = 'B';
-	backTracking(2);
+	backTracking(1);
 
 	return 0;
 }

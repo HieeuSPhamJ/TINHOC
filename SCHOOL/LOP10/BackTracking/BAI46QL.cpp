@@ -1,35 +1,41 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <map>
+
 using namespace std;
 
 string s;
-bool check[100] = {0};
-string ans = "";
-map <string, bool> mapCheck;
+map<string, bool> m;
+bool a[50];
 
+void backTracking(int d) {
+	if (d > s.size()) {
+		string temp = "";
+		for (int i = 1; i <= s.size(); i++) {
+			if (a[i]) {
+				temp += s[i - 1];
+			}
+		}
 
-void backTracking(int index){
-    // cout << '#' << endl;
-    for (int i = 0; i < s.size(); i++){
-        if (check[i] == 0){
-            check[i] = 1;
-            ans += s[i];
-            if (mapCheck[ans] == 0){
-                cout << ans << endl;
-                mapCheck[ans] = 1;
-            }
-            backTracking(index + 1);
-            ans = ans.substr(0, ans.size() - 1);
-            check[i] = 0;
-        }
-    }
+		if (!m[temp] && temp.size()) {
+			m[temp] = true;
+			cout << temp << "\n";
+		}
+	}
+	else {
+		for (int i = 0; i <= 1; i++) {
+			a[d] = i;
+			backTracking(d + 1);
+		}
+	}
 }
 
-int main(){
-    freopen("BAI46QL.INP", "r", stdin);
-    freopen("BAI46QL.OUT", "w", stdout);
-    
-    cin >> s;
-    backTracking(0);
-    // cout << s.substr(0, s.size() - 1);
-    return 0;
+int main() {
+	freopen("BAI46QL.INP", "r", stdin);
+	freopen("BAI46QL.OUT", "w", stdout);
+
+	cin >> s;
+
+    backTracking(1);
+
+	return 0;
 }
