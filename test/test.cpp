@@ -1,15 +1,18 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+vector <int> adl;
+stack <int> myStack;
 
 int main(){
-    int n;
-    cin >> n;
-    long long ans = 1;
-    for (int i = 1; i <= n / 2; i++){
-        ans = ans * 4;
-    }
-    cout << ans;
+    int na;
+    cin >> na;
+    cout << na;
+    adl.push_back();
+    myStack.front();
+    myStack.f
+    
+
     return 0;
 }
 

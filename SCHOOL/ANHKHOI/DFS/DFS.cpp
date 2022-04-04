@@ -25,7 +25,7 @@ void DFS(int start){
     visited[start]=1;
     for (int i=0;i<adj[start].size();i++){
         if (visited[adj[start][i]]==-1){
-            return DFS(adj[start][i]);
+            DFS(adj[start][i]);
         }
     }
 }
