@@ -1,0 +1,1 @@
+{"name":"Local: test","url":"c:\\Users\\phamd\\Desktop\\31-3\\test.cpp","tests":[{"id":1648708108850,"input":"2","output":"2"},{"id":1648708118873,"input":"3","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\phamd\\Desktop\\31-3\\test.cpp","group":"local","local":true}

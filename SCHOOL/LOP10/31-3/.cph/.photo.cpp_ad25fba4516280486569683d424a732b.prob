@@ -1,0 +1,1 @@
+{"name":"Local: photo","url":"c:\\Users\\phamd\\Desktop\\31-3\\photo.cpp","tests":[{"id":1648713690527,"input":"3 2 3 2\n1 1\n3 1\n2 2","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\phamd\\Desktop\\31-3\\photo.cpp","group":"local","local":true}
