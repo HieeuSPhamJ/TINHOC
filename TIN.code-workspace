@@ -81,7 +81,9 @@
 			"typeinfo": "cpp",
 			"variant": "cpp",
 			"xutility": "cpp",
-			"xlocale": "cpp"
+			"xlocale": "cpp",
+			"xstring": "cpp",
+			"xtree": "cpp"
 		}
 	}
 }
