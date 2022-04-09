@@ -1,0 +1,42 @@
+#Vì sao cần bảo mật và mã hoá thông tin?
+    Đặt câu hỏi: <Trong thực thế>
+        Ví dụ: Thư tình giữa 2 người
+        =>rút ra kết luật vì sao cần bảo mật và mã hoá thông tin
+
+#Một số cách mã hoá thông tin
+    Mã hoá "đơn giản"
+        <SGK/151>
+        Ưu điểm đồng thời cũng là nhược điểm: có thể giả mã
+    Hàm Hash()
+        là việc ông mã hoá dữ liệu thành 1 chuỗi kí tự đặc biệt mà việc ông suy ngược lại từ chuỗi hash là điều không thể
+        Ví dụ:
+            hash(gkedickbu) = fsad343fd
+            fsad343fd == bla bla bla
+        <câu hỏi> thế thì tại sao ta lại cần hàm hash?
+            - trong việc lưu trữ mật khẩu trên website
+                vd:
+
+                    hieupham1103: hieudeptrai
+                    <lưu dưới database>
+                    hieupham1103: hieudeptrai
+                    <vấn đề> khi bị hack -> bị lộ mật khẩu
+
+                    hieupham1103: hieudeptrai
+                    <lưu dưới database>
+                    hieupham1103: 1234453541
+                    <vấn đề> có thể truy ngược lại mật khẩu
+
+                    hieupham1103: hieudeptrai
+                    <lưu dưới database>
+                    hieupham1103: hash(hieudeptrai)
+                    => không thể truy ngược lại mật khẩu khi bị hack
+
+        Phá hàm hash():
+            trâu input đến khi đúng thì thôi
+
+#Lời khuyên
+    Không nên dùng một mật khẩu đơn giản cho nhiều dịch vụ trên internet
+    Thường xuyên cập nhật phần mềm để tang tính bảo mật
+    Sử dụng mật khẩu mạnh, bảo mật n lớp
+    Cân nhắn trước khi sử dụng các phần mềm kém tin cậy, các ứng dụng free.
+    Thường xuyên sao lưu dự liệu
