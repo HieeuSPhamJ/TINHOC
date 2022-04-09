@@ -3,6 +3,9 @@ using namespace std;
 
 
 int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     freopen("BAC.INP", "r", stdin);
     freopen("BAC.OUT", "w", stdout);
     int n;
@@ -12,9 +15,9 @@ int main(){
         for (int j = 1; j <= n; j++){
             int inp;
             cin >> inp;
-            count += inp;    
+            count += (inp > 0);    
         }
-        cout << i << ' ' << count << endl;
+        cout << i << ' ' << count << "\n";
         
     }
 

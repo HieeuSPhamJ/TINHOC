@@ -8,8 +8,8 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    freopen("CHUYEN02.INP", "r", stdin);
-    freopen("CHUYEN02.OUT", "w", stdout);
+    // freopen("CHUYEN02.INP", "r", stdin);
+    // freopen("CHUYEN02.OUT", "w", stdout);
     int n;
     cin >> n;
     int count =  0;

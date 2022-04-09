@@ -8,11 +8,11 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // freopen("CHUYEN03.INP", "r", stdin);
-    // freopen("CHUYEN03.OUT", "w", stdout);
+    freopen("CHUYEN03.INP", "r", stdin);
+    freopen("CHUYEN03.OUT", "w", stdout);
     int n, m;
     cin >> n >> m;
-    for (int i = 1; i <= n; i++){
+    for (int i = 1; i <= m; i++){
         int a, b;
         cin >> a >> b;
         maze[a][b] = 1;

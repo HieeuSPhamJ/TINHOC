@@ -1,0 +1,1 @@
+{"name":"Local: CHUYEN03","url":"d:\\TINHOC\\SCHOOL\\LOP10\\Graph\\CHUYEN03.cpp","tests":[{"id":1649380732953,"input":"6 16\n1 2\n1 3\n2 1\n2 3\n2 4\n2 5\n3 1\n3 2\n3 5\n4 2\n4 5\n4 6\n5 2\n5 3\n5 4\n6 4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\LOP10\\Graph\\CHUYEN03.cpp","group":"local","local":true}
