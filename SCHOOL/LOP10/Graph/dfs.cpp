@@ -1,36 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int maxN = 1e3;
+const int maxN = 2010;
 
-int e, v;
-int Start, End;
-
+int n, m;
 vector <int> adj[maxN];
-int checkVisited[maxN];
+int visited[maxN] = {0};
 
-void DFS(int V){
-    cout << V << ' ';
-    checkVisited[V] = 1;
-    for (int i = 0; i < adj[V].size(); i++){
-        if (checkVisited[adj[V][i]] != 1){
-            DFS(adj[V][i]);
+void DFS(int Start){
+    visited[Start] = 1;
+    cout << Start << ' ';
+    for (auto i: adj[Start]){
+        if (visited[i] == 0){
+            DFS(i);
         }
     }
-
-
 }
 
 int main(){
-    cin >> v >> e;
-    for (int i = 1; i <= e; i++){
+    freopen("DFS.INP", "r", stdin);
+    freopen("DFS.OUT", "w", stdout);
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++){
         int a, b;
         cin >> a >> b;
         adj[a].push_back(b);
         adj[b].push_back(a);
     }
-    cin >> Start >> End;
-    DFS(Start);
+    DFS(1);
 
     return 0;
 }
