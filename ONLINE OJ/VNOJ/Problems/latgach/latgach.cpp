@@ -1,23 +1,20 @@
 #include <bits/stdc++.h>
-
 using namespace std;
+
+unsigned long long ans[110];
 
 int main(){
     int t;
     cin >> t;
-    while(t--){
-        int n;
-        cin >> n;
-        long long a = 1;
-        int b = 1;
-        for (int i = 1; i <= n; i++){
-            int temp = a;
-            a += b;
-            b = temp;
-        }
-        cout << b;
-        cout << endl;
+    ans[1] = 1;
+    ans[2] = 2;
+    for (int i = 3; i <= 100; i++){
+        ans[i] = ans[i - 1] + ans[i - 2];
     }
-
+    while(t--){
+        int inp;
+        cin >> inp;
+        cout << inp << endl;
+    }
     return 0;
 }
