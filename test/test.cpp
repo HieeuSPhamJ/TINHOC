@@ -1,79 +1,87 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int maxN = 1e6 + 10;
 
-int a[maxN];
-int countBigger[maxN];
-int countSmaller[maxN];
-int diff[maxN];
-map <int, int> leftCount;
-map <int, int> rightCount;
-vector <int> leftVec;
-vector <int> rightVec;
-map <int, int> tempCount;
+int n = 6;
+vector <int> myVec;
+bool check[300] = {0};
+int count16 = 0;
+int count18 = 0;
+int delayCin;
+
+void back(int index, string s){
+    if (index > 6){
+        int countBinary = 0;
+        for (int i = 0; i < 6; i++){
+            if (s[i] == '1'){
+                countBinary++;
+            }
+        }
+        if (countBinary != 3){
+            return;
+        }
+        int tempSum = 0;
+        for (int i = 0; i < 6; i++){
+            if (s[i] == '1'){
+                tempSum += myVec[i];
+                cout << myVec[i] << ' ';
+            }
+        }
+        if (tempSum == 16){
+            cout << '!';
+        }
+        if (tempSum == 18){
+            cout << '@';
+        }
+        cout << endl;
+        
+        count16 += (tempSum == 16);
+        count18 += (tempSum == 18);
+    
+        return;
+    }
+    back(index + 1, s + '0');
+    back(index + 1, s + '1');
+}
+
+
+bool checkSum(){
+    count16 = 0;
+    count18 = 0;
+    back(1, "");
+    cout << count16 << ' ' << count18 << endl;
+    if (count16 == 10 and count18 == 10){
+        return 1;
+    }
+    return 0;
+}
+
+
+void backtracking(int index){
+    if (index > n){
+        for (auto i: myVec){
+            cout << i << ' ';
+        }
+        cout << endl;
+        if (checkSum()){
+            exit(1);
+        }
+        return;
+    }
+    for (int i = 0; i <= 10;i++){
+        if (check[i] == 0){
+            check[i] = 1;
+            myVec.push_back(i);
+            backtracking(index + 1);
+            check[i] = 0;
+            myVec.pop_back();
+        }
+    }
+    
+
+}
+
 int main(){
-    freopen("trungvi.INP", "r", stdin);
-    freopen("trungvi.OUT", "w", stdout);
-    int n, m;
-    cin >> n >> m;
-    int index;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
-        if (a[i] == m){
-            index = i;
-        }
-    }
-    countBigger[index] = 0;
-    countSmaller[index] = 0;
-    for (int i = index; i >= 1; i--){
-        countBigger[i] = countBigger[i + 1];
-        countSmaller[i] = countSmaller[i + 1];
-        if (a[i] < m){
-            countSmaller[i]++;
-        }
-        if (a[i] > m){
-            countBigger[i]++;
-        }
-        diff[i] = countSmaller[i] - countBigger[i];
-    }
-    for (int i = index + 1; i <= n; i++){
-        countBigger[i] = countBigger[i - 1];
-        countSmaller[i] = countSmaller[i - 1];
-        if (a[i] < m){
-            countSmaller[i]++;
-        }
-        if (a[i] > m){
-            countBigger[i]++;
-        }
-        diff[i] = countSmaller[i] - countBigger[i];
-    }
-    // cout << index;
-    // sort(diff + 1, diff + index);
-    // sort(diff + 1 + index, diff + 1 + n);
-    // for (int i = 1; i <= n; i++){
-    //     cout << diff[i] << ' ';
-    // }
-    // cout << endl;
-    for (int i = 1; i <= index; i++){
-        leftCount[diff[i]]++;
-        leftVec.push_back(diff[i]);
-    }
-    for (int i = index; i <= n; i++){
-        rightCount[diff[i]]++;
-        rightVec.push_back(diff[i]);
-    }
-    if (leftVec.size() > rightVec.size()){
-        swap(leftVec, rightVec);
-        swap(leftCount, rightCount);
-    }
-    // sort(rightCount.begin(), rightCount.end());
-    long long count = 1;
-    for (int i = 0; i < (int)leftVec.size() - 1; i++){
-        count+= rightCount[-leftVec[i]];
-    }
-
-    cout << count;
-
+    backtracking(1);
     return 0;
 }

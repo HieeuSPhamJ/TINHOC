@@ -1,0 +1,1 @@
+{"name":"Local: C","url":"d:\\STUDY\\TINHOC\\ONLINE OJ\\Hackerrank\\LastAprilTesting\\C.cpp","tests":[{"id":1650965763088,"input":"4\n2 5 50\n3 1 4\n5 3 142\n23 57 1000000000","output":"13\n0\n14\n744623544"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\STUDY\\TINHOC\\ONLINE OJ\\Hackerrank\\LastAprilTesting\\C.cpp","group":"local","local":true}
