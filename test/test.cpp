@@ -68,7 +68,7 @@ void backtracking(int index){
         }
         return;
     }
-    for (int i = 0; i <= 10;i++){
+    for (int i = 2; i <= 10;i++){
         if (check[i] == 0){
             check[i] = 1;
             myVec.push_back(i);
@@ -82,6 +82,7 @@ void backtracking(int index){
 }
 
 int main(){
+    freopen("test.txt", "w", stdout);
     backtracking(1);
     return 0;
 }
