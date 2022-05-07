@@ -9,11 +9,12 @@ int trace[maxN];
 priority_queue <pair <int,int>> myHeap;
 
 void path(int node){
-	if (trace[node] != -1){
-		path(trace[node]);
-		cout << ' ' << node;
+	if (trace[node] == -1){
+		cout << node;
+		return;
 	}
-	cout << node;
+	path(trace[node]);
+	cout << ' ' << node;
 }
 
 int main(){
@@ -32,15 +33,15 @@ int main(){
 		trace[i] = -1;
 	}
 	myHeap.push({0,Start});
+	visited[Start] = 0;
 	while(!myHeap.empty()){
 		pair <int,int> tempNode = myHeap.top();
 		myHeap.pop();
-		for (auto newNode: adj[tempNode]){
-			if (newNode.first + tempNode.first > visited[newNode.second]){
+		for (auto newNode: adj[tempNode.second]){
+			if (newNode.first + tempNode.first < visited[newNode.second]){
 				visited[newNode.second] = newNode.first + tempNode.first;
 				trace[newNode.second] = tempNode.second;
 				myHeap.push({visited[newNode.second], newNode.second});
-
 			}
 		}
 	}

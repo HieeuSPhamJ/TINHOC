@@ -13,6 +13,7 @@ priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> 
 void inputReader()
 {
     cin >> V >> E;
+    cin >> Start >> End;
     for (int i = 1; i <= E; i++)
     {
         int a, b, w;
@@ -20,7 +21,6 @@ void inputReader()
         adj[a].push_back({b, w});
         adj[b].push_back({a, w});
     }
-    cin >> Start >> End;
 }
 
 void Dijkstra(int start)

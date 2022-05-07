@@ -12,7 +12,6 @@ int main(){
         for (int i = 0; i <= 33; i++){
             countBit[i] = 0;
         }
-
         for (int i = 1; i <= n; i++){
             int inp;
             cin >> inp;
@@ -34,8 +33,6 @@ int main(){
         }
         // cout << endl;
         cout << ans << endl;
-
     }
-
     return 0;
 }
