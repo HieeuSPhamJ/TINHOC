@@ -1,46 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int maxN = 510;
+map <int, map <int, long long>> prefix;\
 
-int n, m, test;
-
-long long sum[maxN][maxN];
-
-void printMaze(){
-    for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= m; j++){
-            
-            cout << sum[i][j] << ' ';
-        }
-        cout << endl;
-    }
-    cout << "----------" << endl;
+int calLen(int ix, int iy, int x, int y){
+    return ceil(sqrt(pow(ix - x, 2) + pow(iy - y, 2)));
 }
 
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    cin >> n >> m >> test;
-
-    for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= m; j++){
-            long long inp;
-            cin >> inp;
-            sum[i][j] = inp + sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1];
-            printMaze();
-        }
-        cout << endl;
-    }
-
-    
-
-    while(test--){
-        int x1, y1, x2, y2;
-        cin >> x1 >> y1 >> x2 >> y2;
-        cout << sum[x2][y2] - sum[x2][y1] - sum[x1][y2] + sum[x1 - 1][x1 - 1] << endl;
-    }
-
-    return 0;
+    cout <<
 }
