@@ -1,21 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int maxN = 1e5;
-const int inf = 1e8;
-vector <pair<int,int>> adj[maxN];
+const int maxN = 1e3 + 10;
+const int inf = 0;
+vector <pair<int,int> > adj[maxN];
 int visited[maxN];
-int trace[maxN];
-priority_queue <pair <int,int>> myHeap;
-
-void path(int node){
-	if (trace[node] == -1){
-		cout << node;
-		return;
-	}
-	path(trace[node]);
-	cout << ' ' << node;
-}
+priority_queue < pair <int, int>, vector < pair <int, int> >, greater < pair <int, int> > > myHeap;
 
 int main(){
 	int n, m;
@@ -28,26 +18,26 @@ int main(){
 		adj[a].push_back({w, b});
 		adj[b].push_back({w, a});
 	}
-	for (int i = 1; i <= n; i++){
-		visited[i] = inf;
-		trace[i] = -1;
-	}
-	myHeap.push({0,Start});
-	visited[Start] = 0;
+
+	myHeap.push({1e8,Start});
+	visited[Start] = 1e8;
 	while(!myHeap.empty()){
 		pair <int,int> tempNode = myHeap.top();
 		myHeap.pop();
-		for (auto newNode: adj[tempNode.second]){
-			if (newNode.first + tempNode.first < visited[newNode.second]){
-				visited[newNode.second] = newNode.first + tempNode.first;
-				trace[newNode.second] = tempNode.second;
+		for (int i = 0; i < adj[tempNode.second].size(); i++){
+			pair <int,int> newNode = adj[tempNode.second][i];
+			if (min(newNode.first, tempNode.first) > visited[newNode.second]){
+				visited[newNode.second] = min(newNode.first, tempNode.first);
 				myHeap.push({visited[newNode.second], newNode.second});
 			}
 		}
 	}
-	cout << visited[End];
+	if (visited[End]){
+		cout << visited[End];
+	}
+	else{
+		cout << -1;
+	}
 	cout << endl;
-	path(End);
-	// cout << ' ' << End;
 	return 0;
 }
