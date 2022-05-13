@@ -59,17 +59,20 @@ void solve(){
         }
     }
     long long ans = 0;
-    for (int i = 1; i < len; i++){
-        for (int state = 0; state <= 2; state++){
-            if (i != len - 1){
-                ans += dp[i][0][0][0][state];
-                ans %= mod;
-            }
-            else if (state <= 1){
-                ans += dp[i][0][0][0][state];
-                ans %= mod;
+    for (int i = 1; i <= len; i++){
+        if (i < len){
+            for (int state = 0; state <= 2; state++){
+                (ans += dp[i][0][0][0][state]) %= mod;
+                
             }
         }
+        else{
+            for (int state = 0; state <= 1; state++){
+                (ans += dp[i][0][0][0][state]) %= mod;
+                
+            }
+        }
+        
     }
     cout << ans;
 

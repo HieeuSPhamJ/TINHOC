@@ -1,0 +1,1 @@
+{"name":"Local: backup","url":"d:\\STUDY\\TINHOC\\SCHOOL\\ANHKHOI\\DP Digit\\backup.cpp","tests":[{"id":1652460309679,"input":"5\n10 1\n15 2\n100 99\n1234567 1\n51267123 15","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\STUDY\\TINHOC\\SCHOOL\\ANHKHOI\\DP Digit\\backup.cpp","group":"local","local":true}
