@@ -1,26 +1,38 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-const int maxI = 11;
-const int maxK = 90;
-const int maxState = 4;
-const int mod = 1000000007;
+const long long maxI = 11;
+const long long maxK = 90;
+const long long maxState = 4;
+const long long mod = 1000000007;
 
 
 long long dp[maxI][maxK][maxK][maxK][maxState];
 
 void solve(){
-    int k;
+    long long k;
     string n;
     cin >> n >> k;
-    if (k > 81){
+    if (k > 83){
         cout << 0;
         return;
     }
-    int len = n.size();
+    long long len = n.size();
 
-    for (int i = 1; i <= 9; i++){
-        int state = 0;
+    for (long long i = 1; i <= len; i++) {
+        for (long long thatNum = 0; thatNum < k; thatNum++) {
+            for (long long sum = 0; sum < k; sum++) {
+                for (long long pro = 0; pro < k; pro++) {
+                    for (long long state = 0; state <= 2; state++) {
+                        dp[i][thatNum][sum][pro][state] = 0;
+                    }
+                }
+            }
+        }
+    }
+
+    for (long long i = 1; i <= 9; i++){
+        long long state = 0;
         if (i == n[0] - '0'){
             state = 1;
         }
@@ -29,24 +41,24 @@ void solve(){
         }
         dp[1][i % k][i % k][i % k][state]++;
     }    
-    for (int i = 1; i < len; i++){
-        for (int thatNum = 0; thatNum < k; thatNum++){
-            for (int sum = 0; sum < k; sum++){
-                for (int pro = 0; pro < k; pro++){
-                    for (int state = 0; state <= 2; state++){
+
+    for (long long i = 1; i < len; i++){
+        for (long long thatNum = 0; thatNum < k; thatNum++){
+            for (long long sum = 0; sum < k; sum++){
+                for (long long pro = 0; pro < k; pro++){
+                    for (long long state = 0; state <= 2; state++){
                         if (dp[i][thatNum][sum][pro][state] == 0){
                             continue;
                         }
-                        for (int dig = 0; dig <= 9; dig++){
-                            int newState = state;
+                        for (long long dig = 0; dig <= 9; dig++){
+                            long long newState = state;
                             if (state == 1){
                                 if (dig < n[i] - '0'){
                                     newState = 0;
                                 }
-                                else if (dig > n[i] - '0'){
+                                if (dig > n[i] - '0'){
                                     newState = 2;
                                 }
-                                
                             }
                             long long ans = dp[i][thatNum][sum][pro][state];
                             (dp[i + 1][(thatNum * 10 + dig) % k][(sum + dig) % k][(pro * k) % k][newState] += ans) %= mod;
@@ -59,15 +71,15 @@ void solve(){
         }
     }
     long long ans = 0;
-    for (int i = 1; i <= len; i++){
+    for (long long i = 1; i <= len; i++){
         if (i < len){
-            for (int state = 0; state <= 2; state++){
+            for (long long state = 0; state <= 2; state++){
                 (ans += dp[i][0][0][0][state]) %= mod;
                 
             }
         }
         else{
-            for (int state = 0; state <= 1; state++){
+            for (long long state = 0; state <= 1; state++){
                 (ans += dp[i][0][0][0][state]) %= mod;
                 
             }
@@ -79,7 +91,7 @@ void solve(){
 }
 
 int main(){
-    int test;
+    long long test;
     cin >> test;
     while(test--){
         solve();
