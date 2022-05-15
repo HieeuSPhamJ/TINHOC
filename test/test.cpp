@@ -1,86 +1,70 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-
-const int maxI = 11;
-const int maxK = 90;
-const int maxState = 4;
-const int mod = 1000000007;
-
-
-long long dp[maxI][maxK][maxK][maxK][maxState];
-
-void solve(){
-    int k;
-    string n;
-    cin >> n >> k;
-    if (k > 81){
-        cout << 0;
-        return;
+long long test_case,tt,f[100][200][200][3],newsumx,newsumy,ans,k,dx,newrem;
+bool nto[1000];
+string n;
+int main()
+{
+    cin>>n;
+    f[0][0][0][0]=1;
+    n='0'+n;
+    n=n+'0';
+    for (int i=2;i<=135;i++)
+    {
+        if (nto[i]==true)
+        {
+          for (int j=2*i;j<=135;j+=i)
+          {
+            nto[j]=false;
+          }
+        }
+        
     }
-    int len = n.size();
-
-    for (int i = 1; i <= 9; i++){
-        int state = 0;
-        if (i == n[0] - '0'){
-            state = 1;
-        }
-        else if (i > n[0] - '0'){
-            state = 2;
-        }
-        dp[1][i % k][i % k][i % k][state]++;
-    }    
-    for (int i = 1; i < len; i++){
-        for (int thatNum = 0; thatNum < k; thatNum++){
-            for (int sum = 0; sum < k; sum++){
-                for (int pro = 0; pro < k; pro++){
-                    for (int state = 0; state <= 2; state++){
-                        if (dp[i][thatNum][sum][pro][state] == 0){
-                            continue;
-                        }
-                        for (int dig = 0; dig <= 9; dig++){
-                            int newState = state;
-                            if (state == 1){
-                                if (dig < n[i] - '0'){
-                                    newState = 0;
+    for (int i = 1; i <= 20; i++){
+        cout << nto[i] << ' ';
+    }
+    reverse(n.begin(),n.end());
+    f[0][0][0][0]=1;
+    for (int i=1;i<n.size()-1;i++)
+    {
+        for (int sumx=0;sumx<=135;sumx++)
+        {
+            for (int sumy=0;sumy<=135;sumy++)
+            {
+                for (int rem=0;rem<=2;rem++)
+                {
+                    if (f[i][sumx][sumy][rem]>0)
+                    {
+                        for (int dy=0;dy<=9;dy++)
+                        {
+                            for (int tam=0;tam<=2;tam++)
+                            {
+                                dx=(10*tam+n[i+1]-'0')-(2*dy+rem);
+                                if (dx<0)
+                                {
+                                    continue;
                                 }
-                                else if (dig > n[i] - '0'){
-                                    newState = 2;
-                                }
-                                
+                                newsumx=sumx+dx;
+                                newsumy=sumx+dy;
+                                newrem=(dx+dy*2+rem)/10;
+                                f[i+1][newsumx][newsumy][newrem]+=f[i][sumx][sumy][rem];
                             }
-                            long long ans = dp[i][thatNum][sum][pro][state];
-                            (dp[i + 1][(thatNum * 10 + dig) % k][(sum + dig) % k][(pro * k) % k][newState] += ans) %= mod;
-
                         }
-                        
                     }
                 }
             }
         }
     }
-    long long ans = 0;
-    for (int i = 1; i < len; i++){
-        for (int state = 0; state <= 2; state++){
-            if (i != len - 1){
-                ans += dp[i][0][0][0][state];
-                ans %= mod;
-            }
-            else if (state <= 1){
-                ans += dp[i][0][0][0][state];
-                ans %= mod;
+    ans=0;
+    for (int sumx=1;sumx<=135;sumx++)
+    {
+        for (int sumy=1;sumy<=135;sumy++)
+        {
+            if (nto[sumx] && nto[sumy])
+            {
+                ans=ans+f[n.size()-1][sumx][sumy][0];
             }
         }
     }
-    cout << ans;
-
-}
-
-int main(){
-    int test;
-    cin >> test;
-    while(test--){
-        solve();
-        cout << endl;
-    }
-    return 0;
+    cout<<ans<<endl;
 }
