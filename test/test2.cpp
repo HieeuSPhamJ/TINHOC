@@ -1,43 +1,73 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-const int maxN = 1e3 + 10;
-const int inf = 0;
-vector <pair<int,int> > adj[maxN];
-int visited[maxN];
-priority_queue < pair <int, int>, vector < pair <int, int> >, greater < pair <int, int> > > myHeap;
-
-int main(){
-	int n, m;
-	cin >> n >> m;
-	int Start, End;
-	cin >> Start >> End;
-	for (int i = 1; i <= m; i++){
-		int a, b, w;
-		cin >> a >> b >> w;
-		adj[a].push_back({w, b});
-		adj[b].push_back({w, a});
-	}
-
-	myHeap.push({1e8,Start});
-	visited[Start] = 1e8;
-	while(!myHeap.empty()){
-		pair <int,int> tempNode = myHeap.top();
-		myHeap.pop();
-		for (int i = 0; i < adj[tempNode.second].size(); i++){
-			pair <int,int> newNode = adj[tempNode.second][i];
-			if (min(newNode.first, tempNode.first) > visited[newNode.second]){
-				visited[newNode.second] = min(newNode.first, tempNode.first);
-				myHeap.push({visited[newNode.second], newNode.second});
+const int maxn=2e5+5;
+vector <long> mTempVector,mVector;
+int n,m,t;
+long A[maxn],B[maxn];
+void Mine(){
+	cin.tie(0) -> sync_with_stdio(0);
+}
+void ans(){
+	mVector.clear();
+	cin>>n>>m;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<m;j++){
+			cin>>A[j];
+			B[j]=A[j];
+		}
+		sort(A,A+m);
+		if(i==0){
+			for(int j=0;j<m;j++){
+				if(A[j]!=B[j]){
+					mVector.push_back(j);
+					if(mVector.size()>2){
+						cout<<-1<<endl;
+						return;
+					}
+				}
+			}
+		}
+		else{
+			mTempVector.clear();
+			for(int j=0;j<m;j++){
+				if(A[j]!=B[j]){
+					mTempVector.push_back(j);
+				}
+			}
+			if(mTempVector.empty()){
+				for(int j=0;j<int(mVector.size())-1;j++){
+					int k=mVector[j];
+					if(A[k]!=A[k+1]){
+						cout<<-1<<endl;
+						return;
+					}
+				}
+			}
+			else if(mTempVector.size()==2){
+				for(int j=0;j<int(mVector.size());j++){
+					if(mVector[j]!=mTempVector[j]){
+						cout<<-1<<endl;
+						return;
+					}
+				}
+			}
+			else{
+				cout<<-1<<endl;
+				return;
 			}
 		}
 	}
-	if (visited[End]){
-		cout << visited[End];
+	if(mVector.empty()) cout<<1<<" "<<1;
+	else cout<<mVector[0]+1<<" "<<mVector[1]+1;
+	cout<<"\n";
+}
+int main(){
+	// freopen("ColumnSwapping.INP","r",stdin);
+	// freopen("ColumnSwapping.OUT","w",stdout);
+	Mine();
+	cin>>t;
+	while(t--){
+		ans();
 	}
-	else{
-		cout << -1;
-	}
-	cout << endl;
 	return 0;
 }

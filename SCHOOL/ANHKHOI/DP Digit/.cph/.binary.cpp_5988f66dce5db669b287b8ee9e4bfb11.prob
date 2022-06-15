@@ -1,0 +1,1 @@
+{"name":"Local: binary","url":"d:\\STUDY\\TINHOC\\SCHOOL\\ANHKHOI\\DP Digit\\binary.cpp","tests":[{"id":1652748908913,"input":"18 3\n\n","output":"3"},{"id":1652748917576,"input":"8 1","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\STUDY\\TINHOC\\SCHOOL\\ANHKHOI\\DP Digit\\binary.cpp","group":"local","local":true}

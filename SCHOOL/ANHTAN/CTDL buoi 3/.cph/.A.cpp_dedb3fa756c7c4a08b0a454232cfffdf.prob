@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"d:\\STUDY\\TINHOC\\SCHOOL\\ANHTAN\\CTDL buoi 3\\A.cpp","tests":[{"id":1652875085016,"input":"3\na\na\nab\n","output":""},{"id":1652875092288,"input":"5\nmad\nmadam\nda\nm\na","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\STUDY\\TINHOC\\SCHOOL\\ANHTAN\\CTDL buoi 3\\A.cpp","group":"local","local":true}
