@@ -1,0 +1,1 @@
+{"name":"Local: sqrnum","url":"/Users/hieuphamdinhtrung/Desktop/BDHE 1/sqrnum.cpp","tests":[{"id":1655254713981,"input":"5\n1 2\n2 3\n3 4\n2 5 ","output":""},{"id":1655255730400,"input":"7\n1 2\n1 4\n3 7\n5 6\n4 5\n1 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/Desktop/BDHE 1/sqrnum.cpp","group":"local","local":true}
