@@ -28,7 +28,7 @@ void update(int i, int left, int right, int index, int val){
 
 
 int getMax(int i, int left, int right, int Tleft, int Tright){
-    // cout << i << ' ' << left << ' ' << right << " | " << Tleft << ' ' << Tright << endl;
+    cout << i << ' ' << left << ' ' << right << " | " << Tleft << ' ' << Tright << endl;
     if (left > Tright or right < Tleft){
         return -inf;
     }

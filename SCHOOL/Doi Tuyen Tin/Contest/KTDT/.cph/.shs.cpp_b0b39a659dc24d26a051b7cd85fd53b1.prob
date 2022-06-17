@@ -1,0 +1,1 @@
+{"name":"Local: shs","url":"d:\\STUDY\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\Contest\\KTDT\\shs.cpp","tests":[{"id":1655429284013,"input":"2\n4\nabcd\n2 3 1 4\n5\nababa\n3 4 5 2 1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\STUDY\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\Contest\\KTDT\\shs.cpp","group":"local","local":true}
