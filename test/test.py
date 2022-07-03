@@ -1,10 +1,24 @@
-from time import sleep
+import random
 
-i = 0
+n = 20
+k = 10
 
-while (i <= 100):
-    print(f'hecking {i}%')
-    sleep(0.5)
-    i += 10
+inf = 1000
 
-print("Nasa đ4~ bj h4ck!!!")
+print(f"{n} {k}")
+
+listA = []
+
+for i in range(1, n + 1):
+    a = random.randint(1, 100)
+    listA.append(a)
+
+for i in listA:
+    print(i, end = " ")
+
+print()
+
+for i in range(1, k + 1):
+    l = random.randint(1, n)
+    r = random.randint(1, n)
+    print(f"{min(l, r)} {max(l, r)}")
