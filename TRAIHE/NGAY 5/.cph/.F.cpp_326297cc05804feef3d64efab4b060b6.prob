@@ -1,0 +1,1 @@
+{"name":"Local: F","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIHE/NGAY 5/F.cpp","tests":[{"id":1656384178067,"input":"10 5 \n9 6 5 4 10 1 2 7 3 8 \n4 9\n8 10\n3 4\n2 9\n3 6","output":"3 2 5 1 4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIHE/NGAY 5/F.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: RMQ","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIHE/NGAY 5/RMQ.cpp","tests":[{"id":1656296958894,"input":"5 3\n3 6 5 7 11\n1 2\n1 5\n3 5","output":"3\n1\n2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIHE/NGAY 5/RMQ.cpp","group":"local","local":true}

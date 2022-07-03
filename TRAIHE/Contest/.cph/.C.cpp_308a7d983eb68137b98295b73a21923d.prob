@@ -1,0 +1,1 @@
+{"name":"Local: C","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIHE/Contest/C.cpp","tests":[{"id":1656212834593,"input":"aaaabbbbcccc\n3\n0 2 a y\n5 9 b c\n1 3 a z","output":"yyyzbccccccc"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIHE/Contest/C.cpp","group":"local","local":true}
