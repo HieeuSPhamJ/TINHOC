@@ -1,10 +1,9 @@
 #include<bits/stdc++.h>
-#define endl '\n'
 #define int long long
+#define endl "\n"
 #define ii pair <int,int>
 #define f first
 #define s second
-#define st set<int>
 using namespace std;
 
 const int maxN = 2 * 1e5 + 10;
@@ -19,6 +18,7 @@ struct dataType{
         right = b;
         pos = c;
     }
+    
 };
 
 int sq;
@@ -28,10 +28,14 @@ vector <dataType> query;
 vector <ii> Ans;
 
 bool cmp(dataType x, dataType y){
-    if (x.left / sq != y.left /sq){
+    if (x.left / sq != y.left / sq){
         return x.left < y.left;
     }
     return x.right < y.right;
+}
+
+int cal(int index){
+    return check[a[index]] * check[a[index]] * a[index];
 }
 
 void printCheck(){
@@ -45,22 +49,18 @@ main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-
-    int n;
-    cin >> n;
+    
+    int n, test;
+    cin >> n >> test;
     for (int i = 1; i <= n; i++){
         cin >> a[i];
-        
     }
-
     sq = sqrt(n);
 
-    int test;
-    cin >> test;
     for (int i = 1; i <= test; i++){
         int l, r;
         cin >> l >> r;
-        query.push_back({l, r, i});
+        query.push_back({l,r,i});
     }
 
     sort(query.begin(), query.end(), cmp);
@@ -70,64 +70,74 @@ main(){
     int right = 1;
 
     check[a[1]]++;
-    ans++;
-    // cout << left << "-" << right << endl;
+    ans += cal(1);
+    // cout << ans << endl;
     // printCheck();
+
 
     for (auto i: query){
         int _left = i.left;
         int _right = i.right;
-
         // cout << _left << ' ' << _right << endl;
 
         while(right < _right){
-            if (check[a[right + 1]] + 1 == 1){
-                ans++;
-            }
-            check[a[right + 1]]++;
-            right++;
-            // cout << left << "-" << right << endl;
             // printCheck();
+            right++;
+            ans -= cal(right);
+            check[a[right]]++;
+            ans += cal(right);
+            // printCheck();
+            // cout << ans << endl;
+            // cout << left << '-' << right << endl;
+
         }
 
         while(right > _right){
-            if (check[a[right]] - 1 == 0){
-                ans--;
-            }
-            check[a[right]]--;
-            right--;
-            // cout << left << "-" << right << endl;
+            ans -= cal(right);
             // printCheck();
+            check[a[right]]--;
+            ans += cal(right);
+            right--;
+            // printCheck();
+            // cout << ans << endl;
+            // cout << left << '-' << right << endl;
+
         }
 
         while(left < _left){
-            if (check[a[left]] - 1 == 0){
-                ans--;
-            }
+            ans -= cal(left);
+            // printCheck();
             check[a[left]]--;
+            ans += cal(left);
             left++;
-            // cout << left << "-" << right << endl;
             // printCheck();
-        }
-        while(left > _left){
-            if (check[a[left - 1]] + 1 == 1){
-                ans++;
-            }
-            check[a[left - 1]]++;
-            left--;
-            // cout << left << "-" << right << endl;
-            // printCheck();
+            // cout << ans << endl;
+            // cout << left << '-' << right << endl;
+
         }
 
+        while(left > _left){
+            left--;
+            ans -= cal(left);
+            // printCheck();
+            check[a[left]]++;
+            ans += cal(left);
+            // printCheck();
+            // cout << ans << endl;
+            // cout << left << '-' << right << endl;
+
+        }
         Ans.push_back({i.pos, ans});
         // cout << ans << endl;
     }
 
     sort(Ans.begin(), Ans.end());
-
     for (auto i: Ans){
-        cout << i.s << endl;
+        cout <<  i.s << endl;
     }
+
+
+
 
     return 0;
 }

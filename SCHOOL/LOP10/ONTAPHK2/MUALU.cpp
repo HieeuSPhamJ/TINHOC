@@ -16,8 +16,6 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    freopen("MUALU.INP", "r", stdin);
-    freopen("MUALU.OUT", "w", stdout);
     int n, m, k;
     cin >> n >> m >> k;
     for (int i = 1; i <= n; i++){

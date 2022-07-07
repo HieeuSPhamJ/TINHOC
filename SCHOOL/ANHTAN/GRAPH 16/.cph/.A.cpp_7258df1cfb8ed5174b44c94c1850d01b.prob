@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/ANHTAN/GRAPH 16/A.cpp","tests":[{"id":1657187343598,"input":"5 7\n1 2 2\n2 3 1\n3 4 1\n4 5 4\n2 4 3\n1 3 4\n2 5 10","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/ANHTAN/GRAPH 16/A.cpp","group":"local","local":true}
