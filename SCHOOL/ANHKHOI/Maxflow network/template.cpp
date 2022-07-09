@@ -168,15 +168,41 @@ int Graph::DinicMaxflow(int s, int t)
 // Driver Code
 int main()
 {
-    int n, m;
-    cin >> n >> m;
+	Graph g(6);
+	g.addEdge(0, 1, 16 );
+	g.addEdge(0, 2, 13 );
+	g.addEdge(1, 2, 10 );
+	g.addEdge(1, 3, 12 );
+	g.addEdge(2, 1, 4 );
+	g.addEdge(2, 4, 14);
+	g.addEdge(3, 2, 9 );
+	g.addEdge(3, 5, 20 );
+	g.addEdge(4, 3, 7 );
+	g.addEdge(4, 5, 4);
 
-    Graph graph(n + m + 4);
+	// next exmp
+	/*g.addEdge(0, 1, 3 );
+	g.addEdge(0, 2, 7 ) ;
+	g.addEdge(1, 3, 9);
+	g.addEdge(1, 4, 9 );
+	g.addEdge(2, 1, 9 );
+	g.addEdge(2, 4, 9);
+	g.addEdge(2, 5, 4);
+	g.addEdge(3, 5, 3);
+	g.addEdge(4, 5, 7 );
+	g.addEdge(0, 4, 10);
 
-    for (int i = 1; i <= n; i++){
-        
-    }
+	// next exp
+	g.addEdge(0, 1, 10);
+	g.addEdge(0, 2, 10);
+	g.addEdge(1, 3, 4 );
+	g.addEdge(1, 4, 8 );
+	g.addEdge(1, 2, 2 );
+	g.addEdge(2, 4, 9 );
+	g.addEdge(3, 5, 10 );
+	g.addEdge(4, 3, 6 );
+	g.addEdge(4, 5, 10 ); */
 
-    cout << graph.DinicMaxflow(s, t);
+	cout << "Maximum flow " << g.DinicMaxflow(0, 5);
 	return 0;
 }
