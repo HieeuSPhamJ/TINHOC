@@ -24,11 +24,9 @@ void Dijstra(){
             if (newWeight < visited[newV.first]){
                 visited[newV.first] = newWeight;
                 myHeap.push(make_pair(newWeight, newV.first));
-
             }
         }
     }
-
 }
 
 
