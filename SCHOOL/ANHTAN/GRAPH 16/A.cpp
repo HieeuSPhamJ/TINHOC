@@ -18,6 +18,9 @@ void Dijstra(){
     while(!myHeap.empty()){
         ii tempV = myHeap.top();
         myHeap.pop();
+        if (visited[tempV.s] != tempV.f){
+            continue;
+        }
         for (int i = 0; i < adj[tempV.second].size(); i++){
             ii newV = adj[tempV.second][i];
             int newWeight = newV.second + tempV.first;
@@ -47,6 +50,7 @@ signed main(){
     for (int i = 0; i <= n; i++){
         visited[i] = infinity;
     }
+    visited[1] = 0;
 
     Dijstra();
     
