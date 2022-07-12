@@ -5,7 +5,6 @@
 #include <bits/stdc++.h>
 using namespace std;
  
-typedef long long ll;
 const int maxn = 1e2 + 14, lg = 15;
 
 const int base = 1000000000;
@@ -410,9 +409,10 @@ struct bigint {
 	}
 };
 
-int main(){
+signed main(){
 	ios::sync_with_stdio(0), cin.tie(0);
 	bigint a=99999999;
 	a*=1000200000003000LL;
+    
 	cout<<a<<'\n';
 }

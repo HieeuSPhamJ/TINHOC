@@ -1,0 +1,1 @@
+{"name":"Local: KILL","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Doi Tuyen Tin/CO CHAU/KILL.cpp","tests":[{"id":1657504196044,"input":"4 2\n4 5 9 7\n1 2 11 33","output":"1 3 46 36"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Doi Tuyen Tin/CO CHAU/KILL.cpp","group":"local","local":true}
