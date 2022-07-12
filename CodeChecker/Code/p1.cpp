@@ -1,57 +1,55 @@
 #include<bits/stdc++.h>
-#define ii pair <long long, long long>
+#define ii pair <int,int>
 #define f first
 #define s second
 #define ll long long
-#define int ll
 using namespace std;
 
-
-vector <ii> lists;
-ll n, k;
-
-int dirX[] = {-2 , -2 , -1 , -1 , 1 , 1 , 2 , 2};
-int dirY[] = {1 , -1 , 2 , -2 , 2 , -2 , 1 , -1};
-
-map <ii,ll> valMap;
-
-
-bool check(ll x){
-    if (x >= 1 and x <= n){
-        return 1;
-    }
-    return 0;
-}
-
+map <int, int> beginEle;
+map <int, int> endEle;
 
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
     freopen("input.inp", "r", stdin);
-    freopen("out2.txt", "w", stdout);
-    
-    cin >> n >> k;
-    for (int i = 1; i <= k; i++){
-        ll x, y, val;
-        cin >> x >> y >> val;
-        for (int i = 0; i < 8; i++){
-            if (check(x + dirX[i]) and check(y + dirY[i])){
-                lists.push_back({x + dirX[i], y + dirY[i]});
-                ii dir = {x + dirX[i], y + dirY[i]};
-                valMap[dir] += val;
+    freopen("out1.txt", "w", stdout);
+    int test;
+    cin >> test;
+    while(test--){
+        beginEle.clear();
+        endEle.clear();
+        int n, m;
+        cin >> n >> m;
+        for (int i = 1; i <= n; i++){
+            int inp;
+            cin >> inp;
+
+            if (beginEle[inp] == 0){
+                beginEle[inp] = i;
             }
+            endEle[inp] = i;
         }
+
+        for (int i = 1; i <= m; i++){
+            int a, b;
+            cin >> a >> b;
+            int l = beginEle[a];
+            int r = endEle[b];
+            // cout << a << ' ' << b << ' ';
+            // cout << l << ' ' << r << endl;
+            if (l * r <= 0){
+                cout << "NO";
+            }
+            else if (l < r){
+                cout << "YES";
+            }
+            else{
+                cout << "NO";
+            }
+            cout << endl;
+        }
+        // cout << endl;
     }
-
-    ll ans = 0;
-
-    for (auto i: lists){
-        ans = max(ans, valMap[i]);
-    }
-
-    cout << ans;
-
-    
     return 0;
 }

@@ -5,40 +5,38 @@
 #define int long long
 using namespace std;
 
-const int maxN = 2 * 1e5 + 10;
-
-int a[maxN];
+map <int, int> beginEle;
+map <int, int> endEle;
 
 signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    
     int test;
     cin >> test;
     while(test--){
+        beginEle.clear();
+        endEle.clear();
         int n, m;
         cin >> n >> m;
         for (int i = 1; i <= n; i++){
-            cin >> a[i];
+            int inp;
+            cin >> inp;
+
+            if (beginEle[inp] == 0){
+                beginEle[inp] = i;
+            }
+            endEle[inp] = i;
         }
-        while (m--){
-            int x, y;
-            cin >> x >> y;
-            int l = -1;
-            int r = -1;
-            for (int i = 1; i <= n; i++){
-                if (x == a[i]){
-                    l = i;
-                    break;
-                }
-            }
-            for (int i = l; i <= n; i++){
-                if (y == a[i]){
-                    r = i;
-                }
-            }
-            if (l == -1 or r == -1){
+
+        for (int i = 1; i <= m; i++){
+            int a, b;
+            cin >> a >> b;
+            int l = beginEle[a];
+            int r = endEle[b];
+            // cout << a << ' ' << b << ' ';
+            // cout << l << ' ' << r << endl;
+            if (l * r <= 0){
                 cout << "NO";
             }
             else if (l < r){
@@ -48,7 +46,6 @@ signed main(){
                 cout << "NO";
             }
             cout << endl;
-
         }
         // cout << endl;
     }
