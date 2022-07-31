@@ -1,0 +1,1 @@
+{"name":"Local: Array Description","url":"d:\\TINHOC\\ONLINE OJ\\cses\\Array Description.cpp","tests":[{"id":1658757754958,"input":"3 5\n2 0 2","output":"3"},{"id":1658758478349,"input":"10 3\n0 0 0 0 0 0 0 0 0 0","output":"8119"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\ONLINE OJ\\cses\\Array Description.cpp","group":"local","local":true}

@@ -1,1 +1,0 @@
-{"name":"Local: test","url":"/media/hieupham/DATA/TIN/test/test.cpp","tests":[{"id":1635049125184,"input":"434324","output":"434324"},{"id":1635049127767,"input":"432523543","output":"432523543"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/hieupham/DATA/TIN/test/test.cpp","group":"local","local":true}

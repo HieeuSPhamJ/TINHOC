@@ -1,0 +1,1 @@
+{"name":"Local: D","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\GRAPH 21\\D.cpp","tests":[{"id":1658665691867,"input":"5\n11 -15 -15\n14 -5 -15\n-1 -1 -5\n10 -4 -1\n19 -4 19","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\GRAPH 21\\D.cpp","group":"local","local":true}

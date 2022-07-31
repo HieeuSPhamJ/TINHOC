@@ -50,7 +50,6 @@ int get(int i, int left, int right, int _left, int _right){
 
     int mid = (left + right) / 2;
     return max(get(2 * i, left, mid, _left, _right), get(2 * i + 1, mid + 1, right, _left, _right));
-
 }
 
 main(){

@@ -1,0 +1,1 @@
+{"name":"Local: Money Sums","url":"d:\\TINHOC\\ONLINE OJ\\cses\\Money Sums.cpp","tests":[{"id":1658762380608,"input":"4\n4 2 5 2","output":"9\n2 4 5 6 7 8 9 11 13"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\ONLINE OJ\\cses\\Money Sums.cpp","group":"local","local":true}

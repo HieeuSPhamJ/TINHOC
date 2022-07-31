@@ -1,0 +1,1 @@
+{"name":"Local: MOBIVINA","url":"d:\\TINHOC\\SCHOOL\\ANHKHOI\\Maxflow network\\MOBIVINA.cpp","tests":[{"id":1658133899920,"input":"3\n1 1 10\n10 10 1\n0 0 1\n0 0 1\n1 1 0","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHKHOI\\Maxflow network\\MOBIVINA.cpp","group":"local","local":true}

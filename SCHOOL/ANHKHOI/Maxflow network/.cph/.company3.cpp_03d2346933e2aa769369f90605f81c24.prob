@@ -1,0 +1,1 @@
+{"name":"Local: company3","url":"d:\\TINHOC\\SCHOOL\\ANHKHOI\\Maxflow network\\company3.cpp","tests":[{"id":1658569421363,"input":"3 3\n1 2\n2 3\n1 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHKHOI\\Maxflow network\\company3.cpp","group":"local","local":true}
