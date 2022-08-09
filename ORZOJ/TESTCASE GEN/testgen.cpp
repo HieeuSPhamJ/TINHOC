@@ -14,8 +14,10 @@ int random(int left = 0, int right = 1e8){
 
 void genTest(){
     // Dùng inp thay cho cout và hàm random(a, b) để random 1 số thuộc [a; b]
-    ofstream inp(("input.in"));
 
+    ofstream inp(("input.in")); //Không xoá dòng này
+
+    //Bắt đầu tạo test từ đâu
     int n = random(990000000, 1000000000);
     int m = random(200000, 200000);
     inp << n << ' ' << m << endl;
@@ -48,35 +50,35 @@ void genTest(){
         inp << a << " " << b << " " << c << " " << d << " " << k << endl;
     }
 
-    inp.close();
+    //kết thúc tạo test ở đâu
+    inp.close(); //Không xoá dòng này
 }
 
 signed main(){
     srand(time(0));
-    // cout << random();
     int maxTest = 15;
-    // while(maxTest--){
-    //     cout << random(1, 10) << endl;
-    // }
-    for (int test = 11; test <= maxTest; test++){
-        genTest();        
-        system(("sol.exe"));
+
+    /*
+        Bỏ solution chuẩn vô sol.cpp và compile file sol.cpp để tạo ra file sol.exe
+        Chỉnh vòng for phía dưới để tạo test từ test -> maxTest
+        input và output của mỗi test sẽ dc tạo ra ở folder ./OUTPUT
+        
+        Để sinh ra 1 test ta chỉnh trong hàm genTest()
+    */
+    for (int test = 1; test <= maxTest; test++){
+        genTest(); //Tạo ra input cho test (input được lưu tạm vô file input.in)   
+        system(("sol.exe")); //Chạy file sol.exe để lấy kết quả của test (input được lưu tạm vô file output.out)   
         string testNum = to_string(test);
-        // cout << testNum << endl;
         string testName = "test" + testNum;
         
         string cmd = ("mkdir .\\OUTPUT\\" + testName).c_str();
-        // system(cmd.c_str());
-        // cout << cmd << endl;
 
-        cmd = ("copy .\\input.in OUTPUT\\test" + testNum + ".in").c_str();
+        cmd = ("copy .\\input.in OUTPUT\\test" + testNum + ".in").c_str(); //Copy file input.in vào folder .OUTPUT
         system(cmd.c_str());
-        // cout << cmd << endl;
 
-        cmd = ("copy .\\output.out OUTPUT\\test" + testNum + ".out").c_str();
+        cmd = ("copy .\\output.out OUTPUT\\test" + testNum + ".out").c_str(); //Copy file output.out vào folder .OUTPUT
         system(cmd.c_str());
-        // cout << cmd << endl;
-
+        
         cout << "Test" << test << ": COMPLETE!\n";
     }
     return 0;
