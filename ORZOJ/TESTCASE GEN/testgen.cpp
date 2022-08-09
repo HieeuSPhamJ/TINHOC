@@ -62,7 +62,11 @@ signed main(){
         Bỏ solution chuẩn vô sol.cpp và compile file sol.cpp để tạo ra file sol.exe
         Chỉnh vòng for phía dưới để tạo test từ test -> maxTest
         input và output của mỗi test sẽ dc tạo ra ở folder ./OUTPUT
-        
+
+        Nhớ freopen trong file sol.cpp
+            freopen("input.in", "r", stdin);
+            freopen("output.out", "w", stdout);
+
         Để sinh ra 1 test ta chỉnh trong hàm genTest()
     */
     for (int test = 1; test <= maxTest; test++){
