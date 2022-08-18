@@ -124,5 +124,11 @@
 			"syncstream": "cpp",
 			"xhash": "cpp"
 		}
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools-extension-pack",
+			"ms-vscode.cpptools"
+		]
 	}
 }

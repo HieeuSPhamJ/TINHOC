@@ -1,0 +1,16 @@
+docker run \
+    --name judge1 \
+    -p "$(ip addr show dev eth0 | perl -ne 'm@inet (.*)/.*@ and print$1 and exit')":9998:9998 \
+    -v /mnt/problems:/problems \
+    --cap-add=SYS_PTRACE \
+    -d \
+    --restart=always \
+    dmoj/judge-tier1:latest \
+    run -p "$9999" -c /problems/judge.yml \
+    "localhost" "orzanhtus" "qG3wPIXx/WW1geY4toLT69YQW3lH72uiOV8LoF5cla8d1hGTIHuGidooTwqa7LW4uuVsRbjM8CND7qg4tgn5vertov82sr8eboW7"
+
+    docker run \
+    -v /mnt/problems:/problems \
+    --cap-add=SYS_PTRACE \
+    dmoj/judge-tier1:latest \
+    cli -c /problems/judge.yml

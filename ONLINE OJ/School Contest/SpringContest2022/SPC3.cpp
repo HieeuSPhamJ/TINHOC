@@ -1,80 +1,83 @@
 #include<bits/stdc++.h>
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define int long long
+#define endl '\n'
 using namespace std;
 
-int point[210];
-vector <int> adj[210];
+const int maxN = 200010;
 
-bool check[210] = {false};
+int a[maxN];
+int ans[maxN];
+int check[maxN];
+set <int> tempAns[maxN];
+vector <int> adj[maxN];
 
-void DFS(int n){
-    check[n] = 1;
-    // cout << n << ":" << point[n] << ' ';
-    for (int i = 0; i < adj[n].size(); i++){
-        if (check[adj[n][i]] == 0){
-            DFS(adj[n][i]);
+void DFS(int node, int father){
+    tempAns[node].insert(a[node]);
+    for (auto newNode: adj[node]){
+        if (newNode == father){
+            continue;
         }
+        DFS(newNode, node);
+        if (tempAns[node].size() < tempAns[newNode].size()){
+            swap(tempAns[node], tempAns[newNode]);
+        }
+        for (auto i: tempAns[newNode]){
+            tempAns[node].insert(i);
+        }
+        tempAns[newNode].clear();
     }
+    ans[node] = tempAns[node].size();
 }
 
-
-int main(){
-    freopen("SPC3.INP", "r", stdin);
-    freopen("SPC3.OUT", "w", stdout);
+signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     int test;
     cin >> test;
     while(test--){
         int n;
         cin >> n;
         for (int i = 1; i <= n; i++){
-            cin >> point[i];
+            cin >> a[i];
+            tempAns[i].clear();
             adj[i].clear();
+            check[i] = 0;
+            ans[i] = 0;
         }
+
         for (int i = 1; i <= n; i++){
-            int maxV;
-            cin >> maxV;
-            while (maxV--){
+            int m;
+            cin >> m;
+            for (int j = 1; j <= m; j++){
                 int inp;
                 cin >> inp;
                 adj[i].push_back(inp);
-        
+                adj[inp].push_back(i);
+                // cout << i << ' ' << inp << endl;
+                check[inp] = 1;
             }
         }
-        // for (int i = 1; i <= n; i++){
-        //     for (int e = 0; e < adj[i].size(); e++){
-        //         cout << adj[i][e] << ' ';
-        //     }
-        //     cout << "|" << endl;
-        // }
-        // cout << "----" << endl;
+
+        int root = -1;
         for (int i = 1; i <= n; i++){
-            memset(check, 0, sizeof(check));
-            DFS(i);
-            // cout << endl;
-            int count = 0;
-            // cout << i << "#" << endl;
-
-            set <int> checkMap;
-            for (int i = 1; i <= 205; i++){
-                if (check[i] == 1){
-                    checkMap.insert(point[i]);
-                }
-
+            if (check[i] == 0){
+                root = i;
+                break;
             }
-            // cout << endl;
-            cout << checkMap.size() << ' ';
-            // cout << endl;
+        }
+
+        DFS(root, root);
+
+        for (int i = 1; i <= n; i++){
+            cout << ans[i] << ' ';
         }
         cout << endl;
     }
-
     return 0;
 }
-
-/*
-1:3 2:10 4:3 5:3 6:2 3:2 
-2:10 4:3 5:3 6:2 
-3:2 
-4:3 
-5:3 6:2 
-6:2
-*/

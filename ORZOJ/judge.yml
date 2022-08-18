@@ -1,0 +1,12 @@
+id: orzanhtus
+key: "qG3wPIXx/WW1geY4toLT69YQW3lH72uiOV8LoF5cla8d1hGTIHuGidooTwqa7LW4uuVsRbjM8CND7qg4tgn5vertov82sr8eboW7"
+problem_storage_root:
+  - /mnt/problems
+runtime:
+  g++: /usr/bin/g++
+  g++11: /usr/bin/g++
+  g++14: /usr/bin/g++
+  g++17: /usr/bin/g++
+  gcc: /usr/bin/gcc
+  gcc11: /usr/bin/gcc
+  python3: /home/DMOJ-ORZOJ/dmojsite/bin/python3

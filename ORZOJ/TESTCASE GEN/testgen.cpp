@@ -17,38 +17,11 @@ void genTest(){
 
     ofstream inp(("input.in")); //Không xoá dòng này
 
-    //Bắt đầu tạo test từ đâu
-    int n = random(990000000, 1000000000);
-    int m = random(200000, 200000);
-    inp << n << ' ' << m << endl;
+    int a = random(1, 10000);
+    int b = random(1, 10000);
 
-    vector <int> listA;
-    listA.push_back(0);
-    for (int i = 1; i <= m; i++){
-        int a = random(0, n);
-        listA.push_back(a);
-        inp << a << ' ';
-    }
-    inp << endl;
-
-    int test = random(200000, 200000);
-    inp << test << endl;
-    while(test--){
-        int a, b, c, d, k;
-        k = random(1, m);
-        b = random(1, m);
-        d = random(1, m);
-        while(listA[b] == n){
-            b = random(1, m);
-        }
-        while(listA[d] == n){
-            d = random(1, m);
-        }
-        // cout << b <<": " << listA[b] + 1 << " " << d << ": " << listA[d] + 1 << endl;
-        a = random(listA[b] + 1, n);
-        c = random(listA[d] + 1, n);
-        inp << a << " " << b << " " << c << " " << d << " " << k << endl;
-    }
+    inp << a << " " << b << endl;
+    
 
     //kết thúc tạo test ở đâu
     inp.close(); //Không xoá dòng này
@@ -56,7 +29,7 @@ void genTest(){
 
 signed main(){
     srand(time(0));
-    int maxTest = 15;
+    int maxTest = 10;
 
     /*
         Bỏ solution chuẩn vô sol.cpp và compile file sol.cpp để tạo ra file sol.exe
@@ -69,7 +42,8 @@ signed main(){
 
         Để sinh ra 1 test ta chỉnh trong hàm genTest()
     */
-    for (int test = 1; test <= maxTest; test++){
+   
+    for (int test = 0; test <= maxTest; test++){
         genTest(); //Tạo ra input cho test (input được lưu tạm vô file input.in)   
         system(("sol.exe")); //Chạy file sol.exe để lấy kết quả của test (input được lưu tạm vô file output.out)   
         string testNum = to_string(test);

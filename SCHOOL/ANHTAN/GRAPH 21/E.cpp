@@ -12,46 +12,88 @@ struct iii{
 };
 
 const int maxN = 2 * 1e5 + 10;
-
+int n, m;
 vector <ii> adj[maxN];
-int father[maxN];
-int visited[maxN];
+int gayFather[maxN];
+int father[maxN][32];
+int minLen[maxN][32];
+int maxLen[maxN][32];
+int height[maxN];
+
+void init(){
+    for (int j = 1; (1 << j) <= n; j++){
+        for (int i = 1; i <= n; i++){
+            father[i][j] = father[father[i][j - 1]][j - 1];
+            minLen[i][j] = min(minLen[i][j - 1], minLen[father[i][j - 1]][j - 1]);
+            maxLen[i][j] = max(maxLen[i][j - 1], maxLen[father[i][j - 1]][j - 1]);
+        }
+    }
+}
+
+void DFS(int node, int khang){
+    for (auto newNode: adj[node]){
+        if (newNode.se == khang){
+            continue;
+        }
+        father[newNode.se][0] = node;
+        minLen[newNode.se][0] = newNode.fi;
+        maxLen[newNode.se][0] = newNode.fi;
+        height[newNode.se] = height[node] + 1;
+        DFS(newNode.se, node);
+    }
+}
+
+ii LCA(int a, int b){
+    if (height[a] < height[b]){
+        swap(a, b);
+    }
+
+    int ansMax = 0;
+    int ansMin = 1e18;
+ 
+    for (int i = log2(height[a]); height[a] != height[b]; i--){
+        if (height[a] - height[b] >= (1 << i)){
+            // cout << a << " " << father[a][i] << " " << minLen[a][i] << "-" << maxLen[a][i] << endl;
+            ansMin = min(ansMin, minLen[a][i]);
+            ansMax = max(ansMax, maxLen[a][i]);
+            a = father[a][i];
+        }
+    }
+ 
+    if (a == b){
+        // cout << ansMin << "-" << ansMax << endl;
+        return {ansMin,ansMax};
+        return {a,b};
+    }
+ 
+    for (int i = log2(height[a]); father[a][0] != father[b][0]; i--){
+        if (father[a][i] != father[b][i]){
+            ansMin = min({ansMin, minLen[a][i], minLen[b][i]});
+            ansMax = max({ansMax, maxLen[a][i], maxLen[b][i]});
+            a = father[a][i];
+            b = father[b][i];
+        }
+    }
+ 
+    return {min({ansMin, minLen[a][0], minLen[b][0]}), max({ansMax, maxLen[a][0], maxLen[b][0]})};
+    ///
+}
+
 
 bool cmp(iii a, iii b){
     return a.w < b.w;
 }
 
-void resetAll(){
-    for (int i = 0; i < maxN; i++){
-        visited[i] = -1;
-    }
-}
 
 int findFather(int child){
-    if (child == father[child]){
+    if (child == gayFather[child]){
         return child;
     }
-    return father[child] = findFather(father[child]);
+    return gayFather[child] = findFather(gayFather[child]);
 }
 
 int calMax(int a, int b){
-    resetAll();
-
-    queue <int> myQueue;
-    myQueue.push(a);
-    while(!myQueue.empty()){
-        int tempV = myQueue.front();
-        myQueue.pop();
-        for (auto newV: adj[tempV]){
-            if (visited[newV.node] == -1){
-                visited[newV.node] = max(visited[tempV], newV.weight);
-                myQueue.push(newV.node);
-            }
-        }
-        
-    }
-
-    return visited[b];
+    return LCA(a,b).se;
 }
 
 
@@ -59,10 +101,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, m;
+    
     cin >> n >> m;
     for (int i = 1; i <= n; i++){
-        father[i] = i;
+        gayFather[i] = i;
     }
     vector <iii> E;
     for (int i = 1; i <= m; i++){
@@ -83,25 +125,20 @@ signed main(){
             continue;
         }
         usedE.push_back(tempE);
-        adj[tempE.a].push_back({tempE.b, tempE.w});
-        adj[tempE.b].push_back({tempE.a, tempE.w});
-        father[a] = b;
+        adj[tempE.a].push_back({tempE.w, tempE.b});
+        adj[tempE.b].push_back({tempE.w, tempE.a});
+        // cout << tempE.a << " " << tempE.b << endl;
+        gayFather[a] = b;
     }
-
-    // for (auto tempE: usedE){
-    //     cout << tempE.a << " " << tempE.b << " " << tempE.w << endl;
-    // }
-
-    // cout << endl;
-
-    // for (auto tempE: unusedE){
-    //     cout << tempE.a << " " << tempE.b << " " << tempE.w << endl;
-    // }
 
     int ans = 0;
 
+    DFS(1,1);
+    init();
+
     for (auto tempE: unusedE){
         int val = calMax(tempE.a, tempE.b);
+        // cout << tempE.a << "-" << tempE.b << endl;
         if (val == tempE.w){
             ans++;
         }
