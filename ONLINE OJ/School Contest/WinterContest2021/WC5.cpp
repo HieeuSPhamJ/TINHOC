@@ -38,8 +38,8 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    freopen("WC5.INP","r",stdin);
-    freopen("WC5.OUT","w",stdout);
+    // freopen("WC5.INP","r",stdin);
+    // freopen("WC5.OUT","w",stdout);
     int test;
     cin>>test;
     while(test--){

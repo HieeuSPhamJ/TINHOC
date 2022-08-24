@@ -1,0 +1,1 @@
+{"name":"Local: 2","url":"d:\\TINHOC\\ONLINE OJ\\School Contest\\SpringContest2022\\2.cpp","tests":[{"id":1660811319298,"input":"6\n0\n1\n2\n3\n7\n1234","output":"1\n2\n6\n24\n83160\n127166957"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\ONLINE OJ\\School Contest\\SpringContest2022\\2.cpp","group":"local","local":true}

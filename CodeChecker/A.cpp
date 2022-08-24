@@ -6,10 +6,24 @@
 #define endl '\n'
 using namespace std;
 
-const int maxN = 1e5 + 10;
-int n;
-int a[maxN];
-int father[maxN];
+const int maxN = 2 * 1e5 + 10;
+
+int n, m, a, b;
+vector <int> adj[4][maxN];
+int visited[4][maxN];
+int countNode[4];
+int diff[3];
+
+void dfs(int type, int node){
+    // cout << node << " ";
+    visited[type][node] = 1;
+    for (auto newNode: adj[type][node]){
+        if (visited[type][newNode] == 1){
+            continue;
+        }
+        dfs(type,newNode);
+    }
+}
 
 signed main(){
     freopen("input.inp", "r", stdin);
@@ -19,47 +33,40 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        cin >> n;
-        for (int i = 1; i <= n; i++){
-            cin >> a[i];
-            father[i] = i;
+    
+    cin >> n >> m >> a >> b;
+    for (int i = 1; i <= m; i++){
+        int x, y;
+        cin >> x >> y;
+        if (x != b and y!= b){
+            adj[0][x].push_back(y);
+            adj[0][y].push_back(x);
+            // cout << "A" << ": " << x << " " << y << endl;
         }
-
-        if (n == 1){
-            cout << 0 << endl;
-            continue;
+        if (x != a and y!= a){
+            adj[1][x].push_back(y);
+            adj[1][y].push_back(x);
+            // cout << x << " " << y << endl;
         }
-
-        int right = -1;
-        int left = 1;
-        int check = 1;
-        int ans = 0;
-
-        while (check == 1){
-            check = 0;
-            for (int i = n; i >= 2; i--){
-                if (father[a[i]] >= father[a[i - 1]]){
-                    continue;
-                }
-                check = 1;
-                right = i;
-                break;
-            }
-            for (int i = left; i < right; i++){
-                if (father[a[i]] == 0){
-                    continue;
-                }
-                ans++;
-                father[a[i]] = 0;
-            }
-            left = right;
-        }
-
-        cout << ans;
-        cout << endl;
     }
+
+    diff[0] = a;
+    diff[1] = b;
+    dfs(0,a);
+    dfs(1,b);
+
+    for (int i = 1; i <= n; i++){
+        // cout << visited[0][i] << " " << visited[1][i] << endl;
+        if (i != diff[0] and visited[0][i] == 1 and visited[1][i] == 0){
+            countNode[0]++;
+        }
+        if (i != diff[1] and visited[0][i] == 0 and visited[1][i] == 1){
+            countNode[1]++;
+        }
+    }
+    
+    // cout << countNode[0] << "*" << countNode[1] << endl;
+    cout << countNode[0] * countNode[1];
+
     return 0;
 }

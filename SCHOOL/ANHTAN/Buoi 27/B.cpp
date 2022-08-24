@@ -21,7 +21,7 @@ priority_queue <ii, vector <ii>, greater <ii>> myHeap;
 int minLen[maxN][maxN];
 
 void init(){
-    for (int i = 0; i <= maxN; i++){
+    for (int i = 0; i < maxN; i++){
         visited[0][i] = inf;
         visited[1][i] = inf;
     }
@@ -35,18 +35,15 @@ void Dickcha(int type, int Start){
     while(!myHeap.empty()){
         ii tempV = myHeap.top();
         myHeap.pop(); 
-        // cout << "#" << tempV.id << endl;
         if (tempV.len != visited[type][tempV.id]){
             continue;
         }
         for (auto newV: adj[tempV.id]){
             if (visited[type][tempV.id] + newV.val < visited[type][newV.id]){
-                // cout << newV.id << ' ';
                 visited[type][newV.id] = visited[type][tempV.id] + newV.val;
                 myHeap.push({visited[type][newV.id], newV.id});
             }
         }
-        // cout << endl;
     }
 }
 
@@ -65,7 +62,6 @@ signed main(){
         adj[a].push_back({w,b});
         adj[b].push_back({w,a});
         listE.push_back({a,b});
-        // listE.push_back({b,a});
     }
     int res = 0;
     for (int i = 1; i <= k; i++){
@@ -79,36 +75,25 @@ signed main(){
         init();
         Dickcha(0,a);
         Dickcha(1,b);
-        // for (int i = 1; i <= n; i++){
-        //     cout << visited[0][i] << " " << visited[1][i] << endl;
-        // }
-        // cout << "------" << endl;
         int ans = 1e18;
         
         for (int j = 0; j < listE.size(); j++){
             ii e = listE[j];
             minLen[i][j] = visited[0][e.first] + visited[1][e.second];
             minLen[i][j] = min(minLen[i][j],visited[0][e.second] + visited[1][e.first]);
-            // ans = min(ans, visited[0][e.first] + visited[1][e.second]);
-
-            // cout << e.first << " " << e.second << " " << visited[0][e.first] << " " << visited[1][e.second] << endl;
-    
+            minLen[i][j] = min(minLen[i][j],visited[0][e.first] + visited[1][e.first]);
+            minLen[i][j] = min(minLen[i][j],visited[0][e.second] + visited[1][e.second]);
+            minLen[i][j] = min(minLen[i][j],visited[0][b]);
+            minLen[i][j] = min(minLen[i][j],visited[1][a]);
         }
-        // res += ans;
-        // cout << ans << endl;
     }
-    // cout << res;
-
     int ans = 1e18;
 
     for (int i = 0; i < listE.size(); i++){
         int tempAns = 0;
-        // cout << listE[i].first << "," << listE[i].second << ": " << endl;
         for (int j = 1; j <= k; j++){
-            // cout << minLen[j][i] << " ";
             tempAns += minLen[j][i];
         }
-        // cout << endl;
         ans = min(ans, tempAns);
     }
 
