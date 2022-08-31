@@ -1,0 +1,1 @@
+{"name":"Local: B-DP","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP 28\\B-DP.cpp","tests":[{"id":1661432415628,"input":"3\n3 0\n1 3 2\n2 0\n1 2\n7 0\n1 2 5 4 3 6 7\n","output":"3\n2\n9\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP 28\\B-DP.cpp","group":"local","local":true}

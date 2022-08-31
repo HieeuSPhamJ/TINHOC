@@ -12,19 +12,14 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = (2097151 xor 1747626 xor 1922389);
-    int m = (4194303 xor 3844778 xor 4019541);
-    cout << n << " " << m;
-
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
+        cin >> n;
+        int c1 = (n * (n - 1)) / 2;
+        int c2 = (n * (n - 2)) / 2;
+        cout << c1 * c2 << endl;
+    }
     return 0;
 }
-
-/*
-111111111111111111111
-010101010101010101010
-111010101010101010101
-
-1111111111111111111111
-1010101010101010101010
-1101010101010101010101
-*/

@@ -12,19 +12,18 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = (2097151 xor 1747626 xor 1922389);
-    int m = (4194303 xor 3844778 xor 4019541);
-    cout << n << " " << m;
-
+    int test;
+    cin >> test;
+    while(test--){
+        set <char> S;
+        for (int i = 1; i <= 2; i++){
+            for (int j = 1; j <= 2; j++){
+                char inp;
+                cin >> inp;
+                S.insert(inp);
+            }
+        }
+        cout << S.size() - 1 << endl;
+    }
     return 0;
 }
-
-/*
-111111111111111111111
-010101010101010101010
-111010101010101010101
-
-1111111111111111111111
-1010101010101010101010
-1101010101010101010101
-*/

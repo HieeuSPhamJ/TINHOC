@@ -14,10 +14,16 @@ int a[maxN];
 void init(){
     a[1] = 0;
     a[2] = 1;
-    int t = -1;
+    int check = -1;
     for (int i = 3; i < maxN - 2; i++){
-        a[i] = i * a[i - 1] + t;
-        t *= -1;
+        a[i] = i * a[i - 1] + check;
+        if (i % 2 == 0){
+            check = -1;
+        }
+        else{
+            check = 1;
+        }
+        // cout << check;
         a[i] %= mod;
     }
 }

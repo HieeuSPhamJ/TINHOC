@@ -6,25 +6,21 @@
 #define endl '\n'
 using namespace std;
 
+const int maxN = 210;
+
+int a[maxN];
+int dp[maxN]
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = (2097151 xor 1747626 xor 1922389);
-    int m = (4194303 xor 3844778 xor 4019541);
-    cout << n << " " << m;
-
+    int n, d;
+    cin >> n >> d;
+    for (int i = 1; i <= n; i++){
+        cin >> a[i];
+    }
     return 0;
 }
-
-/*
-111111111111111111111
-010101010101010101010
-111010101010101010101
-
-1111111111111111111111
-1010101010101010101010
-1101010101010101010101
-*/
