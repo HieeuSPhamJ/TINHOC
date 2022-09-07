@@ -1,0 +1,1 @@
+{"name":"Local: C","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP bitmask 33\\C.cpp","tests":[{"id":1662291753644,"input":"2\n-22 2\n-33 45\n56 -60\n-8 -38\n79 66\n-10 -23\n99 46\n1 -55","output":"279"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP bitmask 33\\C.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\THI THU 32\\B.cpp","tests":[{"id":1662010906780,"input":"3\n2 5000\n20000 30000\n2 5000\n20000 20001\n4 123\n20000 25000 22000 30000\n","output":"7400.00000\n5000.00000\n203.27875\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\THI THU 32\\B.cpp","group":"local","local":true}
