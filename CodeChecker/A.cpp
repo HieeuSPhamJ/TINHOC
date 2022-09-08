@@ -1,72 +1,90 @@
-#include<bits/stdc++.h>
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define int long long
-#define endl '\n'
+#include <bits/stdc++.h>
 using namespace std;
-
-const int maxN = 2 * 1e5 + 10;
-
-int n, m, a, b;
-vector <int> adj[4][maxN];
-int visited[4][maxN];
-int countNode[4];
-int diff[3];
-
-void dfs(int type, int node){
-    // cout << node << " ";
-    visited[type][node] = 1;
-    for (auto newNode: adj[type][node]){
-        if (visited[type][newNode] == 1){
-            continue;
+int p[100005][100],h[100005],n,q;
+vector <int> a[100005];
+void dfs(int x, int pre)
+{
+    for (int i=0;i<a[x].size();i++)
+    {
+        if (a[x][i]!=pre)
+        {
+            p[a[x][i]][0]=x;
+            h[a[x][i]]=h[x]+1;
+            dfs(a[x][i],x);
         }
-        dfs(type,newNode);
     }
 }
-
-signed main(){
+void tim()
+{
+    for (int i=1;(1<<i)<=n;i++)
+    {
+        for (int j=1;j<=n;j++)
+        {
+            p[j][i]=p[p[j][i-1]][i-1];
+        }
+    }
+}
+int lca(int x, int y)
+{
+    int ans=0;
+    if (h[x]<h[y])
+    {
+        swap(x,y);
+    }
+    int tam=log2(h[x]);
+    for (int i=tam;i>=0;i--)
+    {
+        if (h[x]-(1<<i)>=h[y])
+        {
+            x=p[x][i];
+            ans+=(1<<i);
+        }
+    }
+    if (x==y)
+    {
+        return ans;
+    }
+    for (int i=tam;i>=0;i--)
+    {
+        if (p[x][i]!=p[y][i] && p[x][i]!=0)
+        {
+            ans+=(1<<(i+1));
+            x=p[x][i];
+            y=p[y][i];
+        }
+    }
+    return ans;
+}
+int main()
+{
     freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
+    freopen("B.out", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    cout.tie(NULL);
-    
-    cin >> n >> m >> a >> b;
-    for (int i = 1; i <= m; i++){
-        int x, y;
-        cin >> x >> y;
-        if (x != b and y!= b){
-            adj[0][x].push_back(y);
-            adj[0][y].push_back(x);
-            // cout << "A" << ": " << x << " " << y << endl;
-        }
-        if (x != a and y!= a){
-            adj[1][x].push_back(y);
-            adj[1][y].push_back(x);
-            // cout << x << " " << y << endl;
-        }
+    cin>>n;
+    for (int i=1;i<n;i++)
+    {
+        int x,y;
+        cin>>x>>y;
+        a[x].push_back(y);
+        a[y].push_back(x);
     }
-
-    diff[0] = a;
-    diff[1] = b;
-    dfs(0,a);
-    dfs(1,b);
-
-    for (int i = 1; i <= n; i++){
-        // cout << visited[0][i] << " " << visited[1][i] << endl;
-        if (i != diff[0] and visited[0][i] == 1 and visited[1][i] == 0){
-            countNode[0]++;
+    dfs(1,0);
+    tim();
+    cin>>q;
+    for (int i=1;i<=q;i++)
+    {
+        int x,y,u,v,k;
+        cin>>x>>y>>u>>v>>k;
+        int tam1=lca(u,v);
+        int tam2=lca(u,x)+lca(y,v)+1;
+        int tam3=lca(u,y)+lca(x,v)+1;
+        tam2=min(tam2,tam3);
+        if ((tam1%2==k%2 && k>=tam1) || (tam2%2==k%2 && k>=tam2))// || (tam3%2==k%2 && k>=tam3))
+        {
+            cout<<"YES"<<"\n";
+            continue;
         }
-        if (i != diff[1] and visited[0][i] == 0 and visited[1][i] == 1){
-            countNode[1]++;
-        }
+        cout<<"NO"<<"\n";
     }
-    
-    // cout << countNode[0] << "*" << countNode[1] << endl;
-    cout << countNode[0] * countNode[1];
-
-    return 0;
 }
