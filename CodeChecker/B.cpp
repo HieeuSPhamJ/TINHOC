@@ -1,89 +1,50 @@
 #include <bits/stdc++.h>
+#define Mine {ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);}
+#define ii pair <long long,long long>
+#define lli long long
+#define se second
+#define fi first
+#define li long
 using namespace std;
-int p[100005][100],h[100005],n,q;
-vector <int> a[100005];
-void dfs(int x, int pre)
-{
-    for (int i=0;i<a[x].size();i++)
-    {
-        if (a[x][i]!=pre)
-        {
-            p[a[x][i]][0]=x;
-            h[a[x][i]]=h[x]+1;
-            dfs(a[x][i],x);
+
+const int N=1e5+5;
+int n,m;
+lli A[N],B[N];
+
+lli GetMaxXor(int n,lli b){
+    lli max=0,mask=0,Val;
+    set<ii> mSet;
+    for (int i=30;i>=0;i--){
+        mask|=(1<<i);
+        for (int j=0;j<n;++j){
+            mSet.insert({A[j]&mask,A[j]});
         }
+        lli newMax=max|(1<<i);
+        for (ii prefix:mSet){
+            if((newMax^prefix.fi)==(b&mask)){
+                max=newMax;
+                Val=prefix.se;
+                break;
+            }
+        }
+        mSet.clear();
     }
+    return Val;
 }
-void tim()
-{
-    for (int i=1;(1<<i)<=n;i++)
-    {
-        for (int j=1;j<=n;j++)
-        {
-            p[j][i]=p[p[j][i-1]][i-1];
-        }
-    }
-}
-int lca(int x, int y)
-{
-    int ans=0;
-    if (h[x]<h[y])
-    {
-        swap(x,y);
-    }
-    int tam=log2(h[x]);
-    for (int i=tam;i>=0;i--)
-    {
-        if (h[x]-(1<<i)>=h[y])
-        {
-            x=p[x][i];
-            ans+=(1<<i);
-        }
-    }
-    if (x==y)
-    {
-        return ans;
-    }
-    for (int i=tam;i>=0;i--)
-    {
-        if (p[x][i]!=p[y][i] && p[x][i]!=0)
-        {
-            ans+=(1<<(i+1));
-            x=p[x][i];
-            y=p[y][i];
-        }
-    }
-    return ans+2;
-}
-int main()
-{
+
+int main(){
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    // freopen("E.INP","r",stdin);
+    // freopen("E.OUT","w",stdout);
+    Mine;
     cin>>n;
-    for (int i=1;i<n;i++)
-    {
-        int x,y;
-        cin>>x>>y;
-        a[x].push_back(y);
-        a[y].push_back(x);
+    for(int i=0;i<n;++i) cin>>A[i];
+    int Size=sizeof(A)/sizeof(A[1]);
+    cin>>m;
+    for(int i=1;i<=m;++i){
+        cin>>B[i];
+        cout<<GetMaxXor(Size,B[i])<<" ";
     }
-    dfs(1,0);
-    tim();
-    cin>>q;
-    for (int i=1;i<=q;i++)
-    {
-        int x,y,u,v,k;
-        cin>>x>>y>>u>>v>>k;
-        int tam1=lca(u,v);
-        int tam2=lca(u,x)+lca(y,v)+1;
-        int tam3=lca(u,y)+lca(x,v)+1;
-        if ((tam1%2==k%2 && k>=tam1) || (tam2%2==k%2 && k>=tam2) || (tam3%2==k%2 && k>=tam3))
-        {
-            cout<<"YES"<<"\n";
-            continue;
-        }
-        cout<<"NO"<<"\n";
-    }
+    return 0;
 }

@@ -1,1 +1,1 @@
-{"name":"Local: test","url":"d:\\TINHOC\\test\\test.cpp","tests":[{"id":1661437061972,"input":"","output":"2097151 4194303 1747626 3844778 1922389 4019541"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\test\\test.cpp","group":"local","local":true}
+{"name":"Local: test","url":"d:\\TINHOC\\test\\test.cpp","tests":[{"id":1661437061972,"input":"2\n3\n4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\test\\test.cpp","group":"local","local":true}

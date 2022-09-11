@@ -12,7 +12,6 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = 2 xor 2 xor 2;
     cout << n;
     return 0;
 }

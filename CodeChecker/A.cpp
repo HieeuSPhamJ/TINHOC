@@ -1,90 +1,73 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define int long long
+#define endl '\n'
 using namespace std;
-int p[100005][100],h[100005],n,q;
-vector <int> a[100005];
-void dfs(int x, int pre)
-{
-    for (int i=0;i<a[x].size();i++)
-    {
-        if (a[x][i]!=pre)
-        {
-            p[a[x][i]][0]=x;
-            h[a[x][i]]=h[x]+1;
-            dfs(a[x][i],x);
-        }
-    }
+
+const int maxN = 1e5 + 10;
+
+int maxBits[20];
+
+bool getBit(int mask, int i){
+    return (mask & (1 << i));
 }
-void tim()
-{
-    for (int i=1;(1<<i)<=n;i++)
-    {
-        for (int j=1;j<=n;j++)
-        {
-            p[j][i]=p[p[j][i-1]][i-1];
-        }
-    }
+
+int onBit(int mask, int i){
+    return mask | (1 << i);
 }
-int lca(int x, int y)
-{
-    int ans=0;
-    if (h[x]<h[y])
-    {
-        swap(x,y);
-    }
-    int tam=log2(h[x]);
-    for (int i=tam;i>=0;i--)
-    {
-        if (h[x]-(1<<i)>=h[y])
-        {
-            x=p[x][i];
-            ans+=(1<<i);
-        }
-    }
-    if (x==y)
-    {
-        return ans;
-    }
-    for (int i=tam;i>=0;i--)
-    {
-        if (p[x][i]!=p[y][i] && p[x][i]!=0)
-        {
-            ans+=(1<<(i+1));
-            x=p[x][i];
-            y=p[y][i];
-        }
-    }
-    return ans;
+
+int offBit(int mask, int i){
+    return (mask xor (1 << i));
 }
-int main()
-{
+
+int countBits(int mask){
+    int count = 0;
+    while (mask){
+        count += (mask & 1);
+        mask >>= 1;
+    }
+    return count;
+}
+
+signed main(){
     freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
+    freopen("A.out", "w", stdout);
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    cin>>n;
-    for (int i=1;i<n;i++)
-    {
-        int x,y;
-        cin>>x>>y;
-        a[x].push_back(y);
-        a[y].push_back(x);
-    }
-    dfs(1,0);
-    tim();
-    cin>>q;
-    for (int i=1;i<=q;i++)
-    {
-        int x,y,u,v,k;
-        cin>>x>>y>>u>>v>>k;
-        int tam1=lca(u,v);
-        int tam2=lca(u,x)+lca(y,v)+1;
-        int tam3=lca(u,y)+lca(x,v)+1;
-        tam2=min(tam2,tam3);
-        if ((tam1%2==k%2 && k>=tam1) || (tam2%2==k%2 && k>=tam2))// || (tam3%2==k%2 && k>=tam3))
-        {
-            cout<<"YES"<<"\n";
-            continue;
+    cout.tie(NULL);
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++){
+        int inp;
+        cin >> inp;
+        for (int j = 0;  j < 22; j++){
+            if (getBit(inp,j)){
+                maxBits[j] = max(maxBits[j], inp);
+            }
         }
-        cout<<"NO"<<"\n";
     }
+
+    cin >> n;
+
+    for (int i = 1; i <= n; i++){
+        int inp;
+        cin >> inp;
+        int ans = 0;
+        int temp = 0;
+        for (int j = 0;  j < 22; j++){
+            if (getBit(inp,j) == 0){
+                if ((inp xor maxBits[j]) > temp){
+                    ans = maxBits[j];
+                    temp = (inp xor maxBits[j]);
+                }
+            }
+        }
+        cout << ans << " ";
+    }
+
+    return 0;
 }
