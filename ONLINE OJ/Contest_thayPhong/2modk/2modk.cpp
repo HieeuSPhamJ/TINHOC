@@ -7,7 +7,6 @@ cin>>test;
 while(test--){
   int n,k;
   cin>>n>>k;
-  cout<<n;
 }
 return 0;
 }

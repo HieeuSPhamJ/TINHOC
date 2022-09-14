@@ -1,0 +1,1 @@
+{"name":"Local: LCA","url":"d:\\TINHOC\\Template\\LCA.cpp","tests":[{"id":1662972282584,"input":"4 2\n2 1 2\n4 3 2\n1 4 3\n1 2\n3 2","output":"2\n7"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\Template\\LCA.cpp","group":"local","local":true}

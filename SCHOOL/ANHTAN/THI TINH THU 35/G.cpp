@@ -2,71 +2,73 @@
 #define ii pair <int,int>
 #define fi first
 #define se second
-#define endl "\n"
 #define int long long
+#define endl '\n'
 using namespace std;
 
-const int maxN = 1000 + 10;
+const int maxN = 1010;
+const int maxMask = (1 << 11);
+const int inf = 1e18;
 
-int n, m;
-int Start, End;
+int visited[maxN][maxMask];
 vector <ii> adj[maxN];
-int visited[maxN];
-int value[maxN];
 
-void treeSubTask(){
-    queue <int> myQueue;
-    visited[Start] = 1;
-    myQueue.push(Start);
-    // for (int i = 1; i <= n; i++){
-    //     cout << "NODE: " << i << endl;
-    //     for (auto v: adj[i]){
-    //         cout << v.se << ", ";
-    //     }
-    //     cout << endl;
-    // }
-    while(!myQueue.empty()){
-        int tempV = myQueue.front();
-        myQueue.pop();
-        // cout << "#" << tempV << endl;
-        for (auto newV: adj[tempV]){
-            if (visited[newV.se] == 1){
-                continue;
-            }
-            // cout << newV.se << " ";
-            visited[newV.se] = 1;
-            value[newV.se] = value[tempV] | newV.fi;
-            myQueue.push(newV.se);
+void init(){
+    for (int i = 1; i < maxN; i++){
+        for (int j = 0; j < maxMask; j++){
+            visited[i][j] =inf;
         }
-        cout << endl;
     }
-    cout << value[End];
-
 }
 
-void normalSub(){
-    cout << 3;
+void dickcha(int Start){
+    init();
+    queue <ii> myHeap;
+    myHeap.push({0,Start});
+    visited[Start][0] = 0;
+    
+    while(!myHeap.empty()){
+        ii tempV = myHeap.front();
+        myHeap.pop();
+        // cout << "#" << tempV.se << endl;
+        for (auto newV: adj[tempV.se]){
+            if (visited[newV.se][tempV.fi | newV.fi] == inf){
+                // cout << newV.se << " ";
+                visited[newV.se][tempV.fi | newV.fi] = tempV.fi | newV.fi;
+                myHeap.push({visited[newV.se][tempV.fi | newV.fi], newV.se});
+            }
+        }
+        // cout << endl;
+    }
 }
-
 
 signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    int n, m;
     cin >> n >> m;
     for (int i = 1; i <= m; i++){
         int a, b, w;
         cin >> a >> b >> w;
-        adj[a].push_back({w, b});
-        adj[b].push_back({w, a});
+        adj[a].push_back({w,b});
+        adj[b].push_back({w,a}); 
     }
+    int Start, End;
     cin >> Start >> End;
-    
-    if (m == n - 1){
-        treeSubTask();
+    dickcha(Start);
+    int ans = inf;
+    for (int i = 0; i < maxMask; i++){
+        ans = min(ans, visited[End][i]);
+    }
+
+    if (ans == inf){
+        cout << -1;
     }
     else{
-        normalSub();
+        cout << ans;
     }
 
     return 0;

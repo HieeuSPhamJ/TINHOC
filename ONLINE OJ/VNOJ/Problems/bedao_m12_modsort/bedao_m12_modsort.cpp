@@ -12,6 +12,14 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << (1 << 11);
+    int test;
+    cin >> test;
+    while(test--){
+        int n, k;
+        cin >> n >> k;
+        for (int i = 1; i <= n; i++){
+            cin >> a[i];
+        }
+    }
     return 0;
 }

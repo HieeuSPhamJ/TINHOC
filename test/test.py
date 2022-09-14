@@ -1,11 +1,8 @@
+print("""? 1 2
 
+? 1 3
 
+? 1 4
 
-# print(int(binaryStat,3))
-
-lists = [7];
-
-for i in lists:
-    binaryStat = format(i, 'b')
-
-    print(binaryStat)
+! 3
+""")

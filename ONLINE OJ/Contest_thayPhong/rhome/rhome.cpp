@@ -12,6 +12,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << (1 << 11);
+    int n, m;
+    cin >> n >> m;
+    int a, b, c, d;
+    cin >> a >> b >> c >> d;
+    
     return 0;
 }

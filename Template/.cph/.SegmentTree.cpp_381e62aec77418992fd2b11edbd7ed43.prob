@@ -1,0 +1,1 @@
+{"name":"Local: SegmentTree","url":"d:\\TINHOC\\Template\\SegmentTree.cpp","tests":[{"id":1662973491977,"input":"6 5\n0 1 3\n0 4 4\n1 1 6\n0 1 7\n1 1 6","output":"4\n10"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\Template\\SegmentTree.cpp","group":"local","local":true}
