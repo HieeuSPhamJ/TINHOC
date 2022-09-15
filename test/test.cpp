@@ -12,6 +12,23 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << (1 << 11);
+    multiset <int> ms;
+    ms.insert(1);
+    ms.insert(2);
+    ms.insert(2);
+    ms.insert(3);
+
+    for (auto i: ms){
+        cout << i << " ";
+    }
+    cout << endl;
+
+    ms.erase(ms.find(2));
+    
+    
+    for (auto i: ms){
+        cout << i << " ";
+    }
+    cout << endl;
     return 0;
 }
