@@ -6,30 +6,10 @@
 #define endl '\n'
 using namespace std;
 
-const int maxN = 1e5 + 10;
+char a[10000];
+char b[10000];
+int check[10000];
 
-int maxBits[20];
-
-bool getBit(int mask, int i){
-    return (mask & (1 << i));
-}
-
-int onBit(int mask, int i){
-    return mask | (1 << i);
-}
-
-int offBit(int mask, int i){
-    return (mask xor (1 << i));
-}
-
-int countBits(int mask){
-    int count = 0;
-    while (mask){
-        count += (mask & 1);
-        mask >>= 1;
-    }
-    return count;
-}
 
 signed main(){
     freopen("input.inp", "r", stdin);
@@ -39,35 +19,45 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    for (int i = 1; i <= n; i++){
-        int inp;
-        cin >> inp;
-        for (int j = 0;  j < 22; j++){
-            if (getBit(inp,j)){
-                maxBits[j] = max(maxBits[j], inp);
+    int test;
+    cin >> test;
+    while(test--){
+        memset(check, 0, sizeof(check));
+        int n, x, y;
+        cin >> n >> x >> y;
+        for (int i = 1; i <= n; i++){
+            cin >> a[i];
+        }
+        for (int i = 1; i <= n; i++){
+            cin >> b[i];
+        }
+        int countDiff = 0;
+        for (int i = 1, last = 1; i <= n; i++){
+            if (a[i] != b[i]){
+                countDiff++;
+                check[last] = i;
+                last++;
             }
         }
-    }
-
-    cin >> n;
-
-    for (int i = 1; i <= n; i++){
-        int inp;
-        cin >> inp;
-        int ans = 0;
-        int temp = 0;
-        for (int j = 0;  j < 22; j++){
-            if (getBit(inp,j) == 0){
-                if ((inp xor maxBits[j]) > temp){
-                    ans = maxBits[j];
-                    temp = (inp xor maxBits[j]);
+        if (countDiff % 2 == 0){
+            if (countDiff != 2){
+                cout << countDiff * y  / 2 << endl;
+            }
+            else {
+                if (check[2] == check[1] + 1){
+                    if (x <= 2 * y){
+                        cout << x << endl;
+                    }
+                    else{
+                        cout << 2 * y << endl;
+                    }
+                    continue;
                 }
             }
         }
-        cout << ans << " ";
+        else{
+            cout << -1 << endl;
+        }
     }
-
     return 0;
 }

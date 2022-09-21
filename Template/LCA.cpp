@@ -14,14 +14,6 @@ int father[maxN][20];
 int level[maxN];
 int height[maxN];
 
-void init(){
-    for (int j = 1; j <= log2(n); j++){
-        for (int i = 1; i <= n; i++){
-            father[i][j] = father[father[i][j - 1]][j - 1];
-        }
-    }
-}
-
 void DFS(int node, int daddy){
     for (auto newNode: adj[node]){
         if (newNode.se == daddy){
@@ -34,12 +26,19 @@ void DFS(int node, int daddy){
     }
 }
 
+void init(){
+    for (int j = 1; j <= log2(n); j++){
+        for (int i = 1; i <= n; i++){
+            father[i][j] = father[father[i][j - 1]][j - 1];
+        }
+    }
+}
+
 int LCA(int a, int b){
     if (level[a] < level[b]){
-        return LCA(b,a);
+        swap(a,b);
     }
-
-    for (int i = log2(level[a]); level[a] > level[b]; i--){
+    for (int i = log2(level[a]); i >= 0; i--){
         if (level[father[a][i]] >= level[b]){
             a = father[a][i];
         }
@@ -57,8 +56,6 @@ int LCA(int a, int b){
     }
 
     return father[a][0];
-
-    return 0;
 }
 
 signed main(){
@@ -77,10 +74,6 @@ signed main(){
 
     DFS(1,1);
     init();
-
-    // for (int i = 1; i <= n; i++){
-        // cout << father[i][0] << " " << level[i] << endl;
-    // }
 
     while(test--){
         int a, b;

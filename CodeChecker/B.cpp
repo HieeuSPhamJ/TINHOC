@@ -1,79 +1,71 @@
 #include<bits/stdc++.h>
-#define ii pair <int,int>
+using namespace std;
+ 
+#define y1 as214
+#define ii pair < int , int >
+#define iii pair < int , ii >
+#define iv pair < ii , ii >
+ 
 #define fi first
 #define se second
+#define fr front()
+#define pb push_back
+#define t top()
+ 
+#define FOR(i , x , n) for(int i = x ; i <= n ; ++i)
+#define FORD(i , x , n) for(int i = x ; i >= n ; --i)
+#define REP(i , n) for(int i = 0 ; i < n ; ++i)
+ 
 #define int long long
-#define endl '\n'
-using namespace std;
+#define ll long long
+#define oo 1e18
 
-const int maxN = 1e5 + 10;
+const int N = 1e6 + 5;
+int q , n , k , x , y;
+int a[N];
+char f1[N] , f2[N];
 
-int a[maxN];
-int prefix[maxN];
+main()
+{
+    //     freopen("input.inp", "r", stdin);
+    // freopen("B.out", "w", stdout);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cin >> q;
 
-int sum(int left, int right){
-    return prefix[right] - prefix[left - 1];
-}
-
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        int n;
-        cin >> n;
-        for (int i = 1; i <= n; i++){
-            cin >> a[i];
-            prefix[i] = prefix[i - 1] + a[i];        
-        }
-        int ans = 0;
-
-        for (int j = 1, cap = 0; j <= n; j++){
-            cap += a[j];
-            // cout << "Cap: " << cap << endl;
-            int lastId = j;
-            bool check = 1;
-            while(lastId < n){
-                int left = lastId + 1;
-                int right = n;
-                int mid = (left + right) / 2;
-                // cout << lastId << endl;
-                while(left <= right){
-                    mid = (left + right) / 2;
-                    int s = sum(lastId + 1, mid);
-                    // cout << left << " " << mid << " " << right << " " << s << endl;
-                    if (s < cap){
-                        left = mid + 1;
-                    }
-                    else if (s > cap){
-                        right = mid - 1;
-                    }
-                    else{
-                        break;
-                    }
-                }
-                // cout << lastId + 1 << " " << mid << endl;
-                if (sum(lastId + 1, mid) == cap){
-                    lastId = mid;
-                    // cout << "-" << endl;
-                }
-                else{
-                    check = 0;
-                    break;
+    
+    while(q--)
+    {
+        int cnt = 0;
+        cin >> n >> x >> y;
+        FOR(i , 1 , n)
+            cin >> f1[i];
+        FOR(i , 1 , n)
+            cin >> f2[i];
+        int r = 0;
+        FOR(i , 1 , n)
+            if(f1[i] != f2[i])
+            {
+                cnt++;
+                a[++r] = i;
+            }
+        if(cnt % 2 == 0)
+        {
+            if(cnt == 2)
+            {
+                if(a[1] + 1 == a[2])
+                {
+                    if(x <= 2 * y)
+                        cout << x << "\n";
+                    else
+                        cout << 2 * y << "\n";
+                    goto l1;
                 }
             }
-            if (check == 1){
-                // cout << "*" << endl;
-                ans++;
-            }
+            cout << y * cnt / 2 << "\n";
+            l1:;
         }
-
-        cout << ans << endl;
-
+        else
+            cout << "-1" << "\n";
     }
-    return 0;
 }

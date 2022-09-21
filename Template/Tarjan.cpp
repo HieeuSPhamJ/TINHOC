@@ -6,46 +6,35 @@
 #define endl '\n'
 using namespace std;
 
-const int maxN = 1e4 + 10;
+const int maxN = 1e5 + 10;
 
 vector <int> adj[maxN];
-int isKhop[maxN];
 int num[maxN];
 int low[maxN];
+int Count;
+int cnt;
+stack <int> stackNode;
 
-int cnt = 0;
-int khop = 0;
-int cau = 0;
-
-void tarjan(int node, int father){
+void tarjan(int node){
+    stackNode.push(node);
     num[node] = low[node] = ++cnt;
-    int child = 0;
     for (auto newNode: adj[node]){
-        if (newNode == father){
-            continue;
-        }
         if (num[newNode]){
             low[node] = min(low[node], num[newNode]);
         }
         else{
-            tarjan(newNode, node);
+            tarjan(newNode);
             low[node] = min(low[node], low[newNode]);
-            child++;
-            if (low[newNode] >= num[newNode]){
-                cau++;
-                cout << node << " " << newNode << endl;
-            }
-            if (node == father){
-                if (child >= 2){
-                    isKhop[node] = 1;
-                }
-            }
-            else{
-                if (low[newNode] >= num[node]){
-                    isKhop[node] = 1;
-                }
-            }
         }
+    }
+    if (num[node] == low[node]){
+        Count++;
+        while(stackNode.top() != node){
+            low[stackNode.top()] = num[stackNode.top()] = 1e18;
+            stackNode.pop();
+        }
+        low[stackNode.top()] = num[stackNode.top()] = 1e18;
+        stackNode.pop();
     }
 }
 
@@ -61,29 +50,11 @@ signed main(){
         int a, b;
         cin >> a >> b;
         adj[a].push_back(b);
-        adj[b].push_back(a);
     }
-
-    // for (int i = 1; i <= n; i++){
-    //     cout << i << ": ";
-    //     for (auto j: adj[i]){
-    //         cout << j << ", ";
-    //     }
-    //     cout << endl;
-    // }
-
     for (int i = 1; i <= n; i++){
-        tarjan(i,i);
+        if (!num[i])
+        tarjan(i);
     }
-    // tarjan(1,1);
-
-    for (int i = 1; i <= n; i++){
-        if (isKhop[i]){
-            cout << i << endl;
-        }
-        khop += isKhop[i];
-    }
-
-    // cout << khop << " " << cau;
+    cout << Count;
     return 0;
 }

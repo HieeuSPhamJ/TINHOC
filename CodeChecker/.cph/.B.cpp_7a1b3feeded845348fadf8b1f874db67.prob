@@ -1,1 +1,1 @@
-{"name":"Local: B","url":"d:\\TINHOC\\CodeChecker\\B.cpp","tests":[],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\CodeChecker\\B.cpp","group":"local","local":true}
+{"name":"Local: B","url":"d:\\TINHOC\\CodeChecker\\B.cpp","tests":[{"id":1663602602126,"input":"1\n9 6 6\n110000000\n010001000","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\CodeChecker\\B.cpp","group":"local","local":true}
