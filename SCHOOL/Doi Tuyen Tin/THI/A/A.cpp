@@ -61,15 +61,15 @@ signed main(){
         for (auto i: listPrime){
             int a2 = i * i;
             if (a2 >= x){
-                break;;
+                continue;
             }
             for (auto j: listPrime){
                 int a3 = j * j * j;
                 int a1 = x - a2 - a3;
                 if (a1 <= 0){
-                    break;
+                    continue;
                 }
-                else if (notPrime[a1] == 0){
+                if (notPrime[a1] == 0){
                     // cout << a1 << " " << i << " " << j << endl;
                     ans++;
                 }
