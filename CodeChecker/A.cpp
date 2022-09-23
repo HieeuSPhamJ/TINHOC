@@ -6,10 +6,31 @@
 #define endl '\n'
 using namespace std;
 
-char a[10000];
-char b[10000];
-int check[10000];
+const int maxN = 1e6 + 10;
 
+int MA;
+int a[maxN];
+int notPrime[maxN];
+int res[maxN];
+vector <int> listPrime;
+
+void init(){
+    notPrime[0] = notPrime[1] = 1;
+    for (int i = 2; i  * i <= MA + 5; i++){
+        if (notPrime[i] == 0){
+            for (int j = 2; i * j <= MA; j++){
+                notPrime[i * j] = 1;
+            }   
+        }
+    }
+
+    for (int i = 2; i <= MA; i++){
+        if (notPrime[i] == 0){
+            listPrime.push_back(i);
+            // cout << i << endl;
+        }
+    }
+}
 
 signed main(){
     freopen("input.inp", "r", stdin);
@@ -19,45 +40,48 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        memset(check, 0, sizeof(check));
-        int n, x, y;
-        cin >> n >> x >> y;
-        for (int i = 1; i <= n; i++){
-            cin >> a[i];
-        }
-        for (int i = 1; i <= n; i++){
-            cin >> b[i];
-        }
-        int countDiff = 0;
-        for (int i = 1, last = 1; i <= n; i++){
-            if (a[i] != b[i]){
-                countDiff++;
-                check[last] = i;
-                last++;
+    int n;
+    cin >> n;
+    set <int> mySet;
+    for (int i = 1; i <= n; i++){
+        cin >> a[i];
+        MA = max(MA, a[i]);
+        mySet.insert(a[i]);
+    }
+    init();
+    
+    vector <int> lists;
+
+    for (auto i: mySet){
+        lists.push_back(i);
+    }
+
+
+    for (auto x: lists){
+        // cout << x << endl;
+        int ans = 0;
+        for (auto i: listPrime){
+            int a2 = i * i;
+            if (a2 >= x){
+                continue;
             }
-        }
-        if (countDiff % 2 == 0){
-            if (countDiff != 2){
-                cout << countDiff * y  / 2 << endl;
-            }
-            else {
-                if (check[2] == check[1] + 1){
-                    if (x <= 2 * y){
-                        cout << x << endl;
-                    }
-                    else{
-                        cout << 2 * y << endl;
-                    }
+            for (auto j: listPrime){
+                int a3 = j * j * j;
+                int a1 = x - a2 - a3;
+                if (a1 <= 0){
                     continue;
+                }
+                if (notPrime[a1] == 0){
+                    // cout << a1 << " " << i << " " << j << endl;
+                    ans++;
                 }
             }
         }
-        else{
-            cout << -1 << endl;
-        }
+        res[x] = ans;
+    }
+
+    for (int i = 1; i <= n; i++){
+        cout << res[a[i]] << endl;
     }
     return 0;
 }
