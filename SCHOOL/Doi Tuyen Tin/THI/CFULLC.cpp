@@ -1,16 +1,18 @@
 #include<bits/stdc++.h>
+
+#define int long long
 #define ii pair <int,int>
 #define fi first
 #define se second
-#define int long long
 #define endl '\n'
+
 using namespace std;
 
 const int maxN = 1e6 + 10;
 
-int a[maxN];
 int father[maxN];
 int minVal[maxN];
+int a[maxN];
 
 int findFather(int node){
     if (node == father[node]){
@@ -20,33 +22,32 @@ int findFather(int node){
 }
 
 bool cmp(int x, int y){
-    return minVal[x] < minVal[y];
+    return (minVal[x] < minVal[y]);
 }
 
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n, m;
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
-        father[i] = i;
-        minVal[i] = a[i];
-    }
 
-    for (int i = 1; i <= m; i++){
-        int x, y;
-        cin >> x >> y;
-        int u = findFather(x);
-        int v = findFather(y);
+signed main(){
+    freopen("CFULLC.INP", "r", stdin);
+    freopen("CFULLC.OUT", "w", stdout);
+	ios_base::sync_with_stdio(0);
+    cin.tie(0);
+	int n, m;
+	cin >> n >> m;
+	for (int i = 1; i <= n; i++){
+        cin >> a[i];
+        minVal[i] = a[i];
+        father[i] = i;
+    }
+	for (int i = 1; i <= m; i++){
+        int a, b;
+        cin >> a >> b;
+        int u = findFather(a);
+        int v = findFather(b);
         if (u == v){
             continue;
         }
         father[u] = v;
-        minVal[v] = min(minVal[u], minVal[v]);
+        minVal[v] = min(minVal[v], minVal[u]);
     }
 
     set <int> mySet;
@@ -54,24 +55,32 @@ signed main(){
     for (int i = 1; i <= n; i++){
         int fa = findFather(i);
         mySet.insert(fa);
+//        cout << i << ": " << fa << " " << minVal[fa] << endl;
     }
 
     vector <int> myVec;
 
     for (auto i: mySet){
+//        cout << i << " ";
         myVec.push_back(i);
-        // cout << i << ": " << minVal[i] << endl;
     }
-
-    sort(myVec.begin(), myVec.end(), cmp);
-    
-    int root = minVal[myVec[0]];
+    sort(myVec.begin(), myVec.end(),cmp);
+//    cout << endl;
     int ans = 0;
+    int root = myVec[0];
+    if (myVec.size() == 1){
+        cout << 0;
+        return 0;
+    }
     for (int i = 1; i < (int)myVec.size(); i++){
-        ans += root + minVal[myVec[i]];
+//        cout << root << "-" << myVec[i] << endl;
+        ans += minVal[root] + minVal[myVec[i]];
     }
 
     cout << ans;
 
     return 0;
 }
+
+
+
