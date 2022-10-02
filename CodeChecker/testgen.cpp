@@ -21,10 +21,11 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int n = 100;
-    cout << n << endl;
+    int n = 20;
+    int k = random(1, n / 3);
+    cout << n << " " << k << endl;
     for (int i = 1; i <= n; i++){
-        cout << random(10000, 100000) << " ";
+        cout << random(1, n) << " ";
     }
 
     return 0;
