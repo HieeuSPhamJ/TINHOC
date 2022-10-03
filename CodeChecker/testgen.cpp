@@ -16,17 +16,16 @@ int random(int left = 0, int right = 1e8){
 
 signed main(){
     srand(time(0));
+    freopen("input.inp", "r", stdin);
     freopen("input.inp", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-
-    int n = 20;
-    int k = random(1, n / 3);
-    cout << n << " " << k << endl;
-    for (int i = 1; i <= n; i++){
-        cout << random(1, n) << " ";
-    }
+    int n;
+    cin >> n >> n;
+    n++;
+    cout << 1 << endl;
+    cout << n;
 
     return 0;
 }

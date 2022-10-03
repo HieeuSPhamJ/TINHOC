@@ -7,22 +7,12 @@
 #define endl '\n'
 using namespace std;
 
-int countBits(int mask){
-    int count = 0;
-    while (mask){
-        count += (mask & 1);
-        mask >>= 1;
-    }
-    return count;
-}
+const int maxN = 2 * 1e5 + 10;
 
-bool check(int n){
-    return countBits(n) == 2;
-}
+int a[maxN];
+int dp[maxN];
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -33,12 +23,20 @@ signed main(){
     while(test--){
         int n;
         cin >> n;
-        for (int i = 0; ;i++){
-            if (check(n + i) or check(max(0ll, n - i))){
-                cout << i << endl;
-                break;
+        for (int i = 1; i <= n; i++){
+            cin >> a[i];
+        }
+
+        sort(a + 1, a + 1 + n);
+
+        for (int i = 1; i <= n; i++){
+            dp[i] = dp[i - 1];
+            if (i - a[i] >= 0){
+                dp[i] = max(dp[i], dp[i - a[i]] + 1);
             }
         }
+
+        cout << dp[n] << endl;
     }
     return 0;
 }

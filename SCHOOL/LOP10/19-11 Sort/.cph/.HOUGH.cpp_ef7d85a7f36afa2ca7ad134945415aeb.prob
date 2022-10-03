@@ -1,0 +1,1 @@
+{"name":"Local: HOUGH","url":"d:\\TINHOC\\SCHOOL\\LOP10\\19-11 Sort\\HOUGH.cpp","tests":[{"id":1664810379017,"input":"3 4\n1 4 3 \n4 5 3 3 ","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\LOP10\\19-11 Sort\\HOUGH.cpp","group":"local","local":true}

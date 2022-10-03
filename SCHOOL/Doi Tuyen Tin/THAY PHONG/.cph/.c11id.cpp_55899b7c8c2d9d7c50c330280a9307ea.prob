@@ -1,0 +1,1 @@
+{"name":"Local: c11id","url":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\THAY PHONG\\c11id.cpp","tests":[{"id":1664810179069,"input":"2\n1\n3 ","output":""},{"id":1664810183901,"input":"4\n4\n4\n4\n4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\THAY PHONG\\c11id.cpp","group":"local","local":true}

@@ -34,8 +34,8 @@ bool check(int n){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
+    // freopen("input.inp", "r", stdin);
+    // freopen("A.out", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
