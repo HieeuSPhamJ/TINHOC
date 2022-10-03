@@ -63,13 +63,13 @@ signed main(){
             int i = listPrime[iis];
             int a2 = i * i;
             if (a2 >= x){
-                continue;
+                break;
             }
             for (int jis = 0; jis <(int)listPrime.size(); jis++){
                 int j = listPrime[jis];
                 int a3 = j * j * j;
                 if (a2 + a3 >= x){
-                    continue;
+                    break;
                 }
                 int a1 = x - a2 - a3;
                 if (notPrime[a1] == 0){
