@@ -8,6 +8,7 @@ using namespace std;
 const int maxN = 3 * 1e5;
 
 int a[maxN];
+int visited[maxN];
 
 
 signed main(){
@@ -21,13 +22,17 @@ signed main(){
         cin >> n;
         for (int i = 1; i <= n; i++){
             cin >> a[i];
+            visited[i] = -1;
         }
-
-        int l = 1;
-        int r = 1;
-        
+         queue <int> myQueue;
+        set <int> mySet;
         for (int i = 1; i <= n; i++){
-            if
+            mySet.insert(i);
+        }
+        myQueue.push(1);
+        visited[1] = 0;
+        while(myQueue.empty()){
+
         }
 
     }
