@@ -1,0 +1,1 @@
+{"name":"Local: mfriend","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Doi Tuyen Tin/THAY PHONG/mfriend.cpp","tests":[{"id":1664961283221,"input":"6\n1 2\n1 3\n1 4\n2 5\n2 6\n4\n5\n6\n3\n4 ","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Doi Tuyen Tin/THAY PHONG/mfriend.cpp","group":"local","local":true}

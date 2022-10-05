@@ -1,0 +1,1 @@
+{"name":"Local: CONNECT","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Doi Tuyen Tin/THAY PHONG/CONNECT.cpp","tests":[{"id":1664943642353,"input":"3 1 3\n1 2\n2 1\n1 3\n3 2","output":"YES\nNO\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Doi Tuyen Tin/THAY PHONG/CONNECT.cpp","group":"local","local":true}
