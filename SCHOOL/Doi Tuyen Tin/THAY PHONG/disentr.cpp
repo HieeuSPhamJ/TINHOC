@@ -47,18 +47,18 @@ void Dickcha(){
     while(!myHeap.empty()){
         ii tempV = myHeap.top();
         myHeap.pop(); 
-        // cout << "#" << tempV.id << endl;
+        cout << "#" << tempV.id << endl;
         if (tempV.fi != visited[tempV.id]){
             continue;
         }
         for (auto newV: adj[tempV.id]){
             if (visited[tempV.id] + newV.val < visited[newV.id]){
-                // cout << newV.id << ' ';
+                cout << newV.id << ' ';
                 visited[newV.id] = visited[tempV.id] + newV.val;
                 myHeap.push({visited[newV.id], newV.id});
             }
         }
-        // cout << endl;
+        cout << endl;
     }
 }
 
@@ -103,6 +103,9 @@ signed main(){
     }
 
     Dickcha();
-    cout << visited[t];
+    // cout << visited[t];
+    for (int i = 1; i <= n; i++){
+        cout << i << " " << visited[i] << endl;
+    }
     return 0;
 }
