@@ -2,6 +2,10 @@
 #define ii pair <int,int>
 #define fi first
 #define se second
+#define val first
+#define id second
+#define len first
+#define num second
 #define int long long
 using namespace std;
 

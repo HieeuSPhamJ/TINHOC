@@ -2,7 +2,7 @@
 using namespace std;
 
 
-int root[10000];
+int root[100010];
 
 
 int findRoot(int n){
