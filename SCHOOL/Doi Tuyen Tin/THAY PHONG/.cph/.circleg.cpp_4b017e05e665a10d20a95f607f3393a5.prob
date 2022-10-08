@@ -1,0 +1,1 @@
+{"name":"Local: circleg","url":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\THAY PHONG\\circleg.cpp","tests":[{"id":1665196524801,"input":"2\n3 2\n1 2\n2 3\n2 2\n1 2\n2 1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\THAY PHONG\\circleg.cpp","group":"local","local":true}

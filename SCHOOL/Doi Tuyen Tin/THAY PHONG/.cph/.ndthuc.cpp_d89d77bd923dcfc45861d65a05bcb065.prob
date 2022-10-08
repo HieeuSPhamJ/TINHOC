@@ -1,0 +1,1 @@
+{"name":"Local: ndthuc","url":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\THAY PHONG\\ndthuc.cpp","tests":[{"id":1665231969971,"input":"4 6\n1 3 5 100\n-2\n2\n4\n80\n107\n5","output":"+\n-\n+\n-\n+\n0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\THAY PHONG\\ndthuc.cpp","group":"local","local":true}
