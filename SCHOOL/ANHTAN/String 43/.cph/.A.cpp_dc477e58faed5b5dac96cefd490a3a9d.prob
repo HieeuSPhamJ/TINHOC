@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\String 43\\A.cpp","tests":[{"id":1665325217663,"input":"3\na\nab\nabc\n","output":""},{"id":1665325221394,"input":"5\na\nab\nbc\nbcd\nadd","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\String 43\\A.cpp","group":"local","local":true}
