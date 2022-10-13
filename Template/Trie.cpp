@@ -8,43 +8,47 @@
 using namespace std;
 
 struct node{
-    node *child[26];
+    node* a[26];
     bool checkEnd = 0;
     node(){
         for (int i = 0; i < 26; i++){
-            child[i] = NULL;
+            a[i] = NULL;
         }
         checkEnd = 0;
-    }    
+    }
 };
 
 node *root = new node();
 
-void insert(string a){
+void insert(string s){
     node *p = root;
-    for (int i = 0; i < (int)a.length(); i++){
-        if (p->child[a[i] - 'a'] == NULL){
-            p->child[a[i] - 'a'] = new node();
+    for (int i = 0; i < s.length(); i++){
+        int dig = s[i] - 'a';
+        if (p->a[dig] == NULL){
+            p->a[dig] = new node();
         }
-        p = p->child[a[i] - 'a'];
+        p = p->a[dig];
     }
     p->checkEnd = 1;
 }
 
-int find(string a){
+
+int find(string s){
     node *p = root;
-    for (int i = 0; i < (int)a.length(); i++){
-        if (p->child[a[i] - 'a'] == NULL){
+    for (int i = 0; i < s.length(); i++){
+        int dig = s[i] - 'a';
+        if (p->a[dig] == NULL){
             return 0;
         }
-        p = p->child[a[i] - 'a'];
+        p = p->a[dig];
     }
+    
     if (p->checkEnd == 1){
         return 1;
     }
     return 0;
-}
 
+}
 
 signed main(){
     //freopen("input.INP", "r", stdin);

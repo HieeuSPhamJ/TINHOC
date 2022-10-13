@@ -1,0 +1,1 @@
+{"name":"Local: Trie","url":"d:\\TINHOC\\Template\\Trie.cpp","tests":[{"id":1665663365911,"input":"4\nasdf\nasd\nasx\ncda\n3\nasdf\nas\ncda","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\Template\\Trie.cpp","group":"local","local":true}
