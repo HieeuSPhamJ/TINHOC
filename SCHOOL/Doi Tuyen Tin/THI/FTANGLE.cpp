@@ -14,8 +14,8 @@ bool cmp(ii a, ii b){
 }
 
 signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
+    //freopen("FTANGLE.INP", "r", stdin);
+    //freopen("FTANGLE.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
