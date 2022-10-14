@@ -1,2 +1,74 @@
-t = (a * x + (S - a) * y) / S
+ ﻿TrungHieu‣CTREE: 12.00
+CTREE.cpp
+"C:\Program Files (x86)\Themis\gcc\bin\g++.exe" -std=c++14 "CTREE.cpp" -pipe -O2 -s -static -lm -x c++ -o"CTREE.exe" -Wl,--stack,66060288|@WorkDir=C:\ProgramData\ThemisWorkSpace\WaitRoom27895\
+Dịch thành công.
 
+TrungHieu‣CTREE‣TEST01: 1.00
+Thời gian ≈ 0.056749900 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST02: 1.00
+Thời gian ≈ 0.057990000 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST03: 1.00
+Thời gian ≈ 0.073264700 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST04: 1.00
+Thời gian ≈ 0.067955600 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST05: 1.00
+Thời gian ≈ 0.058284400 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST06: 0.00
+Thời gian ≈ 0.074694200 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST07: 0.00
+Thời gian ≈ 0.080747200 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST08: 1.00
+Thời gian ≈ 0.092866900 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST09: 0.00
+Thời gian ≈ 0.063336700 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST10: 0.00
+Thời gian ≈ 0.082466400 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST11: 0.00
+Thời gian ≈ 0.058067700 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST12: 1.00
+Thời gian ≈ 0.071382200 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST13: 0.00
+Thời gian ≈ 0.093208300 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST14: 1.00
+Thời gian ≈ 0.322590500 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST15: 0.00
+Thời gian ≈ 0.339027600 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST16: 0.00
+Thời gian ≈ 0.272775200 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST17: 0.00
+Thời gian ≈ 0.316495400 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST18: 1.00
+Thời gian ≈ 0.333987400 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST19: 0.00
+Thời gian ≈ 0.216767100 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST20: 1.00
+Thời gian ≈ 0.321022800 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST21: 1.00
+Thời gian ≈ 0.355919200 giây
+Kết quả khớp đáp án!
+TrungHieu‣CTREE‣TEST22: 0.00
+Thời gian ≈ 0.326508100 giây
+Kết quả KHÁC đáp án!
+TrungHieu‣CTREE‣TEST23: 1.00
+Thời gian ≈ 0.352532100 giây
+Kết quả khớp đáp án!
