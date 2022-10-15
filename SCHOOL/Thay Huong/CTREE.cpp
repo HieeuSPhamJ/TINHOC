@@ -52,11 +52,19 @@ void DFS(int node, int father){
     // cout << endl;
     auto it1 = childLists[node].upper_bound(s);
     auto it2 = it1;
+    auto it3 = it1;
     if (it2 != childLists[node].begin()){
         it2--;
     }
     if (it2 == childLists[node].end()){
         it2--;
+    }
+    if (it1 == childLists[node].end()){
+        it1--;
+    }
+    it3++;
+    if (it3 == childLists[node].end()){
+        it3--;
     }
     // cout << *it1 << " " << *it2 << endl;
     dp[node] = {n - *it1, *it1};
