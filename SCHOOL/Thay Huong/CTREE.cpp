@@ -71,11 +71,20 @@ void DFS(int node, int father){
     if (abs(dp[node].fi - dp[node].se) > abs((n - *it2) - *it2)){
         dp[node] = {n - *it2, *it2};
     }
+    if (abs(dp[node].fi - dp[node].se) > abs((n - *it3) - *it3)){
+        dp[node] = {n - *it2, *it2};
+    }
     int a = child[1] - child[node];
     int b = dp[node].fi;
     int c = dp[node].se;
     // cout << a << " " << b << " " << c << endl;
     ans = min(ans, max({a,b,c}) - min({a,b,c}));
+
+}
+
+int cal(int n, int b, int c){
+    int a = n - b - c;
+    return max({a,b,c}) - min({a,b,c});
 }
 
 signed main(){
@@ -96,10 +105,33 @@ signed main(){
 
     findChild(1,1);
     DFS(1,1);
+
     // for (int i = 1; i <= n; i++){
     //     cout << "Node " << i << ": ";
     //     cout << dp[i].fi << " " << dp[i].se << endl;
     // }
+    int s = n / 3;
+    auto it1 = childLists[1].upper_bound(s);
+    auto it2 = it1;
+    auto it3 = it1;
+    if (it2 != childLists[1].begin()){
+        it2--;
+    }
+    if (it2 == childLists[1].end()){
+        it2--;
+    }
+    if (it1 == childLists[1].end()){
+        it1--;
+    }
+    it3++;
+    if (it3 == childLists[1].end()){
+        it3--;
+    }
+    ans = min(ans, cal(n, *it1, *it2));
+    ans = min(ans, cal(n, *it2, *it3));
+    ans = min(ans, cal(n, *it1, *it3));
+    
     cout << ans;
+
     return 0;
 }
