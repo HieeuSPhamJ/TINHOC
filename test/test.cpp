@@ -1,61 +1,72 @@
 #include <bits/stdc++.h>
 
-#define nxt "\n"
-
 using namespace std;
-const int N = 2e3 + 3;
 
-long long n, x, y, l, k, ans = 0, q;
-long long f[N][N], sum[N][N], a[N];
+const int maxN = 1000005;
 
-long long cal(int l, int r)
-{
-    long long res = 0;
-    for (int i = l; i <= r; ++ i)
-    {
-        for (int j = l; j <= i; ++ j)
-        {
-            res = res + abs(a[i] - a[j]);
+int n, m, soThuTuDfs, dem, tongTien, costMin = INT_MAX;
+int low[maxN], num[maxN], deleted[maxN], prices[maxN];
+bool isVisit[maxN];
+vector<int> args[maxN];
+stack<int> st, st2;
+
+void dfs(int u) {
+    isVisit[u] = true;
+    low[u] = num[u] = ++soThuTuDfs;
+    st.push(u);
+    for (int v : args[u]) {
+        if (deleted[v]) continue;
+        if (isVisit[v] == 0) {
+            dfs(v);
+            low[u] = min(low[u], low[v]);
+        } else if (isVisit[v] == 1) {
+            low[u] = min(low[u], num[v]);
         }
     }
-    return res;
+    if (low[u] == num[u]) {
+        ++dem;
+        st2 = st;
+        int v;
+        while (v != u) {
+            v = st.top();
+            st.pop();
+            deleted[v] = true;
+            isVisit[v] = 2;
+            cout << "Node: " << v << endl;
+            cout << costMin << " " << prices[v] << endl;
+            costMin = min(costMin, prices[v]);
+        }
+
+        // Lỗi ở đây
+        cout << costMin << endl;
+        tongTien += costMin;
+    }
 }
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
     cin >> n;
-    for (int i = 1; i <= n; ++ i)
-    {
-        cin >> a[i];
+
+    for (int i = 1; i <= n; i++) cin >> prices[i];
+
+    cin >> m;
+
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        cin >> u >> v;
+        args[u].push_back(v);
     }
-    for (int i = 1; i <= n; i++)
-    {
-        long long currSum = 0;
-        for (int j = i + 1; j <= n; j++)
-        {
-            currSum += abs(a[i] - a[j]);
-            f[i][j] += currSum;
+
+    for (int i = 1; i <= n; i++) {
+        if (!isVisit[i]) {
+            dfs(i);
         }
     }
-    cin >> q;
-    for (int i = 1; i <= q; ++ i)
-    {
-        cin >> x >> y >> k;
-        l = x;
-        ans = 0;
-        for (int j = x; j <= y; ++ j)
-        {
-            while (f[l][j] > k)
-            {
-                ++ l;
-            }
-            ans = ans + (j - l + 1);
-        }
-        cout << ans << nxt;
-    }
+
+    cout << tongTien << " " << dem;
+
     return 0;
 }
