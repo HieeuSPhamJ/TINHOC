@@ -8,9 +8,9 @@ using namespace std;
 const int maxN = 1e5 + 10;
 
 int n;
+vector <int> adj[maxN];
 int visited[maxN];
 int path[maxN];
-vector <int> adj[maxN];
 queue <int> myQueue;
 
 
