@@ -1,0 +1,1 @@
+{"name":"Local: NUMCITIES","url":"d:\\TINHOC\\ONLINE OJ\\LQDOJ\\Contest\\LQDOJ CUP 2022 Round 2\\NUMCITIES.cpp","tests":[{"id":1666406737040,"input":"5\n1\n2\n3\n4\n5","output":"3\n7\n13\n22\n33"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\ONLINE OJ\\LQDOJ\\Contest\\LQDOJ CUP 2022 Round 2\\NUMCITIES.cpp","group":"local","local":true}

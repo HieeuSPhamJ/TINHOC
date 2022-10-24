@@ -7,8 +7,8 @@
 #define endl '\n'
 using namespace std;
 
-const int mod = 1e9 + 7;
-const int maxN = 3e6 + 10;
+const int mod = 998244353;
+const int maxN = 3 * 1e5 + 10;
 int fact[maxN];
 int infact[maxN];
 ii a[maxN];
@@ -61,16 +61,51 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     init();
-    int test;
-    cin >> test;
-    while(test--){
-        int n, k;
-        cin >> n >> k;
-        int ans = C(k + 1 + n - 1 + 1, n - 1);
-        ans = mul(2, ans);
-        ans = subtr(ans, n);
-        cout << ans << endl;
+    // cout << C(5,2) << endl;
+    int n, k;
+    cin >> n >> k;
+    set <int> tempConv;
+    for (int i = 1; i <= n; i++){
+        cin >> a[i].fi >> a[i].se;
+        tempConv.insert(a[i].fi);
+        tempConv.insert(a[i].se);
     }
+
+    int count = 1;
+    for (auto i: tempConv){
+        conv[i] = count;
+        // cout << i << " " << count << endl;
+        count++;
+    }
+
+    for (int i = 1; i <= n; i++){
+        a[i].fi = conv[a[i].fi];
+        a[i].se = conv[a[i].se];
+        
+        Add[a[i].fi] += 1;
+        prefixSum[a[i].fi] += 1;
+        prefixSum[a[i].se + 1] -= 1;
+        // cout << a[i].fi << " " << a[i].se << endl;
+    }
+
+    for (int i = 1, temp = 0; i <= 2 * n; i++){
+        temp += prefixSum[i];
+        newA[i] = temp;
+    }
+    int ans = 0;
+    for (int i = 1; i <= 2 * n; i++){
+        int full = 0;
+        int temp = 0;
+        if (Add[i] > 0 and newA[i] >= k){
+            full = C(newA[i],k);
+            if (newA[i] - Add[i] >= k){
+                temp = C(newA[i] - Add[i],k);
+            }
+        }
+        ans = add(ans, subtr(full, temp));
+    }
+
+    cout << ans;
 
     return 0;
 }
