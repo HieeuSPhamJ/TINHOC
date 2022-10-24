@@ -53,6 +53,9 @@ void Dickcha(int Start){
         ii tempV = myHeap.top();
         myHeap.pop(); 
         // cout << "#" << tempV.id << endl;
+        if (tempV.id == End1 or tempV.id == End2){
+            continue;
+        }
         if (tempV.len != visited[tempV.id]){
             continue;
         }
@@ -86,7 +89,7 @@ signed main(){
         cnt++;
     }
 
-    dem = cnt + 5;
+    dem = cnt + 10;
     End2 = End1 + dem;
     
 
