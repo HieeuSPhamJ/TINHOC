@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#define ii pair <double,double>
+#define ii pair <int,int>
 #define fi first
 #define se second
 #define int long long
@@ -7,106 +7,70 @@
 #define endl '\n'
 using namespace std;
 
-const int maxN = 1e5 + 10;
-
-char T;
-int n;
-vector <ii> lists;
+const int mod = 1e9 + 7;
+const int maxN = 3e6 + 10;
+int fact[maxN];
+int infact[maxN];
 ii a[maxN];
-int x[maxN];
+int newA[2 * maxN];
+map <int,int> conv;
+int prefixSum[2 * maxN];
+int Add[2 * maxN];
 
-int cw(ii a, ii b, ii c){
-    return a.fi * (b.se - c.se) + b.fi * (c.se - a.se) + c.fi * (a.se - b.se) > 0;
+
+int add(int a, int b){
+    return (a + b) % mod;
 }
-
-bool cal1(int i, ii p){
-    return cw(lists[(i) % n], lists[(i + 1) % n],p);
+int subtr(int a, int b){
+    return ((a + mod) - b) % mod; 
 }
-
-bool cal2(int i, ii p){
-    int step = n / 2;
-    return cw(lists[(i) % n], lists[(i + 1) % n],p) and cw(lists[(i + step) % n], lists[(i + 1 + step) % n],p);
+int mul(int a, int b){
+    return (a * b) % mod;
 }
-
-void print(ii node){
-    cout << node.fi << " " << node.se << endl;
+int fastpow(int n, int a){
+    if (a == 1){
+        return n;
+    }
+    int temp = fastpow(n, a / 2);
+    int ans = mul(temp, temp);
+    if (a % 2){
+        return mul(ans, n);
+    }
+    else{
+        return ans;
+    }
+}
+void init(){
+    fact[0] = 1;
+    for (int i = 1; i < maxN; i++){
+        fact[i] = mul(fact[i - 1], i);
+    }
+    infact[maxN - 1] = fastpow(fact[maxN - 1], mod - 2);
+    for (int i = maxN - 2; i >= 0; i--){
+        infact[i] = mul(infact[i + 1], i + 1);
+    }
+    
+}
+int C(int n, int k){
+    return mul(fact[n], mul(infact[k], infact[n - k]));
+    return mul(fact[n], fastpow(mul(fact[k], fact[n - k]), mod - 2));
 }
 
 signed main(){
-    freopen("nhap.txt", "r", stdin);
-    freopen("nhap.out", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    
-    cin >> T >> n;
-    for (int i = 1; i <= n; i++){
-        int x, y;
-        cin >> x >> y;
-        lists.push_back({x,y});
-    }
-
+    init();
     int test;
     cin >> test;
-    for (int i = 1; i <= test; i++){
-        cin >> a[i].fi >> a[i].se;
+    while(test--){
+        int n, k;
+        cin >> n >> k;
+        int ans = C(k + 1 + n - 1 + 1, n - 1);
+        ans = mul(2, ans);
+        ans = subtr(ans, n);
+        cout << ans << endl;
     }
 
-    int step = n / 2;
-
-    for (int t = 1; t <= test; t++){
-        x[t] = x[max(t - 1, 0ll)];
-        if (T == '1'){
-            a[t].fi = ((int)(a[t].fi) xor (int)(x[t - 1] * x[t - 1] * x[t - 1]));
-            a[t].se = ((int)(a[t].se) xor (int)(x[t - 1] * x[t - 1] * x[t - 1]));
-        }
-        ii p = a[t];
-        bool check = 0;
-        if (cal1(0,p)){
-            int left = 0;
-            int right = n / 2;
-            int id = 0;
-            while(left <= right){
-                int mid = (left + right) / 2;
-                if (cal1(mid,p)){
-                    left = mid + 1;
-                    id = mid;
-                }
-                else{
-                    right = mid - 1;
-                }
-            }
-            if (cal2(id,p)){
-                check = 1;
-            }
-        }
-        else{
-            int left = 0;
-            int right = n / 2;
-            int id = 0;
-            while(left <= right){
-                int mid = (left + right) / 2;
-                if (cal1(mid,p)){
-                    right = mid - 1;
-                    id = mid;
-                }
-                else{
-                    left = mid + 1;
-                }
-            }
-            if (cal2(id,p)){
-                check = 1;
-            }
-        }
-        if (check){
-            x[t]++;
-            cout << "DA";
-        }
-        else{
-            cout << "NE";
-        }
-        cout << endl;
-    }   
-    
     return 0;
 }
