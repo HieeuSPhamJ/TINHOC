@@ -7,10 +7,10 @@ using namespace std;
 signed main(){
     int maxTest = 1000;
     for (int test = 1; test <= maxTest; test++){
-        system(("testgen.exe"));        
-        system(("A.exe"));
-        system(("B.exe"));
-        if (system(("fc A.out B.out")) != 0){
+        system(("./testgen"));        
+        system(("./A"));
+        system(("./B"));
+        if (system(("diff A.out B.out")) != 0){
             cout << "Test " << test << ": WRONG!\n";
             return 0;
         }

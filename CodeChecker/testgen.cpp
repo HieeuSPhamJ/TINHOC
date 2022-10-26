@@ -22,15 +22,6 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     cout << 1 << endl;
-    int n = 5;
-    cout << n << endl;
-    for (int i = 1; i <= n; i++){
-        cout << random(0,1);
-    }
-    cout << endl;
-    for (int i = 1; i <= n; i++){
-        cout << random(1,n) << " ";
-    }
-    cout << endl;
+    cout << random(1,10000);
     return 0;
 }
