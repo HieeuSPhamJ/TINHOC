@@ -1,0 +1,1 @@
+{"name":"Local: ABSTR","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Duong/ABSTR.cpp","tests":[{"id":1666767572352,"input":"4\n3\nAAB\n5\nAABAA\n1\nB\n4\nBABA","output":"0\n1\n0\n2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Duong/ABSTR.cpp","group":"local","local":true}
