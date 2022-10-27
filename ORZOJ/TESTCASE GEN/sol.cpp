@@ -1,25 +1,20 @@
 #include<bits/stdc++.h>
 #define int long long
-#define ii pair <int,int>
-#define f first
-#define s second
+#define pair <int,int>
+#define fi first
+#define se second
+#define endl '\n'
+
 using namespace std;
 
+const int maxN = 2 * 1e5 + 10;
 const int inf = 1e18;
-const int maxN = 1e5 + 10;
 
-int n;
 int a[maxN];
-ii b[maxN];
-int seg[maxN * 4];
 int dp[maxN];
- 
 
-
-bool cmp(ii x, ii y){
-    return x.s < y.s;
-}
-
+int seg[maxN * 4];
+int segDP[maxN * 4];
 
 void update(int i, int left, int right, int index, int val){
     if (index < left or right < index){
@@ -29,93 +24,112 @@ void update(int i, int left, int right, int index, int val){
         seg[i] = val;
         return;
     }
-
     int mid = (left + right) / 2;
 
     update(2 * i, left, mid, index, val);
     update(2 * i + 1, mid + 1, right, index, val);
 
-    seg[i] = max(seg[2 * i], seg[2 * i + 1]);
-    
+    seg[i] = min(seg[2 * i], seg[2 * i + 1]);
 }
 
-int get(int i, int left, int right, int _left, int _right){
-    if (_right < left or right < _left){
-        return -inf;
+int get(int i, int left, int right, int L, int R){
+    if (right < L or R < left){
+        return inf;
     }
-    if (_left <= left and right <= _right){
+    if (L <= left and right <= R){
         return seg[i];
     }
-
     int mid = (left + right) / 2;
-    return max(get(2 * i, left, mid, _left, _right), get(2 * i + 1, mid + 1, right, _left, _right));
 
+    int t1 = get(2 * i, left, mid, L, R);
+    int t2 = get(2 * i + 1, mid + 1, right, L, R);
+    return min(t1, t2);
+}
+
+void updateDP(int i, int left, int right, int index, int val){
+    if (index < left or right < index){
+        return;
+    }
+    if (left == right){
+        segDP[i] = val;
+        return;
+    }
+    int mid = (left + right) / 2;
+
+    updateDP(2 * i, left, mid, index, val);
+    updateDP(2 * i + 1, mid + 1, right, index, val);
+
+    segDP[i] = max(segDP[2 * i], segDP[2 * i + 1]);
+}
+
+int getDP(int i, int left, int right, int L, int R){
+    if (right < L or R < left){
+        return -inf;
+    }
+    if (L <= left and right <= R){
+        return segDP[i];
+    }
+    int mid = (left + right) / 2;
+
+    int t1 = getDP(2 * i, left, mid, L, R);
+    int t2 = getDP(2 * i + 1, mid + 1, right, L, R);
+    return max(t1, t2);
 }
 
 signed main(){
-	freopen("input.in", "r", stdin);
+    freopen("input.in", "r", stdin);
     freopen("output.out", "w", stdout);
-    int n;
-    cin >> n;
-    b[0] = {0, 0};
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int n, k;
+    cin >> n >> k;
+    int sum = 0;
+    int MIN = 1e18;
     for (int i = 1; i <= n; i++){
         cin >> a[i];
-        b[i] = {a[i], i};
-        dp[i] = 1;
-        // update(1, 1, n, i, 1);
+        sum += a[i];
+        update(1,1,n,i,a[i]);
+        MIN = min(MIN, a[i]);
     }
 
-    sort(b + 1, b + 1 + n);
-    for (int i = 1, j = 0; i <= n; i++){
-        if (b[i].f != b[i - 1].f){
-            j++;
-        }
-        b[i].f = j;
-        
+    if (k == 1){
+        cout << sum;
+        return 0;
+    }
+    if (k == n){
+        cout << MIN;
+        return 0;
+    }
+    int last = 0;
+    dp[k] = get(1,1,n,1,k);
+    int ans = dp[k];
+    for (int i = k + 1; i <= n; i++){
+        last = max(last, dp[i - k]);
+//        cout << i << ": " << i - k << " " << endl;
+//        int last = getDP(1,1,n,1,i - k);
+//        cout << "dp: " << 1 << " " << i - k << endl;
+        int mini = get(1,1,n,i - k + 1, i);
+//        cout << "mini: " << i - k + 1 << " " << i << endl;
+//        cout << i << ": " << last << " " << mini << endl;
+        dp[i] = max(dp[i], last + mini);
+//        updateDP(1,1,n,i,dp[i]);
+        ans = max(ans,dp[i]);
     }
 
-    sort(b + 1, b + 1 + n, cmp);
+//    for (int i = 1; i <= n; i++){
+//        cout << dp[i] << " ";
+//    }
+//    cout << endl;
 
-    for (int i = 1; i <= n; i++){
-        a[i] = b[i].f;
-        // cout << a[i] << ' ';
-    }
-    // cout << endl;
-
-    int ans = 0;
-
-    for (int i = 1; i <= n; i++){
-        int temp = get(1, 1, n, 1, a[i] - 1);
-        if (temp == -inf){
-            temp = 0;
-        }
-        if (dp[a[i]] == 0){
-            dp[a[i]] = 1;
-        }
-        // cout << a[i] << ' ' << dp[a[i]] << ' ' << temp << endl;
-        dp[a[i]] = max(dp[a[i]], 1 + temp);
-        update(1, 1, n, a[i], dp[a[i]]);
-        ans = max(ans, dp[a[i]]);
-    }
-
-    // for (int i = 1; i <= n; i++){
-    //     cout << dp[i] << ' ';
-    // }
-    // cout << endl;
     cout << ans;
-
-    
 
     return 0;
 }
 
 /*
-    0 1 2 3 4 5 6 7 8 9 10
-    0 1 2 3 4 0 0 0 0 0 0
-    
-    1 2 3 4 5 4 3 2 1 10
+6 2
+1 8 5 1 3 1
 
-
-
+6 5
+19450 10268 30106 17888 20346 5464
 */
-

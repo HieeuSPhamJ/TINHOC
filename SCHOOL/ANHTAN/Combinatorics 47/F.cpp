@@ -7,15 +7,10 @@
 #define endl '\n'
 using namespace std;
 
-const int mod = 998244353;
-const int maxN = 3 * 1e5 + 10;
+const int mod = 1e9 + 7;
+const int maxN = 1e7 + 10;
 int fact[maxN];
 int infact[maxN];
-ii a[maxN];
-int newA[2 * maxN];
-map <int,int> conv;
-int prefixSum[2 * maxN];
-int Add[2 * maxN];
 
 
 int add(int a, int b){
@@ -56,56 +51,32 @@ int C(int n, int k){
     return mul(fact[n], fastpow(mul(fact[k], fact[n - k]), mod - 2));
 }
 
+int a[maxN];
+
 signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
     init();
-    // cout << C(5,2) << endl;
-    int n, k;
-    cin >> n >> k;
-    set <int> tempConv;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i].fi >> a[i].se;
-        tempConv.insert(a[i].fi);
-        tempConv.insert(a[i].se);
-    }
-
-    int count = 1;
-    for (auto i: tempConv){
-        conv[i] = count;
-        // cout << i << " " << count << endl;
-        count++;
-    }
-
-    for (int i = 1; i <= n; i++){
-        a[i].fi = conv[a[i].fi];
-        a[i].se = conv[a[i].se];
-        
-        Add[a[i].fi] += 1;
-        prefixSum[a[i].fi] += 1;
-        prefixSum[a[i].se + 1] -= 1;
-        // cout << a[i].fi << " " << a[i].se << endl;
-    }
-
-    for (int i = 1, temp = 0; i <= 2 * n; i++){
-        temp += prefixSum[i];
-        newA[i] = temp;
-    }
-    int ans = 0;
-    for (int i = 1; i <= 2 * n; i++){
-        int full = 0;
-        int temp = 0;
-        if (Add[i] > 0 and newA[i] >= k){
-            full = C(newA[i],k);
-            if (newA[i] - Add[i] >= k){
-                temp = C(newA[i] - Add[i],k);
-            }
+    int numtest;
+    cin >> numtest;
+    for (int test = 1; test <= numtest; test++){
+        int n, k;
+        cin >> n >> k;
+        for (int i = 1; i <= n; i++){
+            cin >> a[i];
         }
-        ans = add(ans, subtr(full, temp));
+
+        sort(a + 1, a + 1 + n);
+        k--;
+        int ans = 0;
+        for (int i = k + 1; i <= n; i++){
+            ans = add(ans, mul(a[i], C(i - 1, k)));
+        }
+
+        cout << "Case #" << test << ": " << ans << endl;
     }
-
-    cout << ans;
-
     return 0;
 }

@@ -17,11 +17,12 @@ void genTest(){
 
     ofstream inp(("input.in")); //Không xoá dòng này
 
-    int n = random(1e5,1e5);
-    inp << n << endl;
+    int n = random(1,2 * 1e5);
+    int k = random(1,n);
+    inp << n << " " << k << endl;
 
     for (int i = 1; i <= n; i++){
-        inp << random(1e8,1e9) << " ";
+        inp << random(1,1e9) << " ";
     }
 
     //kết thúc tạo test ở đâu
@@ -30,7 +31,8 @@ void genTest(){
 
 signed main(){
     srand(time(0));
-    int maxTest = 10;
+    int startTest = 21;
+    int maxTest = 50;
 
     /*
         Bỏ solution chuẩn vô sol.cpp và compile file sol.cpp để tạo ra file sol.exe
@@ -44,18 +46,18 @@ signed main(){
         Để sinh ra 1 test ta chỉnh trong hàm genTest()
     */
    
-    for (int test = 8; test <= maxTest; test++){
+    for (int test = startTest; test <= maxTest; test++){
         genTest(); //Tạo ra input cho test (input được lưu tạm vô file input.in)   
-        system("./sol"); //Chạy file sol.exe để lấy kết quả của test (input được lưu tạm vô file output.out)   
+        system("sol.exe"); //Chạy file sol.exe để lấy kết quả của test (input được lưu tạm vô file output.out)   
         string testNum = to_string(test);
         string testName = "test" + testNum;
         
-        string cmd = ("mkdir ./OUTPUT/" + testName).c_str();
+        string cmd = ("mkdir .\\OUTPUT\\" + testName).c_str();
 
-        cmd = ("cp ./input.in OUTPUT/test" + testNum + ".in").c_str(); //Copy file input.in vào folder .OUTPUT
+        cmd = ("copy .\\input.in OUTPUT\\test" + testNum + ".in").c_str(); //Copy file input.in vào folder .OUTPUT
         system(cmd.c_str());
 
-        cmd = ("cp ./output.out OUTPUT/test" + testNum + ".out").c_str(); //Copy file output.out vào folder .OUTPUT
+        cmd = ("copy .\\output.out OUTPUT\\test" + testNum + ".out").c_str(); //Copy file output.out vào folder .OUTPUT
         system(cmd.c_str());
         
         cout << "Test" << test << ": COMPLETE!\n";
