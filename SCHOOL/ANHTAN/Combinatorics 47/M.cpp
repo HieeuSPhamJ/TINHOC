@@ -7,11 +7,10 @@
 #define endl '\n'
 using namespace std;
 
-const int mod = 998244353;
-const int maxN = 1e6 + 10;
+const int mod = 1e9 + 7;
+const int maxN = 1e7 + 10;
 int fact[maxN];
 int infact[maxN];
-
 
 int add(int a, int b){
     return (a + b) % mod;
@@ -23,6 +22,9 @@ int mul(int a, int b){
     return (a * b) % mod;
 }
 int fastpow(int n, int a){
+    if (a == 0){
+        return 1;
+    }
     if (a == 1){
         return n;
     }
@@ -51,19 +53,6 @@ int C(int n, int k){
     return mul(fact[n], fastpow(mul(fact[k], fact[n - k]), mod - 2));
 }
 
-int a[maxN];
-int dp[3][maxN];
-
-void pre(){
-    dp[1][2] = 1;
-	dp[2][2] = 0;
-	for (int i = 4; i <= 100; i+=2) {
-		dp[1][i] = add(C(i - 1, i / 2 - 1), dp[2][i - 2]);
-		dp[2][i] = subtr(subtr(C(i, i / 2), dp[1][i]), 1);
-	}
-
-}
-
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
@@ -71,13 +60,31 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     init();
-    pre();
     int test;
     cin >> test;
     while(test--){
-        int n;
-        cin >> n;
-        cout << dp[1][n] << " " << dp[2][n] << " " << 1 << endl;
+        
+        // cout << "====TEST====" << endl;
+        int n, k;
+        cin >> n >> k >> mod;
+        int num = n / k + (n % k > 0);
+        
+        int permu = 0;
+        int rem = n % k;
+        int m = num - 1;
+        if (n % k){
+            // for (int i = 0; i <= k - rem; i++){
+            //     int temp = C(m + i - 1, m - 1);
+            //     (permu += temp) %= mod;
+            //     // cout << m + i - 1 << " " << m << " " << temp << endl;
+            // }
+            permu = C(m + k - rem, k - rem);
+        }
+        else{
+            permu = 1;
+        }
+
+        cout << num << " " << permu << endl;
     }
     return 0;
 }
