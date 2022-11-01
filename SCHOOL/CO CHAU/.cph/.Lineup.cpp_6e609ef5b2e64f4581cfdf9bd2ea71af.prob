@@ -1,0 +1,1 @@
+{"name":"Local: Lineup","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/CO CHAU/Lineup.cpp","tests":[{"id":1667290772263,"input":"6\n25 7\n26 1\n15 1\n22 3\n20 1\n30 1","output":"15 1\n20 1\n22 3\n25 7\n26 1\n30 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/CO CHAU/Lineup.cpp","group":"local","local":true}
