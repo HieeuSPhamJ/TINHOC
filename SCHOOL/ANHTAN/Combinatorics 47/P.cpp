@@ -53,7 +53,10 @@ int C(int n, int k){
     return mul(fact[n], fastpow(mul(fact[k], fact[n - k]), mod - 2));
 }
 
+int pre[maxN];
+int suf[maxN];
 int a[maxN];
+
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -64,27 +67,58 @@ signed main(){
     init();
     int n;
     cin >> n;
-    int ans = 1;
-    vector <int> lists;
+    string s;
+    cin >> s;
+    s = "*" + s;
     for (int i = 1; i <= n; i++){
-        int inp;
-        cin >> inp;
-        if (inp){
-            lists.push_back(i);
+        if (s[i] == '?'){
+            a[i] = 0;
+        }
+        else if (s[i] == 'a'){
+            a[i] = 1;
+        }
+        else if (s[i] == 'b'){
+            a[i] = 2;
+        }
+        else if (s[i] == 'c'){
+            a[i] = 3;
         }
     }
 
-    if (lists.empty()){
-        cout << 0; 
-        return 0;
+    for (int i = 1; i <= n; i++){
+        pre[i] = pre[i - 1];
+        if (a[i] == 1 or a[i] == 0){
+            pre[i]++;
+        }
     }
-
-    for (int i = 1; i < (int)lists.size(); i++){
-        ans = mul(ans, lists[i] - lists[i - 1]);
-    }
-    cout << ans;
 
     
+    for (int i = n; i >= 1; i--){
+        suf[i] = suf[i + 1];
+        if (a[i] == 3 or a[i] == 0){
+            suf[i]++;
+        }
+    }
+
+    for (int i = 1; i <= n; i++){
+        cout << pre[i] << " ";
+    }
+    cout << endl;
+    for (int i = 1; i <= n; i++){
+        cout << suf[i] << " ";
+    }
+    cout << endl;
+
+    int ans = 0;
+
+    for (int i = 1; i <= n; i++){
+        if (a[i] == 0 or a[i] == 2){
+            cout << i << " " << pre[i - 1] << " " << suf[i + 1] << endl;
+            ans = add(ans, mul(pre[i - 1], suf[i + 1]));
+        }
+    }
+
+    cout << ans;
 
     return 0;
 }

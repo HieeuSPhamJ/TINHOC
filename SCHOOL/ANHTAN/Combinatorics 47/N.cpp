@@ -53,7 +53,10 @@ int C(int n, int k){
     return mul(fact[n], fastpow(mul(fact[k], fact[n - k]), mod - 2));
 }
 
+int pre[maxN];
+int suf[maxN];
 int a[maxN];
+
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -62,29 +65,13 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     init();
-    int n;
-    cin >> n;
-    int ans = 1;
-    vector <int> lists;
-    for (int i = 1; i <= n; i++){
-        int inp;
-        cin >> inp;
-        if (inp){
-            lists.push_back(i);
-        }
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
+        cin >> n;
+        
     }
-
-    if (lists.empty()){
-        cout << 0; 
-        return 0;
-    }
-
-    for (int i = 1; i < (int)lists.size(); i++){
-        ans = mul(ans, lists[i] - lists[i - 1]);
-    }
-    cout << ans;
-
-    
 
     return 0;
 }

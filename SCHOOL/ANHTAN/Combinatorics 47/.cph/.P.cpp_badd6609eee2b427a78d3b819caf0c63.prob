@@ -1,0 +1,1 @@
+{"name":"Local: P","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\Combinatorics 47\\P.cpp","tests":[{"id":1667480466925,"input":"6\nac?b?c\n","output":"24\n"},{"id":1667480474941,"input":"3\n???\n","output":"1\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\Combinatorics 47\\P.cpp","group":"local","local":true}

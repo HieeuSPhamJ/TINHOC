@@ -1,10 +1,11 @@
-Ngay khi cuộc thi “Lập trình xanh” kết thúc, kết quả được ban tổ chức công bố và hiển thị
-trên màn hình. Người dành chức vô địch cuộc thi năm nay là Ếch Xanh, anh ấy sẽ được vinh
-danh như một huyền thoại vì đây đã là lần thứ 8 liên tiếp anh ấy lặp lại thành tích này. Sau
-khi công bố kết quả, ban tổ chức tiến hành trao phần thưởng cho nhà vô địch. Đây là một cuộc
-thi lập trình nên việc trao thưởng rất đặc biệt. Ban tổ chức cho hiển thị trên màn hình 𝑛 phần
-thưởng, các phần thưởng được đánh số từ 1 đến 𝑛, phần thưởng thứ 𝑖 (1 ≤ 𝑖 ≤ 𝑛) có giá trị
-𝑎𝑖
-. Ban tổ chức đưa ra quy định, nhà vô địch được chia các phần thưởng thành nhiều phần,
-mỗi phần bao gồm các phần thưởng liên tiếp nhau. Với mỗi phần có ít nhất 𝑘 phần thưởng,
-Ếch Xanh chỉ được chọn phần thưởng có giá trị nhỏ nhất.
+6 6
+1
+1 2
+2 3
+3 4
+4 2
+4 5
+3 6
+2
+5 6
+6 6
