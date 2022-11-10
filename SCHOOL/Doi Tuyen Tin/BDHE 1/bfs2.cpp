@@ -11,18 +11,14 @@ int n;
 vector <int> adj[maxN];
 int visited[maxN];
 int path[maxN];
-queue <int> myQueue;
 
 
 void bfs(int start){
     for (int i = 0; i < maxN; i++){
         visited[i] = -1;
     }
-
     visited[start] = 0;
-
     myQueue.push(start);
-
     while(!myQueue.empty()){
         int tempV = myQueue.front();
         myQueue.pop();
@@ -33,8 +29,7 @@ void bfs(int start){
                 myQueue.push(i);
             }
         }
-    }
-    
+    } 
 }
 
 int getMax(){

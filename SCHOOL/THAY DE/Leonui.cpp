@@ -1,110 +1,118 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #define ii pair <int,int>
-#define dd pair <double,double>
 #define fi first
 #define se second
 #define int long long
 #define double long double
+#define mp make_pair
+#define all(x) x.begin(), x.end()
 #define endl '\n'
 using namespace std;
 
-int h;
-vector <ii> listNode;
-vector <ii> listConvexHull;
+struct point_t {
+  int x, y;
+  point_t(int _x, int _y) {
+    x = _x;
+    y = _y;
+  }
+  point_t() {}
+  point_t operator - (const point_t &oth) const {
+    return point_t(x - oth.x, y - oth.y);
+  }
+};
 
-void print(ii x){
-    cout << "(" << x.fi << ", " << x.se << ")" << " ";
+struct line_t {
+  int a, b;
+  long long c;
+  line_t(int _a, int _b, long long _c) {
+    a = _a;
+    b = _b;
+    c = _c;
+  }
+  line_t() {}
+};
+
+long long cross(point_t a, point_t b) {
+  return 1LL * a.x * b.y - 1LL * a.y * b.x;
 }
 
-int cw(ii a, ii b, ii c){
-    return a.fi * (b.se - c.se) + b.fi * (c.se - a.se) + c.fi * (a.se - b.se) < 0;
+point_t vt(point_t a, point_t b) {
+  return point_t(a.y - b.y, b.x - a.x);
 }
 
-int ccw(ii a, ii b, ii c){
-    return a.fi * (b.se - c.se) + b.fi * (c.se - a.se) + c.fi * (a.se - b.se) > 0;
+line_t line(point_t a, point_t b) {
+  point_t w = vt(a, b);
+  return line_t(w.x, w.y, cross(a, b));
 }
+const int N = 1e6 + 7;
 
-int dcw(dd a, dd b, dd c){
-    return a.fi * (b.se - c.se) + b.fi * (c.se - a.se) + c.fi * (a.se - b.se) < 0;
-}
+int n, height;
+point_t a[N];
+int st[N];
+int lef[N];
+int rig[N];
 
-int dccw(dd a, dd b, dd c){
-    return a.fi * (b.se - c.se) + b.fi * (c.se - a.se) + c.fi * (a.se - b.se) > 0;
-}
+signed main() {
 
-dd getInte(ii A, ii B, ii C = {0,h}, ii D = {1,h}){
-    double a1 = B.se - A.se;
-    double b1 = A.fi - B.fi;
-    double c1 = a1*(A.fi) + b1*(A.se);
- 
-    double a2 = D.se - C.se;
-    double b2 = C.fi - D.fi;
-    double c2 = a2*(C.fi)+ b2*(C.se);
- 
-    double determinant = a1*b2 - a2*b1;
+freopen("Leonui.INP", "r", stdin);
+freopen("Leonui.OUT", "w", stdout);
+  cin.tie(0)->sync_with_stdio(0);
+  cin >> n >> height;
+  for (int i = 1; i <= n; i ++) {
+    cin >> a[i].x >> a[i].y;
+  }
 
-    double x = (b2*c1 - b1*c2)/determinant;
-    double y = (a1*c2 - a2*c1)/determinant;
-    return {x, y};
-}
+  auto ccw = [&](point_t a, point_t b, point_t c) {
+    return 1LL * a.x * (c.y - b.y)
+        +  1LL * b.x * (a.y - c.y)
+        +  1LL * c.x * (b.y - a.y);
+  };
 
-
-ii ConvexHull(int right){
-    listConvexHull.clear();
-    ii farLeft = listNode[right];
-    ii farRight = listNode.back();
-    vector <ii> up;
-    up.push_back(farLeft);
-    for (int i = right; i < listNode.size(); i++){
-        ii now = listNode[i];
-        if (i == listNode.size() - 1 or cw(farLeft, now, farRight)){
-            while(up.size() >= 2 and !cw(up[up.size() - 2], up[up.size() -  1], now)){
-                up.pop_back();
-            }
-            up.push_back(now);
-        }
+  int m = 0;
+  st[++ m] = 1;
+  for (int i = 2; i < n; i ++) {
+    while (m > 1 && ccw(a[st[m - 1]], a[st[m]], a[i]) <= 0) {
+      m --;
     }
-    ii hill = {0,0};
-    // for (auto i: up){
-    //     listConvexHull.push_back(i);
-    //     if (i.se > hill.se){
-    //         hill = i;
-    //     }
-    // }    
-
-    if ((int)up.size() == 1){
-        return up[0];
+    if (i & 1) {
+      lef[i] = st[m];
     }
-
-    return up[1];
-
-}
-
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n;
-    cin >> n >> h;
-    for (int i = 1; i <= n; i++){
-        ii inp;
-        cin >> inp.fi >> inp.se;
-        listNode.push_back(inp);
+    st[++ m] = i;
+  }
+  m = 0;
+  st[++ m] = n;
+  for (int i = n - 1; i > 1; i --) {
+    while (m > 1 && ccw(a[st[m - 1]], a[st[m]], a[i]) >= 0) {
+      m --;
     }
-
-    int ans = 0;
-    
-    for (int i = 2; i < n - 1; i+=2){
-        ii valley = listNode[i];
-        ii hill = ConvexHull(i);
-        // print(valley);
-        // print(hill);
-        // cout << endl;
-        dd inte = getInte(valley, hill);
-        // cout << inte.fi << " " << inte.se << endl;
+    if (i & 1) {
+      rig[i] = st[m];
     }
+    st[++ m] = i;
+  }
 
-    return 0;
+  #define pii pair<long long, int>
+  auto get = [&](line_t ln) -> pii {
+    return mp((-ln.c - 1LL * ln.b * height), ln.a);
+  };
+  vector<pair<pii, pii>> seg;
+  for (int i = 3; i < n; i += 2) {  
+    line_t l(line(a[i], a[lef[i]]));
+    line_t r(line(a[i], a[rig[i]]));
+    seg.emplace_back(get(l), get(r));
+  }
+  sort(all(seg), [&](pair<pii, pii> l, pair<pii, pii> r) {
+    return l.se.fi * r.se.se < l.se.se * r.se.fi;
+  });
+  int res = 0;
+  for (int i = 0, j = 0; i < (int) seg.size(); i ++) {
+    j = i + 1;
+    res ++;
+    while (j < (int) seg.size() && seg[j].fi.fi * seg[i].se.se <= seg[i].se.fi * seg[j].fi.se) {
+      j ++;
+    }
+    i = j - 1;
+  }
+  cout << res;
+  return 0;
 }

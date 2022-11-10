@@ -31,24 +31,7 @@ void reset(){
 }
 
 void Dickcha(int type, int Start){
-    myHeap.push({0, Start});
-    visited[type][Start] = 0;
-    while(!myHeap.empty()){
-        ii tempV = myHeap.top();
-        myHeap.pop(); 
-        // cout << "#" << tempV.id << endl;
-        if (tempV.len != visited[type][tempV.id]){
-            continue;
-        }
-        for (auto newV: adj[tempV.id]){
-            if (visited[type][tempV.id] + newV.val < visited[type][newV.id]){
-                // cout << newV.id << ' ';
-                visited[type][newV.id] = visited[type][tempV.id] + newV.val;
-                myHeap.push({visited[type][newV.id], newV.id});
-            }
-        }
-        // cout << endl;
-    }
+    
 }
 
 int cal(int a, int b){

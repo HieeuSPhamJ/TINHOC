@@ -5,67 +5,141 @@
 #define int long long
 #define double long double
 #define endl '\n'
+
 using namespace std;
 
-bool getBit(int mask, int i){
-    return (mask & (1ll << i));
-}
+const int maxN = 2 * 1e5 + 10;
+const int inf = 1e18;
 
-int onBit(int mask, int i){
-    return mask | (1ll << i);
-}
+int N = maxN;
+int seg[maxN * 4];
+multiset <int> store;
 
-int offBit(int mask, int i){
-    if (getBit(mask,i)){
-        return (mask xor (1ll << i));
+void update(int i, int left, int right, int index, int val){
+    if (index < left or right < index){
+        return;
     }
-    return mask;
-}
-
-int flipBit(int mask, int i){
-    return (mask xor (1ll << i));
-}
-
-int countBits(int mask){
-    int count = 0;
-    while (mask){
-        count += (mask & 1);
-        mask >>= 1;
+    if (left == right){
+        seg[i] += val;
+        return;
     }
-    return count;
+    int mid = (left + right) / 2;
+
+    update(2 * i, left, mid, index, val);
+    update(2 * i + 1, mid + 1, right, index, val);
+    seg[i] = (seg[2 * i] + seg[2 * i + 1]);
+}
+
+int get(int i, int left, int right, int _left, int _right){
+    if (right < _left or _right < left){
+        return 0;
+    }
+    if (_left <= left and right <= _right){
+        return seg[i];
+    }
+
+    int mid = (left + right) / 2;
+
+    int t1 = get(2 * i, left, mid, _left, _right);
+    int t2 = get(2 * i + 1, mid + 1, right, _left, _right);
+    return (t1 + t2);
+}
+
+int sizeTrain(){
+    return seg[1];
+}
+
+int getGreater(int val){
+    return get(1,1,N,val + 1, N);
+}
+
+void insertVal(int val){
+    update(1,1,N,val,1);
+    store.insert(val);
+}
+
+int getLast(){
+    auto it = store.end();
+    it--;
+    return *it;
+}
+
+void removeVal(int val){
+    update(1,1,N,val,-1);
+    store.erase(store.find(val));
+}
+
+
+vector <ii> lists;
+
+void nenso(){
+    set <int> temp;
+    for (auto i: lists){
+        temp.insert(i.fi);
+        temp.insert(i.se);
+    }
+    int cnt = 1;
+    map <int,int> conv;
+    for (auto i: temp){
+        conv[i] = cnt;
+        cnt++;
+    }
+    for (int i = 0; i < lists.size(); i++){
+        lists[i].fi = conv[lists[i].fi];
+        lists[i].se = conv[lists[i].se];
+        
+    }
 }
 
 signed main(){
+
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        int n;
-        cin >> n;
-        int len = log2(n);
-        int m = n;
-        for (int i = len; i >= len / 2; i--){
-            if (getBit(m,i)){
-                m = onBit(m, len - i);
-            }
-            else{
-                m = offBit(m, len - i);
-            }
-        }
-        int ans = abs(n - m);
-        if (len % 2 == 0){
-            ans = min(ans, abs(n - flipBit(m,len / 2)));
-        }
-        cout << ans << endl;
+    int n, cap, trash;
+    cin >> n >> cap >> trash;
+    // cout << n << " " << cap << endl;
+    while(n--){
+        int a, b;
+        cin >> a >> b;
+        lists.push_back({a,b});
     }
+    sort(lists.begin(), lists.end());
+    nenso();
+    for (auto i: lists){
+        int a = i.fi;
+        int b = i.se;
+        // cout << "With: " << a << " " << b << endl;
+        if (sizeTrain() == 0){
+            // cout << "Empty" << endl;
+            insertVal(b);
+            continue;
+        }
+        int num = getGreater(a);
+        // cout << num << " ";
+        if (num >= cap){
+            if (getGreater(b) <= 0){
+                // cout << "No change" << endl;
+                continue;
+            }
+            int last = getLast();
+            if (getGreater(b) == 1 and last > b){
+                // cout << "Change" << endl;
+                removeVal(last);
+                insertVal(b);
+            }
+        }
+        else{
+            // cout << "Push" << endl;
+            insertVal(b);
+        }
+    }
+
+    cout << sizeTrain();
+
     return 0;
 }
-/*
-100101
-100111
-100001
-*/
