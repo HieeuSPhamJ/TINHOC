@@ -10,10 +10,15 @@ signed main(){
         system(("./testgen"));        
         system(("./A"));
         system(("./B"));
+        // system(("./isok"));
         if (system(("diff A.out B.out")) != 0){
             cout << "Test " << test << ": WRONG!\n";
             return 0;
         }
+        // if (system(("diff isok.out cont.out")) != 0){
+        //     cout << "Test " << test << ": WRONG!\n";
+        //     return 0;
+        // }
         cout << "Test " << test << ": CORRECT!\n";
     }
 

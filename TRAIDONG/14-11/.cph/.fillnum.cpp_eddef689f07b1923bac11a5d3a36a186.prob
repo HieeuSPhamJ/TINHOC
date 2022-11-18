@@ -1,0 +1,1 @@
+{"name":"Local: fillnum","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG/14-11/fillnum.cpp","tests":[{"id":1668420547909,"input":"6 3 123\n4 6 5\n1 3 1\n3 4 9","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG/14-11/fillnum.cpp","group":"local","local":true}

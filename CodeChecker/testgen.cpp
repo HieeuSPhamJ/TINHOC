@@ -8,7 +8,7 @@ using namespace std;
 
 mt19937 rd(chrono::steady_clock::now().time_since_epoch().count());
 
-int random(int left = 0, int right = 1e8){
+int random(int left, int right){
     if (left == right){
         return left;
     }
@@ -22,15 +22,9 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(1,5);
-    int cap = random(1, n / 2);
-    int m = random(2, 10);
-    cout << n << " " << cap << " " << m << endl;
-    for (int i = 1; i <= n; i++){
-        int b = random(2, m);
-        int a = random(1, b - 1);
-        cout << a << " " << b << endl;
-    }
-    
+    cout << 1 << endl;
+    cout << random(1,10) << " " << random(1,10) << " " << random(1,10);
+
+
     return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: lcm","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG/15-11/lcm.cpp","tests":[{"id":1668494185908,"input":"3\n2 6\n4 16\n17 23","output":"10\n60\n391"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG/15-11/lcm.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: machine","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG/9-11/machine.cpp","tests":[{"id":1668099007474,"input":"2 1\nabc\nxyz\n2\n4\nabc\nxyza\naax\nac","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG/9-11/machine.cpp","group":"local","local":true}

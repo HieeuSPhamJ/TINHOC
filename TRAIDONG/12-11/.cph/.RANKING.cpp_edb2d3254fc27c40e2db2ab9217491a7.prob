@@ -1,0 +1,1 @@
+{"name":"Local: RANKING","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG/12-11/RANKING.cpp","tests":[{"id":1668217902758,"input":"5\n0 1000\n1 100\n1 100\n2 200\n100 0","output":"5 5\n2 3\n2 3\n2 4\n1 1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG/12-11/RANKING.cpp","group":"local","local":true}

@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#pragma GCC optimize("Ofast")
 #define ii pair <int,int>
 #define fi first
 #define se second
