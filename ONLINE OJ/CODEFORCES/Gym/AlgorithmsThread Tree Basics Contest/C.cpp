@@ -73,8 +73,6 @@ int len(int a, int b){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -134,8 +132,9 @@ signed main(){
         }
         else{
             // cout << "Second" << endl;
-            int a = b;
             int goal = level[lca] + (w - len(a, lca));
+            // cout << level[6] << endl;
+            int a = b;
             for (int i = log2(level[a]); i >= 0; i--){
                 if (level[father[a][i]] >= goal){
                     a = father[a][i];

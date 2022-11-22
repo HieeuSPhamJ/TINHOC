@@ -15,6 +15,82 @@ int random(int left, int right){
     return (rd() % (right - left + 1)) + left;
 }
 
+void printTreeEdges(vector<int> prufer, int m)
+{
+    int vertices = m + 2;
+    vector<int> vertex_set(vertices);
+ 
+    // Initialize the array of vertices
+    for (int i = 0; i < vertices; i++)
+        vertex_set[i] = 0;
+ 
+    // Number of occurrences of vertex in code
+    for (int i = 0; i < vertices - 2; i++)
+        vertex_set[prufer[i] - 1] += 1;
+ 
+ 
+    int j = 0;
+ 
+    // Find the smallest label not present in
+    // prufer[].
+    for (int i = 0; i < vertices - 2; i++)
+    {
+        for (j = 0; j < vertices; j++)
+        {
+ 
+            // If j+1 is not present in prufer set
+            if (vertex_set[j] == 0)
+            {
+ 
+                // Remove from Prufer set and print
+                // pair.
+                vertex_set[j] = -1;
+                cout << (j + 1) << " "
+                                << prufer[i] << endl;
+ 
+                vertex_set[prufer[i] - 1]--;
+ 
+                break;
+            }
+        }
+    }
+ 
+    j = 0;
+ 
+    // For the last element
+    for (int i = 0; i < vertices; i++)
+    {
+        if (vertex_set[i] == 0 && j == 0)
+        {
+ 
+            cout << (i + 1) << " ";
+            j++;
+        }
+        else if (vertex_set[i] == 0 && j == 1)
+            cout << (i + 1) << "\n";
+    }
+}
+ 
+// generate random numbers in between l an r
+int ran(int l, int r)
+{
+    return l + (rand() % (r - l + 1));
+}
+ 
+// Function to Generate Random Tree
+void generateRandomTree(int n)
+{
+ 
+    int length = n - 2;
+    vector<int> arr(length);
+ 
+    // Loop to Generate Random Array
+    for (int i = 0; i < length; i++)
+    {
+        arr[i] = ran(0, length + 1) + 1;
+    }
+    printTreeEdges(arr, length);
+}
 
 signed main(){
     srand(time(0));
@@ -22,9 +98,14 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << 1 << endl;
-    cout << random(1,10) << " " << random(1,10) << " " << random(1,10);
-
+    int n = random(2,10);
+    cout << n << endl;
+    generateRandomTree(n);
+    int test = 1;
+    cout << test << endl;
+    for (int i = 1; i <= test; i++){
+        cout << random(1, n) << " " << random(1,n) << " " << random(1,n) << endl;
+    }
 
     return 0;
 }

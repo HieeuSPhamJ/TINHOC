@@ -1,125 +1,91 @@
-#include<bits/stdc++.h>
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define int long long
-#define double long double
-#define endl '\n'
-using namespace std;
-
-const int inf = 1e18;
-int dist[1003][1003];
-int minn(int x, int y)
-{
-    if (x < y)
-        return x;
-    else
-        return y;
-}
-int maxx(int x, int y)
-{
-    if (x > y)
-        return x;
-    else
-        return y;
-}
-int bfs(int n, int m, int d)
-{
-    for (int i = 0; i <= n; i++)
-    {
-        for (int j = 0; j <= m; j++)
-        {
-            dist[i][j] = inf;
+        #include<bits/stdc++.h>
+        using namespace std;
+        #define pb push_back
+        vector<vector<int>> g;
+        int bl[(int)4e5][20];
+        int depth[(int)4e5];
+        void dfs(int s,int p){
+            for(int i:g[s]){
+                if(i==p){
+                    continue;
+                }
+                depth[i]=depth[s]+1;
+                bl[i][0]=s;
+                for(int j=1;j<18;j++){
+                    bl[i][j]=bl[bl[i][j-1]][j-1];
+                }
+                dfs(i,s);
+            }
         }
-    }
-    int ans = inf;
-    queue<ii> q;
-    dist[0][0] = 0;
-    q.push({0, 0});
-    while (!q.empty())
-    {
-        int f1 = q.front().first;
-        int f2 = q.front().second;
-        // cout<<f1<<' '<<f2<<endl;
-        q.pop();
-        if (f1 < n && dist[n][f2] > dist[f1][f2] + 1)
-        {
-            dist[n][f2] = dist[f1][f2] + 1;
-            q.push({n, f2});
+        int kthancestor(int node,int k){
+            for(int i=19;i>=0;i--){
+                if((k&(1<<i))){
+                    node=bl[node][i];
+                    k=k^(1<<i);
+                }
+            }
+            return node;
         }
-        if (f2 < m && dist[f1][m] > dist[f1][f2] + 1)
-        {
-            dist[f1][m] = dist[f1][f2] + 1;
-            q.push({f1, m});
+        int findlca(int a,int b){
+            int hdiff=abs(depth[a]-depth[b]);
+            if(depth[a]-depth[b]<0){
+                int temp=a;
+                a=b;
+                b=temp;
+            }
+            for(int i=19;i>=0;i--){
+                if((hdiff&(1<<i))){
+                    a=bl[a][i];
+                    hdiff=hdiff^(1<<i);
+                }
+            }
+            if(a==b)return a;
+            for(int i=19;i>=0;i--){
+                if(bl[a][i]!=bl[b][i]){
+                    a=bl[a][i];
+                    b=bl[b][i];
+                }
+            }
+            return bl[a][0];
+        }void solve(){
+            int n,v1,v2,q,c;
+            cin>>n;
+            g.resize(n+1);
+            for(int i=1;i<n;i++){
+                cin>>v1>>v2;
+                g[v1].pb(v2);
+                g[v2].pb(v1);
+            }
+            memset(bl,0,sizeof(bl));
+            memset(depth,0,sizeof(depth));
+            dfs(1,-1);
+            cin>>q;
+            for(int i=0;i<q;i++){
+                cin>>v1>>v2>>c;
+                int lca=findlca(v1,v2);
+                int dist=depth[v1]-depth[lca]+depth[v2]-depth[lca];
+                if(dist<=c){
+                    cout<<v2<<'\n';
+                }else{
+                    if(c<=depth[v1]-depth[lca]){
+                        cout<<kthancestor(v1,c)<<'\n';
+                    }else{
+                        c-=depth[v1]-depth[lca];
+                        cout<<kthancestor(v2,depth[v2]-(depth[lca]+c))<<'\n';
+                    }
+                }
+            }
         }
-
-        // f2 ---> f1
-        int need = n - f1, give = f2;
-        if (f2 > 0 && f1 < n && dist[f1 + minn(need, give)][f2 - minn(need, give)] > dist[f1][f2] + 1)
-        {
-            int x1 = f1 + minn(need, give), x2 = f2 - minn(need, give);
-            dist[x1][x2] = dist[f1][f2] + 1;
-            q.push({x1, x2});
-        }
-        need = m - f2, give = f1;
-        if (f1 > 0 && f2 < m && dist[f1 - minn(need, give)][f2 + minn(need, give)] > dist[f1][f2] + 1)
-        {
-            int x1 = f1 - minn(need, give), x2 = f2 + minn(need, give);
-            dist[x1][x2] = dist[f1][f2] + 1;
-            q.push({x1, x2});
-        }
-
-        if (f1 > 0 && dist[0][f2] > dist[f1][f2] + 1)
-        {
-            dist[0][f2] = dist[f1][f2] + 1;
-            q.push({0, f2});
-        }
-        if (f2 > 0 && dist[f1][0] > dist[f1][f2] + 1)
-        {
-            dist[f1][0] = dist[f1][f2] + 1;
-            q.push({f1, 0});
-        }
-    }
-    if (m >= d)
-    {
-        for (int i = 0; i <= n; i++)
-        {
-            ans = min(ans, dist[i][d]);
-            // cout<<dist[i][d]<<' '<<i<<' '<<d<<endl;
-        }
-    }
-    if (n >= d)
-    {
-        for (int i = 0; i <= m; i++)
-        {
-            // cout<<dist[d][i]<<' '<<d<<' '<<i<<endl;
-            ans = min(ans, dist[d][i]);
-        }
-    }
-    return ans;
-}
-signed main()
-{
+        int main(){
+            
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-    int n, m, d, t;
-    cin >> t;
-    while (t--)
-    {
-        int n, m, d, g;
-        cin >> n >> m >> d;
-
-        if ((d > n && d > m))
-            cout << -1 << endl;
-        else if (d == n || d == m)
-            cout << 1 << endl;
-        else
-        {
-            int ans = bfs(n, m, d);
-            if (ans == inf)
-                cout << -1 << endl;
-            else
-                cout << ans << endl;
+          //  fastIO();
+            int t=1;
+            // int t;cin>>t;
+            while(t>0){
+                solve();
+                t--;
+            }
+            return 0;
         }
-    }
-}

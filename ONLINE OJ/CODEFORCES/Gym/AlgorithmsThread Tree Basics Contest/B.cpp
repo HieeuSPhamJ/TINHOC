@@ -33,7 +33,7 @@ void bfs2(int node, int father){
             continue;
         }
         // cout << anoChild << " ";
-        up[node] = max(up[node], down[anoChild] + 1);
+        up[node] = max(up[node], down[anoChild] + 2);
     }  
     // cout << endl;
     // cout << "Node: " << node << " " << up[node] << endl;
@@ -67,6 +67,7 @@ signed main(){
         dem = max(dem, up[i] + down[i] - 2);
         // cout << i << ": " << up[i] << " " << down[i] << endl;
     }
+    // cout << "Dem: " << dem << endl;
 
     for (int i = 1; i <= n; i++){
         int ndem = 0;

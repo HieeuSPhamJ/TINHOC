@@ -27,6 +27,7 @@ void DFS(int node, int daddy){
 }
 
 void init(){
+    level[0] = -1;
     for (int j = 1; j <= log2(n); j++){
         for (int i = 1; i <= n; i++){
             father[i][j] = father[father[i][j - 1]][j - 1];
