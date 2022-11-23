@@ -7,79 +7,78 @@
 #define endl '\n'
 using namespace std;
 
+const int maxN = 1e5 + 7;
 
-const int maxN = 3 * 1e5 + 10;
-
-int n;
 vector <int> adj[maxN];
-int level[maxN];
-int father[maxN][30];
+int ans = 0;
+int lacon[maxN];
+int la[maxN];
+int isla[maxN];
+int dp[maxN];
+int countBru;
+int sus = 0;
 
+int choose(int x){
+    if (x == 0){
+        return 0;
+    }
+    return (1 << (x - 1));
+}
 
-void dfs(int node, int dad){
+void dfs(int node, int father){
+    int checkLa = 1;
+    int fullLa = 1;
+    int child = 0;
+    int c = 0;
+    dp[node] = 1;
     for (auto newNode: adj[node]){
-        if (newNode == dad){
+        if (father == newNode){
             continue;
         }
-        level[newNode] = level[node] + 1;
-        father[newNode][0] = node;
-        dfs(newNode, node);
-    } 
-}
-
-
-void init(){
-    level[0] = -1;
-    for (int j = 1; j <= log2(n); j++){
-        for (int i = 1; i <= n; i++){
-            father[i][j] = father[father[i][j - 1]][j - 1];
+        child++;
+        checkLa = 0;
+        dfs(newNode,node);
+        if (isla[newNode] == 0){
+            fullLa = 0;
         }
-    }
-}
-
-int LCA(int a, int b){
-    if (a == b){
-        return a;
-    }
-
-    if (level[a] < level[b]){
-        swap(a,b);
-    }
-    // cout << a << " " << b << endl;
-    for (int i = log2(level[a]); i >= 0; i--){
-        if (level[father[a][i]] >= level[b]){
-            a = father[a][i];
+        c = 1;
+        if (isla[newNode] == 0){
+            dp[node] *= dp[newNode];
         }
+        lacon[node] += isla[newNode];
+        la[node] += la[newNode];
     }
-    
-    // cout << a << " " << b << endl;
-    if (a == b){
-        return a;
-    }   
-
-    for (int i = log2(level[a]); father[a][0] != father[b][0]; i--){
-        if (father[a][i] != father[b][i]){
-            a = father[a][i];
-            b = father[b][i];
-        }
+    if ((child - lacon[node]) >= 1 and (child - lacon[node]) % 2 == 0 and lacon[node] == 0){
+        sus = 1;
     }
-
-    return father[a][0];
-}
-
-int len(int a, int b){
-    int lca = LCA(a,b);
-    return level[a] + level[b] - 2 * level[lca];
+    // cout << node << ": " << isla[node] << endl;
+    if (checkLa == 1){
+        isla[node] = 1;
+        la[node] = 1;
+        fullLa = 0;
+    }
+    else if (fullLa){
+        dp[node] = choose(lacon[node]);
+    }
+    else if ((child - lacon[node]) % 2 == 0 and lacon[node] >= 1){
+        // cout << "Spec chan: " << node << endl;
+        dp[node] *= choose(lacon[node]);
+    }
+    else if ((child - lacon[node]) % 2 == 1 and lacon[node] >= 1){
+        // cout << "Spec le: " << node << endl;
+        dp[node] *= (choose(lacon[node]));
+    }
 }
 
 signed main(){
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
+    // freopen("JUNGLE.INP", "r", stdin);
+    // freopen("JUNGLE.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    int n;
     cin >> n;
     for (int i = 1; i < n; i++){
         int a, b;
@@ -87,63 +86,16 @@ signed main(){
         adj[a].push_back(b);
         adj[b].push_back(a);
     }
-    int test;
-    cin >> test;
+
     dfs(1,1);
-    init();
+
     // for (int i = 1; i <= n; i++){
-    //     cout << i << ": " << father[i][0] << " " << level[i] << endl;
+    //     cout << i << ": " << dp[i] << endl;
     // }
-    while(test--){
-        int a, b, w;
-        cin >> a >> b >> w;
-        if (len(a,b) <= w){
-            cout << b << endl;
-            continue;
-        }
-        int lca = LCA(a,b);
-        // cout << a << " " << b << " lca:" << lca <<endl; 
-        if (a == lca){
-            int goal = level[a] + w;
-            a = b;
-            for (int i = log2(level[a]); i >= 0; i--){
-                if (level[father[a][i]] >= goal){
-                    a = father[a][i];
-                }
-            }
-            cout << a << endl;
-        }
-        else if (b == lca){
-            int goal = level[a] - w;
-            for (int i = log2(level[a]); i >= 0; i--){
-                if (level[father[a][i]] >= goal){
-                    a = father[a][i];
-                }
-            }
-            cout << a << endl;
-        }
-        else if (len(a, lca) >= w){
-            // cout << "First " << len(a, lca) << endl;
-            int goal = level[a] - w;
-            for (int i = log2(level[a]); i >= 0; i--){
-                if (level[father[a][i]] >= goal){
-                    a = father[a][i];
-                }
-            }
-            cout << a << endl;
-        }
-        else{
-            // cout << "Second" << endl;
-            int a = b;
-            int goal = level[lca] + (w - len(a, lca));
-            for (int i = log2(level[a]); i >= 0; i--){
-                if (level[father[a][i]] >= goal){
-                    a = father[a][i];
-                }
-            }
-            cout << a << endl;
-        }
-        // cout << lca << endl;
+    if (sus == 1){
+        cout << 0;
+        return 0;
     }
+    cout << dp[1] + (1 << countBru) - 1;
     return 0;
 }
