@@ -29,6 +29,8 @@ void dfs(int node, int father){
     int checkLa = 1;
     int fullLa = 1;
     int child = 0;
+    int c = 0;
+    dp[node] = 1;
     for (auto newNode: adj[node]){
         if (father == newNode){
             continue;
@@ -39,8 +41,10 @@ void dfs(int node, int father){
         if (isla[newNode] == 0){
             fullLa = 0;
         }
-
-        dp[node] += dp[newNode];
+        c = 1;
+        if (isla[newNode] == 0){
+            dp[node] *= dp[newNode];
+        }
         lacon[node] += isla[newNode];
         la[node] += la[newNode];
     }
@@ -54,32 +58,23 @@ void dfs(int node, int father){
         fullLa = 0;
     }
     else if (fullLa){
-        dp[node] += choose(lacon[node]);
-    }
-    else if (lacon[node] == 0 and child % 2 == 0){
-        dp[node] = 1;
+        dp[node] = choose(lacon[node]);
     }
     else if ((child - lacon[node]) % 2 == 0 and lacon[node] >= 1){
-        // cout << "Spec 1" << ": " << node << endl;
-        if ((child - lacon[node]) >= 1 and (child - lacon[node]) % 2 == 0){
-            dp[node] = choose(lacon[node]) * dp[node];
-            // cout << "nosus" << endl;
-        }
-        else{
-            countBru += choose(lacon[node]);
-        }
+        // cout << "Spec chan: " << node << endl;
+        dp[node] *= choose(lacon[node]);
     }
     else if ((child - lacon[node]) % 2 == 1 and lacon[node] >= 1){
-        // cout << "Spec 2" << ": " << node << endl;
-        countBru += choose(lacon[node]) - 1;
+        // cout << "Spec le: " << node << endl;
+        dp[node] *= (choose(lacon[node]));
     }
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
-    // freopen("JUNGLE.INP", "r", stdin);
-    // freopen("JUNGLE.OUT", "w", stdout);
+    // freopen("input.inp", "r", stdin);
+    // freopen("A.out", "w", stdout);
+    freopen("JUNGLE.INP", "r", stdin);
+    freopen("JUNGLE.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
