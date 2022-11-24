@@ -1,1 +1,0 @@
-{"name":"Local: B","url":"/Users/hieuphamdinhtrung/TINHOC/CodeChecker/B.cpp","tests":[{"id":1668482650223,"input":"1\n2 3 1 2 1 2 1 1 9","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/CodeChecker/B.cpp","group":"local","local":true}

@@ -7,11 +7,11 @@ using namespace std;
 signed main(){
     int maxTest = 1000;
     for (int test = 1; test <= maxTest; test++){
-        system(("testgen"));        
-        system(("A"));
-        system(("B"));
+        system(("./testgen"));        
+        system(("./A"));
+        system(("./B"));
         // system(("./isok"));
-        if (system(("fc A.out B.out")) != 0){
+        if (system(("diff A.out B.out")) != 0){
             cout << "Test " << test << ": WRONG!\n";
             return 0;
         }

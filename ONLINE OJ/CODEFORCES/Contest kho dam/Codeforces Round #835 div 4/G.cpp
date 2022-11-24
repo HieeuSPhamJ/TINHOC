@@ -36,9 +36,6 @@ void dfs2(int node, int father){
     // if (node != father and node != x){
     //     B.insert(fromB[node]);
     // }
-    if (node == x){
-        return;
-    }
     for (auto newNode: adj[node]){
         if (newNode.se == father){
             continue;
@@ -49,6 +46,7 @@ void dfs2(int node, int father){
 }
 
 signed main(){
+
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -73,7 +71,7 @@ signed main(){
             adj[b].push_back({w,a});
         }
 
-        if (n == 1){
+        if (n == 1 or x == y){
             cout << "YES" << endl;
             continue;
         }
@@ -85,6 +83,8 @@ signed main(){
         // cout << x << " " << y << endl;
         dfs1(x,x);
         dfs2(y,y);  
+
+        A.insert(0);
 
         for (int i = 1; i <= n; i++){
             if (i == x or i == y){

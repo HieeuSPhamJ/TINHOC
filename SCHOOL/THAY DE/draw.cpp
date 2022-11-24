@@ -7,7 +7,7 @@
 #define endl '\n'
 using namespace std;
 
-const int maxN = 2010;
+const int maxN = 4010;
 const int inf = 1e18;
 
 int n, m, s, t;
@@ -21,7 +21,7 @@ int turn = 0;
 void addEdge(int a, int b, int w){
     adj[a].push_back(b);
     adj[b].push_back(a);
-    cout << a << " " << b << " " << w << endl;
+    // cout << a << " " << b << " " << w << endl;
     cap[a][b] += w;
 }
 
@@ -94,8 +94,8 @@ signed main(){
     for (int i = 1; i <= n; i++){
         cin >> a[i].fi >> a[i].se;
     }
-    int s = n + n + n + n + 1;
-    int t = n + n + n + n + 2;
+    s = n + n + 1;
+    t = n + n + 2;
 
     for (int i = 1; i <= n; i++){
         for (int j = 1; j <= n; j++){
@@ -103,22 +103,25 @@ signed main(){
                 continue;
             }
             if (a[i].fi == a[j].se){ 
-                addEdge(i + n, j + n + n, 1);
+                addEdge(i, j + n, 1);
             }
             else if (a[i].se == a[j].se){  
-                addEdge(i + n, j + n + n, 1);
+                addEdge(i, j + n, 1);
             }
         }
     }
 
     for (int i = 1; i <= n; i++){
         addEdge(s, i, 1);
-        addEdge(i, i + n, 1);
-        addEdge(i + n + n, t, 1);
-        addEdge(i + n + n, i + n, 1);
+        addEdge(i + n, t, 1);
     }
     int ans = 0;
-    // ans = dinic();
-    cout << ans;
+    ans = dinic();
+    if (ans == n){
+        cout << "YES" << endl;
+    }
+    else{
+        cout << "NO" << endl;
+    }
     return 0;
 }

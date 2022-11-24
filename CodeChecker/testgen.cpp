@@ -101,11 +101,6 @@ signed main(){
     int n = random(2,10);
     cout << n << endl;
     generateRandomTree(n);
-    int test = 1;
-    cout << test << endl;
-    for (int i = 1; i <= test; i++){
-        cout << random(1, n) << " " << random(1,n) << " " << random(1,n) << endl;
-    }
 
     return 0;
 }

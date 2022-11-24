@@ -71,10 +71,10 @@ void dfs(int node, int father){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
-    // freopen("JUNGLE.INP", "r", stdin);
-    // freopen("JUNGLE.OUT", "w", stdout);
+    // freopen("input.inp", "r", stdin);
+    // freopen("A.out", "w", stdout);
+    freopen("JUNGLE.INP", "r", stdin);
+    freopen("JUNGLE.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
