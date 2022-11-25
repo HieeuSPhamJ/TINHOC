@@ -99,8 +99,11 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = random(2,10);
-    cout << n << endl;
-    generateRandomTree(n);
+    int d = 0;
+    cout << n << " " << d << endl; 
+    for (int i = 1; i <= n; i++){
+        cout << random(1, 10) << " ";
+    }
 
     return 0;
 }

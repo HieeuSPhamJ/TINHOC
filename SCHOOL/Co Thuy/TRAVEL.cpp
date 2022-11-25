@@ -15,8 +15,6 @@ int a[maxN];
 int visited[maxN];
 
 signed main(){
-    freopen("TRAVEL.INP", "r", stdin);
-    freopen("TRAVEL.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
