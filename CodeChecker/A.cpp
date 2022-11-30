@@ -1,79 +1,54 @@
 #include<bits/stdc++.h>
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define int long long
-#define double long double
-#define endl '\n'
 using namespace std;
-
-const int maxN = 2010;
-
-int a[maxN];
-
-signed main(){
+#define long long long
+const long m=(1<<8);
+const long N=2e5+10;
+long l,r,mid,ans,n,A[N],d,F[(1<<8)],t,gt;
+void update(long a,long val){
+    for(; a<m; a+=a&(-a)) F[a]+=val;
+}
+long get(long a){
+    long t=0;
+    for(; a>=1; a-=a&(-a)) t+=F[a];
+    return t;
+}
+long xuly(long pos){
+    l=1;
+    r=201;
+    long f;
+    while(l<=r){
+        mid=(l+r)>>1;
+        if(get(mid)>=pos){
+            f=mid;
+            r=mid-1;
+        }
+        else l=mid+1;
+    }
+    return f;
+}
+int main(){
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n;
-    cin >> n;
-    int d;
-    cin >> d;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
+    ios::sync_with_stdio(0);cin.tie(0);
+    cin>>n>>d;
+    for(long i=1; i<=n; i++){
+        cin>>A[i];
+        A[i]++;
     }
-    sort(a + 1, a + 1 + n);
-    
-    // for (int i = 1; i <= n; i++){
-    //     cout << a[i] << " ";
-    // }
-    // cout << endl;
+    for(long i=1; i<=d; i++){
+        update(A[i],1);
+    }
+    for(long i=d+1; i<=n; i++){
+        gt=xuly((d+1)/2)-1;
+        if(d&1) gt*=2;
+        else gt+=xuly((d+2)/2)-1;
+        if(gt<=A[i]) ans++;
+        update(A[i-d],-1);
+        update(A[i],1);
+    }
+    cout<<ans;
 
-    int ans = 1;
-    for (int i = 1; i <= n; i++){
-        for (int j = i + 1; j <= n; j++){
-            int left = i + 1;
-            int right = j - 1;
-            int root = a[i] + a[j];
-            int tans = 1;
-            // cout << "With: " << i << " " << j << endl;
-            while(left < right){
-                while(abs(root - (a[left] + a[right])) > d){
-                    while(left < right and root - (a[left] + a[right]) < -d){
-                        right--;
-                    }
-                    if (left == right){
-                        break;
-                    }
-                    while(left < right and root - (a[left] + a[right]) > d){
-                        left++;
-                    }
-                    if (left == right){
-                        break;
-                    }
-                
-                } 
-                if (left == right){
-                    break;
-                }  
-                // cout << left << " " << right << endl;
-                tans++;
-                left++;
-                right--;
-            }
-            bru:;
-            ans = max(ans, tans);
-        }
-    }
-    cout << ans;
+
+
     return 0;
 }
-
-/*
-1 2 3 4 5 6 7 8 9 10
-1 2 2 3 3 5 5 6 8 8 
-
-
-*/

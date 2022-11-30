@@ -99,10 +99,10 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = random(2,10);
-    int d = 0;
+    int d = random(1,n - 1);
     cout << n << " " << d << endl; 
     for (int i = 1; i <= n; i++){
-        cout << random(1, 10) << " ";
+        cout << random(1, 200) << " ";
     }
 
     return 0;
