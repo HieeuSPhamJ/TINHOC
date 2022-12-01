@@ -23,9 +23,6 @@ void init(){
 }
 
 signed main(){
-    
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     // freopen("cbarn2.in", "r", stdin);
     // freopen("cbarn2.out", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -69,10 +66,25 @@ signed main(){
                     //     cout << "Change: " << now + sum << endl;
                     // }
                     dp[open][i][d] = min(dp[open][i][d], now + sum);
-                    dp[i][i][d + 1] = min(dp[i][i][d + 1], sum - a[i] * (i - open));
+                    // cout << "New open:" << i << " " << dp[i][i][d + 1] << endl;
+                    // if (dp[i][i][d + 1] > sum - a[i] * (i - open)){
+                    //     cout << "Change: " << sum - a[i] * (i - open) << endl;
+                    // }
+                    dp[i][i][d + 1] = min(dp[i][i][d + 1], now + sum - a[i] * (i - open));
                 }
+
+                // for (int i = 0; i < n; i++){
+                //     if (dp[open][i][d] == inf){
+                //         cout << -1 << " ";
+                //         continue;
+                //     }
+                //     cout << dp[open][i][d] << " ";
+                // }
+                // cout << endl;
             }
         }
+
+        // cout << endl;
         
         for (int i = 0; i < n; i++){
             ans = min(ans, dp[i][n - 1][k]);
