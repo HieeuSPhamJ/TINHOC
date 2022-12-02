@@ -1,0 +1,1 @@
+{"name":"Local: team","url":"d:\\TINHOC\\USACO GUIDE\\DP-Gold\\team.cpp","tests":[{"id":1669985040434,"input":"10 10 3\n1 2 2 6 6 7 8 9 14 17\n1 3 8 10 10 16 16 18 19 19","output":"382"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\USACO GUIDE\\DP-Gold\\team.cpp","group":"local","local":true}

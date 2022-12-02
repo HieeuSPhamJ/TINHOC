@@ -1,0 +1,1 @@
+{"name":"Local: Drought","url":"d:\\TINHOC\\USACO GUIDE\\DP-Gold\\Drought.cpp","tests":[{"id":1669994827311,"input":"3\n9 11 7","output":"241"},{"id":1669994832652,"input":"4\n6 8 5 9","output":"137"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\USACO GUIDE\\DP-Gold\\Drought.cpp","group":"local","local":true}
