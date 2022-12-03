@@ -1,0 +1,1 @@
+{"name":"Local: MAZE","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Huong/MAZE.cpp","tests":[{"id":1670030764133,"input":"3 3\n000\n110\n000\n2 1 1 3 1\n1 2 3\n2 1 1 3 1\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Huong/MAZE.cpp","group":"local","local":true}
