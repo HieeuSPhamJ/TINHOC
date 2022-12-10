@@ -1,0 +1,1 @@
+{"name":"Local: PSWAP","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Huong/PSWAP.cpp","tests":[{"id":1670634214379,"input":"5\n5 3 4 2 1","output":"3"},{"id":1670640959586,"input":"6\n1 4 6 2 5 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Huong/PSWAP.cpp","group":"local","local":true}
