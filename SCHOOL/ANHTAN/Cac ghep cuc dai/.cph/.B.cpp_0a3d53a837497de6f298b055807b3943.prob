@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\Cac ghep cuc dai\\B.cpp","tests":[{"id":1670594810182,"input":"5 4 6\n5 2\n1 2\n4 3\n3 1\n2 2\n4 4","output":""},{"id":1670594944892,"input":"2 2 3\n1 1\n1 2\n2 1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\Cac ghep cuc dai\\B.cpp","group":"local","local":true}

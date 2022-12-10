@@ -11,6 +11,8 @@ bool cmp(int ax,int bx){
 }
 
 int main(){
+    freopen("photo.inp", "r", stdin);
+    freopen("photo.out", "w", stdout);
 	ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 	int n; cin>>n;

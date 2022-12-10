@@ -46,7 +46,7 @@ void printTreeEdges(vector<int> prufer, int m)
                 // pair.
                 vertex_set[j] = -1;
                 cout << (j + 1) << " "
-                                << prufer[i] << endl;
+                                << prufer[i] << " " << random(1,4) << endl;
  
                 vertex_set[prufer[i] - 1]--;
  
@@ -67,7 +67,7 @@ void printTreeEdges(vector<int> prufer, int m)
             j++;
         }
         else if (vertex_set[i] == 0 && j == 1)
-            cout << (i + 1) << "\n";
+            cout << (i + 1) << " " << random(1,4) << "\n";
     }
 }
  
@@ -92,18 +92,36 @@ void generateRandomTree(int n)
     printTreeEdges(arr, length);
 }
 
+
+string randomStr(const int len) {
+    static const char alphanum[] =
+        "abcdefghijklmnopqrstuvwxyz";
+    std::string tmp_s;
+    tmp_s.reserve(len);
+
+    for (int i = 0; i < len; ++i) {
+        tmp_s += alphanum[rand() % (sizeof(alphanum) - 1)];
+    }
+    
+    return tmp_s;
+}
+
 signed main(){
     srand(time(0));
     freopen("input.inp", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(2,10);
-    int d = random(1,min(n - 1, 7ll));
-    cout << n << " " << d << endl; 
-    for (int i = 1; i <= n; i++){
-        cout << random(1, 20) << " ";
+    int n = random(1,20);
+    int t = random(1,10);
+    cout << n << " " << t << endl;
+    for (int i = 1; i < n; i++){
+        cout << random(1,i) << " ";
     }
-
+    cout << endl;
+    cout << randomStr(n) << endl;
+    while(t--){
+        cout << random(1,n) << " " << random(1,n) << endl;
+    }
     return 0;
 }

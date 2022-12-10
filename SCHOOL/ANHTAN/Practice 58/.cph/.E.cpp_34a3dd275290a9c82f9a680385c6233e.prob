@@ -1,0 +1,1 @@
+{"name":"Local: E","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\Practice 58\\E.cpp","tests":[{"id":1670120441960,"input":"5 8 1 5 1\n1 2 12\n1 3 13\n1 4 14\n4 2 14\n2 3 12\n2 5 12\n4 5 15\n3 5 16","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\Practice 58\\E.cpp","group":"local","local":true}

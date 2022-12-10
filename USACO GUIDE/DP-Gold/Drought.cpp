@@ -29,10 +29,12 @@ signed main(){
     }
 
     for (int i = 3; i <= n; i++){
-        for (int h = 0; h <= a[i]; h++){
-            for (int k = h; k <= a[i - 1]; k++){
-                dp[i][h] += dp[i - 1][k];
-                dp[i][h] %= mod;
+        for (int base = 0; base <= a[i]; base++){
+            for (int h = base; h <= a[i]; h++){
+                int d = (h - base);
+                for (int k = h)
+                dp[i][base] += dp[i - 1][base];
+                dp[i][base] %= mod;
             }
         }
     }

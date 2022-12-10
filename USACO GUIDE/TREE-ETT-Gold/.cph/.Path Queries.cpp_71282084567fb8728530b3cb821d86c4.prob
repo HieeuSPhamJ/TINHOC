@@ -1,0 +1,1 @@
+{"name":"Local: Path Queries","url":"d:\\TINHOC\\USACO GUIDE\\TREE-ETT-Gold\\Path Queries.cpp","tests":[{"id":1670506745000,"input":"5 3\n4 2 5 2 1\n1 2\n1 3\n3 4\n3 5\n2 4\n1 3 2\n2 4","output":"11\n8"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\USACO GUIDE\\TREE-ETT-Gold\\Path Queries.cpp","group":"local","local":true}

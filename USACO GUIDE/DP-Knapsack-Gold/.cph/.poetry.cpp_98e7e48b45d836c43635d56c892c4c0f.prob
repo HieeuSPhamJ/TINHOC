@@ -1,0 +1,1 @@
+{"name":"Local: poetry","url":"d:\\TINHOC\\USACO GUIDE\\DP-Knapsack-Gold\\poetry.cpp","tests":[{"id":1670226614288,"input":"3 3 10\n3 1\n4 1\n3 2\nA\nB\nA","output":"960"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\USACO GUIDE\\DP-Knapsack-Gold\\poetry.cpp","group":"local","local":true}
