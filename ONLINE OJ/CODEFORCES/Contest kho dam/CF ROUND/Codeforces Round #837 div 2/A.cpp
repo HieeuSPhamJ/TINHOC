@@ -7,10 +7,6 @@
 #define endl '\n'
 using namespace std;
 
-const int maxN = 1e5 + 10;
-
-int a[maxN];
-
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);

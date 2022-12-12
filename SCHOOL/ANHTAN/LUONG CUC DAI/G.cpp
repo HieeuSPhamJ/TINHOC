@@ -5,6 +5,7 @@
 #define int long long
 #define double long double
 #define endl '\n'
+#define all(x) x.begin(), x.end()
 using namespace std;
 
 const int inf = 1e18;
@@ -89,6 +90,25 @@ signed main(){
         add(a,b,w);
     }
 
-    cout << dinic();
+    cout << n << " " << dinic() << " ";
+
+    vector <pair <ii,int>> lists;
+
+    for (int i = 0; i < n; i++){
+        for (auto j: adj[i]){
+            if (j.had > 0){
+                lists.push_back({{i,j.to}, j.had});
+            }
+        }
+    }
+
+    sort(all(lists));
+
+    cout << lists.size() << endl;
+
+    for (auto i: lists){
+        cout << i.fi.fi << " " << i.fi.se << " " << i.se << endl;
+    }
+
     return 0;
 }

@@ -3,50 +3,49 @@
 #define fi first
 #define se second
 #define int long long
+#define double long double
 #define endl '\n'
 using namespace std;
 
 const int maxN = 2 * 1e5 + 10;
+const int mod = 998244353;
 
-unordered_map <int, int> dp[maxN];
-int maxVal[maxN];
+int a[maxN];
+map <int,int> dp[maxN];
+map <int,int> dpDup[maxN];
+int ans[maxN];
 
 signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
     int n, k;
     cin >> n >> k;
-    dp[0][0] = 1;
-    for (int i = 0; i <= n; i++){
-        maxVal[i] = 0;
-    }
-    // cout << n << k << endl;
-    for (int i = 0; i <= n; i++){
-        for (int j = 0; j <= maxVal[i]; j++){
-            if (dp[i][j] == 0){
-                continue;
-            }
-            // cout << i << "," << j << ": ";
-            for (int x = 1; i + x * (k + j) <= n; x++){
-                int newI = i + x * (k + j);
-                // cout << newI << "," << j + 1 << " ";
-                dp[newI][j + 1] += dp[i][j];
-                maxVal[newI] = max(maxVal[newI], j + 1);
-            }
-            cout << endl;
-        }
-    }
+
+    dp[0][1] = 1;
+    ans[0] = 1;
     for (int i = 1; i <= n; i++){
-        int ans = 0;
-        for (int j = 0; j <= maxVal[i]; j++){
-            ans += dp[i][j];
+        for (int j = k; j <= k + 500; j++){
+            if (i - j >= 0){
+                (dp[i][j] += dp[i - j][j - 1] + dpDup[i - j][j - 1]) %= mod;
+                (dp[i][j] += dpDup[i - j][j]) %= mod;
+                dpDup[i][j] = dpDup[i - j][j];
+                dpDup[i][j] += dp[i - j][j - 1];
+                
+            }
+
+            ans[i] += dp[i][j];
         }
-        cout << ans << ' ';
     }
+
+
+    for (int i = 1; i <= n; i++){
+        cout << ans[i] << " ";
+    }
+
+
+
     return 0;
 }
-
-/*
-    
-*/

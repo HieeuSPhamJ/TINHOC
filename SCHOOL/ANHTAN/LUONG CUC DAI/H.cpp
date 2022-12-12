@@ -8,7 +8,7 @@
 using namespace std;
 
 const int inf = 1e18;
-const int maxN = 1e3 + 10;
+const int maxN = 1e5 + 10;
 
 struct edge{
     int to, rev, had, cap;
@@ -82,10 +82,13 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cin >> n >> m >> s >> t;
-    while(m--){
-        int a, b, w;
-        cin >> a >> b >> w;
+    // cin >> n;
+    cin >> n;
+    s = n;
+    t = 1;
+    int a, b, w;
+    while(cin >> a >> b >> w){
+        // cin >> a >> b >> w;
         add(a,b,w);
     }
 
