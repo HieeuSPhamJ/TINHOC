@@ -13,41 +13,41 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int m = 0;
-    int x = -1, y = -1;
-    for (int A = 4; A <= 1000; A++){
-    for (int B = 4; B <= 1000; B++){
-        int a = A;
-        int b = B;
+    int test;
+    cin >> test;
+    while(test--){
+        int a, b;
+        cin >> a >> b;
         if (__gcd(a,b) != 1){
-            // cout << 0 << endl;
+            cout << 0 << endl;
             continue;
         }
         if (abs(a - b) == 1){
-            // cout << -1 << endl;
+            cout << -1 << endl;
             continue;
         }
         if (a % 2 == b % 2){
-            // cout << 1 << endl;
+            cout << 1 << endl;
             continue;
         }
         int ans = 1;
-        while(__gcd(a + 1, b + 1) == 1){
-            ans++;
-            a++;
-            b++;
+
+        if (b < a){
+            swap(a,b);
         }
 
-        // cout << ans << endl;
-        if (ans > m){
-            m = ans;
-            x = A;
-            y = B;
-        }
-    }
-    }
+        ans = a - b * 2;
 
-    cout << m << " ";
-    cout << x << " " << y << endl;
+        if (ans < 1){
+            ans = 1;
+            while(__gcd(a + 1, b + 1) == 1){
+                ans++;
+                a++;
+                b++;
+            }
+        }
+
+        cout << ans << endl;
+    }
     return 0;
 }
