@@ -1,22 +1,17 @@
-ưu điểm
-    + nếu quá tải về film chụp, thì sẽ tư vấn giúp bác sĩ chuẩn đoán (1 kênh tư vấn cho bác sĩ)
-    + nếu vị trí của khối u mà bị che bởi xương hay dị vật nào đó thì phần mềm giúp định vị trí của khối u giúp bác sĩ đưa ra quyết định chính xác
-        + xương che, bị dị vật che => k thấy
-        + khối u nhỏ khó thấy
-    
-vị trí khối ú bị che, kích thước nhỏ => khó quan sát
-    phần mềm sẽ giúp phát hiện vị trí khối u, để giúp bác sĩ đưa ra quyết định chính xác
-    khi phát hiện vị trí bất thường => bác sĩ sẽ dựa vào kết quả đó để quan sát và đưa ra kết quả chính xác hơn
-    => ưu điểm lớn nhất của phần mềm của e
-=> công cụ hỗ trợ bác sĩ chuẩn đoán
-
-Khi mà e nghiên cứu cái đề tài này, khi mà khối u bị che bởi dị vật thì việc quan xác vị trí khá là khó khăn vs bác sĩ
-Vì vậy e đã cải tiến đề tài 
-Hiện nay nếu phát hiện khối u sớm sẽ có nhiều phương án điều trị kip thời và hiệu quả
-
-Đưa ra ví dụ
-
-NHẤN MẠNH PHẦN NHẬN BIẾT VỊ TRÍ BẤT THƯỜNG
-
-công nghệ ai phát triển 
-    vd: nhận diện khung mặt
+131515399
+315153172
+121315160
+213151533
+315153248
+1121315
+213151541
+112
+213151599
+315153251
+131515325
+112131516
+1121311
+1
+213151537
+11213
+213151540

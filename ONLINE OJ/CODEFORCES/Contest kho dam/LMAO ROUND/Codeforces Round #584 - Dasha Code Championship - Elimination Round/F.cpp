@@ -53,21 +53,14 @@ int getLen(int a){
 }
 
 ii add(ii a, ii b){
-    ii res = b;
-    res.fi += a.fi;
-    // if (getLen(b.se) >= 15){
-    //     cout << "LMAO" << endl;
-    //     exit(1);
-    // }
-    res.se += a.se * POW[getLen(b.se)];
-    // while(res.se >= mod){
-    //     res.se -= mod;
-    //     res.fi++;
-    // }   
-    res.fi += res.se / mod;
-    res.se %= mod;
+    ii res;
+    res.fi = POW[getLen(b.se)] * a.fi + b.fi;
+    int sum = POW[getLen(b.se)] * a.se + b.se;
+    res.fi += sum / mod;
+    res.se += sum % mod;
     return res;
 }
+
 
 void init(){
     POW[0] = 1;
@@ -75,8 +68,8 @@ void init(){
         visited[i] = {inf,inf};
     }
     visited[1] = {0,0};
-    for (int i = 1; i <= 15; i++){
-        POW[i] = POW[i - 1] * 10;
+    for (int i = 1; i < 20; i++){
+        (POW[i] = POW[i - 1] * 10) %= mod;
     }
 }
 
@@ -107,21 +100,7 @@ void dickcha(){
     }
 }
 
-void dfs(int node, int father){
-    for (auto newNode: adj[node]){
-        if (father == newNode.se){
-            continue;
-        }
-        visited[newNode.se] = add(visited[node], {0,newNode.fi});
-        // (visited[newNode.se].se = visited[node].se * POW[getLen(newNode.fi)] + newNode.fi) %= mod;
-        dfs(newNode.se,node);
-    }
-}
-
 signed main(){
-    
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -138,12 +117,8 @@ signed main(){
     }
 
     init();
-    // if (n - 1 == m){
-    //     dfs(1,1);
-    // }
-    // else{
-        dickcha();
-    // }
+    dickcha();
+    
 
     for (int i = 2; i <= n; i++){
         cout << visited[i].se << endl;

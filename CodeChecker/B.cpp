@@ -1,48 +1,108 @@
-// LUOGU_RID: 96828563
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+ 
 using namespace std;
-int read()
-{
-	int x=0,f=1;char ch=getchar();
-	while(ch<'0'||ch>'9') f=(ch=='-')?-1:1,ch=getchar();
-	while(ch>='0'&&ch<='9') x=(x<<1)+(x<<3)+(ch^48),ch=getchar();
-	return x*f;
-}
-const int N=500010;
-int ver[N],ne[N],head[N],tot,dfn[N],cnt,d[N],b[N],e[N],dfnn[N];//e是异或的累加，b是每个点的数值，d是深度 
-vector<int> a[N],c[N];//a是dfs序，c是前缀和 
-inline int max(int x,int y){return (x>y)?x:y;}
-void add(int x,int y){ver[++tot]=y,ne[tot]=head[x],head[x]=tot;}
-void dfs(int x,int f)
-{
-	dfn[x]=++cnt,d[x]=d[f]+1,a[d[x]].push_back(dfn[x]),e[d[x]]^=b[x],c[d[x]].push_back(e[d[x]]);
-	for(int i=head[x];i;i=ne[i]) dfs(ver[i],x);
-	dfnn[x]=cnt;
-}
-int main()
-{
+
+template<class A, class B>
+    bool maximize(A& x, B y) {
+        if (x < y) return x = y, true; else return false;
+    }
     
+template<class A, class B>
+    bool minimize(A& x, B y) {
+        if (x >= y) return x = y, true; else return false;
+    }
+
+typedef     long long             ll;
+typedef     unsigned long long    ull;
+typedef     double                db;
+typedef     long double           ld;
+typedef     pair<db, db>          pdb;
+typedef     pair<ld, ld>          pld;
+typedef     pair<int, int>        pii;
+typedef     pair<ll, ll>          pll;
+typedef     pair<ll, int>         plli;
+typedef     pair<int, ll>         pill;
+
+#define     all(a)                a.begin(), a.end()
+#define     fi                    first
+#define     se                    second
+//#define     int                   long long
+
+const int MAX_N = 1.5e6 + 5;
+const int mod = 1e9 + 7;
+
+int n, m;
+vector<int> adj[MAX_N][10];
+vector<int> q[MAX_N];
+int ans[MAX_N];
+bool vis[MAX_N];
+
+signed main() {
+	
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-	int n=read(),m=read();
-	for(int i=2;i<=n;i++) add(read(),i);
-	string s;cin>>s;
-	for(int i=0;i<n;i++) b[i+1]=1<<(s[i]-'a');
-	dfs(1,0);
-	while(m--)
-	{
-		int x=read(),y=read();
-		int l=lower_bound(a[y].begin(),a[y].end(),dfn[x])-a[y].begin(),r=upper_bound(a[y].begin(),a[y].end(),dfnn[x])-a[y].begin()-1;
-		if(r==-1)
-		{
-			puts("Yes");
-			continue;
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
+
+	cin >> n >> m;
+	int extra = n;
+	int curr;
+
+	for (int i = 1; i <= m; i++) {
+		int x = i;
+		vector<int> digit;
+		while (x) {
+			digit.push_back(x % 10);
+			x /= 10;
 		}
-		int ss;
-		if(l==0) ss=c[y][r];
-		else ss=c[y][r]^c[y][l-1];
-		if(ss-(ss&-ss)) puts("No");
-		else puts("Yes");
+		reverse(all(digit));
+
+		int u, v;
+		cin >> u >> v;
+		curr = u;
+		for (int j = 0; j < (int) digit.size() - 1; j++) {
+			++extra;
+			adj[curr][digit[j]].push_back(extra);
+			curr = extra;
+		}
+		adj[curr][digit.back()].push_back(v);
+		curr = v;
+		for (int j = 0; j < (int) digit.size() - 1; j++) {
+			++extra;
+			adj[curr][digit[j]].push_back(extra);
+			curr = extra;
+		}
+		adj[curr][digit.back()].push_back(u);
 	}
+
+	int time = 1;
+	q[0].push_back(1);
+	vis[1] = true;
+	for (int i = 0; i < time; i++) {
+		for (int d = 0; d < 10; d++) {
+			bool ok = false;
+			for (int u : q[i]) {
+				for (int v : adj[u][d]) {
+					if (!vis[v]) {
+						vis[v] = true;
+						ok = true;
+						ans[v] = (10ll * ans[u] + d) % mod;
+						q[time].push_back(v);
+					}
+				}
+			}
+			time += ok;
+		}
+	}
+
+	for (int i = 2; i <= n; i++) {
+		cout << ans[i] << "\n";
+	}
+
 	return 0;
 }
+
+/*
+
+
+*/

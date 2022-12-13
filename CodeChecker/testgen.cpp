@@ -46,7 +46,7 @@ void printTreeEdges(vector<int> prufer, int m)
                 // pair.
                 vertex_set[j] = -1;
                 cout << (j + 1) << " "
-                                << prufer[i] << " " << random(1,4) << endl;
+                                << prufer[i] << endl;
  
                 vertex_set[prufer[i] - 1]--;
  
@@ -67,7 +67,7 @@ void printTreeEdges(vector<int> prufer, int m)
             j++;
         }
         else if (vertex_set[i] == 0 && j == 1)
-            cout << (i + 1) << " " << random(1,4) << "\n";
+            cout << (i + 1) << "\n";
     }
 }
  
@@ -112,16 +112,13 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(1,20);
-    int t = random(1,10);
-    cout << n << " " << t << endl;
-    for (int i = 1; i < n; i++){
-        cout << random(1,i) << " ";
-    }
-    cout << endl;
-    cout << randomStr(n) << endl;
-    while(t--){
+    int n = random(1,1000);
+    int m = random(0, 10);
+    cout << n << " " << n - 1 + m << endl;
+    generateRandomTree(n);
+    for (int i = 1; i <= m; i++){
         cout << random(1,n) << " " << random(1,n) << endl;
     }
+
     return 0;
 }

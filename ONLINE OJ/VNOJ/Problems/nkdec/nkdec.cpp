@@ -20,6 +20,7 @@ int dist[maxN];
 int nxt[maxN];
 
 void add(int a, int b, int w){
+    // cout << a << " " << b << endl;
     adj[a].push_back({b,(int)adj[b].size(), 0, w});
     adj[b].push_back({a,(int)adj[a].size(), 0, 0});
 }
@@ -84,6 +85,30 @@ signed main(){
     cout.tie(NULL);
     cin >> n >> m;
     s = 0;
-    t = n * m + 1;
+    int c = max(n,m);
+    t = n + m + c + 1;
+    for (int i = 1; i <= m; i++){
+        add(i + n + c, t, inf);
+    }
+    for (int i = 1; i <= c; i++){
+        add(s, i, inf);
+        for (int j = 1; j <= n; j++){
+            add(i, j + c, 1);
+        }
+    }
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= m; j++){
+            char x;
+            cin >> x;
+            if (x == '1'){
+                add(i + c, j + c + n, 1);
+            }
+        }
+    }   
+
+    
+
+    cout << dinic();
+    
     return 0;
 }
