@@ -20,7 +20,7 @@ int nxt[maxN];
 int dist[maxN];
 
 void add(int a, int b, int w){
-    // cout << a << " " << b << " " << w << endl;
+    cout << a << " " << b << " " << w << endl;
     node u = {b,(int)adj[b].size(),0,w};
     node v = {a,(int)adj[a].size(),0,0};
     adj[a].push_back(u);
@@ -89,12 +89,24 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-
-    cin >> n >> m >> s >> t;
-    while(m--){
-        int a, b, w;
-        cin >> a >> b >> w;
-        add(a,b,w);
+    int k;
+    cin >> n >> m >> k;
+    s = 0;
+    t = n + m + 1;
+    for (int i = 1; i <= n; i++){
+        int x;
+        cin >> x;
+        add(s,i,x);
+    }
+    for (int i = 1; i <= m; i++){
+        int x;
+        cin >> x;
+        add(i + n,t,x);
+    }
+    while(k--){
+        int x, y;
+        cin >> x >> y;
+        add(x,y + n,inf);
     }
 
     cout << dinic();

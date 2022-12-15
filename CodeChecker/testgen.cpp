@@ -95,7 +95,7 @@ void generateRandomTree(int n)
 
 string randomStr(const int len) {
     static const char alphanum[] =
-        "abcdefghijklmnopqrstuvwxyz";
+        "ab";
     std::string tmp_s;
     tmp_s.reserve(len);
 
@@ -112,13 +112,11 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(1,1000);
-    int m = random(0, 10);
-    cout << n << " " << n - 1 + m << endl;
-    generateRandomTree(n);
-    for (int i = 1; i <= m; i++){
-        cout << random(1,n) << " " << random(1,n) << endl;
-    }
+    cout << randomStr(4) << endl;
+    cout << 1 << endl;
+    int a = random(1,4);
+    int b = random(a,4);
+    cout << a << " " << b << endl;
 
     return 0;
 }

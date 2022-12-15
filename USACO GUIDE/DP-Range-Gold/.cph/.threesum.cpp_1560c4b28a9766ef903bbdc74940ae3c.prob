@@ -1,0 +1,1 @@
+{"name":"Local: threesum","url":"d:\\TINHOC\\USACO GUIDE\\DP-Range-Gold\\threesum.cpp","tests":[{"id":1671081101842,"input":"7 3\n2 0 -1 1 -2 3 3\n1 5\n2 4\n1 7","output":"2\n1\n4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\USACO GUIDE\\DP-Range-Gold\\threesum.cpp","group":"local","local":true}
