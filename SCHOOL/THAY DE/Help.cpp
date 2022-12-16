@@ -32,9 +32,13 @@ signed main(){
             int i;
             cin >> i;
             pair <ii,int> now = {lists[i - 1],0ll};
+            cout << "With: " << now.fi.fi << " " << now.fi.se << endl;
             auto it = lmao.lower_bound(now);
+            for (auto i: lmao){
+                cout << i.fi.fi << " " << i.fi.se << endl;
+            }
             if (it == lmao.end()){
-                cout << "NO" << endl;
+                cout << "NE" << endl;
             }
             else{
                 auto ans = *it;
