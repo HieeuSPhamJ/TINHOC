@@ -7,6 +7,10 @@
 #define endl '\n'
 using namespace std;
 
+const int maxN = 2 * 1e5 + 10;
+
+int a[maxN];
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
@@ -16,71 +20,79 @@ signed main(){
     int test;
     cin >> test;
     while(test--){
-        map <int,int> A[2], hashA[2];
-        A[0]['a'] = 1;
-        A[1]['a'] = 1;
-        int n;
+        int n, x;
+        ii ans;
+        vector <int> a;
+        vector <int> v;
         cin >> n;
-        for (int i = 1; i <= n; i++){
-            int d , k;
-            string s;
-            cin >> d >> k >> s;
-            for (int i = 0; i < s.size(); i++){
-                A[d - 1][s[i]] += k;
-            }
-            for (int i = 'a'; i <= 'z'; i++){
-                hashA[0][i] = A[0][i];
-                hashA[1][i] = A[1][i];
-            }
-            int left = 'a';
-            int right = 'z';
-            
-            int dmcodeforces = 0;
-
-            while(1){
-                while(A[1][right] == 0 and right >= 'a'){
-                    right--;
-                }
-                while(A[0][left] == 0 and left <= 'z'){
-                    left++;
-                }
-                if(left > 'z'){
-                    if(right >= 'a'){
-                        cout << "YES" << endl;
-                        dmcodeforces = 1;
-                        if (dmcodeforces){
-                            break;
-                        }
-                    }
-                    break;
-                }
-                if(dmcodeforces or right < 'a'){
-                    break;
-                }
-                if(left < right){
-                    cout << "YES" << endl;
-                    dmcodeforces = 1;
-                    if (dmcodeforces){
-                        break;
-                    }
-                }
-                if(dmcodeforces or right < left){
-                    break;
-                }
-                int x = min(A[0][left] , A[1][right]);
-                A[1][right] -= x;
-                A[0][left] -= x;
-            }
-            if (!dmcodeforces){
-                cout << "NO" << endl;
-            }
-            
-            for (int i = 'a'; i <= 'z'; i++){
-                A[0][i] = hashA[0][i];
-                A[1][i] = hashA[1][i];
+        if (n == 2)
+        {
+            int x, y;
+            cin >> x >> y;
+            cout << x << endl;
+            continue;
+        }
+        a.push_back(-1);
+        for (int i = 1; i <= n; i++)
+        {
+            cin >> x;
+            if (x != a[a.size() - 1])
+            {
+                a.push_back(x);
             }
         }
-        
+        ans.se = 0;
+        ans.fi = 1e18;
+        n = a.size() - 1;
+        a.push_back(a[n - 1]);
+other
+
+        a[0] = a[2];
+        for (int i = 1; i <= n; i++)
+        {
+            if ((a[i] - a[i - 1]) * (a[i] - a[i + 1]) > 0)
+            {
+                v.push_back(i);
+            }
+        }
+other
+
+        int l, r;
+        for (int i = 0; i < v.size() - 1; i++)
+        {
+            l = v[i], r = v[i + 1];
+            if (a[r] > a[l])
+            {
+                ans.fi = min(ans.fi, (a[l] + a[l + 1]) / 2);
+            }
+            else
+            {
+other
+
+                ans.se = max(ans.se, (a[l] + a[l + 1] + 1) / 2);
+            }
+        }
+        if (ans.se <= ans.fi){
+            cout << ans.se << endl;
+            continue;
+        }
+        cout << -1 << endl;
+    
     }
     return 0;
 }
+
+
+/*
++  <= -tbm(2min)
+-  >= -tbm(2max)
+
+5 3 4 5
+1 1 0 1
+
+2
+
+10 5 4 3 2 1
+2 3 4  5 6 
+
+*/

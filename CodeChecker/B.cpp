@@ -1,43 +1,86 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define int long long
+#define double long double
+#define endl '\n'
+#define rall(x) x.begin(), x.end()
 using namespace std;
 
-int main() {
-	freopen("input.inp", "r", stdin);
-	freopen("B.out", "w", stdout);
-	cin.tie(0) -> sync_with_stdio(false);
-	string s;
-	cin >> s;
-	int n = s.length();
-	
-	// dp[i][j] = number of palidrome substrings in [i,j]
-	vector<vector<int>> dp(n, vector<int>(n));
-	
-	// pal[i][j] = true if [i,j] is a palindrome
-	vector<vector<bool>> pal(n, vector<bool>(n));
+const int maxN = 2 * 1e5 + 10;
 
-	for (int i = n - 1; i >= 0; i--) {
-		// base case: strings of length 1 are always a palindrome
-		dp[i][i] = pal[i][i] = 1;
-		for (int j = i + 1; j < n; j++) {
-			/*
-			 * We add a character before start and after the end.
-			 * If previously was a palindrome and the new characters
-			 * are the same, then it is still a palindrome.
-			 */
-			pal[i][j] = (pal[i + 1][j - 1] || j - i == 1)
-						&& (s[i] == s[j]);
+vector <int> adj[maxN];
 
-			// number of palindromes using inclusion - exclusion
-			dp[i][j] = dp[i + 1][j] + dp[i][j - 1]
-					    - dp[i + 1][j - 1] + pal[i][j];
-		}
-	}
+int dp[maxN];
+int ans = 1;
+int isleaf[maxN];
 
-	int q;
-	cin >> q;
-	for (int i = 0; i < q; i++) {
-		int l, r; 
-		cin >> l >> r;
-		cout << dp[l - 1][r - 1] << "\n";
-	}
+void dfs(int node, int father){
+    int ok = 1;
+    int okall = 1;
+    vector <int> lists;
+    for (auto nu: adj[node]){
+        if (nu == father){
+            continue;
+        }
+        ok = 0;
+        dfs(nu,node);
+        if (isleaf[nu] == 0){
+            okall = 0;
+        }
+        lists.push_back(dp[nu]);
+    }
+    
+    isleaf[node] = ok;
+    // cout << "Node: " << node << " " << ok << endl;
+    sort(rall(lists));
+    ok = 1;
+
+    // for (auto i: lists){
+    //     cout << i << "," << isleaf[i] << " ";
+    // }
+    // cout << endl;
+
+    if (lists.size() >= 2){
+        ans = max(ans, lists[0] + lists[1] + (int)(lists.size() - 2));
+    }
+    if (!lists.empty()){
+        dp[node] = max(dp[node], (int)(lists.back() + lists.size() - 1));
+    }
+    if (okall == 0){
+        ans = max(ans,dp[node] + 2);
+    }
+    else{
+        ans = max(ans, dp[node]);
+    }
+    // cout << dp[node] << endl;
+}
+
+signed main(){
+    freopen("input.inp", "r", stdin);
+    freopen("B.out", "w", stdout);
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int n;
+    cin >> n;
+    for (int i = 1; i < n; i++){
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+
+    dfs(1,1);
+
+    if (n == 2){
+        cout << 1 << endl;
+        return 0;
+    }
+
+    cout << ans;
+    return 0;
 }
