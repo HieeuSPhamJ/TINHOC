@@ -7,6 +7,15 @@
 #define endl '\n'
 using namespace std;
 
+const int maxN = 1e5 + 10;
+
+int dp[maxN];
+vector <int> adj[maxN];
+
+void dfs(int node, int father){
+
+}
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
@@ -18,9 +27,20 @@ signed main(){
     while(test--){
         int n;
         cin >> n;
-        for (int i = 1; i < n; i++){
-
+        
+        for (int i = 1; i <= n; i++){
+            dp[i] = 0;
+            adj[i].clear();
         }
+        for (int i = 1; i < n; i++){
+            int a, b;
+            cin >> a >> b;
+            adj[a].push_back(b);
+            adj[b].push_back(a);
+        }
+        dfs(1,1);
+
+        cout << dp[1] << endl;
     }
     return 0;
 }
