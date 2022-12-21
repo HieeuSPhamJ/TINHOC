@@ -25,7 +25,6 @@ void add(int a, int b, int w){
     node v = {a,(int)adj[a].size(),0,0};
     adj[a].push_back(u);
     adj[b].push_back(v);
-    // cout << a << " " << b << " " << w << endl;
 }
 
 bool cango(){
@@ -88,26 +87,26 @@ char a[maxN][maxN];
 
 bool adu(int mval){
     // cout << "WITH VAL" << mval << endl;
-    for (int i = 0; i < maxN; i++){
+    for (int i = 0; i <= n + m + 2; i++){
         adj[i].clear();
     }
 
     s = 0;
     t = n + m + 1;
-    for (int i = 1; i <= m; i++){
-        add(s,i,mval);
+    for (int i = 1; i <= n; i++) {
+        add(s, i, 2);
     }
-    for (int i = 1; i <= n; i++){
-        add(i + m,t,2);
+    for (int j = 1; j <= m; j++) {
+        add(n + j, t, mval);
     }
-    for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= m; j++){
-            if (a[i][j] == '1'){
-                add(j,i + m,1);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (a[i][j] == '1') {
+                add(i, n + j, 1);
             }
         }
     }
-    cout << "DINIC: " << dinic() << endl;
+    // cout << "DINIC: " << dinic() << endl;
     // return 0;
     return dinic() == 2 * n;
 }
@@ -128,17 +127,17 @@ signed main(){
     int left = 1;
     int right = inf;
     int ans = 0;
-    // while(left <= right){
-    //     int mid = (left + right) / 2;
-    //     if (adu(mid)){
-    //         right = mid - 1;
-    //         ans = mid;
-    //     }
-    //     else{
-    //         left = mid + 1;
-    //     }
-    // }
-    cout << adu(4) << endl;
+    while(left <= right){
+        int mid = (left + right) / 2;
+        if (adu(mid)){
+            right = mid - 1;
+            ans = mid;
+        }
+        else{
+            left = mid + 1;
+        }
+    }
+    // cout << adu(4) << endl;
     cout << ans;
 
     return 0;
