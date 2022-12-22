@@ -7,7 +7,7 @@
 #define endl '\n'
 using namespace std;
 
-const int maxN = 1e4 + 10;
+const int maxN = 1e5 + 10;
 const int inf = 1e18;
 
 struct node{
@@ -25,7 +25,6 @@ void add(int a, int b, int w){
     node v = {a,(int)adj[a].size(),0,0};
     adj[a].push_back(u);
     adj[b].push_back(v);
-    // cout << a << " " << b << " " << w << endl;
 }
 
 bool cango(){
@@ -84,33 +83,8 @@ int dinic(){
     return res;
 }
 
-char a[110][110];
-
-bool adu(int mval){
-    // cout << "WITH VAL" << mval << endl;
-    for (int i = 0; i < maxN; i++){
-        adj[i].clear();
-    }
-
-    s = 0;
-    t = n + m + 1;
-    for (int i = 1; i <= m; i++){
-        add(s,i,mval);
-    }
-    for (int i = 1; i <= n; i++){
-        add(i + m,t,2);
-    }
-    for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= m; j++){
-            if (a[i][j] == '1'){
-                add(j,i + m,1);
-            }
-        }
-    }
-    // cout << "DINIC: " << dinic() << endl;
-    // return 0;
-    return dinic() == 2 * n;
-}
+vector <int> lists[4][maxN];
+ii a[maxN];
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -118,28 +92,82 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+
     cin >> n >> m;
+    s = 0;
+    t = n + n + m + m + 1;
+
+    int lay1 = 0;
+    int lay2 = n;
+    int lay3 = lay2 + m;
+    int lay4 = lay3 + m;
+    
+    string str;
+    getline(cin, str);
     for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= m; j++){
-            cin >> a[i][j];
+        add(s,lay1 + i,1);
+        
+        getline(cin, str);
+        stringstream ss;
+        ss << str;
+        int x;
+        
+        while(ss >> x){
+            // lists[1][i].push_back(x);
+            add(i,lay2 + x,1);
+            // cout << x << " ";
+        }
+        // cout << endl;
+    }
+
+    for (int i = 1; i <= n; i++){
+        add(lay4 + i, t, 1);
+        getline(cin, str);
+        stringstream ss;
+        ss << str;
+        int x;
+        while(ss >> x){
+            add(lay3 + x, lay4 + i,1);
+            
+            // cout << x << " ";
+            // lists[2][i].push_back(x);
+        }
+        
+        // cout << endl;
+    }
+
+    for (int i = 1; i <= m; i++){
+        add(lay2 + i, lay3 + i, 1);
+        
+    }
+
+    int t = dinic();
+
+    // cout << t << endl;
+
+    for (int i = 1; i <= n; i++){
+        for (auto e: adj[i]){
+            // cout << i << " " << e.to << " " << e.had << endl;
+            if (e.had > 0 and e.to >= 1){
+                a[e.to - n].fi = i;
+                break;
+            }
         }
     }
 
-    int left = 1;
-    int right = n;
-    int ans = 0;
-    while(left <= right){
-        int mid = (left + right) / 2;
-        if (adu(mid)){
-            right = mid - 1;
-            ans = mid;
-        }
-        else{
-            left = mid + 1;
+    for (int i = 1; i <= m; i++){
+        for (auto e: adj[i + n + m]){
+            if (e.had > 0 and e.to > lay4){
+                a[i].se = e.to - lay4;
+                break;
+            }
         }
     }
-    // cout << adu(2) << endl;
-    cout << ans;
+
+    for (int i = 1; i <= m; i++){
+        cout << a[i].fi << " " << a[i].se << endl;
+    }
+
 
     return 0;
 }
