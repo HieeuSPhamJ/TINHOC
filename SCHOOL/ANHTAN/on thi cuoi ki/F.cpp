@@ -4,17 +4,20 @@
 #define se second
 #define int long long
 #define double long double
-#define endl '\n'
+// #define endl '\n'
+#define vec vector <int>
 using namespace std;
 
+int n, sum;
+double ans;
 
 struct str{
-    string s;
+    vec s;
     double cal(){
         double res = 0;    
         vector <double> st;
         for (int i = 0; i < s.size(); i++){
-            double d = s[i] - '0';
+            double d = s[i];
             if (1 <= d and d <= 9){
                 st.push_back(d);
             }
@@ -24,7 +27,7 @@ struct str{
                 }
                 else if (s[i] == '*'){
                     i++;
-                    d = s[i] - '0';
+                    d = s[i];
                     double last = st.back();
                     st.pop_back();
                     last *= d;
@@ -32,7 +35,7 @@ struct str{
                 }
                 else{
                     i++;
-                    d = s[i] - '0';
+                    d = s[i];
                     double last = st.back();
                     st.pop_back();
                     last /= d;
@@ -41,6 +44,10 @@ struct str{
             }
         }
         res = st[0];
+        // for (auto x: st){
+        //     cout << x << " ";
+        // }
+        // cout << endl;
         for (int i = 1; i < st.size(); i+=2){
             if ((int)st[i] == '+'){
                 res += st[i + 1];
@@ -55,17 +62,71 @@ struct str{
     }
 };
 
+void adu(int i, vector <int> s){
+    
+    if (i == 0){
+        for (int d = 1; d <= 9; d++){
+            vec t;
+            t.push_back(d);
+            adu(i + 1, t);
+        }
+        return;
+    }
+    if (i == n){
+        str ss;
+        ss.s = s;
+        
+        if (ss.cal() == sum){
+            for (auto x: s){
+                if (1 <= x and i <= 9){
+                    cout << x;
+                    continue;
+                }
+                cout << char(x);
+            }
+            cout << endl;
+            ans++;
+        }
+        return;
+    }
+    
+    for (int d = 1; d <= 9; d++){   
+        s.push_back('+');
+        s.push_back(d);
+        adu(i + 1, s);
+        s.pop_back();
+        s.pop_back();
+
+        s.push_back('-');
+        s.push_back(d);
+        adu(i + 1, s);
+        s.pop_back();
+        s.pop_back();
+
+        s.push_back('*');
+        s.push_back(d);
+        adu(i + 1, s);
+        s.pop_back();
+        s.pop_back();
+
+        s.push_back('-');
+        s.push_back(d);
+        adu(i + 1, s);
+        s.pop_back();
+        s.pop_back();
+        
+    }
+}
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    str s;
-    s.s = "1+1-2*4+5/2+3-3";
-
-    cout << s.cal();
-
-
+    cin >> n;
+    cin >> sum;
+    adu(0,{});
+    cout << ans;
     return 0;
 }

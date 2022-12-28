@@ -27,7 +27,7 @@ void tarjan(int node, int father){
         if (num[newNode]){
             low[node] = min(low[node], num[newNode]);
         }
-        else {
+        else {  
             tarjan(newNode, node);
             child++;
             low[node] = min(low[node], low[newNode]);
