@@ -4,8 +4,8 @@
 #define se second
 #define int long long
 #define double long double
-// #define endl '\n'
-#define vec vector <int>
+#define endl '\n'
+#define all(x) x.begin(), x,end()
 using namespace std;
 
 int n, sum;

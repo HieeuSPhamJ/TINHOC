@@ -7,27 +7,23 @@
 #define endl '\n'
 using namespace std;
 
+const int maxN = 1e5 + 10;
 
-const int maxN = 2 * 1e5 + 10;
-
+int n, mod;
 vector <int> adj[maxN];
 int dp[maxN];
-int si[maxN];
 
 void dfs1(int node, int father){
-    si[node] = 1;
-    dp[node] = 0;
-    for (auto i: adj[node]){
-        if (i == father){
+    dp[node] = 1;
+    for (auto nu: adj[node]){
+        if (nu == father){
             continue;
         }
-        dfs1(i,node);
-        si[node] += si[i];
-        dp[node] += dp[i];
-    }
-    dp[node] += si[node];
-}
+        dfs1(nu,node);
 
+        dp[node] *= (dp[nu] + 1);
+    }
+}
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -35,19 +31,13 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    for (int i = 1; i < n; i++){
+    cin >> n >> mod;
+    for (int i = 1; i<= m; i++){
         int a, b;
         cin >> a >> b;
         adj[a].push_back(b);
         adj[b].push_back(a);
-    }
-    int root = 3;
-    dfs1(root,root);
-
-    for (int i = 1; i <= n; i++){
-        cout << i << ": " << dp[i] << endl;
-    }
+    }   
+    dfs1(1,1);
     return 0;
 }

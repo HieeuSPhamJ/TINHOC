@@ -42,36 +42,16 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = random(1,10);
-    int test = random(1,20);
-    cout << n << " " << test << endl;
-
-    vector <ii> tree;
-
-    for (int i = 2; i <= n; i++){
-        tree.push_back({i,random(1,i - 1)});
+    vector <int> lists;
+    for (int i = 1;  i <= 100; i++){
+        lists.push_back(i);
     }
-    
-    random_shuffle(tree.begin(), tree.end());
-    int cnt = 0;
-    while(test--){
-        int t = random(1,3);
-        if ((t == 3 and cnt == 0) or (t == 1 and tree.empty())){
-            t = 2;
-        }
 
-        cout << t << " ";
-        
-        if (t == 1){
-            cout << tree.back().fi << " " << tree.back().se << endl;
-            tree.pop_back();
-        }
-        else if (t == 2){
-            cnt++;
-            cout << random(1,n) << endl;
-        }
-        else{
-            cout << random(1,n) << " " << random(1,cnt) << endl;
-        }
+    random_shuffle(lists.begin(), lists.end());
+    cout << n << endl;
+    for (int i = 1; i <= n; i++){
+        cout << lists.back() << " ";
+        lists.pop_back();
     }
     return 0;
 }
