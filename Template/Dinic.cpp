@@ -54,17 +54,20 @@ int Try(int node, int Min){
     if (node == t){
         return Min;
     }
-    for (auto& nu: adj[node]){
+    for (auto &nu: adj[node]){
         if (dist[nu.to] == dist[node] + 1 and nu.had < nu.cap){
-            int tMin = min(Min,nu.cap - nu.had);
-            tMin = Try(nu.to, tMin);
-            if (tMin != 0){
-                nu.had += tMin;
-                adj[nu.to][nu.rev].had -= tMin;
-                return tMin;
+            int tempMin = min(Min,nu.cap - nu.had);
+            tempMin = min(tempMin, Try(nu.to,tempMin));
+            if (tempMin > 0){
+                // cout << node << " " << nu.to << " " << tempMin << endl;
+                nu.had += tempMin;
+                adj[nu.to][nu.rev].had -= tempMin;
+                return tempMin;
             }
         }
     }
+
+
     return 0;
 }
 
@@ -76,6 +79,7 @@ int dinic(){
     // }
     while(cango()){
         memset(nxt, 0, sizeof(nxt));
+        // cout << "Turn" << endl;
         while(int temp = Try(s,inf)){
             res += temp;
         }

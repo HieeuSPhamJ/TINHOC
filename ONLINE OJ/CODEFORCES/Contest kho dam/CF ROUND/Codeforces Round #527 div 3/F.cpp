@@ -31,9 +31,10 @@ void dfs1(int node, int father){
 }
 
 void dfs(int node, int father){
-    
     if (node != father){
-        dp2[node] = dp[node] + (dp2[father] - dp[node] - sum[node]);
+        // cout << "Node: " << node << endl;
+        dp2[node] = dp[node] + (dp2[father] - dp[node] - sum[node]) + SUM - sum[node];
+        // cout << dp2[node] << " " << dp[node] << " " << (dp2[father] - dp[node] - sum[node]) << endl;
         ans = max(ans, dp2[node]);  
     }
     for (auto newNode: adj[node]){
@@ -62,13 +63,30 @@ signed main(){
         adj[a].push_back(b);
         adj[b].push_back(a);
     }
-    int root = 2;
+    int root = 1;
     dfs1(root,root);
 
-    for (int i = 1; i <= n; i++){
-        cout << i << ": " << dp[i] << endl;
-    }
+    // for (int i = 1; i <= n; i++){
+    //     cout << i << ": " << dp[i] << endl;
+    // }
 
+    ans = dp[1];
+    dp2[1] = dp[1];
+
+    dfs(root,root);
+
+    cout << ans;
     
     return 0;
 }
+
+/*
+1: 41
+2: 80
+3: 0
+4: 0
+5: 12
+6: 0
+7: 0
+8: 0
+*/
