@@ -23,7 +23,7 @@ void randomTree(int n){
 
 string randomStr(const int len) {
     static const char alphanum[] =
-        "ab";
+        "LR";
     std::string tmp_s;
     tmp_s.reserve(len);
 
@@ -42,16 +42,7 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = random(1,10);
-    vector <int> lists;
-    for (int i = 1;  i <= 100; i++){
-        lists.push_back(i);
-    }
-
-    random_shuffle(lists.begin(), lists.end());
-    cout << n << endl;
-    for (int i = 1; i <= n; i++){
-        cout << lists.back() << " ";
-        lists.pop_back();
-    }
+    cout << 1 << endl << n << endl;
+    cout << randomStr(n);
     return 0;
 }

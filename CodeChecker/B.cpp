@@ -7,6 +7,9 @@
 #define endl '\n'
 using namespace std;
 
+const int maxN = 1e5 + 10;
+int a[maxN];    
+
 signed main(){
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
@@ -15,28 +18,37 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    vector <ii> lists;
-    for (int i = 1; i <= n; i++){
-        int x;
-        cin >> x;
-        lists.push_back({x,i});
-    }
-
-    sort(lists.begin(), lists.end());
-    
-    int mi = 1e18;
-    int ans = -1;
-    for (auto i: lists){
-        if (mi > i.se){
-            mi = min(mi, i.se);
-            continue;
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
+        cin >> n;
+        for (int i = 1; i <= n; ++ i)
+        {
+            char x;
+            cin >> x;
+            a[i] = (x == 'R');
         }
-        ans = max(ans, i.se - mi);
-        mi = min(mi, i.se);
+        int pos = -1;
+        for (int i = 2; i <= n; ++ i)
+        {
+            if (a[i] == 0 and a[i - 1] == 1)
+            {
+                pos = 0;
+                break;
+            }
+        }
+        if (pos == -1){
+            for (int i = 2; i <= n; ++ i)
+            {
+                if (a[i] == 1 and a[i - 1] == 0)
+                {
+                    pos = i - 1;
+                    break;
+                }
+            }
+        }
+        cout << pos << endl;
     }
-
-    cout << ans;
     return 0;
 }
