@@ -1,64 +1,116 @@
-#include<bits/stdc++.h>
-#define ii pair <int,int>
+#include <bits/stdc++.h>
+
+#define taskname "blabla"
+#define endl "\n"
 #define fi first
 #define se second
-#define int long long
-#define double long double
-#define endl '\n'
+#define Ha dethuong
+
 using namespace std;
+typedef pair <int, int> ii;
+const long long oo = 1e18 + 3;
+const long long mod = 1e9 + 7; // 998244353
+const int N = 1e6 + 3;
 
-const int mod = 1e9 + 7;
-const int maxN = 1e7 + 10;
-int fact[maxN];
+int a[N];
+int ans1[N], ans2[N];
+int check[N];
+int main()
+{
+//   freopen (taskname".inp", "r", stdin);
+//   freopen (taskname".out", "w", stdout);
 
+    // freopen ("test.inp", "r", stdin);
+    // freopen ("test.out", "w", stdout);
 
-int add(int a, int b){
-    return (a + b) % mod;
-}
-int subtr(int a, int b){
-    return ((a + mod) - b) % mod; 
-}
-int mul(int a, int b){
-    return (a * b) % mod;
-}
-void init(){
-    fact[0] = 1;
-    for (int i = 1; i < maxN; i++){
-        fact[i] = mul(fact[i - 1], i);
-    }
-}
-int fastpow(int n, int a){
-    if (a == 1){
-        return n;
-    }
-    int temp = fastpow(n, a / 2);
-    int ans = mul(temp, temp);
-    if (a % 2){
-        return mul(ans, n);
-    }
-    else{
-        return ans;
-    }
-}
-
-
-int C(int n, int k){
-   return mul(fact[n], fastpow(mul(fact[k], fact[n - k]), mod - 2));
-}
-
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    init();
-    int n;
-    cin >> n;
-    int res = 0;
-    for (int i = 1; i <= n; i++){
-        res += C(n,i);
+
+    int Test;
+    cin >> Test;
+    for (int TestCase = 1; TestCase <= Test; ++ TestCase)
+    {
+        int n;
+        cin >> n;
+        int ok = 1;
+        set <int> se1,se2;
+        for (int i = 1; i <= n; ++ i)
+        {
+            se1.insert(i);
+            se2.insert(i);
+            ans1[i] = ans2[i] = 0;
+            check[i] = 0;
+        }
+        multiset <ii> ms;
+        for (int i = 1; i <= n; ++ i)
+        {
+            cin >> a[i];
+            ms.insert(make_pair(a[i],i));
+            if (check[a[i]] == 0)
+            {
+                se1.erase(a[i]);                
+                ans1[i] = a[i];
+                check[a[i]] = 1;
+                continue;
+            }
+            if (check[a[i]] == 1)
+            {
+                se2.erase(a[i]);
+                ans2[i] = a[i];
+                check[a[i]] = 3;
+                continue;
+            }
+            ok = 0;
+        
+        }
+        while(ms.size())
+        {
+            auto i = *ms.begin();
+            if (ans1[i.se] == 0)
+            {
+                if (*se1.begin() <= i.fi)
+                {
+                    ans1[i.se] = *se1.begin();
+                }
+                else
+                {
+                    ok = 0;
+                }
+                se1.erase(se1.begin());
+            }
+            else
+            {
+                if (*se2.begin() <= i.fi)
+                {
+                    ans2[i.se] = *se2.begin();
+                }
+                else
+                {
+                    ok = 0;
+                }
+                se2.erase(se2.begin());
+            }
+            ms.erase(ms.begin());
+        }
+        if (ok == 0)
+        {
+            cout << "NO" << endl;
+        }
+        else{
+            cout << "YES" << endl;
+            for (int i = 1; i <= n; ++ i)
+            {
+                cout << ans1[i] << " ";
+            }
+            cout << endl;
+            for (int i = 1; i <= n; ++ i)
+            {
+                cout << ans2[i] << " ";
+            }
+            cout << endl;
+        }
     }
-    cout << res;
+
     return 0;
 }

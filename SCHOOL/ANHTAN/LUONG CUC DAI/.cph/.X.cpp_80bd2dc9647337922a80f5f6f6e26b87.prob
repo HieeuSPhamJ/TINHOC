@@ -1,0 +1,1 @@
+{"name":"Local: X","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\LUONG CUC DAI\\X.cpp","tests":[{"id":1672924836885,"input":"5 8\n1 5\n1 2 1\n1 4 8\n2 3 5\n2 4 1\n3 5 1\n4 3 8\n4 5 1\n1 3 1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\LUONG CUC DAI\\X.cpp","group":"local","local":true}

@@ -5,12 +5,44 @@
 #define int long long
 #define double long double
 #define endl '\n'
+#define all(x) x.begin(), x.end()
 using namespace std;
 
 const int maxN = 2 * 1e5 + 10;
 
-int a[maxN];
-int prefix[maxN];
+int n;
+int a[maxN], used[maxN];
+
+void run_case(){
+    cin >> n;
+    memset(used, 0, sizeof used);
+    for (int i = 1; i <= n; i++)
+        cin >> a[i];
+    int ans = 0;
+    bool ok = 0;
+    for (int i = 1; i <= n; i++){
+        if (used[i])
+            continue;
+        vector <int> f;
+        int x = i;
+        while (!used[x]){
+            used[x] = 1;
+            f.push_back(x);
+            x = a[x];
+        }
+        ans += (int) f.size() - 1;
+        sort(all(f));
+        for (int j = 0; j < f.size(); j++)
+            if (abs(f[j] - f[j + 1]) == 1)
+                ok = 1;
+    }
+    if (ok) 
+        ans--;
+    else 
+        ans++;
+    cout << ans << "\n";
+
+}
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -21,54 +53,7 @@ signed main(){
     int test;
     cin >> test;
     while(test--){
-        int n, m;
-        cin >> n >> m;
-        for (int i = 1; i <= n; i++){
-            cin >> a[i];
-            prefix[i] = 0;
-        }
-
-        //[m + 1; n]
-        for (int i = m + 1; i <= n; i++){
-            prefix[i] = prefix[i - 1] + a[i];
-        }
-        priority_queue <int> q;
-        int res = 0;
-        for (int i = m + 1, temp = 0; i <= n; i++){
-            if (a[i] < 0){
-                q.push(-a[i]);
-            }
-            while(!q.empty() and prefix[i] + temp < 0){
-                temp += 2 * q.top();
-                q.pop();
-                res++;
-            }
-            // cout << prefix[i] << " " << temp << endl;
-        }
-
-        // [1;m]
-
-        for (int i = 1; i <= m; i++){
-            prefix[i] = prefix[i - 1] + a[i];
-        }
-
-        while(!q.empty()){
-            q.pop();
-        }
-
-        for (int i = m, temp = 0; i >= 1; i--){
-            while(!q.empty() and prefix[i] < prefix[m] + temp){
-                temp -= 2 * q.top();
-                q.pop();
-                res++;
-            }
-            if (a[i] > 0){
-                q.push(a[i]);
-            }
-        }
-
-
-        cout << res << endl;
+        run_case();
     }
     return 0;
 }

@@ -1,68 +1,77 @@
-#include<bits/stdc++.h>
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define int long long
-#define double long double
-#define endl '\n'
+#include <bits/stdc++.h>
+
 using namespace std;
 
-const int maxN = 2 * 1e5 + 10;
-const int maxR = 2010;
-int a[maxN];
+typedef long long ll;
+typedef pair<int, int> pii;
 
-int dp[maxR];
-int store[maxR];
-int pre[maxN];
+#define fi first
+#define se second
+#define mp make_pair
+#define fastIO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
 
-int sum(int i, int j){
-    return pre[j] - pre[i - 1];
+const int N = (int)2e5 + 10;
+const int MOD = 998244353;
+
+vector<int> T[N];
+int dp[N][3];
+int f[3];
+int nw[3];
+int mult(int x, int y){
+    return (x * 1ll * y) % MOD;
 }
 
+int add(int x, int y){
+    x += y;
+    if(x >= MOD) x -= MOD;
+    else if(x < 0) x += MOD;
+    return x;
+}
 
-signed main(){
+void dfs(int node){
+    for(auto x : T[node]){
+        dfs(x);
+    }
+    if(T[node].size() == 0){
+        dp[node][0] = 1;
+    }
+    else{
+        dp[node][2] = 1;
+        for(auto x : T[node]){
+            dp[node][2] = mult(dp[node][2], add(dp[x][0], dp[x][2]));
+        }
+        for(int p = 0 ; p < 3; p ++ ) f[p]=0;
+        f[0]=1;
+        int j;
+        for(auto x : T[node]){
+            nw[0] = nw[1] = nw[2] = 0;
+            for(int i = 0 ; i < 3; i ++ ){
+                nw[i] = add(nw[i], mult(f[i], add(dp[x][0], dp[x][2])));
+                j = min(i + 1, 2);
+                nw[j] = add(nw[j], mult(f[i], add(dp[x][0], dp[x][1])));
+            }
+            for(int i = 0 ; i < 3; i ++ ){
+                f[i] = nw[i];
+            }
+        }
+        dp[node][1] = f[1];
+        dp[node][0] = f[2];
+    }
+}
+
+int main(){
+    fastIO;
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-    // freopen("KM2.INP", "r", stdin);
-    // freopen("KM2.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n, m, k;
-    cin >> n >> m >> k;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
-        dp[i] = 1e18;
+    //freopen("in.txt", "r", stdin);
+    int n;
+    cin >> n;
+    int p;
+    for(int i = 2; i <= n; i ++ ){
+        cin >> p;
+        T[p].push_back(i);
     }
-
-    for (int i = 1; i <= m; i++){
-        int x, y;
-        cin >> x >> y;
-        store[x] = max(store[x], y);
-    }
- 
-    sort(a + 1, a + 1 + n);
-
-    for (int i = 1; i <= n; i++){
-        pre[i] = pre[i - 1] + a[i];
-    }
-
-    dp[0] = 0;
-    for (int i = 1; i <= k; i++){
-        // cout << "With: " << i << endl;
-        for (int j = 1; i - j >= 0; j++){
-            // cout << j << ": " << i - j << " " << i - j + 1 << " " << i - j + 1 + store[j] << endl;
-            // cout << dp[i - j] << " - " << sum(i - j + 1, i) << " - " << sum(i - j + 1, i - j + store[j]) << endl;
-            dp[i] = min(dp[i], dp[i - j] + sum(i - j + 1, i) - sum(i - j + 1, i - j + store[j]));
-        }
-    }
-
-    cout << dp[k];
-
-
+    dfs(1);
+    cout << add(dp[1][0], dp[1][2]) << "\n";
     return 0;
 }
-
-/*
-1 2 2 3 4
-*/

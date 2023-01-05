@@ -1,57 +1,92 @@
 #include<bits/stdc++.h>
-#define int long long
-#define pb push_back
-#define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-#define MOD 1000000007
-#define INF 1e18
+#define ii pair <int,int>
 #define fi first
 #define se second
-#define FOR(i,a,b) for(int i=a;i<=b;i++)
-#define FORD(i,a,b) for(int i=a;i>=b;i--)
-#define sz(a) ((int)(a).size())
+#define int long long
+#define double long double
 #define endl '\n'
-#define pi 3.14159265359
-#define TASKNAME "KM2"
 using namespace std;
-typedef pair<int,int> ii;
-typedef pair<int,ii> iii;
-typedef vector<int> vi;
 
-const int MAXN = 2e5 + 9;
+const int mod = 998244353;
+const int maxN = 2e5 + 10;
+int fact[maxN];
 
-int n,a[MAXN],pre[MAXN],prefixsum[MAXN],m,k,dp[MAXN];
-signed main()
-{
+
+int add(int a, int b){
+    return (a + b) % mod;
+}
+int subtr(int a, int b){
+    return ((a + mod) - b) % mod; 
+}
+int mul(int a, int b){
+    return (a * b) % mod;
+}
+void init(){
+    fact[0] = 1;
+    for (int i = 1; i < maxN; i++){
+        fact[i] = mul(fact[i - 1], i);
+    }
+}
+int fastpow(int n, int a){
+    if (a == 1){
+        return n;
+    }
+    int temp = fastpow(n, a / 2);
+    int ans = mul(temp, temp);
+    if (a % 2){
+        return mul(ans, n);
+    }
+    else{
+        return ans;
+    }
+}
+
+
+int C(int n, int k){
+   return mul(fact[n], fastpow(mul(fact[k], fact[n - k]), mod - 2));
+}
+
+vector <int> adj[maxN];
+int dp[maxN];
+
+void dfs(int node, int father){
+    dp[node] = 1;
+    int child = 0;
+    for (auto newNode: adj[node]){
+        if (newNode == father){
+            continue;
+        }
+        dfs(newNode,node);
+        child++;
+        dp[node] = mul(dp[node], dp[newNode]);
+    }
+    int now = 1;
+    for (int i = 2; i <= child; i++){
+        now = add(now, C(child,i));
+    }
+    dp[node] = mul(dp[node], now);
+    // cout << "Node " << node << ": " << dp[node] << " " << now << endl;
+}
+
+signed main(){
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
-    cin>>n>>m>>k;
-    for(int i=1;i<=n;i++){
-        cin>>a[i];
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    init();
+    int n;
+    cin >> n;
+    for (int i = 2; i <= n; i++){
+        int x;
+        cin >> x;
+        adj[x].push_back(i);
+        adj[i].push_back(x);
     }
-    sort(a+1,a+1+n);
+    dfs(1,1);
 
-    for(int i=1;i<=n;i++){
-        prefixsum[i] = prefixsum[i-1] + a[i];
-        dp[i] = INF;
-    }
-    int x = INF;
-    for(int i=1;i<=m;i++){
-        int l,r;
-        cin>>l>>r;
-        pre[l] = max(pre[l],r);
-        x = min(x,l);
-    }
-
-    for(int i=1;i<x;i++){
-        dp[i] = dp[i-1] + a[i];
-    }
-    for(int i=x;i<=k;i++){
-        dp[i] = dp[i-1] + a[i];
-        for(int j=k;j>=0;j--){
-           if (pre[j]>0 && i>=j){
-               dp[i] = min(dp[i], dp[i-j] + (prefixsum[i] - prefixsum[i-j + pre[j]]));
-           }
-        }
-    }
-    cout<<dp[k];
+    cout << dp[1];
+    return 0;
 }
