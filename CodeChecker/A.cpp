@@ -1,40 +1,57 @@
-//       *Author: Md Sohanur Rahman Hridoy* ​
-
-//In the name of ALLAH, the Most Gracious, the Most Merciful...
-
-#pragma GCC optimize("Ofast")
-#pragma GCC optimize("O3,unroll-loops")
-
-#include"bits/stdc++.h"
-#define int               long long
-#define pb                push_back
-#define ppb               pop_back
-#define pf                push_front
-#define ppf               pop_front
-#define endl              '\n'
-#define all(v)            v.begin(),v.end()
-#define fo(i, n)          for(int i = 0; i < n; i++)
-#define Fo(i,k,n)         for(int i = k;k<n?i<n:i>n;k<n?i++:i--)
+#include<bits/stdc++.h>
+#define int long long
+#define pb push_back
+#define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+#define MOD 1000000007
+#define INF 1e18
+#define fi first
+#define se second
+#define FOR(i,a,b) for(int i=a;i<=b;i++)
+#define FORD(i,a,b) for(int i=a;i>=b;i--)
+#define sz(a) ((int)(a).size())
+#define endl '\n'
+#define pi 3.14159265359
+#define TASKNAME "KM2"
 using namespace std;
+typedef pair<int,int> ii;
+typedef pair<int,ii> iii;
+typedef vector<int> vi;
 
-void solve(){
-    int n; cin >> n;
-    string s; cin >> s;
-}
+const int MAXN = 2e5 + 9;
 
-int32_t main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+int n,a[MAXN],pre[MAXN],prefixsum[MAXN],m,k,dp[MAXN];
+signed main()
+{
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
-    int t;
-    //t = 1;
-    //int cs = 1;
-    cin >> t;
-    while (t--){
-        //cout << "Case-#" << cs <<": ";
-        solve();
-        //cs++;
+    cin>>n>>m>>k;
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
     }
+    sort(a+1,a+1+n);
+
+    for(int i=1;i<=n;i++){
+        prefixsum[i] = prefixsum[i-1] + a[i];
+        dp[i] = INF;
+    }
+    int x = INF;
+    for(int i=1;i<=m;i++){
+        int l,r;
+        cin>>l>>r;
+        pre[l] = max(pre[l],r);
+        x = min(x,l);
+    }
+
+    for(int i=1;i<x;i++){
+        dp[i] = dp[i-1] + a[i];
+    }
+    for(int i=x;i<=k;i++){
+        dp[i] = dp[i-1] + a[i];
+        for(int j=k;j>=0;j--){
+           if (pre[j]>0 && i>=j){
+               dp[i] = min(dp[i], dp[i-j] + (prefixsum[i] - prefixsum[i-j + pre[j]]));
+           }
+        }
+    }
+    cout<<dp[k];
 }

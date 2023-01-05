@@ -42,7 +42,17 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = random(1,10);
-    cout << 1 << endl << n << endl;
-    cout << randomStr(n);
+    int m = random(1,5);
+    int k = random(1,n);
+    cout << n << " " << m << " " << k << endl;
+    for (int i = 1; i <= n; i++){
+        cout << random(1,10) << " ";
+    }
+    cout << endl;
+    for (int i = 1; i <= m; i++){
+        int x = random(1,n);
+        cout << x << " " << random(1,x) << endl;
+    }
+
     return 0;
 }

@@ -21,8 +21,8 @@ int sum(int i, int j){
 
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
+    freopen("KM2.inp", "r", stdin);
+    freopen("KM2.out", "w", stdout);
     // freopen("KM2.INP", "r", stdin);
     // freopen("KM2.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
