@@ -10,6 +10,7 @@ using namespace std;
 const int maxN = 2 * 1e5 + 10;
 
 int a[maxN];
+int prefix[maxN];
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -20,79 +21,54 @@ signed main(){
     int test;
     cin >> test;
     while(test--){
-        int n, x;
-        ii ans;
-        vector <int> a;
-        vector <int> v;
-        cin >> n;
-        if (n == 2)
-        {
-            int x, y;
-            cin >> x >> y;
-            cout << x << endl;
-            continue;
+        int n, m;
+        cin >> n >> m;
+        for (int i = 1; i <= n; i++){
+            cin >> a[i];
+            prefix[i] = 0;
         }
-        a.push_back(-1);
-        for (int i = 1; i <= n; i++)
-        {
-            cin >> x;
-            if (x != a[a.size() - 1])
-            {
-                a.push_back(x);
-            }
-        }
-        ans.se = 0;
-        ans.fi = 1e18;
-        n = a.size() - 1;
-        a.push_back(a[n - 1]);
-other
 
-        a[0] = a[2];
-        for (int i = 1; i <= n; i++)
-        {
-            if ((a[i] - a[i - 1]) * (a[i] - a[i + 1]) > 0)
-            {
-                v.push_back(i);
-            }
+        //[m + 1; n]
+        for (int i = m + 1; i <= n; i++){
+            prefix[i] = prefix[i - 1] + a[i];
         }
-other
+        priority_queue <int> q;
+        int res = 0;
+        for (int i = m + 1, temp = 0; i <= n; i++){
+            if (a[i] < 0){
+                q.push(-a[i]);
+            }
+            while(!q.empty() and prefix[i] + temp < 0){
+                temp += 2 * q.top();
+                q.pop();
+                res++;
+            }
+            // cout << prefix[i] << " " << temp << endl;
+        }
 
-        int l, r;
-        for (int i = 0; i < v.size() - 1; i++)
-        {
-            l = v[i], r = v[i + 1];
-            if (a[r] > a[l])
-            {
-                ans.fi = min(ans.fi, (a[l] + a[l + 1]) / 2);
-            }
-            else
-            {
-other
+        // [1;m]
 
-                ans.se = max(ans.se, (a[l] + a[l + 1] + 1) / 2);
+        for (int i = 1; i <= m; i++){
+            prefix[i] = prefix[i - 1] + a[i];
+        }
+
+        while(!q.empty()){
+            q.pop();
+        }
+
+        for (int i = m, temp = 0; i >= 1; i--){
+            while(!q.empty() and prefix[i] < prefix[m] + temp){
+                temp -= 2 * q.top();
+                q.pop();
+                res++;
+            }
+            if (a[i] > 0){
+                q.push(a[i]);
             }
         }
-        if (ans.se <= ans.fi){
-            cout << ans.se << endl;
-            continue;
-        }
-        cout << -1 << endl;
-    
+
+
+        cout << res << endl;
     }
     return 0;
 }
-
-
-/*
-+  <= -tbm(2min)
--  >= -tbm(2max)
-
-5 3 4 5
-1 1 0 1
-
-2
-
-10 5 4 3 2 1
-2 3 4  5 6 
-
-*/

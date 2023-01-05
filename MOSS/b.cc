@@ -1,103 +1,60 @@
-//#pragma GCC optimize("Ofast")
-#include <bits/stdc++.h>
-
-#define taskname "blabla"
-#define endl "\n"
-#define X first
-#define Y second
+#include<bits/stdc++.h>
+#define fast ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define int long long
-#define Ha dethuong
-
 using namespace std;
-typedef pair <int, int> ii;
-const int oo = 1e9 + 3;
-const long long mod = 1e9 + 7; // 998244353
-const int N = 2e5 + 3;
 
-int n, x, maxx, minn;
-vector <int> a;
-vector <int> v;
+const int MAXN = 2*1e5+10;
 
-signed main()
-{
-//   freopen (taskname".inp", "r", stdin);
-//   freopen (taskname".out", "w", stdout);
+int a[MAXN];
+int b[MAXN];
 
-    freopen ("test.inp", "r", stdin);
-    freopen ("test.out", "w", stdout);
-
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
-    int Test;
-    cin >> Test;
-    for (int TestCase = 1; TestCase <= Test; ++ TestCase)
+main(){
+    fast;
+    int T;
+    cin>>T;
+    while(T--)
     {
-        cin >> n;
-        if (n == 2)
+        int n,m;
+        cin>>n>>m;
+        for (int i=1;i<=n;i++)
         {
-            int x, y;
-            cin >> x >> y;
-            cout << x << endl;
-            continue;
+            cin>>a[i];
+            b[i]=0;
         }
-        a.clear();
-        a.push_back(-1);
-        v.clear();
-        for (int i = 1; i <= n; ++ i)
+        for (int i=m+1; i<=n;i++)
+            b[i]=b[i-1]+a[i];
+        priority_queue <int> q;
+        int ans=0;
+        for (int i=m+1,tam=0;i<=n;i++)
         {
-            cin >> x;
-            if (x != a[a.size() - 1])
+            if (a[i]<0)
+                q.push(-a[i]);
+            while(!q.empty() && b[i]+tam<0)
             {
-                a.push_back(x);
+                tam+=2*q.top();
+                q.pop();
+                ans++;
             }
         }
-        maxx = 0;
-        minn = oo;
-        n = a.size() - 1;
-        a.push_back(a[n - 1]);
-        a[0] = a[2];
-//        cout << a[0] << ' ';
-        for (int i = 1; i <= n; ++ i)
+        for (int i=1;i<=m;i++)
+            b[i]=b[i-1]+a[i];
+
+        while(!q.empty())
+            q.pop();
+
+        for (int i=m,tam=0;i>=1;i--)
         {
-//            cout << a[i] << ' ';
-            if ((a[i] - a[i - 1]) * (a[i] - a[i + 1]) > 0)
+            while(!q.empty() && b[i]<b[m]+tam)
             {
-//                cout << i << endl;
-                v.push_back(i);
+                tam-=2*q.top();
+                q.pop();
+                ans++;
             }
+            if (a[i]>0)
+                q.push(a[i]);
         }
-//        cout << a[n + 1] << endl;
-//        cout << endl;
-//        for (int i : v)
-//        {
-//            cout << i << ' ';
-//        }
-//        cout << endl;
-        int l, r;
-        for (int i = 0; i < v.size() - 1; ++ i)
-        {
-            l = v[i], r = v[i + 1];
-            if (a[r] > a[l])
-            {
-                minn = min(minn, (a[l] + a[l + 1]) / 2);
-            }
-            else
-            {
-                maxx = max(maxx, (a[l] + a[l + 1] + 1) / 2);
-            }
-        }
-        if (maxx <= minn)
-        {
-            cout << maxx << endl;
-        }
-        else
-        {
-            cout << -1 << endl;
-        }
+
+
+        cout<<ans<<endl;
     }
-
-    return 0;
 }
-

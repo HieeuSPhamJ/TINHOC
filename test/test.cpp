@@ -7,41 +7,43 @@
 #define endl '\n'
 using namespace std;
 
-const int maxN = 1e5 * 2 + 10;
+const int mod = 1e9 + 7;
+const int maxN = 1e7 + 10;
+int fact[maxN];
 
-int n;
-int a[maxN];
-vector <int> adj[maxN];
-int sum[maxN];
-int dp[maxN];
-int dp2[maxN];
-int ans = 0;
-int SUM = 0;
 
-void dfs1(int node, int father){
-    sum[node] = a[node];
-    for (auto newNode: adj[node]){
-        if (newNode == father){
-            continue;
-        }
-        dfs1(newNode, node);
-        sum[node] += sum[newNode];
-        dp[node] += dp[newNode] + sum[newNode];
+int add(int a, int b){
+    return (a + b) % mod;
+}
+int subtr(int a, int b){
+    return ((a + mod) - b) % mod; 
+}
+int mul(int a, int b){
+    return (a * b) % mod;
+}
+void init(){
+    fact[0] = 1;
+    for (int i = 1; i < maxN; i++){
+        fact[i] = mul(fact[i - 1], i);
+    }
+}
+int fastpow(int n, int a){
+    if (a == 1){
+        return n;
+    }
+    int temp = fastpow(n, a / 2);
+    int ans = mul(temp, temp);
+    if (a % 2){
+        return mul(ans, n);
+    }
+    else{
+        return ans;
     }
 }
 
-void dfs(int node, int father){
-    
-    if (node != father){
-        dp2[node] = dp[node] + (dp2[father] - dp[node] - sum[node]);
-        ans = max(ans, dp2[node]);  
-    }
-    for (auto newNode: adj[node]){
-        if (newNode == father){
-            continue;
-        }
-        dfs(newNode,node);
-    }
+
+int C(int n, int k){
+   return mul(fact[n], fastpow(mul(fact[k], fact[n - k]), mod - 2));
 }
 
 signed main(){
@@ -50,25 +52,13 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    init();
+    int n;
     cin >> n;
+    int res = 0;
     for (int i = 1; i <= n; i++){
-        cin >> a[i];
-        SUM += a[i];
+        res += C(n,i);
     }
-
-    for (int i = 1; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
-    }
-    int root = 2;
-    dfs1(root,root);
-
-    for (int i = 1; i <= n; i++){
-        cout << i << ": " << dp[i] << endl;
-    }
-
-    
+    cout << res;
     return 0;
 }
