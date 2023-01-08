@@ -1,92 +1,116 @@
-#include<bits/stdc++.h>
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define int long long
-#define double long double
-#define endl '\n'
+#include <bits/stdc++.h>
+ 
 using namespace std;
 
-const int mod = 998244353;
-const int maxN = 2e5 + 10;
-int fact[maxN];
+template<class A, class B> bool maximize(A& x, B y) {if (x < y) return x = y, true; else return false;}
+template<class A, class B> bool minimize(A& x, B y) {if (x >= y) return x = y, true; else return false;}
 
+void __print(int x) {cerr << x;}
+void __print(long x) {cerr << x;}
+void __print(long long x) {cerr << x;}
+void __print(unsigned x) {cerr << x;}
+void __print(unsigned long x) {cerr << x;}
+void __print(unsigned long long x) {cerr << x;}
+void __print(float x) {cerr << x;}
+void __print(double x) {cerr << x;}
+void __print(long double x) {cerr << x;}
+void __print(char x) {cerr << '\'' << x << '\'';}
+void __print(const char *x) {cerr << '\"' << x << '\"';}
+void __print(const string &x) {cerr << '\"' << x << '\"';}
+void __print(bool x) {cerr << (x ? "true" : "false");}
+ 
+template<typename T, typename V>
+void __print(const pair<T, V> &x) {cerr << '{'; __print(x.first); cerr << ", "; __print(x.second); cerr << '}';}
+template<typename T>
+void __print(const T &x) {int f = 0; cerr << '{'; for (auto &i: x) cerr << (f++ ? ", " : ""), __print(i); cerr << "}";}
+void _print() {cerr << " ]\n";}
+template <typename T, typename... V>
+void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v...);}
+#define     deb(x...)             cerr << "[ in " <<__func__<< "() : line " <<__LINE__<< " ] : [ " << #x << " ] = [ "; _print(x); cerr << '\n';
 
-int add(int a, int b){
-    return (a + b) % mod;
-}
-int subtr(int a, int b){
-    return ((a + mod) - b) % mod; 
-}
-int mul(int a, int b){
-    return (a * b) % mod;
-}
-void init(){
-    fact[0] = 1;
-    for (int i = 1; i < maxN; i++){
-        fact[i] = mul(fact[i - 1], i);
-    }
-}
-int fastpow(int n, int a){
-    if (a == 1){
-        return n;
-    }
-    int temp = fastpow(n, a / 2);
-    int ans = mul(temp, temp);
-    if (a % 2){
-        return mul(ans, n);
-    }
-    else{
-        return ans;
-    }
-}
+typedef     long long             ll;
+typedef     unsigned long long    ull;
+typedef     double                db;
+typedef     long double           ld;
+typedef     pair<db, db>          pdb;
+typedef     pair<ld, ld>          pld;
+typedef     pair<int, int>        pii;
+typedef     pair<ll, ll>          pll;
+typedef     pair<ll, int>         plli;
+typedef     pair<int, ll>         pill;
 
+#define     all(a)                a.begin(), a.end()
+#define     pb(a)                 push_back(a)
+#define     fi                    first
+#define     se                    second
+// #define     int                   long long
 
-int C(int n, int k){
-   return mul(fact[n], fastpow(mul(fact[k], fact[n - k]), mod - 2));
-}
+const int MAX_N = 2e5 + 5;
+const int mod = 1e9 + 7; // 998244353
+const int base = 256;
 
-vector <int> adj[maxN];
-int dp[maxN];
+int n;
+string s;
+int POW[MAX_N];
+int HASH[MAX_N];
 
-void dfs(int node, int father){
-    dp[node] = 1;
-    int child = 0;
-    for (auto newNode: adj[node]){
-        if (newNode == father){
-            continue;
-        }
-        dfs(newNode,node);
-        child++;
-        dp[node] = mul(dp[node], dp[newNode]);
-    }
-    int now = 1;
-    for (int i = 2; i <= child; i++){
-        now = add(now, C(child,i));
-    }
-    dp[node] = mul(dp[node], now);
-    // cout << "Node " << node << ": " << dp[node] << " " << now << endl;
+int getHash(int l, int r) {
+	return (1ll * HASH[r] - 1ll * HASH[l - 1] * POW[r - l + 1] + 1ll * mod * mod) % mod;
 }
 
-signed main(){
+unordered_map<int, bool> m;
+bool check(int len) {
+	m.clear();
+	for (int i = len; i <= n; i++) {
+		int curr = getHash(i - len + 1, i);
+		if (m[curr]) {
+			return true;
+		}
+		m[curr] = true;
+	}
+	return false;
+}
+
+signed main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
+
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    init();
-    int n;
-    cin >> n;
-    for (int i = 2; i <= n; i++){
-        int x;
-        cin >> x;
-        adj[x].push_back(i);
-        adj[i].push_back(x);
-    }
-    dfs(1,1);
 
-    cout << dp[1];
-    return 0;
+	cin >> n;
+	cin >> s;
+
+	POW[0] = 1;
+	for (int i = 1; i <= n; i++) {
+		POW[i] = 1ll * POW[i - 1] * base % mod;
+	}
+
+	for (int i = 1; i <= n; i++) {
+		HASH[i] = (1ll * HASH[i - 1] * base + s[i - 1] - 'a' + 1) % mod;
+	}
+
+	int low = 1;
+	int high = n;
+	int ans = 0;
+
+	while (low <= high) {
+		int mid = (low + high) >> 1;
+		if (check(mid)) {
+			ans = mid;
+			low = mid + 1;
+		}
+		else {
+			high = mid - 1;
+		}
+	}
+
+	cout << ans;
+
+	return 0;
 }
+
+/*
+
+
+*/
