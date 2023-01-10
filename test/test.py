@@ -1,96 +1,54 @@
-0 1
-1 2
-0 1
-1 5
-0 3
-3 2
-0 3
-3 7
-0 4
-4 5
-0 4
-4 7
-1 0
-0 3
-1 0
-0 4
-1 2
-2 3
-1 2
-2 6
-1 5
-5 4
-1 5
-5 6
-2 1
-1 0
-2 1
-1 5
-2 3
-3 0
-2 3
-3 7
-2 6
-6 5
-2 6
-6 7
-3 0
-0 1
-3 0
-0 4
-3 2
-2 1
-3 2
-2 6
-3 7
-7 4
-3 7
-7 6
-4 0
-0 1
-4 0
-0 3
-4 5
-5 1
-4 5
-5 6
-4 7
-7 3
-4 7
-7 6
-5 1
-1 0
-5 1
-1 2
-5 4
-4 0
-5 4
-4 7
-5 6
-6 2
-5 6
-6 7
-6 2
-2 1
-6 2
-2 3
-6 5
-5 1
-6 5
-5 4
-6 7
-7 3
-6 7
-7 4
-7 3
-3 0
-7 3
-3 2
-7 4
-4 0
-7 4
-4 5
-7 6
-6 2
-7 6
-6 5
+#include <bits/stdc++.h>
+using namespace std;
+
+/**
+ * Calculate the sum of all elements in arr, represented by the binary mask, and
+ * take modulo mod.
+ */
+int unmask(int mask, const vector<int> &arr, int mod) {
+	int current_sum = 0;
+	for (int bit = 0; bit < arr.size(); bit++) {
+		if ((mask >> bit & 1) == 1) {
+			current_sum += arr[bit];
+			current_sum %= mod;
+		}
+	}
+	return current_sum;
+}
+
+int main() {
+	int n, m;
+	cin >> n >> m;
+
+	// split the input array into two parts
+	vector<int> left_arr((n + 1) / 2);
+	vector<int> right_arr(n / 2);
+	for (int &i : left_arr) {
+		cin >> i;
+	}
+	for (int &i : right_arr) {
+		cin >> i;
+	}
+
+	// stores the sums of all combinations from the left_arr modulo m
+	set<int> left_sums;
+	for (int mask = 0; mask < (1 << left_arr.size()); mask++) {
+		left_sums.insert(unmask(mask, left_arr, m));
+	}
+
+	// the best value from all combinations of left_arr
+	int best = *left_sums.rbegin();
+	for (int mask = 0; mask < (1 << right_arr.size()); mask++) {
+		int current_sum = unmask(mask, right_arr, m);
+		/*
+		 * a possible new maximum value is the sum of current_sum and the largest
+		 * value below m - current_sum from the combinations in left_arr
+		 */
+		best = max(
+			best, 
+			*prev(left_sums.lower_bound(m - current_sum)) + current_sum
+		);
+	}
+
+	cout << best << endl;
+}

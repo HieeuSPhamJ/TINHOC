@@ -1,104 +1,79 @@
-#include <bits/stdc++.h>
- 
+Nguyễn Tài
+#include<bits/stdc++.h>
+#define int long long
+#define pb push_back
+#define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+#define MOD 1000000007
+#define INF 1e18
+#define fi first
+#define se second
+#define FOR(i,a,b) for(int i=a;i<=b;i++)
+#define FORD(i,a,b) for(int i=a;i>=b;i--)
+#define sz(a) ((int)(a).size())
+#define endl '\n'
+#define pi 3.14159265359
+#define TASKNAME "1783B"
 using namespace std;
-
-template<class A, class B> bool maximize(A& x, B y) {if (x < y) return x = y, true; else return false;}
-template<class A, class B> bool minimize(A& x, B y) {if (x >= y) return x = y, true; else return false;}
-
-void __print(int x) {cerr << x;}
-void __print(long x) {cerr << x;}
-void __print(long long x) {cerr << x;}
-void __print(unsigned x) {cerr << x;}
-void __print(unsigned long x) {cerr << x;}
-void __print(unsigned long long x) {cerr << x;}
-void __print(float x) {cerr << x;}
-void __print(double x) {cerr << x;}
-void __print(long double x) {cerr << x;}
-void __print(char x) {cerr << '\'' << x << '\'';}
-void __print(const char *x) {cerr << '\"' << x << '\"';}
-void __print(const string &x) {cerr << '\"' << x << '\"';}
-void __print(bool x) {cerr << (x ? "true" : "false");}
- 
-template<typename T, typename V>
-void __print(const pair<T, V> &x) {cerr << '{'; __print(x.first); cerr << ", "; __print(x.second); cerr << '}';}
-template<typename T>
-void __print(const T &x) {int f = 0; cerr << '{'; for (auto &i: x) cerr << (f++ ? ", " : ""), __print(i); cerr << "}";}
-void _print() {cerr << " ]\n";}
-template <typename T, typename... V>
-void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v...);}
-#define     deb(x...)             cerr << "[ in " <<__func__<< "() : line " <<__LINE__<< " ] : [ " << #x << " ] = [ "; _print(x); cerr << '\n';
-
-typedef     long long             ll;
-typedef     unsigned long long    ull;
-typedef     double                db;
-typedef     long double           ld;
-typedef     pair<db, db>          pdb;
-typedef     pair<ld, ld>          pld;
-typedef     pair<int, int>        pii;
-typedef     pair<ll, ll>          pll;
-typedef     pair<ll, int>         plli;
-typedef     pair<int, ll>         pill;
-
-#define     all(a)                a.begin(), a.end()
-#define     pb(a)                 push_back(a)
-#define     fi                    first
-#define     se                    second
-// #define     int                   long long
-
-const int MAX_N = 2e5 + 5;
-const int mod = 1e9 + 7; // 998244353
-const ll inf = 1e18 + 1;
-
+typedef pair<int,int> ii;
+typedef pair<int,ii> iii;
+typedef vector<int> vi;
+int ma[59][59];
+bool check[2509];
+int dx[4] = {1,-1,0,0};
+int dy[4] = {0,0,1,-1};
 int n;
-int a[MAX_N];
-bool mark[MAX_N];
-int ans;
-bool check;
-vector<int> v;
-
-signed main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
-
-	int numCases = 0;
-	cin >> numCases;
-	for (int testCase = 1; testCase <= numCases; testCase++) {
-		cin >> n;
-		for (int i = 1; i <= n; i++) {
-			cin >> a[i];
-			mark[i] = false;
-		}
-
-		ans = 0;
-		check = false;
-		for (int i = 1; i <= n; i++) {
-			if (!mark[i]) {
-				v.clear();
-				int j = i;
-				while (!mark[j]) {
-					mark[j] = true;
-					v.pb(j);
-					j = a[j];
-				}
-				sort(all(v));
-				for (int j = 0; j < (int) v.size() - 1; j++) {
-					if (abs(v[j] - v[j + 1]) != 1) {
-						continue;
-					}
-					check = true;
-				}
-				ans += v.size();
-				ans--;
-			}
-		}
-
-		cout << ans + (check ? -1 : 1) << '\n';
-	}
-
-	return 0;
+bool valid(int x,int y){
+    return (x>=1 && x<=n && y>=1 && y<=n);
 }
+void bfs(int x,int y){
+    stack<ii> q;
+    q.push({x,y});
+    memset(check,false,sizeof(check));
+    memset(ma,0,sizeof(ma));
+    ma[1][1] = 1;
+    check[1] = true;
+    int dist = n * n -1;
+    while(!q.empty()){
+        int x1 = q.top().fi;
+        int y1 = q.top().se;
+        q.pop();
+        for(int k = 0;k<4;k++){
+            int nx = x1 + dx[k];
+            int ny = y1 + dy[k];
 
-/*
-
-
-*/
+            if (ma[nx][ny]==0 && valid(nx,ny)){
+                int v = ma[x1][y1];
+                if (!check[v+dist] && v+dist<=n*n ){
+                    ma[nx][ny] = v + dist;
+                    check[v+dist] = true;
+                    dist--;
+                    q.push({nx,ny});
+                }
+                if (!check[v-dist] && v-dist>=1){
+                    ma[nx][ny] = v - dist;
+                    check[v-dist] = true;
+                    dist--;
+                    q.push({nx,ny});
+                }
+            }
+        }
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
+            cout<<ma[i][j]<<' ';
+        }
+        cout<<endl;
+    }
+}
+main()
+{
+    fast;
+    freopen(TASKNAME".inp","r",stdin);
+    //freopen(TASKNAME".out","w",stdout);
+    int t;
+    cin>>t;
+    while(t--){
+        cin>>n;
+        bfs(1,1);
+    }
+}
