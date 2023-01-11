@@ -106,7 +106,7 @@ void hld(int node, int fa, int top){
 }
 
 int getTree(int x, int y){
-    int res = 0;
+    int res = -inf;
     while(knup[x] != knup[y]){
         if (dep[knup[x]] < dep[knup[y]]){
             swap(x,y);
@@ -120,13 +120,12 @@ int getTree(int x, int y){
     if (dep[x] > dep[y]){
         swap(x,y);
     }
+    // cout << id[x] << " " << id[y] << endl;
     res = max(res, get(1,1,n,id[x], id[y]));
     return res;
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -151,6 +150,7 @@ signed main(){
         if (t == "add"){
             int u, v;
             cin >> u >> v;
+            // cout << id[u] << " " << en[u] << " " << v << endl;
             update(1,1,n,id[u],en[u],v);
         }
         else{
@@ -159,7 +159,6 @@ signed main(){
             cout << getTree(a,b) << endl;
         }
     }
-
     // for (int i = 1; i <= n; i++){
     //     cout << id[i] << " " << en[i] << endl;
     // }

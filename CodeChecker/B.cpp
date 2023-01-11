@@ -2,76 +2,136 @@
 
 using namespace std;
 
-typedef long long ll;
-typedef pair<int, int> pii;
+const int N = 1e5 + 4;
+vector<int> g[N];
+int depth[N], parent[N], max_pos[N];
+int pos[N], heavy[N], head[N];
+int cur_pos;
 
-#define fi first
-#define se second
-#define mp make_pair
-#define fastIO ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+long long tree[4 * N + 1], lazy[4 * N + 1];
+int treesize;
 
-const int N = (int)2e5 + 10;
-const int MOD = 998244353;
-
-vector<int> T[N];
-int dp[N][3];
-int f[3];
-int nw[3];
-int mult(int x, int y){
-    return (x * 1ll * y) % MOD;
+int dfs(int v) {
+   int size = 1;
+   int max_size = 0;
+   for (auto to : g[v]) {
+      if (to == parent[v]) continue;
+      parent[to] = v;
+      depth[to] = depth[v] + 1;
+      int c_size = dfs(to);
+      size += c_size;
+      if (c_size > max_size) {
+         max_size = c_size;
+         heavy[v] = to;
+      }
+   }
+   return size;
 }
 
-int add(int x, int y){
-    x += y;
-    if(x >= MOD) x -= MOD;
-    else if(x < 0) x += MOD;
-    return x;
+void decompose(int v, int h) {
+   head[v] = h;
+   pos[v] = cur_pos++;
+   max_pos[v] = pos[v];
+   if (heavy[v] != -1) {
+      decompose(heavy[v], h);
+      max_pos[v] = max(max_pos[v], max_pos[heavy[v]]);
+   }
+   for (auto to : g[v]) {
+      if (to == parent[v] || to == heavy[v]) continue;
+      decompose(to, to);
+      max_pos[v] = max(max_pos[v], max_pos[to]);
+   }
 }
 
-void dfs(int node){
-    for(auto x : T[node]){
-        dfs(x);
-    }
-    if(T[node].size() == 0){
-        dp[node][0] = 1;
-    }
-    else{
-        dp[node][2] = 1;
-        for(auto x : T[node]){
-            dp[node][2] = mult(dp[node][2], add(dp[x][0], dp[x][2]));
-        }
-        for(int p = 0 ; p < 3; p ++ ) f[p]=0;
-        f[0]=1;
-        int j;
-        for(auto x : T[node]){
-            nw[0] = nw[1] = nw[2] = 0;
-            for(int i = 0 ; i < 3; i ++ ){
-                nw[i] = add(nw[i], mult(f[i], add(dp[x][0], dp[x][2])));
-                j = min(i + 1, 2);
-                nw[j] = add(nw[j], mult(f[i], add(dp[x][0], dp[x][1])));
-            }
-            for(int i = 0 ; i < 3; i ++ ){
-                f[i] = nw[i];
-            }
-        }
-        dp[node][1] = f[1];
-        dp[node][0] = f[2];
-    }
+void prepare(int n) {
+   fill(heavy, heavy + n, -1);
+   
+   parent[0] = -1;
+   depth[0] = 0;
+   dfs(0);
+
+   cur_pos = 0;
+   decompose(0, 0);
 }
 
-int main(){
-    fastIO;
+void push(int v, int vl, int vr) {
+   if (lazy[v] == 0) return;
+   tree[v] += lazy[v];
+   if (vl != vr) {
+      lazy[v << 1] += lazy[v];
+      lazy[v << 1 | 1] += lazy[v];
+   }
+   lazy[v] = 0;
+}
+
+void seg_update(int l, int r, int val, int v = 1, int vl = 0, int vr = treesize - 1) {
+   push(v, vl, vr);
+   if (l > vr || vl > r) return;
+   if (l <= vl && vr <= r) {
+      lazy[v] += val;
+      push(v, vl, vr);
+      return;
+   }
+   int vm = (vl + vr) >> 1;
+   seg_update(l, r, val, v << 1, vl, vm);
+   seg_update(l, r, val, v << 1 | 1, vm + 1, vr);
+   tree[v] = max(tree[v << 1], tree[v << 1 | 1]);
+}
+
+long long seg_query(int l, int r, int v = 1, int vl = 0, int vr = treesize - 1) {
+   push(v, vl, vr);
+   if (l > vr || vl > r) return LONG_LONG_MIN;
+   if (l <= vl && vr <= r) return tree[v];
+   int vm = (vl + vr) >> 1;
+   long long g1 = seg_query(l, r, v << 1, vl, vm);
+   long long g2 = seg_query(l, r, v << 1 | 1, vm + 1, vr);
+   return max(g1, g2);
+}
+
+long long query(int a, int b) {
+   long long res = LONG_LONG_MIN;
+   while (head[a] != head[b]) {
+      if (depth[head[a]] > depth[head[b]])
+         swap(a, b);
+      res = max(res, seg_query(pos[head[b]], pos[b]));
+      b = parent[head[b]];
+   }
+   if (depth[a] > depth[b])
+      swap(a, b);
+   res = max(res, seg_query(pos[a], pos[b]));
+   return res;
+}
+
+int main() {
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-    //freopen("in.txt", "r", stdin);
-    int n;
-    cin >> n;
-    int p;
-    for(int i = 2; i <= n; i ++ ){
-        cin >> p;
-        T[p].push_back(i);
-    }
-    dfs(1);
-    cout << add(dp[1][0], dp[1][2]) << "\n";
-    return 0;
+   ios::sync_with_stdio(0);
+   cin.tie(0);
+   int n;
+   cin >> n;
+   treesize = n;
+   for (int i = 0; i < n - 1; i++) {
+      int u, v;
+      cin >> u >> v;
+      u--; v--;
+      g[v].push_back(u);
+      g[u].push_back(v);
+   }
+   prepare(n);
+   int q;
+   cin >> q;
+   while (q --) {
+      string t;
+      cin >> t;
+      if (t == "max") {
+         int l, r;
+         cin >> l >> r; l--; r--;
+         cout << query(l, r) << '\n';
+      } else {
+         int i, val;
+         cin >> i >> val; i--;
+         seg_update(pos[i], max_pos[i], val);
+      }
+   }
+   return 0;
 }

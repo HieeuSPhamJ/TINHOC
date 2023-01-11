@@ -42,10 +42,18 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = random(1,5);
+    int m = random(1,5);
     cout << n << endl;
-    for (int i = 2; i <= n; i++){
-        cout << random(1,i - 1) << " ";
+    randomTree(n);
+    cout << m << endl;
+    while(m--){
+        int t = random(1,2);
+        if (t == 1){
+            cout << "add " << random(1,n) << " " << random(-20,20) << endl;
+        }
+        else{
+            cout << "max " << random(1,n) << " " << random(1,n) << endl;
+        }
     }
-
     return 0;
 }

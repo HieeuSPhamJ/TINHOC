@@ -146,16 +146,6 @@ signed main(){
             cout << query(a,b) << " ";
         }
     }
-
-    // for (int i = 1; i <= n; i++){
-    //     cout << get(1,1,n,i,i) << " ";
-    // }
-
-    // cout << endl;
     
-    // cout << query(10,1) << endl;
-
-    // cout << "END" << endl;
-
     return 0;
 }
