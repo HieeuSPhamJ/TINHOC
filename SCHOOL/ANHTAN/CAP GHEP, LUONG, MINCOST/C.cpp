@@ -11,15 +11,16 @@ const int inf = 1e18;
 
 int ans = 0;
 int n, m, VAL, s, t;
-vector <int> adj[1010];
-int cost[1010][1010];
-int had[1010][1010];
-int cap[1010][1010];
-int dist[1010];
-int trace[1010];
+int cost[420][420];
+int had[420][420];
+int cap[420][420];
+vector <int> adj[420];
+int dist[420];
+int trace[420];
+int inq[420];
 
 void add(int a, int b, int costi, int capa){
-    cout << a << " " << b  << " " << costi << endl;
+    // cout << a << " " << b << " " << capa << endl;
     cost[a][b] = cost[b][a] = costi;
     cap[a][b] = capa;
 
@@ -28,8 +29,10 @@ void add(int a, int b, int costi, int capa){
 
 }
 
+int hasAns;
+
 bool cango(){
-    for (int i = 1; i <= n; i++){
+    for (int i = 0; i <= n + m + 1; i++){
         dist[i] = inf;
         trace[i] = 0;
     }
@@ -37,10 +40,12 @@ bool cango(){
     queue <int> q;
     q.push(s);
     dist[s] = 0;
+    inq[s] = 1;
 
     while(q.empty() == 0){
         int te = q.front();
         q.pop();
+        inq[te] = 0;
         for (auto i: adj[te]){
             if (had[te][i] >= cap[te][i]){
                 continue;
@@ -52,16 +57,17 @@ bool cango(){
 
             if (dist[i] > dist[te] + co){
                 dist[i] = dist[te] + co;
-                q.push(i);
                 trace[i] = te;
+                if (inq[i] == 0){
+                    q.push(i);
+                    inq[i] = 1;
+                }
             }
         }
     }
     return dist[t] != inf;
 }
 
-
-int hasAns;
 
 void Try(){
     int now = inf;
@@ -92,13 +98,13 @@ void Try(){
 
 void minCost(){
     hasAns = 0;
+    ans = 0;
     while(cango()){
         Try();
         if (hasAns){
             return;
         }
     }
-    cout << -1 << endl;
 }
 
 signed main(){
@@ -107,14 +113,45 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cin >> n >> m >> VAL >> s >> t;
-    for (int i = 1; i <= m; i++){
-        int a, b, costi, capa;
-        cin >> a >> b >> costi >> capa;
-        add(a,b,costi,capa);
+    int test;
+    cin >> test;
+    while(test--){
+        cin >> n >> m;
+
+        s = 0;
+        t = n + m + 1;
+        VAL = 0;
+
+        memset(cost,0,sizeof(cost));
+        memset(had,0,sizeof(had));
+        memset(cap,0,sizeof(cap));
+        
+        for (int i = 0; i <= t; i++){
+            adj[i].clear();
+        }
+
+        for (int i = 1; i <= n; i++){
+            int w;
+            cin >> w;
+            add(s,i,0,w);
+        }
+
+        for (int i = 1; i <= m; i++){
+            int w;
+            cin >> w;
+            add(i + n,t,0,w);
+            VAL += w;
+        }
+
+
+        for (int i = 1; i <= n; i++){
+            for (int j = 1; j <= m; j++){
+                int w;
+                cin >> w;
+                add(i,j + n,w,inf);
+            }
+        }
+        minCost();
     }
-
-    minCost();
-
     return 0;
 }
