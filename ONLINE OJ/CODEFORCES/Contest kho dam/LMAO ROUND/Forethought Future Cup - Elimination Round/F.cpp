@@ -48,21 +48,22 @@ int C(int n, int k){
 
 vector <int> adj[maxN];
 int dp[maxN];
+int child[maxN];
 
 void dfs(int node, int father){
     dp[node] = 1;
-    int child = 0;
     for (auto newNode: adj[node]){
         if (newNode == father){
             continue;
         }
         dfs(newNode,node);
-        child++;
-        dp[node] = mul(dp[node], dp[newNode]);
+        child[node]++;
+        dp[node] = mul(dp[node], dp[newNode] + max(0ll,child[newNode] - 1));
+        // cout << newNode << " " << child[newNode] - 1 << endl;
     }
     int now = 1;
-    for (int i = 2; i <= child; i++){
-        now = add(now, C(child,i));
+    for (int i = 2; i <= child[node]; i++){
+        now = add(now, C(child[node],i));
     }
     dp[node] = mul(dp[node], now);
     cout << "Node " << node << ": " << dp[node] << " " << now << endl;

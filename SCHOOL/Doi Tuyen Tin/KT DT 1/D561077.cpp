@@ -8,36 +8,65 @@
 using namespace std;
 
 const int maxN = 2 * 1e5 + 10;
-const int mod = 1000000531;
-const int base = 256;
-int POW[maxN];
+const ii mod = {1000000531,1e9 + 7};
+const ii base = {26, 40};
+ii POW[maxN];
+
+ii add(ii a, ii b){
+    a.fi += b.fi;
+    a.se += b.se;
+    if (a.fi >= mod.fi){
+        a.fi -= mod.fi;
+    }
+    if (a.se >= mod.se){
+        a.se -= mod.se;
+    }
+    return a;
+}
+
+ii mul(ii a, ii b){
+    (a.fi *= b.fi) %= mod.fi;
+    (a.se *= b.se) %= mod.se;
+    return a;
+}
+
+ii sub(ii a, ii b){
+    (a.fi -= b.fi) += mod.fi;
+    (a.se -= b.se) += mod.se;
+    if (a.fi >= mod.fi){
+        a.fi -= mod.fi;
+    }
+    if (a.se >= mod.se){
+        a.se -= mod.se;
+    }
+    return a;
+}
 
 struct hashtype{
     string data;
-    vector <int> ha;
+    ii ha[maxN];
     int len;
     void init(){
         len = data.length();
-        ha.resize(len + 3);
-        ha[0] = 0;
+        ha[0] = {0,0};
         for (int i = 0; i < len; i++){
-            (ha[i + 1] = ha[i] * base + data[i]) %= mod;
+            ha[i + 1] = add(mul(ha[i], base), sub({data[i], data[i]}, {'a','a'}));
         }
     }
-    int getHash(int left, int right){
-        return (ha[right] - (ha[left - 1] * POW[right - left + 1]) % mod + mod) % mod;
+    ii getHash(int left, int right){
+        return sub(ha[right], mul(ha[left - 1], POW[right - left + 1]));
     }
 };
 
 signed main(){
-    // freopen("D561077.INP", "r", stdin);
-    // freopen("D561077.OUT", "w", stdout);
+    freopen("D561077.INP", "r", stdin);
+    freopen("D561077.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    POW[0] = 1;
+    POW[0] = {1,1};
     for (int i = 1; i < maxN; i++){
-        (POW[i] = POW[i - 1] * base) %= mod;
+        POW[i] = mul(POW[i - 1], base);
     }
     int n;
     cin >> n;
@@ -50,16 +79,16 @@ signed main(){
     int left = 0;
     int right = n - 1;
     int ans = -1;
-
+    unordered_set <int> cnt;
     while(left <= right){
         int mid = (left + right) / 2;
-        unordered_map <int,int> cnt;
+        cnt.clear();
         int ok = 0;
         for (int i = 1; i + mid <= n; i++){
-            int now =  s.getHash(i, i + mid);
-            cnt[now]++;
-            if (cnt[now] >= 2){
-                ok = 1;
+            ii now =  s.getHash(i, i + mid);
+            int hashnow = now.se | (now.fi << 30);
+            if(!cnt.insert(hashnow).second){
+                ok=true;
                 break;
             }
         }
