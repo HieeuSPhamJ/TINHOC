@@ -11,15 +11,14 @@ const int inf = 1e18;
 
 int ans = 0;
 int n, m, VAL, s, t;
-vector <int> adj[1010];
 int cost[1010][1010];
 int had[1010][1010];
 int cap[1010][1010];
+vector <int> adj[1010];
 int dist[1010];
 int trace[1010];
 
 void add(int a, int b, int costi, int capa){
-    cout << a << " " << b  << " " << costi << endl;
     cost[a][b] = cost[b][a] = costi;
     cap[a][b] = capa;
 
@@ -61,8 +60,6 @@ bool cango(){
 }
 
 
-int hasAns;
-
 void Try(){
     int now = inf;
     for (int i = t; i != s; i = trace[i]){
@@ -84,21 +81,22 @@ void Try(){
     ans += now * dist[t];
     if (!VAL){
         cout << ans << endl;
-        hasAns = 1;
-        return;
+        for (int i = 1; i <= n; i++){
+            for (int j = 1; j <= n; j++){
+                if (had[i][j] > 0){
+                    cout << i << " " << j << " " << had[i][j] << endl;
+                }
+            }
+        }
+        cout << 0 << " " << 0 << " " << 0 << endl;
+        exit(0);
     }
 }
 
-
 void minCost(){
-    hasAns = 0;
     while(cango()){
         Try();
-        if (hasAns){
-            return;
-        }
     }
-    cout << -1 << endl;
 }
 
 signed main(){
@@ -116,5 +114,6 @@ signed main(){
 
     minCost();
 
+    cout << -1 << endl;
     return 0;
 }

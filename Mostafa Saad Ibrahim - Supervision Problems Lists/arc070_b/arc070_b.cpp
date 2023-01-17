@@ -15,8 +15,6 @@ bool Right[maxN][maxN];
 int prefix[maxN][maxN];
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -32,13 +30,15 @@ signed main(){
 
     Left[0][0] = 1;
     for (int j = 0; j <= k; j++){
-            prefix[0][j] = 1;
-        }
+        prefix[0][j] = 1;
+    }
     for (int i = 1; i <= n; i++){
-        for (int j = 0; j + a[i] <= k; j++){
+        for (int j = 0; j <= k; j++){
             if (Left[i - 1][j]){
                 Left[i][j] = 1;
-                Left[i][j + a[i]] = 1;
+                if (j + a[i] <= k){
+                    Left[i][j + a[i]] = 1;
+                }
             }
         }
         prefix[i][0] = 1;
@@ -48,13 +48,17 @@ signed main(){
     }
     Right[n + 1][0] = 1;
     for (int i = n; i >= 1; i--){
-        Right[i][0] = 1;
-        for (int j = 0; j + a[i] <= k; j++){
+        // cout << i << ": " << endl;
+        for (int j = 0; j <= k; j++){
             if (Right[i + 1][j]){
+                // cout << j << " " << j + a[i] << endl;
                 Right[i][j] = 1;
-                Right[i][j + a[i]] = 1;
+                if (j + a[i] <= k){
+                    Right[i][j + a[i]] = 1;
+                }
             }
         }
+        cout << endl;
     }
 
     // for (int i = 0; i <= n; i++){
@@ -71,7 +75,7 @@ signed main(){
         int lo = k - a[i];
         int ok = 1;
         // cout << "With: " << i << " " << a[i] << endl;
-        for (int j = 0; j <= maxV; j++){
+        for (int j = 0; j <= k; j++){
             if (hi - j >= 0 and Right[i + 1][j]){
                 int cnt = prefix[i - 1][hi - j];
                 if (lo - j > 0){
