@@ -23,7 +23,7 @@ void randomTree(int n){
 
 string randomStr(const int len) {
     static const char alphanum[] =
-        "LR";
+        "YN";
     std::string tmp_s;
     tmp_s.reserve(len);
 
@@ -42,18 +42,10 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = random(1,5);
-    int m = random(1,5);
-    cout << n << endl;
-    randomTree(n);
-    cout << m << endl;
-    while(m--){
-        int t = random(1,2);
-        if (t == 1){
-            cout << "add " << random(1,n) << " " << random(-20,20) << endl;
-        }
-        else{
-            cout << "max " << random(1,n) << " " << random(1,n) << endl;
-        }
+    int m = random(1,20);
+    cout << n << " " << m << endl;
+    for (int i = 1; i <= n; i++){
+        cout << random(1,m) << " ";
     }
     return 0;
 }

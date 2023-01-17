@@ -1,0 +1,1 @@
+{"name":"Local: C","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP opt\\C.cpp","tests":[{"id":1673794793920,"input":"5\n0 1 -2 10 3","output":""},{"id":1673795203757,"input":"7\n2 5 -2 9 -6 4 8","output":"5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP opt\\C.cpp","group":"local","local":true}

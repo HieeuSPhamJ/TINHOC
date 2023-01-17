@@ -2,21 +2,26 @@
 #define ii pair <int,int>
 #define fi first
 #define se second
-#define int long long
+// #define int long long
 #define double long double
 #define endl '\n'
 using namespace std;
 
-const int maxN = 1010 + 10;
-const int inf = 1e18;
+const int maxN = 2000 + 10;
+const int inf = 1e9;
 
 struct node{
     int to, rev, had, cap;
 };
-
 int n, m, s, t;
 vector <node> adjFlow[maxN];
 vector <int> adjMin[maxN];
+// unordered_map <int,int> nxt;
+// unordered_map <int,int> dist;
+// unordered_map <int,unordered_map <int,int>> cost;
+// unordered_map <int,unordered_map <int,int>> had;
+// unordered_map <int,unordered_map <int,int>> cap;
+// unordered_map <int,int> trace;
 int nxt[maxN];
 int dist[maxN];
 int cost[maxN][maxN];
@@ -25,13 +30,17 @@ int cap[maxN][maxN];
 int trace[maxN];
 int VAL;
 int ans;
+int maxNode = 0;
 
 void add(int a, int b, int c, int w){
-    cout << a << " " << b << " " << " " << w << endl;
+    // cout << a << " " << b << " " << c << endl;
+    // cout << a << " " << b << " " << c << " " << w << endl;
+    maxNode = max(maxNode, max(a,b));
     node u = {b,(int)adjFlow[b].size(),0,w};
     node v = {a,(int)adjFlow[a].size(),0,0};
     adjFlow[a].push_back(u);
     adjFlow[b].push_back(v);
+
     cost[a][b] = cost[b][a] = c;
     cap[a][b] = w;
     adjMin[a].push_back(b);
@@ -100,7 +109,7 @@ int dinic(){
 
 
 bool cangoMin(){
-    for (int i = 0; i <= n + n + 1; i++){
+    for (int i = 0; i <= maxNode; i++){
         dist[i] = inf;
         trace[i] = 0;
     }
@@ -112,6 +121,7 @@ bool cangoMin(){
     while(q.empty() == 0){
         int te = q.front();
         q.pop();
+        // cout << "Node: " << te << endl;
         for (auto i: adjMin[te]){
             if (had[te][i] >= cap[te][i]){
                 continue;
@@ -128,6 +138,7 @@ bool cangoMin(){
             }
         }
     }
+    // cout << "Dist:" << dist[t] << endl;
     return dist[t] != inf;
 }
 
@@ -154,13 +165,7 @@ void tryMin(){
     ans += now * dist[t];
     if (!VAL){
         cout << ans << endl;
-        for (int i = 1; i <= n; i++){
-            for (int j = n + 1; j <= n + n; j++){
-                if (had[i][j] > 0)
-                cout << i << " " << j - n << endl;
-            }
-        }
-        return;
+        exit(0);
     }
 }
 
@@ -168,11 +173,10 @@ void tryMin(){
 void minCost(){
     hasAns = 0;
     while(cangoMin()){
+        // cout << "turn" << endl;
         tryMin();
-        if (hasAns){
-            return;
-        }
     }
+    cout << "-1" << endl;
 }
 
 int c[maxN];
@@ -190,6 +194,8 @@ signed main(){
         cin >> c[i];
     }
     s = 0;
+    int lay1 = 0;
+    int lay2 = n;
     for (int i = 1; i <= n; i++){
         string ss;
         cin >> ss;
@@ -197,10 +203,9 @@ signed main(){
         for (int j = 1; j <= m; j++){
             char x = ss[j - 1];
             if (x == 'Y'){
-                add(i,j + n,c[i] * j * j,1);
+                add(i,j + n,0,1);
             }
         }
-        add(s,i,0,m);
         t = n + ss.size() + 1;
     }
 
@@ -208,7 +213,25 @@ signed main(){
         add(i + n,t,0,1);
     }
 
+    int layTemp = n + m + n;
+
+    int layCost = n + m + n + n;
+
+    for (int i = 1; i <= n; i++){
+        add(s,layTemp + i,0,inf);
+        for (int j = 1; j <= m; j++){
+            int costNode = layCost + m * (i - 1) + j;
+            add(layTemp + i, costNode,c[i] * (j * j - (j - 1) * (j - 1)),1);
+            add(costNode, lay1 + i,0,inf);
+        }
+    }
+
     VAL = dinic();
-    minCost();
+    if (VAL == m){
+        minCost();
+    }
+    cout << -1;
+    // cout << "Final:" << VAL << " " << s << " " << t << endl;
+
     return 0;
-}
+}   
