@@ -1,37 +1,48 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-const int N=5e3+5,M=2e4+5,inf=0x3f3f3f3f,mod=1e9+7;
-#define mst(a,b) memset(a,b,sizeof a)
-#define lx x<<1
-#define rx x<<1|1
-#define reg register
-#define PII pair<int,int>
-#define fi first
-#define se second
-#define pb push_back
-#define il inline
-int a[N],dp[N],n,k;
-ll s;
+#define fast ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define ll long long int
+const ll N = 1e5+5 , INF = 1e18 , MOD = 1e9+7;
+
+string fin = " hard",s;
+vector<ll> a(N);
+ll dp[N][5];
+ll n;
+
+ll go(ll i , ll j){
+
+	if(j == 4) return INF;
+	if(i == n+1) return 0;
+
+	if(dp[i][j] != -1) return dp[i][j];
+
+	ll ans = INF;
+
+	ans = min(ans,go(i+1,j+(s[i] == fin[j+1])));
+	ans = min(ans,go(i+1,j)+a[i]);
+
+	return dp[i][j] = ans;
+}
+
+void solve(){
+
+	cin >> n >> s;
+	s = ' '+s;
+	for(ll i = 1; i <= n; i++) cin >> a[i];
+
+	memset(dp,-1,sizeof dp);
+	cout << go(1,0);
+}
+
 int main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
-	scanf("%d%d",&n,&k);
-	for(int i=1;i<=n;s+=a[i++]){
-		scanf("%d",&a[i]);
-		if(a[i]>k) a[i]=k;
-	}sort(a+1,a+n+1);
-	dp[0]=1;
-	for(int i=n;~i;s-=a[i--]){
-		bool ok=1;
-		for(int j=k-1;j>=max(k-s,0LL);j--)
-			if(dp[j]){
-				ok=0;break;
-			}
-		if(ok){
-			printf("%d\n",i);break;
-		}
-		for(int j=k;j>=a[i];j--) dp[j]|=dp[j-a[i]];
-	}
+
+	fast;
+	freopen("input.inp", "r", stdin);
+	freopen("B.out", "w", stdout);
+
+	ll tc = 1;
+	// cin >> tc;
+	while(tc--) solve();
+
 	return 0;
 }

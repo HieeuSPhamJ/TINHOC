@@ -5,58 +5,33 @@
 #define int long long
 #define double long double
 #define endl '\n'
+#define all(x) x.begin(), x.end()
 using namespace std;
 
-const int N = 1e5 + 5;
-int n , m , q;
+signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int test;
+    cin >> test;
+    while(test--){
+        double a,b,c,x,y,z;
+        cin >> a >> b >> c >> x >> y >> z;
+        double adu1 = a * b / c;
+        double adu2 = x * y / z;
 
-ii a[N][12];
-int b[N][12];
-
-signed main()
-{
-    //freopen("D.inp","r",stdin);
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cin >> q;
-    while(q--)
-    {
-        cin >> n >> m;
-        set < int > s;
-        for (int i = 1; i <= n; i++)
-        {
-            for (int j= 1; j <= m; j++)
-            {
-                cin >> b[i][j];
-                a[i][j].fi = b[i][j];
-                a[i][j].se = j;
-            }
-            sort(a[i] + 1 , a[i] + 1 + m);
-            int x = 0;
-            for (int j= 1; j <= m; j++)
-            {
-                x = x * 10 + a[i][j].se;
-                s.insert(x);
-            }
+        if (adu1 == adu2){
+            cout << "=";
         }
-        for (int i = 1; i <= n; i++)
-        {
-            int x = 0;
-            for (int j= 1; j <= m + 1; j++)
-            {
-                if(j == m + 1)
-                {
-                    cout << j - 1 << " ";
-                    break;
-                }
-                x = x * 10 + b[i][j];
-                if(s.find(x) == s.end())
-                {
-                    cout << j - 1 << " ";
-                    break;
-                }
-            }
+        else if (adu1 < adu2){
+            cout << "<";
+        }
+        else {
+            cout << ">";
         }
         cout << endl;
     }
+    return 0;
 }
