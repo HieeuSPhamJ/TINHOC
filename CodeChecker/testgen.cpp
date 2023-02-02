@@ -9,7 +9,7 @@ using namespace std;
 mt19937 rd(chrono::steady_clock::now().time_since_epoch().count());
 
 int random(int left, int right){
-    if (left == right){
+    if (left >= right){
         return left;
     }
     return (rd() % (right - left + 1)) + left;
@@ -41,11 +41,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(1,200);
-    cout << n << endl;
-    cout << randomStr(n) << endl;
+    int n = random(1,10);
+    cout << n << " " << random(1,n) << endl;
     for (int i = 1; i <= n; i++){
-        cout << random(1,1000) << " ";
+        cout << random(1,10) << " ";
     }
     return 0;
 }

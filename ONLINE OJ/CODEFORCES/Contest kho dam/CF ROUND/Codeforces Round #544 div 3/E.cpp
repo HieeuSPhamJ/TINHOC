@@ -16,8 +16,6 @@ int cost[maxN];
 int dp[maxN][maxN];
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -41,11 +39,17 @@ signed main(){
         val[m] = a[i];
     }
 
+    // for (int i = 1; i <= m; i++){
+    //     cout << val[i] << " " << cost[i] << endl;
+    // }
+
     for (int i = 1; i <= m; i++){
         for (int j = 1; j <= k; j++){
             dp[i][j] = dp[i - 1][j];
-            for (int x = 0, sum = 0; x < 5 and i - x >= 1 and val[i] - val[i - x] <= 5; x++){
+            // cout << "With " << i << " " << j << endl;
+            for (int x = 0, sum = 0; x <= 5 and i - x >= 1 and val[i] - val[i - x] <= 5; x++){
                 sum += cost[i - x];
+                // cout << i - x << " " << sum << endl;
                 dp[i][j] = max(dp[i][j], dp[i - x - 1][j - 1] + sum);
             }
         }
@@ -56,3 +60,12 @@ signed main(){
 
     return 0;
 }
+
+/*
+4 1
+5 1
+6 1
+7 4
+8 1
+9 2
+*/

@@ -1,74 +1,60 @@
 #include<bits/stdc++.h>
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define int long long
-#define double long double
-#define endl '\n'
 using namespace std;
 
-ii d[]{
-    {0,1},
-    {1,0},
-    {-1,0},
-    {0,-1}
-};
+#define ll long long int
 
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        int n;
-        cin >> n;
-        int a[n + 10][n + 10];
-        int check[n * n + 10];
-        vector <ii> q;
-        memset(check,0,sizeof(check));
-        for(int i=1;i<=n;i++){
-            for(int j=1;j<=n;j++){
-                a[i][j] = -1;
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n,m,d;
+        cin>>n>>m>>d;
+        vector<ll> a,b;
+        for(ll i = 0;i<n;i++)
+        {
+            ll x;
+            cin>>x;
+            a.push_back(x);
+        }
+        for(ll i = 0;i<m;i++)
+        {
+            ll x;
+            cin>>x;
+            b.push_back(x);
+        }
+        map<ll,ll> indx;
+        for(ll i = 0;i<n;i++)
+        {
+            indx[a[i]] = i+1;
+        }
+        ll ans = INT_MAX;
+        ll f = 0;
+        for(ll i = 0;i<m-1;i++)
+        {
+            if(indx[b[i]]>=indx[b[i+1]])
+            {
+                cout<<0<<endl;
+                f=1;
+                break;
+            }
+            if(indx[b[i+1]]>indx[b[i]]+d)
+            {
+                cout<<0<<endl;
+                f=1;
+                break;
+            }
+            ans = min(ans,indx[b[i+1]]-indx[b[i]]);
+            if((d+1-(indx[b[i+1]]-indx[b[i]]))<=(n-indx[b[i+1]] + indx[b[i]]-1))
+            {
+                ans = min(ans,d+1-(indx[b[i+1]]-indx[b[i]]));
             }
         }
-        a[1][1] = 1;
-        check[1] = 1;
-        q.push_back({1,1});
-        int maxV = n * n;
-        int diff = maxV - 1;
-        while(q.size()){
-            int x = q.back().fi;
-            int y = q.back().se;
-            q.pop_back();
-            for(int k = 0;k < 4; k++){
-                int nx = x + d[k].fi;
-                int ny = y + d[k].se;
-                if (a[nx][ny]==-1 and min(nx,ny) >= 1 and max(nx,ny) <= n){
-                    int v = a[x][y];
-                    vector <int> k = {-1,1};
-                    for (auto j: k){
-                        int newDiff = diff * j;
-                        if (!check[v + newDiff] and 1 <= v + newDiff and v + newDiff <= maxV){
-                            q.push_back({nx,ny});
-                            check[v+newDiff] = 1;   
-                            a[nx][ny] = v + newDiff;
-                            diff--;
-                            break;
-                        }
-                    }
-                }
-            }
+        if(f==1)
+        {
+            continue;
         }
-        for(int i=1;i<=n;i++){
-            for(int j=1;j<=n;j++){
-                cout<<a[i][j]<<' ';
-            }
-            cout<<endl;
-        }
+        cout<<ans<<endl;
     }
-    
-    return 0;
 }
