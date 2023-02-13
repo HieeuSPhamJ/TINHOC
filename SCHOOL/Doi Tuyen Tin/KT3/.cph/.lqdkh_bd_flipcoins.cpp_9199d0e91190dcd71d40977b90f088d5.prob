@@ -1,0 +1,1 @@
+{"name":"Local: lqdkh_bd_flipcoins","url":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\KT3\\lqdkh_bd_flipcoins.cpp","tests":[{"id":1676268311764,"input":"2\nHTHT\nTHTH\nHTHT\nTHTH\nTHTT\nHHHT\nTHTT\nTTTT","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\KT3\\lqdkh_bd_flipcoins.cpp","group":"local","local":true}

@@ -41,10 +41,31 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(1,10);
-    cout << n << " " << random(1,n) << endl;
-    for (int i = 1; i <= n; i++){
-        cout << random(1,10) << " ";
+    int n = random(2,100);
+    int test = random(1,100);
+    cout << n << " " << test << endl;
+    vector<int> ds;
+    for(long i=2; i<=n; i++) ds.push_back(i);
+    random_shuffle(ds.begin(),ds.end());
+    int l=1;
+    int x=0;
+    while(x<n-1){
+        x=random(x+1,n-1);
+        cout<<1<<' '<<ds[l-1]<<'\n';
+        for(long i=l; i<x; i++){
+            cout<<ds[i-1]<<' '<<ds[i]<<'\n';
+        }
+        l=x+1;
+    }
+    while(test--){
+        int t = random(0,1);
+        cout << t << " ";
+        if (t == 1){
+            cout << random(1,n) << endl;
+        }
+        else{
+            cout << random(1,n) << " " << random(1,n) << " " << random(1,n) << endl;
+        }
     }
     return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: lqdkh_bd_number","url":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\KT3\\lqdkh_bd_number.cpp","tests":[{"id":1676186380937,"input":"123456781234\n567812345678","output":"56781234"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\KT3\\lqdkh_bd_number.cpp","group":"local","local":true}
