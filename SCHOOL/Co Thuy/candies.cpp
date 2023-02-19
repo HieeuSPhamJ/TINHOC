@@ -13,8 +13,8 @@ unordered_map <int,int> m;
 priority_queue <int> s;
 
 signed main(){
-    freopen("candies.INP", "r", stdin);
-    freopen("candies.OUT", "w", stdout);
+    // freopen("candies.INP", "r", stdin);
+    // freopen("candies.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);

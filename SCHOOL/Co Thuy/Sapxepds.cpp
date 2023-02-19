@@ -61,24 +61,17 @@ signed main(){
         }
         nenso();
         for (int i = 1; i <= n; i++){
-            // cout << a[i] << " ";
             last[a[i]] = i;
             meet[a[i]] = min(meet[a[i]], i);
         }
-        // for (auto i: aonly){
-        //     cout << i << " ";
-        // }
-        // cout << endl;
         int ans = 0;
         for (auto i: aonly){
             dp[i] = 1;
             if (last[i - 1] <= meet[i]){
                 dp[i] = max(dp[i],dp[i - 1] + 1);
-                // cout << i << ": " << dp[i] << endl;
                 ans = max(ans,dp[i]);
             }
         }
-        // cout << ans << " ";
         cout << aonly.size() - ans << endl;
         
     }

@@ -26,7 +26,7 @@ signed main(){
     int ans = 0;
     for (int c1 = 1; c1 <= 4; c1++){
         for (int c2 = c1 + 1;  c2 <= 4; c2++){
-            set <int> s = {1,2,3,4};
+            unordered_set <int> s = {1,2,3,4};
             s.erase(c1);
             s.erase(c2);
             int c3 = *s.begin();
@@ -38,13 +38,10 @@ signed main(){
                     int t2 = 0;
                     int trash = 0;
                     for (int line = 0; line <= 400; line++){
-                        int x1 = (a[line][i][c1] * a[line][j][c2] + a[line][i][c2] * a[line][j][c1]);
-                        int x2 = (a[line][i][c3] * a[line][j][c4] + a[line][i][c4] * a[line][j][c3]);
-                        trash += x1 * x2;
-                        t1 += x1;
-                        t2 += x2;
+                        t1 += (a[line][i][c1] * a[line][j][c2] + a[line][i][c2] * a[line][j][c1]);
+                        t2 += (a[line][i][c3] * a[line][j][c4] + a[line][i][c4] * a[line][j][c3]);
                     }
-                    ans += t1 * t2 - trash;
+                    ans += t1 * t2;
                 }
             }
         }
