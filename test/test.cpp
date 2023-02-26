@@ -5,56 +5,99 @@
 #define int long long
 #define double long double
 #define endl '\n'
-#define all(x) x.begin(), x.end()
 using namespace std;
 
-int a[403][403][5];
+const int maxN = 1e5 + 10;
+const int inf = 1e18;
+
+struct node{
+    int to, rev, had, cap;
+};
+
+int n, m, s, t;
+vector <node> adj[maxN];
+int nxt[maxN];
+int dist[maxN];
+
+void add(int a, int b, int w){
+    // cout << a << " " << b << " " << w << endl;
+    node u = {b,(int)adj[b].size(),0,w};
+    node v = {a,(int)adj[a].size(),0,0};
+    adj[a].push_back(u);
+    adj[b].push_back(v);
+}
+
+bool cango(){
+    memset(dist, -1, sizeof(dist));
+    queue <int> q;
+    q.push(s);
+    dist[s] = 0;
+    int check = 0;
+    while(!q.empty()){
+        int temp = q.front();
+        q.pop();
+        if (temp == t){
+            check = 1;
+        }
+        for (auto i: adj[temp]){
+            if (dist[i.to] == -1 and i.had < i.cap){
+                dist[i.to] = dist[temp] + 1;
+                q.push(i.to); 
+            }
+        }
+    }
+
+    return check;
+}
+
+int Try(int node, int Min){
+    if (node == t){
+        return Min;
+    }
+    for (auto &nu: adj[node]){
+        if (dist[nu.to] == dist[node] + 1 and nu.had < nu.cap){
+            int tempMin = min(Min,nu.cap - nu.had);
+            tempMin = min(tempMin, Try(nu.to,tempMin));
+            if (tempMin > 0){
+                // cout << node << " " << nu.to << " " << tempMin << endl;
+                nu.had += tempMin;
+                adj[nu.to][nu.rev].had -= tempMin;
+                return tempMin;
+            }
+        }
+    }
+
+
+    return 0;
+}
+
+int dinic(){
+    int res = 0;
+    // cango();
+    // for (int i = 1; i <= n; i++){
+    //     cout << dist[i] << endl;
+    // }
+    while(cango()){
+        memset(nxt, 0, sizeof(nxt));
+        // cout << "Turn" << endl;
+        while(int temp = Try(s,inf)){
+            res += temp;
+        }
+    }
+    return res;
+}
 
 signed main(){
-    freopen("nhap.txt", "r", stdin);
-    freopen("output.OUT", "w", stdout);
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        memset(a,0,sizeof(a));
-        int n;
-        cin >> n;
-        for (int i = 1; i <= n; i++){
-            int x, y, t;
-            cin >> x >> y >> t;
-            a[x + 200][y + 200][t]++;
-        }
-        int ans = 0;
-        for (int c1 = 1; c1 <= 4; c1++){
-            for (int c2 = c1 + 1;  c2 <= 4; c2++){
-                set <int> s = {1,2,3,4};
-                s.erase(c1);
-                s.erase(c2);
-                int c3 = *s.begin();
-                s.erase(c3);
-                int c4 = *s.begin();
-                for (int i = 0; i <= 400; i++){
-                    for (int j = i + 1; j <= 400; j++){
-                        int t1 = 0;
-                        int t2 = 0;
-                        int trash = 0;
-                        for (int line = 0; line <= 400; line++){
-                            int x1 = (a[line][i][c1] * a[line][j][c2] + a[line][i][c2] * a[line][j][c1]);
-                            int x2 = (a[line][i][c3] * a[line][j][c4] + a[line][i][c4] * a[line][j][c3]);
-                            trash += x1 * x2;
-                            t1 += x1;
-                            t2 += x2;
-                        }
-                        ans += t1 * t2 - trash;
-                    }
-                }
-            }
-        }
-        cout << ans / 2 << endl;
+
+    cin >> n >> n >> m;
+    s = 0;
+    t = n + m + 1;
     
-    }
+
     return 0;
 }

@@ -18,7 +18,7 @@ struct node{
     }
 };
 
-node *root = new node();
+node *root = new node();    
 
 void insert(string s){
     node *p = root;
