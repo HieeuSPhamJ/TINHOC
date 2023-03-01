@@ -41,27 +41,11 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    cout << 1 << endl;
     int n = 5;
-    int m = random(0,n / 2);
-    int k = random(1,n);
-
-    set <ii> lists;
-    for (int i = 2; i <= n; i++){
-        lists.insert({random(1, i - 1), i});
-    }
-
-    for (int i = 1; i <= m; i++){
-        int a = random(1,n - 1);
-        int b = random(a + 1, n);
-        lists.insert({a,b});
-    }
-    cout << n << " " << lists.size() << " " << k << endl;
-
-    for (auto i: lists){
-        cout << i.fi << " " << i.se << " " << random(1,20) << endl;
-    }
-    for (int i = 1; i <= k; i++){
-        cout << i << " ";
+    cout << n << " " << random(1,5) << " " << random(-10,10) << endl;
+    for (int i = 1; i <= n; i++){
+        cout << random(-20,20) << " ";
     }
     return 0;
 }

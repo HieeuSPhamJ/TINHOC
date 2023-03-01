@@ -14,8 +14,6 @@ int a[maxN];
 int dp[maxN][22];
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -32,31 +30,28 @@ signed main(){
         int ans = 0;
         for (int i = 0; i <= n; i++){
             for (int j = 0; j <= k; j++){
-                dp[i][j] = 0;
+                dp[i][j] = -1e18;
             }
         }
+        dp[1][0] = a[1] - x;
+        dp[1][1] = a[1] + x;
         for (int i = 1; i <= n; i++){
             for (int j = 0; j <= min(k,i); j++){
-                // cout << "With: " << i << " " << j << endl;
-                dp[i][j] = max(0ll,dp[i - 1][j]) + a[i] - x;
-                // cout << dp[i][j] << endl;
-                if (j - 1 >= 0){
-                    dp[i][j] = max(dp[i][j], max(0ll, dp[i - 1][j - 1]) + a[i] + x);
-                    // cout << dp[i][j] << endl;
-                }
-                if (j == k){
-                    ans = max(ans, dp[i][j]);
+                int now = dp[i][j];
+                if (now != 1e18){
+                    dp[i + 1][j] = max({a[i] - x,dp[i + 1][j], now + a[i] - x});
+                    dp[i + 1][j + 1] = max({a[i] - x,dp[i + 1][j + 1], now + a[i] + x});
                 }
             }
         }
 
-        // for (int j = 0; j <= k; j++){
-        //     cout << j << ": ";
-        //     for (int i = 1; i <= n; i++){
-        //         cout << dp[i][j] << " ";
-        //     }
-        //     cout << endl;
-        // }
+        for (int j = 0; j <= k; j++){
+            cout << j << ": ";
+            for (int i = 1; i <= n; i++){
+                cout << dp[i][j] << " ";
+            }
+            cout << endl;
+        }
         cout << ans << endl;
     }
     return 0;

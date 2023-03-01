@@ -1,103 +1,118 @@
-#include<bits/stdc++.h>
-#define ii pair <int,int>
-#define fi first
-#define se second
+//#pragma GCC optimize("Ofast")
+#include <bits/stdc++.h>
+
+#define taskname "blabla"
+#define endl "\n"
+#define X first
+#define Y second
 #define int long long
-#define double long double
-#define endl '\n'
+#define Ha dethuong
+
 using namespace std;
+typedef pair <int, int> ii;
+const long long oo = 1e18 + 3;
+const long long mod = 998244353;
+const int N = 4e1 + 3;
 
-const int maxN = 1e5 + 10;
-const int inf = 1e18;
+int l, r, k, temp, ans, limit;
+int p2[40], p3[40];
+long long fact[N], infact[N];
 
-struct node{
-    int to, rev, had, cap;
-};
-
-int n, m, s, t;
-vector <node> adj[maxN];
-int nxt[maxN];
-int dist[maxN];
-
-void add(int a, int b, int w){
-    // cout << a << " " << b << " " << w << endl;
-    node u = {b,(int)adj[b].size(),0,w};
-    node v = {a,(int)adj[a].size(),0,0};
-    adj[a].push_back(u);
-    adj[b].push_back(v);
+long long add(long long a, long long b)
+{
+    return (a + b) % mod;
 }
 
-bool cango(){
-    memset(dist, -1, sizeof(dist));
-    queue <int> q;
-    q.push(s);
-    dist[s] = 0;
-    int check = 0;
-    while(!q.empty()){
-        int temp = q.front();
-        q.pop();
-        if (temp == t){
-            check = 1;
-        }
-        for (auto i: adj[temp]){
-            if (dist[i.to] == -1 and i.had < i.cap){
-                dist[i.to] = dist[temp] + 1;
-                q.push(i.to); 
-            }
-        }
-    }
-
-    return check;
+long long mul(long long a, long long b)
+{
+    return (a * b) % mod;
 }
 
-int Try(int node, int Min){
-    if (node == t){
-        return Min;
-    }
-    for (auto &nu: adj[node]){
-        if (dist[nu.to] == dist[node] + 1 and nu.had < nu.cap){
-            int tempMin = min(Min,nu.cap - nu.had);
-            tempMin = min(tempMin, Try(nu.to,tempMin));
-            if (tempMin > 0){
-                // cout << node << " " << nu.to << " " << tempMin << endl;
-                nu.had += tempMin;
-                adj[nu.to][nu.rev].had -= tempMin;
-                return tempMin;
-            }
-        }
-    }
-
-
-    return 0;
+long long sub(long long a, long long b)
+{
+    return ((a - b) % mod + mod) % mod;
 }
 
-int dinic(){
-    int res = 0;
-    // cango();
-    // for (int i = 1; i <= n; i++){
-    //     cout << dist[i] << endl;
-    // }
-    while(cango()){
-        memset(nxt, 0, sizeof(nxt));
-        // cout << "Turn" << endl;
-        while(int temp = Try(s,inf)){
-            res += temp;
+long long Power(long long a, long long b)
+{
+    long long res = 1;
+    long long curr = a % mod;
+    while (b > 0)
+    {
+        if (b & 1)
+        {
+            res = mul(res, curr);
         }
+        curr = mul(curr, curr);
+        b >>= 1;
     }
     return res;
 }
 
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
+void init()
+{
+    fact[0] = 1;
+    for (long long i = 1; i < N; ++ i)
+    {
+        fact[i] = mul(fact[i - 1], i);
+    }
+    infact[N - 1] = Power(fact[N - 1], mod - 2);
+    infact[0] = 1;
+    for (long long i = N - 2; i >= 1; -- i)
+    {
+        infact[i] = mul(infact[i + 1], i + 1);
+    }
+}
+
+long long C(long long k, long long n)
+{
+    return mul(fact[n], mul(infact[k], infact[n - k]));
+}
+
+signed main()
+{
+//   freopen (taskname".inp", "r", stdin);
+//   freopen (taskname".out", "w", stdout);
+
+
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> n >> n >> m;
-    s = 0;
-    t = n + m + 1;
-    
+    init();
+    p2[0] = p3[0] = 1;
+    for (int i = 1; i <= 25; ++ i)
+    {
+        p2[i] = p2[i - 1] * 2;
+        p3[i] = p3[i - 1] * 3;
+    }
+
+    int Test;
+    cin >> Test;
+    for (int TestCase = 1; TestCase <= Test; ++ TestCase)
+    {
+        cin >> l >> r;
+//        l = 250001, r = 1000000;
+        temp = l;
+        ans = k = 0;
+        while ((temp * 2) <= r)
+        {
+            ++ k;
+            temp <<= 1;
+        }
+        cout << k << endl;
+        for (int j = k; j >= 0; -- j)
+        {
+            limit = r / (p2[j] * p3[k - j]);
+            if (limit < l)
+            {
+                break;
+            }
+            cout << ans << " " << limit - l + 1 << " " << C(j, k) << endl;
+            ans = add(ans, mul(limit - l + 1, C(j, k)));
+        }
+        cout << k + 1 << ' ' << ans << endl;
+    }
 
     return 0;
 }
