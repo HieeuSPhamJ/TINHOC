@@ -5,6 +5,7 @@
 #define int long long
 #define double long double
 #define endl '\n'
+#define all(x) x.begin(), x.end()
 using namespace std;
 
 const int maxN = 1e5 + 10;
@@ -16,6 +17,7 @@ struct node{
 
 int n, m, s, t;
 vector <node> adj[maxN];
+vector <ii> dadj[maxN];
 int nxt[maxN];
 int dist[maxN];
 
@@ -25,6 +27,7 @@ void add(int a, int b, int w){
     node v = {a,(int)adj[a].size(),0,0};
     adj[a].push_back(u);
     adj[b].push_back(v);
+    
 }
 
 bool cango(){
@@ -87,29 +90,25 @@ int dinic(){
     return res;
 }
 
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-
-    cin >> n >> m >> s >> t;
-    while(m--){
-        int a, b, w;
-        cin >> a >> b >> w;
-        add(a,b,w);
+    cin >> n >> m;
+    for (int i = 1; i <= m; i++){
+        int a, b, v, cost;
+        cin >> a >> b >> v >> cost;
+        dadj[a].push_back({v,b});
+        dadj[b].push_back({v,a});
     }
-    
-    cout << dinic() << endl;
 
-    for (int i = 1; i <= n; i++){
-        for (auto v: adj[i]){
-            if (v.had > 0){
-                cout << i << " " << v.to << " " << v.had << endl;
-            }
-        }
-    }
+    dickcha(1,0);
+    dichcha(n,1);
+
+
 
     return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: mathp","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY PHONG/mathp.cpp","tests":[{"id":1677913550856,"input":"5 3\n3 7 10 2 6\n4\n43\n42","output":"YES\nNO\nYES"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY PHONG/mathp.cpp","group":"local","local":true}
