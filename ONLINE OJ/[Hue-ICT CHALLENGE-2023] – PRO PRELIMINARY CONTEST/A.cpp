@@ -8,7 +8,7 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-const int maxN = 1e5 + 10;
+const int maxN = 2e5 + 10;
 
 int len[maxN];
 
@@ -18,27 +18,28 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    len[1] = 1;
     int n, k;
     cin >> n >> k;
     int no = n;
     int ko = k;
     
-    for (int i = 2; i < maxN; i++){
+    for (int i = 1; i < maxN; i++){
         len[i] = 1e18;
     }
 
-    for (int i = 2; i <= 64; i++){
+    len[1] = 1;
+
+    for (int i = 2; i <= 60; i++){
         len[i] = len[i - 1] * 2 + log10(i) + 1;
     }
     
-    if (len[min(n,63ll)] < k){
+    if (len[n] < k){
         cout << -1 << endl;
         return 0;
     }
 
     while (n >= 1 and k > (int)log10(n) + 1){
-        k -= (int)log10(n) + 1;
+        k -= ((int)log10(n) + 1);
         n--;
         if (len[n] <= k){
             k = k % len[n];
@@ -48,10 +49,18 @@ signed main(){
         }
     }
 
+    cout << -1 << endl;
+
+    return 0;
+
     deque <int> s;
     while(n >= 1){
         s.push_front(n % 10);
         n /= 10;
+    }
+    if (s[k - 1] == 0){
+        cout << -1 << endl;
+        return 0;
     }
     cout << s[k - 1];
     return 0;

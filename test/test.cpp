@@ -1,118 +1,64 @@
-//#pragma GCC optimize("Ofast")
-#include <bits/stdc++.h>
-
-#define taskname "blabla"
-#define endl "\n"
-#define X first
-#define Y second
+#include<bits/stdc++.h>
 #define int long long
-#define Ha dethuong
-
+#define pb push_back
+#define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+#define MOD 1000000007
+#define INF 1e18
+#define fi first
+#define se second
+#define FOR(i,a,b) for(int i=a;i<=b;i++)
+#define FORD(i,a,b) for(int i=a;i>=b;i--)
+#define sz(a) ((int)(a).size())
+#define endl '\n'
+#define pi 3.14159265359
+#define TASKNAME "A"
 using namespace std;
-typedef pair <int, int> ii;
-const long long oo = 1e18 + 3;
-const long long mod = 998244353;
-const int N = 4e1 + 3;
-
-int l, r, k, temp, ans, limit;
-int p2[40], p3[40];
-long long fact[N], infact[N];
-
-long long add(long long a, long long b)
-{
-    return (a + b) % mod;
-}
-
-long long mul(long long a, long long b)
-{
-    return (a * b) % mod;
-}
-
-long long sub(long long a, long long b)
-{
-    return ((a - b) % mod + mod) % mod;
-}
-
-long long Power(long long a, long long b)
-{
-    long long res = 1;
-    long long curr = a % mod;
-    while (b > 0)
-    {
-        if (b & 1)
-        {
-            res = mul(res, curr);
-        }
-        curr = mul(curr, curr);
-        b >>= 1;
+typedef pair<int,int> ii;
+typedef pair<int,ii> iii;
+typedef vector<int> vi;
+const int MAXN = 2e5 + 9;
+int n,k,f[MAXN],x,ch[MAXN];
+int cal(int x,int k){
+    cout << x << " " << k << endl;
+    int numd = log10(x)+1;
+    while(x>0){
+        int c = x % 10;
+        ch[numd--] = c;
+        x/=10;
     }
-    return res;
+    return ch[k];
 }
 
-void init()
+main()
 {
-    fact[0] = 1;
-    for (long long i = 1; i < N; ++ i)
-    {
-        fact[i] = mul(fact[i - 1], i);
+    fast;
+  //  freopen(TASKNAME".inp","r",stdin);
+  //  freopen(TASKNAME".out","w",stdout);
+    cin>>n>>k;
+    f[1] = 1;
+    for(x=2;x<=n;x++){
+        int d = log10(x) + 1;
+        f[x] = f[x-1] * 2 + d;
+        if (f[x] > 1e15) break;
     }
-    infact[N - 1] = Power(fact[N - 1], mod - 2);
-    infact[0] = 1;
-    for (long long i = N - 2; i >= 1; -- i)
-    {
-        infact[i] = mul(infact[i + 1], i + 1);
+    for(;x<MAXN;x++){
+        f[x] = INF;
     }
-}
-
-long long C(long long k, long long n)
-{
-    return mul(fact[n], mul(infact[k], infact[n - k]));
-}
-
-signed main()
-{
-//   freopen (taskname".inp", "r", stdin);
-//   freopen (taskname".out", "w", stdout);
-
-
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-
-    init();
-    p2[0] = p3[0] = 1;
-    for (int i = 1; i <= 25; ++ i)
-    {
-        p2[i] = p2[i - 1] * 2;
-        p3[i] = p3[i - 1] * 3;
-    }
-
-    int Test;
-    cin >> Test;
-    for (int TestCase = 1; TestCase <= Test; ++ TestCase)
-    {
-        cin >> l >> r;
-//        l = 250001, r = 1000000;
-        temp = l;
-        ans = k = 0;
-        while ((temp * 2) <= r)
-        {
-            ++ k;
-            temp <<= 1;
-        }
-        cout << k << endl;
-        for (int j = k; j >= 0; -- j)
-        {
-            limit = r / (p2[j] * p3[k - j]);
-            if (limit < l)
-            {
-                break;
+    if (f[n] < k) cout<<-1<<endl;
+    else{
+        for(int i=n;i>=1;i--){
+            int x = log10(i)+1;
+            if (k<=x) {
+                cout<<cal(i,k)<<endl;
+                goto nexxt;
             }
-            cout << ans << " " << limit - l + 1 << " " << C(j, k) << endl;
-            ans = add(ans, mul(limit - l + 1, C(j, k)));
-        }
-        cout << k + 1 << ' ' << ans << endl;
-    }
+            k-=x;
 
-    return 0;
+            if (f[i-1] > k) continue;
+            int len = f[i-1];
+            k = (k%len == 0) ? len: k%len;
+        }
+    }
+    nexxt :;
+
 }

@@ -1,4 +1,1 @@
-x = range(1,5, 3)
-
-print(type(x))
-print(x)
+print(2**100000000)
