@@ -44,12 +44,8 @@ signed main(){
 
         set<int> s;
         for (int i = 1; i <= n; i++){
-            int ma = b[i + 1];
-            if (i != n){
-                ans = min(ans, abs(ma - a[i].fi));
-            }
 
-            if (s.size() and ma < a[i].fi){
+            if (s.size() and b[i + 1] < a[i].fi){
                 auto now = s.lower_bound(a[i].fi);
                 auto nnow = now;
                 now++;
@@ -63,7 +59,15 @@ signed main(){
                     ans = min(ans, abs(*nnow - a[i].fi));
                 }
             }
+            
             s.insert(a[i].se);
+        }
+
+        for (int i = 1; i <= n; i++){
+            if (i != n){
+                ans = min(ans, abs(b[i + 1] - a[i].fi));
+            }
+            
         }
 
         cout << ans << endl;

@@ -8,45 +8,61 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-struct dtype{
-    int data[5];
-    int get(){
-        return min({data[0], data[1], data[2], data[3]});
+const int maxN = 500010;
+
+int n;
+ii a[maxN];
+
+int cal(){
+    int ans = 1e18;
+    
+    multiset <int> low,up;
+
+    for (int i = 1; i <= n; i++){
+        up.insert(a[i].se);
     }
-};
 
-dtype add(dtype a, dtype b){
-    a.data[0] += b.data[0];
-    a.data[1] += b.data[1];
-    a.data[2] += b.data[2];
-    a.data[3] += b.data[3];
-    return a;
-}
+    for (int i = 1; i <= n; i++){
+        // cout << "With: " << i << endl;
+        ii now = a[i];
+        
+        while(up.size() and *up.begin() < now.fi){
+            // cout << "move " << *up.begin() << endl;
+            low.insert(*up.begin());
+            up.erase(up.begin());
+        }
 
-dtype subtr(dtype a, dtype b){
-    a.data[0] -= b.data[0];
-    a.data[1] -= b.data[1];
-    a.data[2] -= b.data[2];
-    a.data[3] -= b.data[3];
-    return a;
-}
+        if (up.find(now.se) != up.end()){
+            // cout << "era in up " << now.se << endl;
+            up.erase(up.find(now.se));
+        }
+        if (low.find(now.se) != low.end()){
+            // cout << "era in low " << now.se << endl;
+            low.erase(low.find(now.se));
+        }
 
-const int maxN = 1e6 + 10;
+        if (up.size()){
+            ans = min(ans, *up.rbegin() - now.fi);
+        }
+        
+        // for (auto x: low){
+        //     cout << x << " ";
+        // }
+        // cout << endl;
+        // for (auto x: up){
+        //     cout << x << " ";
+        // }
+        // cout << endl;
 
-
-int k;
-dtype pre[maxN];
-
-
-bool check(int l, int r){
-    // cout << l << " " << r << endl;
-    dtype t = subtr(pre[r], pre[l - 1]);
-    if (t.get() >= k){
-        return 1;
+        if (now.se < now.fi){
+            low.insert(now.se);
+        }
+        else{
+            up.insert(now.se);
+        }
     }
-    return 0;
+    return ans;
 }
-
 
 signed main(){
     freopen("input.inp", "r", stdin);
@@ -56,58 +72,27 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    string s;
-    cin >> s;
-    cin >> k;
+    int test;
+    cin >> test;
+    while(test--){
+        
+        cin >> n;
+        for (int i = 1; i <= n; i++){
+            cin >> a[i].fi >> a[i].se;
+        }
 
-    int n = s.length();
+        sort(a + 1, a + 1 + n);
 
-    pre[0].data[0] = 0;
-    pre[0].data[1] = 0;
-    pre[0].data[2] = 0;
-    pre[0].data[3] = 0;
-    
-    for (int i = 1; i <= n; i++){
-        pre[i] = pre[i - 1];
-        if (s[i - 1] == 'H'){
-            pre[i].data[0]++;
+        int ans = cal();
+
+        for (int i = 1; i <= n; i++){
+            swap(a[i].fi, a[i].se);
         }
-        else if (s[i - 1] == 'U'){
-            pre[i].data[1]++;
-        }
-        else if (s[i - 1] == 'C'){
-            pre[i].data[2]++;
-        }
-        else {
-            pre[i].data[3]++;
-        }
+        sort(a + 1, a + 1 + n);
+
+        ans = min(ans, cal());
+
+        cout << ans << endl;
     }
-    // for (int j = 0; j < 4; j++){
-    //     for (int i = 1; i <= n; i++){
-    //         cout << pre[i].data[j] << " ";
-    //     }
-    //     cout << endl;
-    // }
-    int ans = 1e18;
-    for (int i = 1, j = 1; i <= n; i++){
-        // cout << "With: " << i << endl;
-        while(check(j,i) and j <= i){
-            // cout << j << endl;
-            int len = i - j + 1;
-            ans = min(ans, (len - k * 4));
-            j++;
-        }
-        if (j > i){
-            j = i;
-        }
-    }
-
-    if (ans == 1e18){
-        cout << -1;
-        return 0;
-    }
-
-    cout << ans;
-
     return 0;
 }

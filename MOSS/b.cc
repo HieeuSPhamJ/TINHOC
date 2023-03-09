@@ -1,64 +1,63 @@
-#include<bits/stdc++.h>
-#define int long long
-#define pb push_back
-#define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-#define MOD 1000000007
-#define INF 1e18
-#define fi first
-#define se second
-#define FOR(i,a,b) for(int i=a;i<=b;i++)
-#define FORD(i,a,b) for(int i=a;i>=b;i--)
-#define sz(a) ((int)(a).size())
-#define endl '\n'
-#define pi 3.14159265359
-#define TASKNAME "A"
+#include <bits/stdc++.h>
 using namespace std;
-typedef pair<int,int> ii;
-typedef pair<int,ii> iii;
+#define int long long
+#define all(x) x.begin(), x.end()
+#define _sort(x) sort(all(x))
+#define loop(i, N) for (int i = 0; i < N; i++)
 typedef vector<int> vi;
-const int MAXN = 2e5 + 9;
-int n,k,f[MAXN],x,ch[MAXN];
-int cal(int x,int k){
-    cout << x << " " << k << endl;
-    int numd = log10(x)+1;
-    while(x>0){
-        int c = x % 10;
-        ch[numd--] = c;
-        x/=10;
+typedef pair<int, int> pi;
+typedef vector<pi> vpi;
+
+void solve()
+{
+    int n;
+    cin >> n;
+
+    vpi arr(n);
+    loop(i, n) cin >> arr[i].first >> arr[i].second;
+    _sort(arr);
+
+    vi suf(n + 1, -1);
+    suf[n - 1] = arr[n - 1].second;
+    for (int i = n - 2; i >= 0; i--)
+        suf[i] = max(suf[i + 1], arr[i].second);
+
+    set<int> st;
+    int ans = INT_MAX;
+    for (int i = 0; i < n; i++)
+    {
+        int mx = suf[i + 1];
+        if (i != n - 1)
+            ans = min(ans, abs(mx - arr[i].first));
+
+        if (mx < arr[i].first && !st.empty())
+        {
+            auto curr = st.upper_bound(arr[i].first);
+            if (curr == st.end())
+            {
+                curr--;
+                ans = min(ans, abs(*curr - arr[i].first));
+            }
+            else
+            {
+                ans = min(ans, abs(*curr - arr[i].first));
+                if (curr != st.begin())
+                {
+                    curr--;
+                    ans = min(ans, abs(*curr - arr[i].first));
+                }
+            }
+        }
+        st.insert(arr[i].second);
     }
-    return ch[k];
+    cout << ans << endl;
 }
 
-main()
+int32_t main()
 {
-    fast;
-  //  freopen(TASKNAME".inp","r",stdin);
-  //  freopen(TASKNAME".out","w",stdout);
-    cin>>n>>k;
-    f[1] = 1;
-    for(x=2;x<=n;x++){
-        int d = log10(x) + 1;
-        f[x] = f[x-1] * 2 + d;
-        if (f[x] > 1e15) break;
-    }
-    for(;x<MAXN;x++){
-        f[x] = INF;
-    }
-    if (f[n] < k) cout<<-1<<endl;
-    else{
-        for(int i=n;i>=1;i--){
-            int x = log10(i)+1;
-            if (k<=x) {
-                cout<<cal(i,k)<<endl;
-                goto nexxt;
-            }
-            k-=x;
+    int T = 1;
+    cin >> T;
 
-            if (f[i-1] > k) continue;
-            int len = f[i-1];
-            k = (k%len == 0) ? len: k%len;
-        }
-    }
-    nexxt :;
-
+    while (T--)
+        solve();
 }

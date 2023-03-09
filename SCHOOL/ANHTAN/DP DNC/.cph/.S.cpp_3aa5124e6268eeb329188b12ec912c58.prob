@@ -1,0 +1,1 @@
+{"name":"Local: S","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP DNC\\S.cpp","tests":[{"id":1678027633206,"input":"6 3\n20 50 30 60 40 100\n","output":""},{"id":1678027641852,"input":"8 3\n20 50 30 60 40 100 5 1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP DNC\\S.cpp","group":"local","local":true}
