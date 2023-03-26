@@ -26,9 +26,15 @@ void cal(int l, int r, int optl, int optr){
     }
     int mid = (l + r) / 2;
     ii best = ii(0 , -1); 
-    for(int k = optl; k <= min(mid,optr); k++){
-        if(best.fi < dp_before[k - 1] + cost[k][mid]){
-            best = {dp_before[k - 1] + cost[k][mid], k};
+    unordered_set <int> s;
+    
+    for(int k = min(mid,optr); k >= optl; k--){
+        s.insert(a[k]);
+        // if (s.size() != cost[k][mid]){
+        //     cout << k << " " << mid << ": " << s.size() << " " << cost[k][mid] << endl;
+        // }
+        if(best.fi < dp_before[k - 1] + s.size()){
+            best = {dp_before[k - 1] + s.size(), k};
         }
     }
     dp_curr[mid] = best.fi;
@@ -67,3 +73,4 @@ signed main(){
 
     return 0;
 }
+

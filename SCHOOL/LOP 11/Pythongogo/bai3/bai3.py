@@ -1,10 +1,12 @@
 name = "bai3"
 
-fi = open(f"{name}.inp")
-fo = open(f"{name}.out", "w")
+# fi = open(f"{name}.inp")
+# fo = open(f"{name}.out", "w")
 
 
-a, b, c, v0, v1, v2 = map(int, fi.readline().split())
+# a, b, c, v0, v1, v2 = map(int, fi.readline().split())
+
+a, b, c, v0, v1, v2 = map(int, input().split())
 
 a = min(a,b + c)
 b = min(b,a + c)
@@ -16,4 +18,6 @@ tans1 = a / v0 + c / v1 + b / v2
 tans2 = b / v0 + c / v1 + a / v2
 
 
-fo.write(str(min([ans,tans1,tans2])))
+# fo.write(str(min([ans,tans1,tans2])))
+
+print(f"{min([ans,tans1,tans2]):.4f}")

@@ -8,30 +8,29 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
+vector <int> s;
+
 signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
+    freopen("KNJI.INP", "r", stdin);
+    freopen("KNJI.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
     int n;
     cin >> n;
     for (int i = 1; i <= n; i++){
-        cin >> a[i];
+        int x;
+        cin >> x;
+        s.push_back(x);
     }
-    int ans = 0;
-    for (int i = 1; i <= n; i++){
-        unordered_map <int,int> s;
-        for (int j = 1; j < i; j++){
-            int k = a[i] - a[j];
-            if (s[a[j] - k] == 0){
-                ans++;
-            }
-            s[a[j]] = 1;
+    int ans = n;
+    while (s.size()){
+        if (s.back() == ans){
+            ans--;
         }
+        s.pop_back();
     }
 
-    cout << ans;
-
+    cout << ans << endl;
     return 0;
 }

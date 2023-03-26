@@ -15,8 +15,8 @@ int check[maxN];
 map <int,int> dir;
 
 signed main(){
-    //freopen("brodo.INP", "r", stdin);
-    //freopen("brodo.OUT", "w", stdout);
+    freopen("brodo.INP", "r", stdin);
+    freopen("brodo.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);

@@ -16,5 +16,7 @@ signed main(){
     cout.tie(NULL);
     int n;
     cin >> n;
+    DT a;
+    cin >>
     return 0;
 }

@@ -8,9 +8,13 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
+const int maxN = 3 * 1e5 + 10;
+
+int a[maxN];
+
 signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
+    freopen("Diferen.INP", "r", stdin);
+    freopen("Diferen.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
@@ -19,19 +23,17 @@ signed main(){
     for (int i = 1; i <= n; i++){
         cin >> a[i];
     }
+
     int ans = 0;
     for (int i = 1; i <= n; i++){
-        unordered_map <int,int> s;
-        for (int j = 1; j < i; j++){
-            int k = a[i] - a[j];
-            if (s[a[j] - k] == 0){
-                ans++;
-            }
-            s[a[j]] = 1;
+        set <int> s;
+        s.insert(a[i]);
+        for (int j = i + 1; j <= n; j++){
+            s.insert(a[j]);
+            ans += abs(*s.begin() - *s.rbegin());
         }
     }
 
     cout << ans;
-
     return 0;
 }

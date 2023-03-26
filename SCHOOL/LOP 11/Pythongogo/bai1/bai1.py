@@ -1,10 +1,11 @@
 name = "bai1"
 
-fi = open(f"{name}.inp")
-fo = open(f"{name}.out", "w")
+# fi = open(f"{name}.inp")
+# fo = open(f"{name}.out", "w")
 
 
-a, b = map(int, fi.readline().split())
+# a, b = map(int, fi.readline().split())
+a, b = map(int, input().split())
 
 ta = (a + 1) // 2
 
@@ -19,5 +20,7 @@ else:
 
 # print(a, b)
 
-fo.write(f"{len} ")
-fo.write(f"{((a + b) * (len + 1) // 2)}")
+# fo.write(f"{len} ")
+# fo.write(f"{((a + b) * (len + 1) // 2)}")
+
+print(f"{len} {((a + b) * (len + 1) // 2)}")

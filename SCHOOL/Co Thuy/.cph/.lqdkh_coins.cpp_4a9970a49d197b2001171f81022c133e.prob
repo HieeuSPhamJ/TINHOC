@@ -1,0 +1,1 @@
+{"name":"Local: lqdkh_coins","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Co Thuy/lqdkh_coins.cpp","tests":[{"id":1679557131338,"input":"5 4\n2 4 8 2 4\n8\n5\n14\n10","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Co Thuy/lqdkh_coins.cpp","group":"local","local":true}
