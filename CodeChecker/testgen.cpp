@@ -41,6 +41,12 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    
+    int test = 1;
+    cout << test << endl;
+    while(test--){
+        int l = random(1e5,1e5);
+        int r = random(l,l + 1e5);
+        cout << l << ' ' << r << endl;
+    }
     return 0;
 }

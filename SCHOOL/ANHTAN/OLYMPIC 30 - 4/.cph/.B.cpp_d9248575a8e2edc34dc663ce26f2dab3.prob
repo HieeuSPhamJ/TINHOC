@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\OLYMPIC 30 - 4\\B.cpp","tests":[{"id":1679838545245,"input":"8 9\n1 2 3\n1 3 1\n2 4 4\n3 4 7\n5 4 9\n8 6 5\n8 7 4\n6 5 2\n7 5 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\OLYMPIC 30 - 4\\B.cpp","group":"local","local":true}

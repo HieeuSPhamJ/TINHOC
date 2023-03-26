@@ -4,7 +4,7 @@
 #define se second
 #define int long long
 #define double long double
-// #define endl '\n'
+#define endl '\n'
 #define all(x) x.begin(), x.end()
 using namespace std;
 
@@ -19,20 +19,18 @@ bool check(int x){
             break;
         }
     }
-
     return 1;
 }
 
 int cal(int l, int r){
     int res = 0;
     for (int i = l; i <= r; i++){
-        // cout << res << endl;
         res += check(i);
     }
     return res;
 }
 
-const int maxN = 1e6 + 10;
+const int maxN = 1e5 + 10;
 
 int notPrime[maxN];
 
@@ -55,8 +53,6 @@ void init(){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -67,7 +63,6 @@ signed main(){
 
     int test;
     cin >> test;
-    // cout << primes.size() << endl;
     while(test--){
         int l, r;
         cin >> l >> r;
