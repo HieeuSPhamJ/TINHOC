@@ -9,9 +9,11 @@
 using namespace std;
 
 vector <int> primes;
+// int cnt;
 
 bool check(int x){  
     for (auto i: primes){
+        // cnt++;
         if (x % i == 0){
             return 0;
         }
@@ -30,9 +32,9 @@ int cal(int l, int r){
     return res;
 }
 
-const int maxN = 1e5 + 10;
+const int maxN = sqrt(1e9 + 20);
 
-int notPrime[maxN];
+int notPrime[maxN + 10];
 
 void init(){
     notPrime[0] = notPrime[1] = 1;
@@ -68,5 +70,6 @@ signed main(){
         cin >> l >> r;
         cout << cal(l, r) << endl;
     }
+    // cerr << cnt;
     return 0;
 }
