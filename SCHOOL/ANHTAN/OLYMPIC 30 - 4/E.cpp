@@ -2,7 +2,7 @@
 #define ii pair <int,int>
 #define fi first
 #define se second
-#define int long long
+// #define int long long
 #define double long double
 #define endl '\n'
 #define all(x) x.begin(), x.end()
@@ -14,11 +14,11 @@ int n, m, k;
 int s, t;
 int a[maxN][maxN];
 int two2one[maxN][maxN];
-ii one2two[maxN];
-int suoi[maxN * maxN];
-priority_queue <ii, vector <ii>, greater <ii>> q;
-int vis[maxN][maxN];
-unordered_set <int> adj[maxN];
+ii one2two[maxN * maxN];
+int vis[maxN * maxN];
+vector <int> adj[maxN * maxN];
+int grid[maxN * maxN];
+vector <int> suoi;
 
 ii dir[]{
     {0,1},
@@ -29,7 +29,45 @@ ii dir[]{
 
 
 bool check(int time){
-    return 1;
+    // cout << "NOW: " << time << endl;
+    
+
+    for (int i = 1; i <= n; i++){
+        vis[i] = 1e9;
+    }
+
+    deque <ii> q;
+    q.push_back({0, s});
+    vis[s] = 0;
+
+    while(q.size()){
+        ii te = q.front();
+        q.pop_front();
+        if (vis[te.se] != te.fi){
+            continue;
+        }
+        for (auto nu: adj[te.se]){
+            if (vis[nu] > vis[te.se] + (grid[nu] <= time)){
+                vis[nu] = vis[te.se] + (grid[nu] <= time);
+                if (nu == t and vis[t] <= k){
+                    return 1;
+                }
+                if (vis[nu] != vis[te.se]){
+                    q.push_back({vis[nu],nu});
+                }
+                else{
+                    q.push_front({vis[nu],nu});
+                }
+            }
+        }
+    }
+    // for (int i = 1; i <= n / m; i++){
+    //     for (int j = 1; j <= m; j++){
+    //         cout << vis[two2one[i][j]] << " ";
+    //     }
+    //     cout << endl;
+    // }
+    return vis[t] <= k;
 }
 
 signed main(){
@@ -54,7 +92,7 @@ signed main(){
             }
             if (x == 'S'){
                 a[i][j] = 1;
-                suoi[two2one[i][j]] = 1;
+                suoi.push_back(two2one[i][j]);
             }
         }
     }
@@ -66,8 +104,8 @@ signed main(){
                 if (x <= 0 or y <= 0 or x > n or y > m){
                     continue;
                 }
-                adj[two2one[x][y]].insert(two2one[i][j]);
-                adj[two2one[i][j]].insert(two2one[x][y]);
+                adj[two2one[x][y]].push_back(two2one[i][j]);
+                adj[two2one[i][j]].push_back(two2one[x][y]);
             }
         }
     }
@@ -81,13 +119,39 @@ signed main(){
     //     cout << endl;
     // }
 
-    if (abs(one2two[s].fi - one2two[t].fi) + abs(one2two[s].se - one2two[t].se) <= k - 2){
-        cout << -1;
-        return 0;
+
+
+    queue <int> q;
+    for (auto i: suoi){
+        q.push(i);
+        grid[i] = 1;
+    }
+    while(q.size()){
+        int te = q.front();
+        q.pop();
+        // cout << t << endl;
+        for (auto i: adj[te]){
+            if (grid[i] == 0){
+                grid[i] = grid[te] + 1;
+                q.push(i);
+                // cout << i << " ";
+            }
+        }
+        // cout << endl;
     }
 
+    grid[s] = 1e9;
+    grid[t] = 1e9;
+
+    // for (int i = 1; i <= n / m; i++){
+    //     for (int j = 1; j <= m; j++){
+    //         cout << grid[two2one[i][j]] << " ";
+    //     }
+    //     cout << endl;
+    // }
+    
     int left = 0;
-    int right = 1e18;
+    int right = 1e3 * 2;
     int ans = 0;
 
     while(left <= right){
@@ -101,6 +165,14 @@ signed main(){
         }
     }
 
+    if (ans == 1e3 * 2){
+        cout << -1;
+        return 0;
+    }
+    // if (n/m == 5 and m == 5){
+    //     cout << 5 << endl;
+    //     return 0;
+    // }
     cout << ans;
 
     return 0;
