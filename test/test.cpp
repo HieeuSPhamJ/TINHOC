@@ -8,33 +8,12 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-<<<<<<< HEAD
 const int maxN = 5e3 + 10;
 
 int a[maxN];
 int dp[maxN][maxN];
 int p[maxN];
 int nxt[maxN][27];
-=======
-const int maxN = 1e6 + 10;
-
-int dp[maxN];
-
-void aduuuu(){
-    for (int i = 0; i < maxN; i++){
-        dp[i] = 1e18;
-    }
-    dp[0] = 0;
-    for (int i = 0; i < maxN; i++){
-        dp[i + 1] = min(dp[i + 1], dp[i] + 1);
-        if (i > 1){
-            for (int j = 2; j <= i and i * j < maxN; j++){
-                dp[i * j] = min(dp[i * j], dp[i] + 1);
-            }
-        }
-    }
-}
->>>>>>> eec7c1378889e76c8deadccb564c08100976fa9d
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -42,7 +21,6 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-<<<<<<< HEAD
     int m,n;
     cin >> m >> n;
     for (int i = 1; i <= m; i++){
@@ -75,16 +53,5 @@ signed main(){
     }
     cout << endl;
     
-=======
-    aduuuu();
-    int test;
-    cin >> test;
-    while(test--){
-        int n;
-        cin >> n;
-        cout << dp[n] << endl;
-    }
-
->>>>>>> eec7c1378889e76c8deadccb564c08100976fa9d
     return 0;
 }
