@@ -2,7 +2,7 @@
 #define ii pair <int,int>
 #define fi first
 #define se second
-#define int long long
+// #define int long long
 #define double long double
 #define endl '\n'
 #define all(x) x.begin(), x.end()

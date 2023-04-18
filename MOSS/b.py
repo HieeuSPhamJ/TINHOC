@@ -4,4 +4,4 @@ d = sqrt((x1 - x)**2 + (y1 - y)**2)
 if d % (2*r) == 0:
     print(int((d//(2*r))))
 else:
-    print(0)
+    print((int(d//(2*r)+1)))

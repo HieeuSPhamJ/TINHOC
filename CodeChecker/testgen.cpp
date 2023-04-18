@@ -6,13 +6,12 @@
 #define endl '\n'
 using namespace std;
 
-mt19937 rd(chrono::steady_clock::now().time_since_epoch().count());
 
 int random(int left, int right){
     if (left >= right){
         return left;
     }
-    return (rd() % (right - left + 1)) + left;
+    return (rand() % (right - left + 1)) + left;
 }
 
 void randomTree(int n){
@@ -37,16 +36,10 @@ string randomStr(const int len) {
 
 signed main(){
     srand(time(0));
-    freopen("input.inp", "w", stdout);
+    // freopen("input.inp", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test = 1;
-    cout << test << endl;
-    while(test--){
-        int l = random(1e5,1e5);
-        int r = random(l,l + 1e5);
-        cout << l << ' ' << r << endl;
-    }
+    cout << random(1,100) << " " << random(1,100) << endl;
     return 0;
 }

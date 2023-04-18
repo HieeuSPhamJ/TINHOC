@@ -3,6 +3,8 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "random": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp"
     }
 }

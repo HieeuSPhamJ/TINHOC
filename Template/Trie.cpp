@@ -8,7 +8,7 @@
 using namespace std;
 
 struct node{
-    node* a[26];
+    node *a[26];
     bool checkEnd = 0;
     node(){
         for (int i = 0; i < 26; i++){
