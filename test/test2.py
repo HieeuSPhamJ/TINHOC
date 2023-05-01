@@ -3,7 +3,7 @@ r, x1, y1, x2, y2 = map(int, input().split())
 
 len = math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
 
-len -= r * 2
+len -= r * 21
 
 t = (len // (r * 2))
 
