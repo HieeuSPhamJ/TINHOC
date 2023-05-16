@@ -1,0 +1,1 @@
+{"name":"Local: COLORS","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\IT\\COLORS.cpp","tests":[{"id":1683812604455,"input":"9 3\n1 2 3 4 1 2 3 4 5\n1 5 4 6\n1 4 3 6\n1 9 1 9","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\IT\\COLORS.cpp","group":"local","local":true}

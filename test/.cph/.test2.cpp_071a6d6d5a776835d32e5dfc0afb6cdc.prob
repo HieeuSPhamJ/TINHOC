@@ -1,0 +1,1 @@
+{"name":"Local: test2","url":"/media/pham/DATA/TINHOC/test/test2.cpp","tests":[{"id":1683465935208,"input":"2\n604\n45","output":"3 11\n3 5\n7 2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/pham/DATA/TINHOC/test/test2.cpp","group":"local","local":true}
