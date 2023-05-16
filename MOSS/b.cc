@@ -14,7 +14,7 @@
 #define TASKNAME "1828D1"
 const int MAXN = 1e5 + 9;
 using namespace std;
-int n, ans,t;
+int n, ans;
 int a[MAXN], start[MAXN], dp[MAXN],BIT[MAXN];
 
 void com()
@@ -29,7 +29,7 @@ void com()
 }
 
 void update(int id, int val) {
-    while (id <= n) {
+    for(int i=id;i<=n;i+=i&(-i)) {
         BIT[id] += val;
         id += id & -id;
     }
@@ -37,7 +37,7 @@ void update(int id, int val) {
 
 int get(int id) {
     int ans = 0;
-    while (id > 0) {
+    for(int i=id;i>0;i-=i&(-i)) {
         ans += BIT[id];
         id -= id & -id;
     }
@@ -75,9 +75,11 @@ int solve(int x)
 
 main()
 {
-    // freopen (TASKNAME".inp", "r", stdin);
-   //  freopen (TASKNAME".out", "w", stdout);
+   //  freopen (TASKNAME".inp", "r", stdin);
+    // freopen (TASKNAME".out", "w", stdout);
      fast;
+
+    int t;
     cin >> t;
     while(t--)
     {
@@ -95,5 +97,4 @@ main()
         cout<<ans<<endl;
     }
 
-    return 0;
 }
