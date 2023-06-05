@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\THT TRAINING\\B.cpp","tests":[{"id":1684672676268,"input":"4\nThai Ngoc Ha 1998\nTran Thi An 2002\nLe Van Phu 1996\nTran Van Anh 2006\n","output":"3\n1999 2001\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\THT TRAINING\\B.cpp","group":"local","local":true}

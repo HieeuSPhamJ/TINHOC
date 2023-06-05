@@ -14,8 +14,6 @@ int a[maxN];
 unordered_map <int,multiset <int>> dir;
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -26,6 +24,7 @@ signed main(){
     while(test--){
         int n, k;
         cin >> n >> k;
+        dir.clear();
         for (int i = 1; i <= n; i++){
             cin >> a[i];
             dir[a[i]].insert(i % k);

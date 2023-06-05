@@ -8,17 +8,22 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
+const int maxN 
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << 710745409 % 998244353 << endl;
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
+        cin >> n;
+        for (int i = 1; i <= n; i++){
+            cin >> a[i];
+        }
+    }
     return 0;
 }
-
-/*
-710745409
-998244353
-*/

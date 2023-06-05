@@ -14,11 +14,18 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << 710745409 % 998244353 << endl;
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+        set <ii> ss;
+        for (int i = 1; i < s.size(); i++){
+            ss.insert({(int)(s[i - 1] - 'a'), (int)(s[i] - 'a')});
+        }
+        cout << ss.size() << endl;
+    }
     return 0;
 }
-
-/*
-710745409
-998244353
-*/

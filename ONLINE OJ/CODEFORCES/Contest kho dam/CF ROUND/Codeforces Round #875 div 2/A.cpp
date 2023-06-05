@@ -14,11 +14,17 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << 710745409 % 998244353 << endl;
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
+        cin >> n;
+        for (int i = 1; i <= n; i++){
+            int x;
+            cin >> x;
+            cout << (n - x) + 1 << ' ';
+        }   
+        cout << endl;
+    }
     return 0;
 }
-
-/*
-710745409
-998244353
-*/

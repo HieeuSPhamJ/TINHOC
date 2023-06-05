@@ -1,100 +1,120 @@
 #include<bits/stdc++.h>
-#define int long long
-#define pb push_back
-#define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-#define MOD 1000000007
-#define INF 1e18
+#define ii pair <int,int>
 #define fi first
 #define se second
-#define FOR(i,a,b) for(int i=a;i<=b;i++)
-#define FORD(i,a,b) for(int i=a;i>=b;i--)
-#define sz(a) ((int)(a).size())
+#define int long long
+#define double long double
 #define endl '\n'
-#define pi 3.14159265359
-#define TASKNAME "1828D1"
-const int MAXN = 1e5 + 9;
+#define all(x) x.begin(), x.end()
 using namespace std;
-int n, ans;
-int a[MAXN], start[MAXN], dp[MAXN],BIT[MAXN];
 
-void com()
-{
-    vector<int> tmp;
-    tmp.pb(0);
-    for (int i=1;i<= n;i++)
-        tmp.pb(a[i]);
-    sort(tmp.begin(), tmp.end());
-    for (int i=1;i<=n;i++)
-        a[i] = lower_bound(tmp.begin(), tmp.end(), a[i]) - tmp.begin();
-}
+const int maxN = 1e5 + 10;
 
-void update(int id, int val) {
-    for(int i=id;i<=n;i+=i&(-i)) {
-        BIT[id] += val;
-        id += id & -id;
-    }
-}
+int a[maxN];
 
-int get(int id) {
-    int ans = 0;
-    for(int i=id;i>0;i-=i&(-i)) {
-        ans += BIT[id];
-        id -= id & -id;
-    }
-    return ans;
-}
-
-int solve(int x)
-{
-    int res = 0, limit = 0;
-    for (int i = 0; i <= n; ++ i)
-    {
-        start[i] = dp[i] = 0;
-    }
-    for (int i = x; i <= n; ++ i)
-    {
-        int pos = get(a[i] - 1) + 5;
-        pos -= 4;
-        update(a[i], 1);
-        while (pos <= start[limit])
-        {
-            start[limit] = dp[limit] = 0;
-            -- limit;
-        }
-        ++ limit;
-        start[limit] = i - x + 1;
-        dp[limit] = dp[limit - 1] + start[limit] - (start[limit - 1] + 1);
-        res = res + dp[limit];
-    }
-    for (int i = x; i <= n; ++ i)
-    {
-        update(a[i], -1);
-    }
-    return res;
-}
-
-main()
-{
-   //  freopen (TASKNAME".inp", "r", stdin);
-    // freopen (TASKNAME".out", "w", stdout);
-     fast;
-
-    int t;
-    cin >> t;
-    while(t--)
-    {
+signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
         cin >> n;
-        for (int i=1;i<=n;i++)
-        {
+        
+        for (int i = 1; i <= n; i++){
             cin >> a[i];
         }
-        com();
-        ans = 0;
-        for (int i=1;i<=n;i++)
-        {
-            ans = ans + solve(i);
-        }
-        cout<<ans<<endl;
-    }
 
+        int f = max_element(a + 2, a + 1 + n) - a;
+
+        vector <int> s;
+
+        for (int i = f; i <= n; i++){
+            s.push_back(a[i]);
+        }
+
+        int nn = n;
+
+        n = f - 1;
+        f = 1;
+        s.push_back(a[n]);
+        n--;
+        for (int i = n; i >= 1; i--){
+            if (a[i] < a[1]){
+                f = i;
+                break;
+            }
+            s.push_back(a[i]);
+        }
+
+        for (int i = 1; i <= f; i++){
+            s.push_back(a[i]);
+        }
+        
+        n = nn;
+
+        vector <int> ss;
+
+        ss.push_back(a[n]);
+        n--;
+        f = 1;
+        for (int i = n; i >= 1; i--){
+            if (a[i] < a[1]){
+                f = i;
+                break;
+            }
+            ss.push_back(a[i]);
+        }
+
+        for (int i = 1; i <= f; i++){
+            ss.push_back(a[i]);
+        }
+        
+        int ok = 0;
+        for (int i = 0; i < n; i++){
+            if (s[i] < ss[i]){
+                ok = 1;
+                break;
+            }
+            else if (s[i] > ss[i]){
+                ok = 0;
+                break;
+            }
+        }
+        if (ok == 0){
+            int cnt = 0;
+            for (auto i: s){
+                cnt++;
+                if (cnt > nn){
+                    break;
+                }
+                cout << i << " ";
+            }
+            cout << endl;
+        }
+        else{
+            int cnt = 0;
+            for (auto i: ss){
+                cnt++;
+                if (cnt > nn){
+                    break;
+                }
+                cout << i << " ";
+            }
+            cout << endl;
+        }
+    }
+    return 0;
 }
+
+/*
+4 3 2 1
+
+3 2 1 4
+
+
+
+*/

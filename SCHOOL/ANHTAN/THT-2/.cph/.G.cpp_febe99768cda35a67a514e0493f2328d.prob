@@ -1,0 +1,1 @@
+{"name":"Local: G","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\THT-2\\G.cpp","tests":[{"id":1685111462939,"input":"4 3\n1 1 0 2\n","output":""},{"id":1685111709637,"input":"4 4\n3 3 3 3\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\THT-2\\G.cpp","group":"local","local":true}
