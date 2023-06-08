@@ -92,9 +92,12 @@ signed main(){
                 seg.update(1,1,n,i,0);
             }
         }
+        for (int i = 0; i <= q + 1; i++){
+            cec[i] = 0;
+        }
         queue <ii> qu;
         for (int time = 1; time <= q; time++){
-            // cout << "With: " << time << endl;
+            // cout << "With: " << time << " " << CNTERROR << endl;
             while(qu.size() and qu.front().fi == time){
                 // cout << qu.front().fi << " " << qu.front().se << endl;
                 if (s[1][qu.front().se] != s[2][qu.front().se]){
@@ -105,13 +108,13 @@ signed main(){
                 }
                 qu.pop();
             }
-            CNTERROR += B[time];
+            CNTERROR += cec[time];
 
             int type;
             cin >> type;
             if (type == 3){
                 // cout << seg.get(1,1,n,1,n) << " ";
-                if (seg.get(1,1,n,1,n) <= 0){
+                if (CNTERROR == 0){
                     cout << "YES" << endl;
                 }
                 else{
@@ -124,16 +127,13 @@ signed main(){
                 qu.push({time + t, x});
                 seg.update(1,1,n,x,-1);
                 if(s[1][x]!=s[2][x]){
-                    B[min(time+t,q+1)] += 1 + B[min(time+t,q+1)] - B[min(time+t,q+1)];
+                    cec[min(time+t,q+1)] += 1 + cec[min(time+t,q+1)] - cec[min(time+t,q+1)];
                     CNTERROR--;
                 }
             }
             else{
                 int t1,i1,t2,i2;
                 cin >> t1 >> i1 >> t2 >> i2;
-                swap(s[t1][i1], s[t2][i2]);
-                // cout << s[1] << t1 << ' ' << i2 << endl;
-                // cout << s[2] << t2 << ' ' << i2 << endl;
                 int ib1 = seg.get(1,1,n,i1,i1);
                 int ib2 = seg.get(1,1,n,i2,i2);
                 if (ib1 != -1){
@@ -155,11 +155,13 @@ signed main(){
 
 
                 
-               if(s[t1][i1]!=s[(t1^1)][i1]) cnt--;
-               if(s[t2][i2]!=s[(t2^1)][i2]) cnt--;
+               if(s[t1][i1]!=s[((t1 - 1 ^1) + 1)][i1]) CNTERROR--;
+               if(s[t2][i2]!=s[((t2 - 1 ^1) + 1)][i2]) CNTERROR--;
                swap(s[t1][i1],s[t2][i2]);
-               if(s[t1][i1]!=s[(t1^1)][i1]) cnt++;
-               if(s[t2][i2]!=s[(t2^1)][i2]) cnt++;
+               if(s[t1][i1]!=s[((t1 - 1^1) + 1)][i1]) CNTERROR++;
+               if(s[t2][i2]!=s[((t2 - 1^1) + 1)][i2]) CNTERROR++;
+                // cout << s[1] << " " << t1 << ' ' << i2 << endl;
+                // cout << s[2] << " " << t2 << ' ' << i2 << endl;
             }
             // print();
         }

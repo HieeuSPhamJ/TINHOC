@@ -8,16 +8,16 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
+vector <vector <int>> dp[maxN];
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, m;
-    cin >> n >> m;
-    n *= m;
+    int test;
+    cin >> test;
 
-    for (int i = 1; i ,)
     return 0;
 }

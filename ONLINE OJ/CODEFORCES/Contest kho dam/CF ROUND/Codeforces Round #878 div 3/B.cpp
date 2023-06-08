@@ -14,10 +14,26 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, m;
-    cin >> n >> m;
-    n *= m;
+    int test;
+    cin >> test;
+    while(test--){
+        int n, k;
+        cin >> n >> k;
+        int sk = 1;
+        for(long i = 1; i <= k; i++){
+                sk *= 2;
+                if (sk > n){
+                    break;
+                }
+        }
 
-    for (int i = 1; i ,)
+        if (sk >= n + 1){
+            cout << n + 1 << endl;
+        }
+        else{
+            cout << sk << endl;
+        }
+
+    }
     return 0;
 }

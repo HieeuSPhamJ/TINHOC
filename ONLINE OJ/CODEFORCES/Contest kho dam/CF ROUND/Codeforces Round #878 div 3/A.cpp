@@ -14,10 +14,24 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, m;
-    cin >> n >> m;
-    n *= m;
-
-    for (int i = 1; i ,)
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
+        cin >> n;
+        vector <char> s;
+        while(n--){
+            char c;
+            cin >> c;
+            if (s.size() and s.front() == c){
+                cout << c;
+                s.clear();
+            }
+            else{
+                s.push_back(c);
+            }
+        }
+        cout << endl;
+    }
     return 0;
 }
