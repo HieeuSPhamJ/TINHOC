@@ -1,0 +1,27 @@
+ for (int i = k; i >= 1; -- i)
+        {
+            if (i != x && n % i != x)
+            {
+                val = i;
+                break;
+            }
+        }
+        if (val == -1)
+        {
+            cout << "NO" << endl;
+        }
+        else
+        {
+            cout << "YES" << endl;
+            cout << n / val + (n % val != 0) << endl;
+            for (int i = 1; i <= n / val; ++ i)
+            {
+                cout << val << ' ';
+            }
+            if (n % val != 0)
+            {
+                cout << n % val;
+            }
+            cout << endl;
+        }
+    }

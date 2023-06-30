@@ -1,0 +1,1 @@
+{"name":"Local: talent","url":"d:\\TINHOC\\USACO GUIDE\\Type\\GOLD\\DP-Knapsack-Gold\\talent.cpp","tests":[{"id":1686392164393,"input":"3 15\n20 21\n10 11\n30 31","output":"1066"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\USACO GUIDE\\Type\\GOLD\\DP-Knapsack-Gold\\talent.cpp","group":"local","local":true}

@@ -1,21 +1,22 @@
-a, b = map(int, input().split())
-
-if (a == 4 and b == 4):
-    print("""YES
-3
-1 4
--4 -8 -12 -16 
-1 3
-3 6 9 
-4 4
-12
-          """)
-elif (a == 5 and b == 1):
-    print("""YES
-1
-2 5
--4 0 -8 0 
-          """)
+import lichess.api
+from lichess.format import PYCHESS
+import chess
+import chess.svg
     
-else:
-    print("NO")
+board = chess.Board()
+
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello_world():
+   img = chess.svg.board(board)
+
+   return render_template('index.html', img=img)
+
+
+if __name__ == '__main__':
+   app.run()

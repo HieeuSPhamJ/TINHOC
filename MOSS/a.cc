@@ -1,106 +1,70 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+
 using namespace std;
 
-const int maxN = 1e5 + 10;
+template<class A, class B> bool maximize(A& x, B y) {if (x < y) return x = y, true; else return false;}
+template<class A, class B> bool minimize(A& x, B y) {if (x > y) return x = y, true; else return false;}
 
-int a[maxN];
-vector <int> s[2];
+#define     all(a)                a.begin(), a.end()
+#define     pb                    push_back
+#define     pf                    push_front
+#define     fi                    first
+#define     se                    second
+#define     int                   long long
 
-void cal1(int n, int f){
-    for (int i = f; i <= n; i++){
-        s[0].push_back(a[i]);
-    }
+typedef     long long             ll;
+typedef     unsigned long long    ull;
+typedef     double                db;
+typedef     long double           ld;
+typedef     pair<db, db>          pdb;
+typedef     pair<ld, ld>          pld;
+typedef     pair<int, int>        pii;
+typedef     pair<ll, ll>          pll;
+typedef     pair<ll, int>         plli;
+typedef     pair<int, ll>         pill;
 
-    n = f - 1;
-    s[0].push_back(a[n]);
-    f = 1;
-    for (int i = n - 1; i >= 1; i--){
-        s[0].push_back(a[i]);
-        if (a[i] < a[1]){
-            f = i;
-            s[0].pop_back();
-            break;
-        }
-    }
-    for (int i = 1; i <= f; i++){
-        s[0].push_back(a[i]);
-    }
-}
+const int MAX_N = 3e5 + 5;
+const int mod = 1e9 + 7; // 998244353
+const ll inf = 1e18 + 1;
 
-void cal2(int n){
-    s[1].push_back(a[n]);
-    n--;
-    int f = 1;
-    for (int i = n; i >= 1; i--){
-        s[1].push_back(a[i]);
-        if (a[i] < a[1]){
-            f = i;
-            s[1].pop_back();
-            break;
-        }
-    }
+int n;
+int a[MAX_N];
+int s[MAX_N];
+int suff[MAX_N];
 
-    for (int i = 1; i <= f; i++){
-        s[1].push_back(a[i]);
-    }
-}
+signed main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
 
-signed main(){
-    int test;
-    cin >> test;
-    while(test--){
-        int n;
-        cin >> n;
-        int f = 0;
-        for (int i = 1; i <= n; i++){
-            cin >> a[i];
-            if (i >= 2 and a[i] > a[f]){
-                f = i;
-            }
-        }
+	int numCases = 0;
+	cin >> numCases;
+	for (int testCase = 1; testCase <= numCases; testCase++) {
+		cin >> n;
+		for (int i = 1; i <= n; i++) {
+			cin >> a[i];
+			s[i] = s[i - 1] + a[i];
+		}
+		
+		suff[n + 1] = inf;
+		for (int i = n; i; i--) {
+			suff[i] = min(s[i], suff[i + 1]);
+		}
 
-        if (n == 1){
-            cout << a[1] << endl;
-            continue;
-        }
-        s[0].clear();
-        s[1].clear();
+		int ans = 0;
+		int res = 0;
+		for (int i = 0; i <= n; i++) {
+			if (maximize(ans, s[n] + s[i] - suff[i + 1])) {
+				res = s[i];
+			}
+		}
 
-        cal1(n,f);
-        cal2(n);
+		cout << res << '\n';
+	}
 
-        s[0].resize(n);
-        s[1].resize(n);
-        
-        for (int i = 0; i < n; i++){
-            if (s[0][i] < s[1][i]){
-                for (auto i : s[1]){
-                    cout << i << ' ';
-                }
-                goto bru;
-            }
-            else if (s[0][i] > s[1][i]){
-                for (auto i : s[0]){
-                    cout << i << ' ';
-                }
-                goto bru;
-            }
-        }
-        for (auto i : s[1]){
-            cout << i << ' ';
-        }
-        bru:;
-        cout << endl;
-
-    }
-    return 0;
+	return 0;
 }
 
 /*
-4 3 2 1
-
-3 2 1 4
-
 
 
 */

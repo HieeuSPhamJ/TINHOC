@@ -1,51 +1,88 @@
-#include<bits/stdc++.h>
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define int long long
-#define double long double
-#define endl '\n'
-#define all(x) x.begin(), x.end()
+//#pragma GCC optimize("Ofast")
+#include <bits/stdc++.h>
+
+#define emotion "Chu he thoi dai"
+#define taskname "blabla"
+#define endl "\n"
+#define X first
+#define Y second
+#define FangIo_oI top1
+
 using namespace std;
+typedef pair <long long, int> ii;
+const long long oo = 1e18 + 6;
+const long long mod = 1e9 + 7; // 998244353
+const int N = 1e6 + 6;
 
-const int maxN = 2e5 + 10;
+int n, k, x, val;
 
-int a[maxN];
-
-signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
+int main()
+{
+      freopen("input.inp", "r", stdin);
+      freopen("B.out", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        int n, k;
-        cin >> n >> k;
-        vector <int> ls[2];
-        for (int i = 1; i <= n; i++){
-            cin >> a[i];
-            ls[i % 2].push_back(a[i]);
-        }
-        sort(a + 1, a + 1 + n);
-        sort(all(ls[0]));
-        sort(all(ls[1]));
-        
-        for (int i = 1; i <= n; i++){
-            if (a[i] != ls[i % 2][(i - 1) / 2]){
-                cout << "NO" << endl;
-                goto bru;
+
+    int Test;
+    cin >> Test;
+    for (int TestCase = 1; TestCase <= Test; ++ TestCase)
+    {
+        cin >> n >> k >> x;
+        val = -1;
+        for (int i = k; i >= 1; -- i)
+        {
+            if (i != x && n % i != x)
+            {
+                val = i;
+                break;
             }
         }
-
-        cout << "YES" << endl;
-
-        bru:;
-    
-
+        if (val == -1)
+        {
+            cout << "NO" << endl;
+        }
+        else
+        {
+            cout << "YES" << endl;
+            // cout << n / val + (n % val != 0) << endl;
+            // for (int i = 1; i <= n / val; ++ i)
+            // {
+            //     cout << val << ' ';
+            // }
+            // if (n % val != 0)
+            // {
+            //     cout << n % val;
+            // }
+            // cout << endl;
+        }
     }
+
     return 0;
 }
+
+//          ¯\ /¯                                                         ▄
+//          [O.o]      ▄   ▄                                             ██▌
+//         //)..)   ▄▄ █▀█▀█        ♥♥            █   █              ▄▄███▀
+//  ╔♫═╗╔╗  -"--"- █ █▌█▄█▄█      █♥▄▄♥█      ▄█▄ █▀█▀█ ▄█▄         █████ ▄█
+//  ╚╗╔╝║║♫═╦╦╦╔╗  █    ███   ██╗ ██████╗ ██╗▀▀████▄█▄████▀▀      ▄██▄█████▀
+//  ╔╝╚╗♫╚╣║║║║╔╣  █   ████╗ ██╔╝██╔═══██╗██║   ██▀█▀█▀         ▄█████████
+//  ╚═♫╝╚═╩═╩♫╩═╝   ▀▀▀███████╔╝ ██║▌ ▌██║██║   ██║              ▄███████▌
+//      ▄▄ ▄▄▀▀▄▀▀▄    ▀  ███╔╝  ██║ ═ ██║██║   ██║            ▄█████████
+//     ███████   ▄▀        ██║   ╚██████╔╝╚██████╔╝         ▄███████████▌
+//     ▀█████▀▀▄▀          ╚═╝    ╚═════╝  ╚═════╝    ▄▄▄▄██████████████▌
+//       ▀█▀  █                █                  ▄▄███████████████████▌
+//           ▐██   ▄███████▄  ██▌               ▄██████████████████████▌
+//           ████████████████████              ████████████████████████
+//          █▐ ▀▀████████████▀▀        █     ▐██████████▌ ▀▀███████████
+//          ▌▐  ██▄▀██████▀▄██        ▐██   ▄██████████▌         ▀██▐█▌
+//         ▐┼▐  █▄═o═▄██▄═O═▄█         ██████ █████████           ▐█▐█▌
+//         ▐┼▐  ██████████████          ▀▀▀▀   ██████▀            ▐█▐█▌
+//         ▐▄▐████ ▀▐▐▀█ █ ▌▐██▄                █████▌            ▐█▐█▌
+//           █████          ▐███▌               ███▀██             █ █▌
+//           █▀▀██▄█ ▄   ▐ ▄███▀               ▐██   ██        ▄▄████████▄
+//           █  ███████▄██████                 ██▌    █▄      ▄███████████████████
+//              ██████████████                 ▐██     ██▄▄███████████████████████
+//              █████████▐▌██▌                  ▐██  ▄████████████████████████████
+//              ▐▀▐ ▌▀█▀ ▐ █               ▄▄█████████████████████████████████████
+//                    ▐    ▌        ▄▄████████████████████████████████████████████

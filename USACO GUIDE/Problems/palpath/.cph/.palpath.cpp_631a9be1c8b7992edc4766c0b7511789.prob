@@ -1,0 +1,1 @@
+{"name":"Local: palpath","url":"d:\\TINHOC\\USACO GUIDE\\Problems\\palpath\\palpath.cpp","tests":[{"id":1686751353174,"input":"4\nABCD\nBXZX\nCDXB\nWCBA","output":"12"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\USACO GUIDE\\Problems\\palpath\\palpath.cpp","group":"local","local":true}
