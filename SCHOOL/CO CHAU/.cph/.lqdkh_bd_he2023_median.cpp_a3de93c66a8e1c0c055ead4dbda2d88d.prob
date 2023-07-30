@@ -1,0 +1,1 @@
+{"name":"Local: lqdkh_bd_he2023_median","url":"d:\\TINHOC\\SCHOOL\\CO CHAU\\lqdkh_bd_he2023_median.cpp","tests":[{"id":1690508605903,"input":"3 10\n9 20 30","output":"1"},{"id":1690508611655,"input":"3 4\n1 2 3","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\CO CHAU\\lqdkh_bd_he2023_median.cpp","group":"local","local":true}

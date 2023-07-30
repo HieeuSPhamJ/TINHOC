@@ -1,74 +1,53 @@
 #include<bits/stdc++.h>
-#define ii pair <int,int>
+#define int long long
+#define pb push_back
+#define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+#define MOD 1000000007
+#define INF 1e18
 #define fi first
 #define se second
-#define int long long
-#define double long double
+#define FOR(i,a,b) for(int i=a;i<=b;i++)
+#define FORD(i,a,b) for(int i=a;i>=b;i--)
+#define sz(a) ((int)(a).size())
 #define endl '\n'
-#define all(x) x.begin(), x.end()
+#define pi 3.14159265359
+#define TASKNAME "1853B"
+template<typename T> bool maximize(T &res, const T &val) { if (res < val){ res = val; return true; }; return false; }
+template<typename T> bool minimize(T &res, const T &val) { if (res > val){ res = val; return true; }; return false; }
 using namespace std;
-
-const int maxN = 3e5 + 10;
-
-
-int n;
-int a[maxN];
-int p[maxN];
-int s[maxN];
-
-int cal(int k){
-    int t = 0;
-    for (int i = 1; i <= n; i++){
-        if (t >= k and t + a[i] < k){
-            t = k;
-        }
+typedef pair<int,int> ii;
+typedef pair<int,ii> iii;
+typedef vector<int> vi;
+int fib[109],n,t,k;
+main()
+{
+    fast;
+    freopen(TASKNAME".inp","r",stdin);
+    freopen(TASKNAME".out","w",stdout);
+    cin>>t;
+    fib[1] = 1;
+    fib[2] = 1;
+    for(int i=3;i<=30;i++){
+        fib[i] = fib[i-1] + fib[i-2];
+//        cout<<fib[i]<<endl;
+    }
+    while(t--){
+        cin>>n>>k;
+        if (k>30) cout<<0<<endl;
+        else if (n==0) cout<<1<<endl;
         else{
-            t += a[i];
-        }
-    }
-    return t;
-}
-
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        cin >> n;
-        for (int i = 1; i <= n; i++){
-            cin >> a[i];
-            p[i] = p[i - 1] + a[i];
-        }
-        s[n + 1] = 1e18;
-        for (int i = n; i >= 1; i--){
-            s[i] = min(s[i + 1], p[i]);
-        }
-
-        int res = 0;
-        int t = cal(0);
-        
-        for (int i = 1; i <= n; i++){
-            if (t < p[n] + p[i] - s[i + 1]){
-               res = max(res, p[i]);
-               t = p[n] + p[i] - s[i + 1];
+            int ans = 0;
+            int b = fib[k-1];
+            int a = fib[k-2];
+            for(int j=1;j<=n/b;j++){
+               int x = n - j * b;
+               if (x%a == 0 && x/a <= j) {
+                  ans++;
+               }
             }
+            cout<<ans<<endl;
         }
-        cout << res << endl;
+
+
     }
-    return 0;
 }
-
-/*
-3 -2 1 2
-3 1 2 4
-s[i]
-
-A - p[i] + 
-
-gọi Sj là tổng từ 1->j, tổng từ (1->i) + tổng từ (i+1->n) -(Si-min(S(i+1->n) )
-
-*/

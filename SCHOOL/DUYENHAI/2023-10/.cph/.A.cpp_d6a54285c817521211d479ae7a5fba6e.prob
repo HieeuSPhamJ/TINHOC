@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"d:\\TINHOC\\SCHOOL\\DUYENHAI\\2023-10\\A.cpp","tests":[{"id":1690161459322,"input":"5 2\n5 2 3 1 3\n1 5\n4 5","output":"8\n4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\DUYENHAI\\2023-10\\A.cpp","group":"local","local":true}

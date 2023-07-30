@@ -4,61 +4,63 @@
 #define se second
 #define int long long
 #define double long double
-#define endl '\n'
+// #define endl '\n'
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-int a[110];
-int p[110];
-int cost[110];
-int dp[110][110][110];
+const int N = 102;
+const int INF = 1e18;
 
-int cal(int l, int r, int k){
-    if (l > r or r - l + 1 < k){
-        return 0;
-    }
-    if (p[r] - p[l - 1] == r - l + 1 or p[r] == p[l - 1]){
-        return dp[l][r][k] = cost[k];
-    }
-    if (dp[l][r][k] != 0){
-        return dp[l][r][k];
-    }
+int n;
+string s;
+int a[N];
 
-    int &res = dp[l][r][k];
+int ans[N][N];
+int dp[2][N][N][N];
 
-    for (int i = l; i <= r; i++){
-        if (a[i] == a[l]){
-            res = max(res, cal(l,i,k))
-        }
-    }
+int calcDp(int c, int l, int r, int cnt);
 
-    return res;
+int calcAns(int l, int r){
+	if(l >= r) return 0;
+	int &res = ans[l][r];
+	if(res != -1) return res;
+
+	res = 0;
+	for(int cnt = 1; cnt <= r - l; ++cnt){
+		res = max(res, calcDp(0, l, r, cnt) + a[cnt - 1]);
+		res = max(res, calcDp(1, l, r, cnt) + a[cnt - 1]);
+	}
+
+	return res;
+}
+
+int calcDp(int c, int l, int r, int cnt){
+	if(cnt == 0) return calcAns(l, r);
+	int &res = dp[c][l][r][cnt];
+	if(res != -1) return res;
+	
+	res = -INF;
+
+	for(int i = l; i < r; ++i){
+		if(c == s[i] - '0')
+			res = max(res, calcAns(l, i) + calcDp(c, i + 1, r, cnt - 1));
+	}
+
+	return res;
 }
 
 signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n;
-    cin >> n;
-    for (int i = 1; i <= n; i++){
-        char x;
-        cin >> x;
-        a[i] = x - '0';
-        p[i] = p[i - 1] + a[i];
-        // cout << a[i] << " ";
-    }
-    // cout << endl;
+	cin >> n >> s;
+	for(int i = 0; i < n; i++)
+		cin >> a[i];
 
-    for (int i = 1; i <= n; i++){
-        cin >> cost[i];
-    }
+	
+	memset(dp, -1, sizeof dp);
+	memset(ans, -1, sizeof ans);
 
-    cout << cal(1,n,0);
+	cout << calcAns(0, n) << endl;	
 
-    return 0;
+	return 0;
 }
 
 /*

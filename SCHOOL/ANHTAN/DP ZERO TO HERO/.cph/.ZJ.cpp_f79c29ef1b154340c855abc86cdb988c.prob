@@ -1,0 +1,1 @@
+{"name":"Local: ZJ","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP ZERO TO HERO\\ZJ.cpp","tests":[{"id":1688990062459,"input":"3\n2 3\n1 2\n3 4\n","output":"5"},{"id":1688990068479,"input":"5\n7 20\n5 8\n11 80\n1 3\n10 45\n","output":"24"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\DP ZERO TO HERO\\ZJ.cpp","group":"local","local":true}

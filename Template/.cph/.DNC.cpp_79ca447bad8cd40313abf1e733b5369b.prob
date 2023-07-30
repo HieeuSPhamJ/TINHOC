@@ -1,0 +1,1 @@
+{"name":"Local: DNC","url":"d:\\TINHOC\\Template\\DNC.cpp","tests":[{"id":1689354504081,"input":"6 3\n11 11 11 24 26 100","output":"299"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\Template\\DNC.cpp","group":"local","local":true}

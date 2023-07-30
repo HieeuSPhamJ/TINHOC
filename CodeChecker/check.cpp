@@ -2,15 +2,16 @@
 #include <unistd.h>
 
 #define int long long
-using namespace std;
+using namespace std;      
 
 signed main(){
     int maxTest = 1000;
-    for (int test = 1; test <= maxTest; test++){
+    for (int test = 1;1; test++){
+    // for (int test = 1; test <= maxTest; test++){
         system(("testgen"));        
         system(("A"));
-        system(("B"));
-        // system(("./isok"));
+        // system(("B"));
+        system(("isok"));
         if (system(("fc A.out B.out")) != 0){
             cout << "Test " << test << ": WRONG!\n";
             return 0;
