@@ -1,0 +1,1 @@
+{"name":"Local: DOLLS","url":"d:\\TINHOC\\SCHOOL\\Thay Huong\\DOLLS.cpp","tests":[{"id":1690769100656,"input":"3\n1 2 3\n3","output":"1"},{"id":1690769105854,"input":"3\n1 3 2\n2","output":"5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\Thay Huong\\DOLLS.cpp","group":"local","local":true}
