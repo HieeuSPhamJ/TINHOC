@@ -1,0 +1,1 @@
+{"name":"Local: Lista","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY DE/Lista.cpp","tests":[{"id":1690860219819,"input":"2 1 \nA 2 1","output":""},{"id":1690860227605,"input":"4 3\nB 1 2 \nA","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY DE/Lista.cpp","group":"local","local":true}

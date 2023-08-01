@@ -21,6 +21,10 @@
         "unordered_set": "cpp",
         "vector": "cpp",
         "tuple": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "istream": "cpp",
+        "locale": "cpp",
+        "memory": "cpp",
+        "variant": "cpp"
     }
 }

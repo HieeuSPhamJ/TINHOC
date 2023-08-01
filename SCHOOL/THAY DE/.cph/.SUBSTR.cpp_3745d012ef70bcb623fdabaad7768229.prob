@@ -1,0 +1,1 @@
+{"name":"Local: SUBSTR","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY DE/SUBSTR.cpp","tests":[{"id":1690853450960,"input":"5 4\n1 2 3 4 5","output":"2"},{"id":1690853462968,"input":"7 4\n5 7 2 4 3 1 6","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY DE/SUBSTR.cpp","group":"local","local":true}
