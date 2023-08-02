@@ -25,16 +25,16 @@ int fastpow(int n, int a){
         return n;
     }
     int t = fastpow(n, a / 2);
-    t *= t;
+    (t *= t) %= mod;
     if (a % 2){
         t *= n;
     }
-    return t;
+    return t % mod;
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
+    freopen("ASSIGN.INP", "r", stdin);
+    freopen("ASSIGN.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
@@ -65,13 +65,13 @@ signed main(){
         cnt[1][x]++;
     }
     vector <ii> ls;
+    int res = 1;
     for (auto i: cnt[0]){
         ii t = i;
         t.se = min(t.se,cnt[1][t.fi]);
         // res = mul(res,fastpow(t.fi,t.se));
         ls.push_back(t);
     }
-    int res = 1;
     for (auto i: ls){
         res = mul(res,fastpow(i.fi,i.se));
         while(lon <= 1e9 and i.se){
@@ -91,7 +91,7 @@ signed main(){
             cout << 0;
         }
     }
-    cout << res;
+    cout << res << endl;
     return 0;
 }
 

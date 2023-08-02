@@ -1,80 +1,153 @@
 #include<bits/stdc++.h>
-#define ii pair <int,int>
+#define int long long
+#define pb push_back
+#define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+#define MOD 1000000000
+#define INF 1e18
 #define fi first
 #define se second
-#define int long long
-#define double long double
+#define FOR(i,a,b) for(int i=a;i<=b;i++)
+#define FORD(i,a,b) for(int i=a;i>=b;i--)
+#define sz(a) ((int)(a).size())
 #define endl '\n'
-#define all(x) x.begin(), x.end()
+#define pi 3.14159265359
+#define TASKNAME "assign"
+template<typename T> bool maximize(T &res, const T &val) { if (res < val){ res = val; return true; }; return false; }
+template<typename T> bool minimize(T &res, const T &val) { if (res > val){ res = val; return true; }; return false; }
 using namespace std;
+typedef pair<int,int> ii;
+typedef pair<int,ii> iii;
+typedef vector<int> vi;
+const int MAXN = 1e6 + 9;
+int n,m,a[5001],b[5001],SPF[MAXN];
 
-const int mod = 1e9 + 7;
-
- int n, m;
-int dp[1010][10010];
-int seg[1010][40010];
-
-void update(int t, int i, int left, int right, int index, int val){
-    if (index < left or right < index){
-        return;
-    }
-    if (left == right){
-        (seg[t][i] += val) %= mod;
-        return;
-    }
-    int mid = (left + right) / 2;
-
-    update(t, 2 * i, left, mid, index, val);
-    update(t, 2 * i + 1, mid + 1, right, index, val);
-    seg[t][i] = (seg[t][2 * i] + seg[t][2 * i + 1]) % mod;
-}
-
-int get(int t, int i, int left, int right, int _left, int _right){
-    if (right < _left or _right < left){
-        return 0;
-    }
-    if (_left <= left and right <= _right){
-        return seg[t][i] % mod;
-    }
-
-    int mid = (left + right) / 2;
-
-    int t1 = get(t, 2 * i, left, mid, _left, _right);
-    int t2 = get(t, 2 * i + 1, mid + 1, right, _left, _right);
-    return (t1 + t2) % mod;
-}
-
-int get(int t, int l, int r){
-    l++;
-    r++;
-    return get(t,1,1,m + 1,l,r);
-}
-
-void update(int t, int i, int v){
-    i++;
-    update(t, 1, 1, n + 1, i, v);
-}
-
-signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-   
-    cin >> n >> m;
-    dp[1][0] = 1;
-    for (int i = 1; i <= n; i++){
-        for (int j = 0; j <= m; j++){
-            for (int k = 0; k <= i; k++){
-                (dp[i + 1][j + k] += dp[i][j]) %= mod;
+unordered_map<int,int> factor1,factor2;
+vector<int> prime;
+set<int> stprime;
+void sieve(int n){
+    iota(SPF+1,SPF+1+n,1);
+    for(int i=2;i<=n;i++){
+        if (SPF[i] == i){
+            prime.pb(i);
+            for(int j=i*i;j<=n;j+=i){
+                SPF[j] = i;
             }
         }
     }
-
-    cout << dp[n][m] << endl;
-    return 0;
+//    for(auto x: prime){
+//        cout<<x<<' ';
+//    }
+//    cout<<endl;
 }
-/*
-12
-*/
+int power(int a,int b){
+    int res = 1;
+    while(b>0){
+        if (b&1) res = (res * a) % MOD;
+        b>>=1;
+        a = (a * a ) % MOD;
+    }
+    return res;
+}
+bool isgreater(int ans,int a,int b){
+    for(int i=1;i<=b;i++){
+        ans = ans * a;
+//        cout<<ans<<endl;
+        if (ans >= 1e9) return true;
+    }
+    return false;
+}
+signed main()
+{
+    fast;
+    freopen("input.inp", "r", stdin);
+    freopen("B.out", "w", stdout);
+    cin>>n;
+    sieve(1000000);
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
+        if (a[i] <= 1000000){
+            int tmp = a[i];
+            while(tmp>1){
+                int x = SPF[tmp];
+                if (stprime.find(x) == stprime.end()) stprime.insert(x);
+                while(tmp % x == 0){
+                    tmp /= x;
+                    factor1[x]++;
+                }
+            }
+        }
+        else{
+            int tmp = a[i];
+//            cout<<tmp<<endl;
+            for(auto p: prime){
+                if (p*p > a[i]) break;
+                if (tmp%p == 0){
+                    if (stprime.find(p) == stprime.end()) stprime.insert(p);
+                    while(tmp % p == 0){
+                        factor1[p]++;
+//                        cout<<p<<' ';
+                        tmp/=p;
+                    }
+                }
+
+            }
+//            cout<<endl;
+//            cout<<tmp<<endl;
+            if (tmp>1) stprime.insert(tmp), factor1[tmp]++;
+        }
+    }
+    cin>>m;
+     for(int i=1;i<=m;i++){
+        cin>>b[i];
+        if (b[i] <= 1000000){
+            int tmp = b[i];
+            while(tmp>1){
+                int x = SPF[tmp];
+                if (stprime.find(x) == stprime.end()) stprime.insert(x);
+                while(tmp % x == 0){
+                    tmp /= x;
+                    factor2[x]++;
+//                    cout<<tmp<<' ';
+                }
+//                cout<<endl;
+            }
+        }
+        else{
+            int tmp = b[i];
+            for(auto p: prime){
+                if (p*p > b[i]) break;
+                if (tmp % p == 0){
+                    if (stprime.find(p) != stprime.end()) stprime.insert(p);
+
+                    while(tmp % p == 0){
+                        factor2[p]++;
+                        tmp/=p;
+                    }
+
+                }
+            }
+//            cout<<tmp<<endl;
+            if (tmp>1) stprime.insert(tmp), factor2[tmp]++;
+        }
+    }
+    int ans = 1;
+//    cout<<endl;
+    bool great = false;
+    for(auto s: stprime){
+        int co = min(factor1[s],factor2[s]);
+        if (!great && isgreater(ans,s,co)) great = true;
+//        cout<<s<<' '<<co<<' '<<factor1[s]<<' '<<factor2[s]<<' '<<great<<endl;
+        if (great) ans = (ans * power(s,co))%MOD;
+        else{
+            for(int j=1;j<=co;j++){
+                ans = ans * s;
+            }
+        }
+    }
+    if (great){
+        printf("%09d%",ans);
+        // cout << '\n';
+    }
+    else cout<<ans;
+}
+

@@ -25,6 +25,7 @@
         "istream": "cpp",
         "locale": "cpp",
         "memory": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "__locale": "cpp"
     }
 }
