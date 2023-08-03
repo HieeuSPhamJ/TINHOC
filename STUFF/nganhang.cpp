@@ -15,8 +15,8 @@ signed main(){
     cout.tie(NULL);
     int what_day = 365;
     int freq = 30;
-    int add = 1000000;
-    double base = 1000000;
+    int add = 0;
+    double base = 2100000;
     double rate = 6.0 / 365;
     for (int day = 1; day <= what_day; day++){
         if (day % freq == 0){
@@ -27,3 +27,7 @@ signed main(){
     }
     return 0;
 }
+
+/*
+
+*/
