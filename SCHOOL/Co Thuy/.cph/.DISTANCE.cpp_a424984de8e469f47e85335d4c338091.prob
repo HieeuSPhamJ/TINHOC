@@ -1,0 +1,1 @@
+{"name":"Local: DISTANCE","url":"d:\\TINHOC\\SCHOOL\\Co Thuy\\DISTANCE.cpp","tests":[{"id":1691197807307,"input":"5 3\n0 2\n4 7\n9 9","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\Co Thuy\\DISTANCE.cpp","group":"local","local":true}

@@ -6,70 +6,57 @@
 #define double long double
 #define endl '\n'
 #define all(x) x.begin(), x.end()
-#define st 0
-#define bw 1
-#define fw 2
 using namespace std;
 
-const int maxN = 2 * 1e5 + 10;
+const int maxN = 1e5 + 10;
 
-int n;
-int n0;
-int a[maxN];
-
-void solvemi(){
-    vector <int> lists;
-    for (int i = 1; i <= n; i++){
-        lists.push_back(a[i]); 
-    }
-    int ans = 0;
-    while(!lists.empty()){
-        ans++;
-        int t = lists.back();
-        while(!lists.empty() and abs(t - lists.back()) <= 2){
-            lists.pop_back();
-        }
-    }
-    cout << ans << " ";
-}
-
-int check[maxN];
-
-void solvema(){
-    n = n0;
-    for (int i = 1; i <= n; i++){
-        if (check[a[i] - 1] == 0){
-            check[a[i] - 1] = 1;
-        }
-        else if (check[a[i]] == 0){
-            check[a[i]] = 1;
-        }
-        else{
-            check[a[i] + 1] = 1;
-        }
-    }
-    int ans = 0;
-    for (int i = 0; i <= n + 1; i++){
-        ans += check[i];
-    }
-    cout << ans << endl;
-}
+int la[maxN];
 
 signed main(){
+    // freopen("party.INP", "r", stdin);
+    // freopen("party.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    
+    int n;
     cin >> n;
+    int m;
+    cin >> m;
+    vector <ii> ls;
     for (int i = 1; i <= n; i++){
-        cin >> a[i];
+        int x, y;
+        cin >> x >> y;
+        ls.push_back({x,y});
     }
-    n0 = n;
+    int res = 0;
+    vector <int> ans;
+    for (int i = n - 1; i >= 0; i--){
+        for (int j = i, adu = ls[i].fi;true;){
+            if (la[adu] == 0){
+                la[adu] = j;
+                res++;
+                goto bru;
+            }
+            if (la[adu] < j){
+                goto bru;
+            }
+            int t = la[adu];
+            la[adu] = j;
+            if (adu == ls[t].se){
+                goto bru;
+            }
+            j = t;
+            adu = ls[t].se;
+            
+        }
+        bru:;
+        ans.push_back(res);
+    }   
 
-    sort(a + 1, a + 1 + n);
-
-    solvemi();
-    solvema();
+    reverse(all(ans));
+    for (auto i: ans){
+        cout << i << endl;
+    }
 
     return 0;
 }
