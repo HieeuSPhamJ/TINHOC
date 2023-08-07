@@ -14,8 +14,23 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    cout << n << endl;
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
+        cin >> n;
+        int cnt = 0;
+        for (int i = 1; i <= n; i++){
+            int x;
+            cin >> x;
+            cnt += x % 2;
+        }
+        if (cnt % 2 == 0){
+            cout << "YES" << endl;
+        }
+        else{
+            cout << "NO" << endl;
+        }
+    }
     return 0;
 }
