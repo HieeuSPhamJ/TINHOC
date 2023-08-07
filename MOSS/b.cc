@@ -1,30 +1,99 @@
 #include<bits/stdc++.h>
-using namespace std;
+#define ii pair <int,int>
+#define fi first
+#define se second
 #define int long long
-const int N = 1e6 + 5;
-int n,a[N],p;
-double f[N];
-main(){
-    freopen("DOLLS.INP","r",stdin);
-    freopen("DOLLS.OUT","w",stdout);
-    ios::sync_with_stdio(0);
-    cin.tie(0);cout.tie(0);
-    cin >>n;
-    for (int i=1;i<=n;i++){
-        cin >>a[i];
-        f[i] = f[i-1] + a[i];
-    }
-    cin >>p;
-    int ans = 0;
-    for (int i=1;i<=n;i++) if (a[i] >= p) ans++;
-    for (int i=1; i <= n; i++) {
-        if (i > 1){
-            int j = i - 1;
-            while (j >= 1 && f[i] - f[j-1] >= p*(i-j+1)){
-                j--;
-                ans++;
-            }
+#define double long double
+#define endl '\n'
+#define all(x) x.begin(), x.end()
+
+using namespace std;
+const int maxN = 2000;
+
+int n, k;
+int a[maxN];
+
+int check(int x)
+{
+    for (int i = 1; i <= n; ++ i)
+    {
+        if (a[i] >= x)
+        {
+            return 1;
         }
     }
-    cout <<ans;
+    int cnt;
+    for (int i = 1; i < n; ++ i)
+    {
+        cnt = 0;
+        for (int j = i; j <= n; ++ j)
+        {
+            if (j == n)
+            {
+                if (a[n] >= x - (n - i))
+                {
+                    return 1;
+                }
+                cnt = k + 1;
+                break;  
+            }   
+            if (a[j] >= x - (j - i))
+            {
+                // cout << "**" << i << ' ' << j << endl;
+                return 1;
+            }
+            cnt = cnt + (x - (j - i)) - a[j];
+            if (cnt > k)
+            {
+                break;
+            }
+        }
+        if (cnt > k)
+        {
+            continue;
+        }
+        else
+        {
+            // cout << "***" << i << ' ' << cnt << endl;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int Test;
+    cin >> Test;
+    for (int TestCase = 1; TestCase <= Test; ++ TestCase)
+    {
+        cin >> n >> k;
+        int l = -1;
+        for (int i = 1; i <= n; i++)
+        {
+            cin >> a[i];
+            l = max(l, a[i]);
+        }
+        int r = 1e18, mid, res = l;
+        while(l <= r)
+        {
+            mid = (l + r) >> 1;
+            if (check(mid))
+            {
+                l = mid + 1;
+                res = mid;
+            }
+            else
+            {
+                r = mid - 1;
+            }
+        }
+        // cout << check(5) << endl;
+        cout << res << endl;
+    }
+    return 0;
 }

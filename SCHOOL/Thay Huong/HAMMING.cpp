@@ -14,10 +14,8 @@ int a[maxN];
 bitset <maxN> dp[21][21];
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
-    // freopen("HAMMING.INP", "r", stdin);
-    // freopen("HAMMING.OUT", "w", stdout);
+    freopen("HAMMING.INP", "r", stdin);
+    freopen("HAMMING.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
@@ -36,9 +34,12 @@ signed main(){
         for (int j = 0; j <= i; j++){
             for (int mask = 0; mask < (1 << m); mask++){
                 dp[i][j][mask] = dp[i - 1][j][mask];
-                if (dp[i][j][mask] == 0){
+                if (j >= 1 and dp[i][j][mask] == 0){
                     dp[i][j][mask] = dp[i - 1][j - 1][mask xor (1 << (i - 1))];
                 }
+                // cout << i << " " << j << " " << bitset<4>(mask) << ": " << dp[i][j][mask] << endl;
+                // cout << " ->" << i - 1 << " " << j << " " << dp[i - 1][j][mask] << endl;
+                // cout << " ->" << dp[i - 1][j - 1][mask xor (1 << (i - 1))] << endl;
             }
         }
     }
@@ -46,7 +47,7 @@ signed main(){
     for (int i = 1; i <= n; i++){
         int res = 0;
         for (int cnt = 1; cnt <= m; cnt++){
-            if (dp[m][cnt][a[i]]){
+            if (dp[m][cnt][a[i]] == 1){
                 res = cnt;
             }
         }

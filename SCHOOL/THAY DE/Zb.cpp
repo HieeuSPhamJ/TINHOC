@@ -11,7 +11,7 @@ using namespace std;
 const int mod = 1e9 + 7;
 
  int n, m;
-int dp[1010][10010];
+int dp[10010];
 int pre[40010];
 
 int sum(int i, int j){
@@ -20,19 +20,19 @@ int sum(int i, int j){
 }
 
 signed main(){
-    freopen("Zb.inp", "r", stdin);
-    freopen("Zb.out", "w", stdout);
+    freopen("ORDER.inp", "r", stdin);
+    freopen("ORDER.out", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
    
     cin >> n >> m;
-    dp[1][0] = 1;
+    dp[0] = 1;
 
     for (int i = 2; i <= n; i++){
-        pre[1] = dp[i - 1][0];
+        pre[1] = dp[0];
         for (int j = 1; j <= m; j++){
-            pre[j + 1] = pre[j] + dp[i - 1][j];
+            pre[j + 1] = pre[j] + dp[j];
             pre[j + 1] %= mod;
             // cout << pre[j + 1] << " ";
         }
@@ -40,8 +40,8 @@ signed main(){
         for (int j = 0; j <= m; j++){
             int k = i - 1;
             // cout << i << " " << j << ": " << endl;
-            dp[i][j] = sum(max(0ll, j - k), j) + mod;
-            dp[i][j] %= mod;
+            dp[j] = sum(max(0ll, j - k), j) + mod;
+            dp[j] %= mod;
             // cout << dp[i][j] << endl;
         }
     }
@@ -53,7 +53,7 @@ signed main(){
     //     cout << endl;
     // }
     // cout << endl;
-    cout << dp[n][m] << endl;
+    cout << dp[m] << endl;
     return 0;
 }
 /*

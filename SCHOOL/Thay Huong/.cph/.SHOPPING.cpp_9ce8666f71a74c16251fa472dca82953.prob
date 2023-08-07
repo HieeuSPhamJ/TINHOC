@@ -1,0 +1,1 @@
+{"name":"Local: SHOPPING","url":"d:\\TINHOC\\SCHOOL\\Thay Huong\\SHOPPING.cpp","tests":[{"id":1691371751635,"input":"3\n0 1 0\n0 2 0","output":"1"},{"id":1691371755743,"input":"3\n3 2 1\n1 2 3","output":"9"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\Thay Huong\\SHOPPING.cpp","group":"local","local":true}
