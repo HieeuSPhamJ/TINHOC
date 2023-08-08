@@ -8,56 +8,56 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-const int maxN = 2e5 + 10;
+map <ii,int> cnt;
 
-int a[maxN];
-map <int,int> cnt;
+int d(int x){
+    int res = 0;
+    for (int i = 1; i * i <= x; i++){
+        if (x % i == 0){
+            res++;
+            if (x / i != i){
+                res++;
+            }
+        }
+    }
+    return res;
+}
+
+ii mini(int x, int y){
+    int gcd = __gcd(x,y);
+    x /= gcd;
+    y /= gcd;
+    return {x,y};
+}
 
 signed main(){
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        int n;
-        cin >> n;
-        cnt.clear();
-        for (int i = 1; i <= n; i++){
-            cin >> a[i];
-            cnt[a[i]]++;
-        }
-        int q;
-        cin >> q;
-        while(q--){
-            int X, Y;
-            cin >> X >> Y;
-            int delta = X * X - 4 * Y;
-            if (delta < 0){
-                cout << 0 << " ";
-                continue;
-            }
-            int x1 = (X + sqrt(delta)) / 2;
-            int x2 = (X - sqrt(delta)) / 2;
-            if (x1 + x2 == X and x1 * x2 == Y){
-                if (x1 == x2){ 
-                    cout << cnt[x1] * (cnt[x1] - 1) / 2 << " ";
-                }
-                else{
-                    cout << cnt[x1] * cnt[x2] << " ";
-                }
-            }
-            else{
-                cout << 0 << " ";
-            }
-        }
-        cout << endl;
+    int n, k;
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++){
+        cnt[mini(i, d(i))]++;
+        cout << i << ": " << d(i) << endl;
     }
+    int res = 0;
+    int resdup = 0;
+    for (int i = 1; i <= n; i++){
+        ii t = mini(k * d(i),  i);
+        int x = cnt[t];
+        if (k * d(i) * d(i) == i * i){
+            x--;
+            resdup++;
+        }
+        res += x;
+
+    }
+
+    cout << res / 2 + resdup << endl;
+
     return 0;
 }
-
-/*
-0 = x^2 - Xx + Y
-*/
