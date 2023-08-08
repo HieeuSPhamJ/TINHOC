@@ -14,8 +14,8 @@ int a[maxN];
 map <int,int> cnt;
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);

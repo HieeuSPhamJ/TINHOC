@@ -1,28 +1,51 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-const int N = 1<<20 + 1;
-int n,m,a[N],ans[N];
-bool f[21][21][N];
-map <int,int> mp;
-main(){
+
+#define int long long
+#define ll long long
+#define ii pair<int, int>
+#define endl '\n'
+#define fi first
+#define se second
+#define pub push_back
+#define pob pop_back
+#define vi vector<int>
+#define vii vector< vector<int> >
+#define st stack<int>
+#define prqueue priority_queue
+#define emb emplace_back
+int t, n, x, y;
+map<int, int> mp;
+int func(int s, int p){
+	int dd=s*s-4*p;
+	if(dd<0) return 0;
+	int d=sqrt(dd);
+	while(d*d<dd) d++;
+	while(d*d>dd) d--;
+	if(d*d!=dd) return 0;
+	if(d==0){
+		dd=mp[s/2];
+		return dd*(dd-1)/2;
+	}
+	return mp[(d+s)/2]*mp[(s-d)/2];
+}
+signed main() {
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
-    ios::sync_with_stdio(0);
-    cin.tie(0);cout.tie(0);
-    cin >>n >>m;
-    for (int i=1;i<=n;i++){
-        cin >>a[i];
-        mp[a[i]]++;
-    }
-    for (int i=1;i<=m;i++){
-        for (int j=1;j<=i;j++){
-            for (int k=0;k<=1<<m;k++){
-                int x = f[i-1][j-1][k^(1<<(i-1))];
-                if (j == 1) x = mp[k^(1<<(i-1))]&&1;
-                f[i][j][k] = f[i-1][j][k]||x;
-                if (f[i][j][k]) ans[k] = j;
-            }
-        }
-    }
-    for (int i=1;i<=n;i++) cout <<ans[a[i]] <<" ";
+	ios_base:: sync_with_stdio(0); cin.tie(NULL); cout.tie(NULL);
+	cin>>t;
+	while(t--){
+		mp=map<int, int>();
+		cin>>n;
+		while(n--){
+			cin>>x;
+			mp[x]++;
+		}
+		cin>>n;
+		while(n--){
+			cin>>x>>y;
+			cout<<func(x, y)<<" ";
+		}
+		cout<<endl;
+	}
 }

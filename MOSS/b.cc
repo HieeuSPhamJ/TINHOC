@@ -1,55 +1,82 @@
 #include<bits/stdc++.h>
-using namespace std;
-
-#define y1 as214
-#define ii pair < int , int >
-#define iii pair < int , ii >
-#define iv pair < ii , ii >
-
+#define ii pair <int,int>
 #define fi first
 #define se second
-#define fr front()
-#define pb push_back
-#define pp pop_back()
-#define t top()
-#define int int
-
-#define FOR(i , x , n) for(int i = x ; i <= n ; ++i)
-#define REP(i , n) for(int i = 0 ; i < n ; ++i)
-#define FORD(i , x , n) for(int i = x ; i >= n ; --i)
-
-#define oo 1e18
 #define int long long
+#define double long double
+#define endl '\n'
+#define all(x) x.begin(), x.end()
+using namespace std;
 
-const int N = 1e6 + 5;
-int q , n , m , sum;
-int a[N] , b[N] , c[N];
+const int maxN = 2000;
 
-main()
-{
-    //freopen("test.inp", "r", stdin);
-	//freopen("1.ans", "w", stdout);
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cin >> q;
-    while(q--)
-    {
-        cin >> n;
+    int n, k;
+int a[maxN];
 
-        int m = n * (n - 1) / 2;
-        FOR(i , 1 , m)
-            cin >> b[i];
-        sort(b + 1 , b + 1 + m , greater < int > ());
-        a[1] = 1e9;
-        int sum = 1;
-        for(int i = 2 ; i <= n ; i++)
-        {
-            a[i] = b[sum];
-            sum += i;
+int check(int x){
+    for (int i = 1; i < n; i++){
+        // cout << "With: " << i << endl;
+        if (a[i] >= x){
+            // cout << "lon" << endl;
+            return 1;
         }
-        FOR(i , 1 , n)
-            cout << a[i] << " ";
-        cout << "\n";
+        int t = 0;
+        int xx = x;
+        for (int j = i; j <= n; j++){
+            // cout << j << ": "<< xx - a[j] << endl;
+            if (max(0ll, xx - a[j]) == 0){
+                break;
+            }
+            if (j == n){
+                t = 1e18;
+                break;
+            }
+            t += max(0ll, xx - a[j]);
+            if (t > k){
+                break;
+            }
+            xx--;
+        }
+        if (t <= k){
+            // cout << "ok at " << i << " " << t << endl;
+            return 1;
+        }
     }
+    return a[n] >= x;
+}
 
+signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int test;
+    cin >> test;
+    while(test--){
+        cin >> n >> k;
+        for (int i = 1; i <= n; i++){
+            cin >> a[i];
+        }
+
+        int l = *max_element(a + 1, a + 1 + n);
+        int r = 1e18;
+        int res = l;
+
+        while(l <= r){
+            int mid = (l + r) / 2;
+            if (check(mid)){
+                l = mid + 1;
+                res = mid;
+            }
+            else{
+                r = mid - 1;
+            }
+        }
+
+        // cout << check(7) << endl;
+        
+        cout << res << endl;
+    }
+    return 0;
 }

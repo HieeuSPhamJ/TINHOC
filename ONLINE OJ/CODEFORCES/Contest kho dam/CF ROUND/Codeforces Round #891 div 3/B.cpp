@@ -28,31 +28,25 @@ signed main(){
         int last = -1;
         int tad = 0;
         while(s.size()){
-            // cout << "With: " << s.size() << endl;
             int t = s.back() + tad;
             s.pop_back();
             if (t >= 5){
-                // cout << "lon" << endl;
                 tad = 1;
                 ans.push_back(0);
                 last = ans.size();
             }
             else{
                 tad = 0;
-                // cout << "non" << endl;
                 ans.push_back(t);
             }
         }
         for (int i = 0; i < (int)ans.size(); i++){
             if (i < last){
                 ans[i] = 0;
-                // cout << 0;
             }
             else{
-                // cout << ans[i];
             }
         }
-        // cout << endl;
         if (ans.back() == 0){
             ans.push_back(1);
         }

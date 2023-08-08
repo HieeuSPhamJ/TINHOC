@@ -17,5 +17,6 @@ signed main(){
     int n;
     cin >> n;
     cout << n << endl;
+    cerr << n + 1 << endl;
     return 0;
 }
