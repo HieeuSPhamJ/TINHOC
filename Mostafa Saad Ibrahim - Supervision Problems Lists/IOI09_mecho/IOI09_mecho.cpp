@@ -63,7 +63,7 @@ void getBeeTime(){
 
 }
 
-int check(int beginTime){
+bool check(int beginTime){
     for (int i = 0; i < maxNN; i++){
         visited[i] = -1;
     }
@@ -79,7 +79,8 @@ int check(int beginTime){
         myQueue.pop();
         // cout << tempV << ": ";
         for (auto newV: adj[tempV]){
-            if (visited[newV] == -1 and grid[newV] == 0 and timeBee[newV] > ((visited[tempV] + 1) / s)){
+            int nW =  (visited[tempV] + 1) / s + ((visited[tempV] + 1) % s != 0);
+            if (visited[newV] == -1 and grid[newV] == 0 and timeBee[newV] > nW){
                 visited[newV] = visited[tempV] + 1;
                 myQueue.push(newV);
                 // cout << newV << "," << timeBee[newV] << "," << visited[newV] << "  ";
@@ -88,20 +89,28 @@ int check(int beginTime){
         // cout << endl;
     }
 
-    // for (int i = 1; i <= n; i++){
-    //     for (int j = 1; j <= n; j++){
-    //         cout << visited[a[i][j]] / s << ' ';
-    //     }
-    //     cout << endl;
-    // }
-    // cout << endl;
-    // for (int i = 1; i <= n; i++){
-    //     for (int j = 1; j <= n; j++){
-    //         cout << timeBee[a[i][j]] << ' ';
-    //     }
-    //     cout << endl;
-    // }
-    // cout << endl;
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= n; j++){
+            if (visited[a[i][j]] == -1){
+                cout << "* ";
+                continue;
+            }
+            cout << visited[a[i][j]] << ' ';
+        }
+        cout << endl;
+    }
+    cout << endl;
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= n; j++){
+            if (timeBee[a[i][j]] == -1){
+                cout << "* ";
+                continue;
+            }
+            cout << timeBee[a[i][j]] << ' ';
+        }
+        cout << endl;
+    }
+    cout << endl;
 
     if (visited[End] == -1){
         return 0;
@@ -138,7 +147,7 @@ signed main(){
             }
         }
     }
-
+    
     for (int i = 1; i <= n; i++){
         for (int j = 1; j <= n; j++){
             int t = a[i][j];
@@ -155,22 +164,23 @@ signed main(){
     }
 
     getBeeTime();
+    
 
     int left = 0;
     int right = 1e8;
     int ans = -1;
-    while(left <= right){
-        int mid = (left + right) / 2;
-        if (check(mid)){
-            ans = max(ans, mid);
-            left = mid + 1;
-        }
-        else{
-            right = mid - 1;
-        }
-    }
+    // while(left <= right){
+    //     int mid = (left + right) / 2;
+    //     if (check(mid + 1)){
+    //         ans = max(ans, mid);
+    //         left = mid + 1;
+    //     }
+    //     else{
+    //         right = mid - 1;
+    //     }
+    // }
     
-    // ans = check(2);
+    ans = check(2);
 
     cout << ans;
 

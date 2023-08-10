@@ -8,27 +8,8 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-map <ii,int> cnt;
-
-int d(int x){
-    int res = 0;
-    for (int i = 1; i * i <= x; i++){
-        if (x % i == 0){
-            res++;
-            if (x / i != i){
-                res++;
-            }
-        }
-    }
-    return res;
-}
-
-ii mini(int x, int y){
-    int gcd = __gcd(x,y);
-    x /= gcd;
-    y /= gcd;
-    return {x,y};
-}
+int n;
+ii a[1000000];
 
 signed main(){
     freopen("input.inp", "r", stdin);
@@ -38,26 +19,32 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, k;
-    cin >> n >> k;
-    for (int i = 1; i <= n; i++){
-        cnt[mini(i, d(i))]++;
-        cout << i << ": " << d(i) << endl;
+    cin >> n;
+    for(int i = 1; i <= n; i++) {
+        int u, v;
+        cin >> u >> v;
+        a[i] = {u - v, u + v};
     }
-    int res = 0;
-    int resdup = 0;
-    for (int i = 1; i <= n; i++){
-        ii t = mini(k * d(i),  i);
-        int x = cnt[t];
-        if (k * d(i) * d(i) == i * i){
-            x--;
-            resdup++;
+    sort(a + 1, a + 1 + n);
+    int l = -1, r = -1, ans = n;
+    for(int i = 1; i <= n; i++) {
+        if(a[i].fi >= r) {
+            l = a[i].fi;
+            r = a[i].se;
+            continue;
         }
-        res += x;
-
+        if(a[i].fi == l) {
+            ans--;
+            r = max(a[i].se, r);
+        }
+        else if(a[i].se <= r) {
+            ans--;
+        }
+        else {
+            l = a[i].fi;
+            r = a[i].se;
+        }
     }
-
-    cout << res / 2 + resdup << endl;
-
+    cout << ans;
     return 0;
 }
