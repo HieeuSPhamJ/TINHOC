@@ -14,7 +14,8 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cout << 134 << endl;
+    int a, b;
+    cin >> a >> b;
+    cout << a + b << endl;
     return 0;
 }
