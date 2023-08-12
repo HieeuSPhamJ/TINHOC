@@ -4,57 +4,53 @@
 #define se second
 #define int long long
 #define double long double
-#define endl '\n'
+// #define endl '\n'
+#define all(x) x.begin(), x.end()
 using namespace std;
 
+const int maxN = 5e5 + 10;
 
-const int mod = 1e9 + 7;
-const int maxN = 1e7 + 10;
-int fact[maxN];
+int n, k;
+ii seg[4 * maxN];
+int a[maxN];
 
+void update(int i, int l, int r, int id, ii v){
+    if (id < l or r < id){
+        return;
+    }
+    // cout << l << " " << r << endl;
+    if (l == r){
+        seg[i] = v;
+        return;
+    }
 
-int add(int a, int b){
-    return (a + b) % mod;
-}
-int subtr(int a, int b){
-    return ((a + mod) - b) % mod; 
-}
-int mul(int a, int b){
-    return (a * b) % mod;
-}
-void init(){
-    fact[0] = 1;
-    for (int i = 1; i < maxN; i++){
-        fact[i] = mul(fact[i - 1], i);
-    }
-}
-int fastpow(int n, int a){
-    if (a == 1){
-        return n;
-    }
-    int temp = fastpow(n, a / 2);
-    int ans = mul(temp, temp);
-    if (a % 2){
-        return mul(ans, n);
-    }
-    else{
-        return ans;
-    }
+    int mid = (l + r) / 2;
+
+    update(2 * i, l, mid, id, v);
+    update(2 * i + 1, mid + 1, r, id, v);
+    
+    seg[i] = max(seg[2 * i], seg[2 * i + 1]);
 }
 
-
-int C(int n, int k){
-    if (k > n){
-        return 0;
-    }
-    if (k == 2){
-        return (n * (n - 1)) / 2;
-    }
-    return (n * (n - 1) * (n - 2)) / 6;
+void update(int i, ii v){
+    update(1, 1, n, i, v);
 }
 
-int le[maxN];
-int chan[maxN];
+ii get(int i, int l, int r, int L, int R){
+    if (R < l or r < L){
+        return {-1,-1};
+    }
+    if (L <= l and r <= R){
+        return seg[i];
+    }
+    int mid = (l + r) / 2;
+    return max(get(2 * i, l, mid, L, R), get(2 * i + 1, mid + 1, r, L, R));
+}
+
+ii get(int l, int r){
+    return get(1,1,n,l,r);
+}
+
 
 signed main(){
     freopen("NUMBER.INP", "r", stdin);
@@ -62,37 +58,45 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    init();
-    int test;
-    cin >> test;
-    while(test--){
-        int n, q;
-        cin >> n >> q;
-        for (int i = 1; i <= n; i++){
-            le[i] = le[i - 1];
-            chan[i] = chan[i - 1];
-            int x;
-            cin >> x;
-            x %= 2;
-            if (x){
-                le[i]++;
-            }
-            else{
-                chan[i]++;
-            }
-        }
-        while(q--){
-            int left, right;
-            cin >> left >> right;
-            int c = chan[right] - chan[left - 1];
-            int l = le[right] - le[left - 1];
-            // cout << l << "-" << c << ":";
-            cout << C(l,3) + C(c,2) * l << " "; 
-        }   
-        cout << endl;
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++){
+        char c;
+        cin >> c;
+        a[i] = c - '0';
+        update(i,{a[i],-i});
     }
-
-
-
+    int last = 1;
+    while(k){
+        int t = -get(1,1,n,last, last + k).se;
+        // cout << last << " " << t << endl;
+        
+        for (last; last < t; last++){
+            a[last] = -1;
+            k--;
+        }
+        if (last == t){
+            last++;
+        }
+        if (last >= n){
+            break;
+        }
+    }
+    priority_queue <ii,vector <ii>, greater <ii>> q;
+    for (int i = 1; i <= n; i++){
+        if (a[i] == -1){
+            continue;
+        }
+        q.push({a[i], i});
+    }
+    while(k--){
+        a[q.top().se] = -1;
+        q.pop();
+    }
+    for (int i = 1; i <= n; i++){
+        if (a[i] == -1){
+            continue;
+        }
+        cout << a[i];
+    }
     return 0;
 }
