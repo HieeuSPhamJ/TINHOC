@@ -1,0 +1,1 @@
+{"name":"Local: F","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/ANHTAN/geometry/F.cpp","tests":[{"id":1692017612674,"input":"2\n1 1 2 2 3 3\n1 1 2 2 1 3","output":"TOUCH\nLEFT"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/ANHTAN/geometry/F.cpp","group":"local","local":true}
