@@ -1,0 +1,1 @@
+{"name":"Local: K","url":"d:\\TINHOC\\SCHOOL\\ANHTAN\\geometry\\K.cpp","tests":[{"id":1692070421440,"input":"5 1 3\n3 3\n1 5\n3 6\n2 6\n4 5","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\ANHTAN\\geometry\\K.cpp","group":"local","local":true}

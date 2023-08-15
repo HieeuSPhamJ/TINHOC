@@ -1,11 +1,9 @@
 #include <bits/stdc++.h>
-#include <unistd.h>
-
 #define int long long
 using namespace std;      
 
 signed main(){
-    int maxTest = 1000;
+    int maxTest = 10000;
     for (int test = 1;1; test++){
     // for (int test = 1; test <= maxTest; test++){
         system(("testgen"));        
