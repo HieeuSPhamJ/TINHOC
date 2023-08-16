@@ -44,10 +44,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = 100000;
-    cout << n << endl;
-    for (int i = 1; i <= n; i++){
-        cout << random(1,10) << " ";
+    int test = 100;
+    cout << test << endl;
+    for (int i = 1; i <= test; i++){
+        cout << i << endl;
     }
 
     return 0;

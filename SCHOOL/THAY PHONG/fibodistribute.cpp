@@ -18,7 +18,7 @@ vector <int> ls;
 void init(){
     int a = 1;
     int b = 1;
-    while(a <= 1e9){
+    while(a <= 1e16){
         // cout << a << endl;
         ls.push_back(a);
         check[a] = 1;
@@ -68,6 +68,9 @@ signed main(){
                 else{
                     r = mid - 1;
                 }
+            }
+            if (t == -1){
+                continue;
             }
             if (isok[t - 1] == 1){
                 // cout << t << endl;

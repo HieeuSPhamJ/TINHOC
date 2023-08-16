@@ -15,7 +15,7 @@ int nxt[maxN];
 
 void init(){
     notprime[0] = notprime[1] = 1;
-    for (int i = 1; i < maxN; i++){
+    for (int i = 0; i < maxN; i++){
         nxt[i] = 1;
     }
     for (int i = 2; i * i < maxN; i++){
@@ -29,6 +29,10 @@ void init(){
 }
 
 int cal(int n){
+    if (n == 0){
+        cout << 0 << endl;
+        exit(0);
+    }
     int cnt = 0;
     while(nxt[n] != 1){
         if (n % nxt[n] == 0){
