@@ -1,0 +1,1 @@
+{"name":"Local: tc","url":"d:\\TINHOC\\SCHOOL\\THAY PHONG\\tc.cpp","tests":[{"id":1692260178933,"input":"6\n5\n4","output":"6\n6\n2"},{"id":1692260560140,"input":"43","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\THAY PHONG\\tc.cpp","group":"local","local":true}

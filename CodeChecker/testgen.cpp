@@ -4,6 +4,7 @@
 #define se second
 #define int long long
 #define endl '\n'
+#define all(s) s.begin(), s.end()
 using namespace std;
 
 
@@ -44,10 +45,17 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test = 100;
-    cout << test << endl;
-    for (int i = 1; i <= test; i++){
-        cout << i << endl;
+    int n = 20;
+    vector <int> ls;
+    ls.push_back(1);
+    ls.push_back(1);
+    cout << n << endl;
+    for (int i = 2; i <= n; i++){
+        random_shuffle(all(ls));
+        ls.pop_back();
+        cout << i << " " << ls.back() << endl;
+        ls.push_back(i);
+        ls.push_back(i);
     }
 
     return 0;
