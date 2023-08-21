@@ -14,7 +14,19 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    string s ="(())";
-    cout << s.find("()()");
+    int test;
+    cin >> test;
+    while(test--){
+        int s, k, n;
+        cin >> s >> k >> n;
+        n -= s;
+        // cout << n << " ";
+        if (n >= 0){
+            cout << n / k + 1 << endl;
+        }
+        else{
+            cout << 0 << endl;
+        }
+    }
     return 0;
 }

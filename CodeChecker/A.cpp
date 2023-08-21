@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 #define ii pair <int,int>
+#define iii pair <ii, int>
 #define fi first
 #define se second
 #define int long long
@@ -8,109 +9,47 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-const int maxN = 2e5 + 10;
-
-vector <int> adj[maxN];
-
-int dep[maxN];
-int lvl[maxN];
-
-void getmdep(int nu, int fa){
-    dep[nu] = 1;
-    for (auto i: adj[nu]){
-        if (i == fa){
-            continue;
-        }
-        lvl[i] = lvl[nu] + 1;
-        getmdep(i, nu);
-        dep[nu] = max(dep[nu], dep[i] + 1);
-    }
-}
-
-unordered_set <int> sto[maxN];
-
-int ans = 0;
-
-void dfs(int nu, int fa){
-    for (auto i: adj[nu]){
-        if (i == fa){
-            continue;
-        }
-        dfs(i,nu);
-    }
-
-    // cout << "With: " << nu << endl;
-
-    vector <int> ls;
-    for (auto i: adj[nu]){
-        if (i == fa){
-            continue;
-        }
-        ls.push_back(dep[i] + lvl[nu]);
-    }
-    // cout << "ls: ";
-    // for (auto i: ls){
-    //     cout << i << " ";
-    // }
-    // cout << endl;
-
-    if (ls.size() == 1){
-        int t1 = ls.front();
-        dep[nu] = 2; 
-    }
-    else if(ls.size() == 2){
-        int t1 = ls.front();
-        int t2 = ls.back();
-        if (t1 != t2){
-            dep[nu] = min(t1,t2) - lvl[nu] + 2; 
-        }
-    }
-
-    // cout << "dep: " << dep[nu] << endl;
-}
-
-void setdep(int nu, int fa){
-    if (dep[nu] <= 0){
-        ans++;
-    }
-    for (auto i: adj[nu]){
-        if (i == fa){
-            continue;
-        }
-        dep[i] = min(dep[i],dep[nu] - 1);
-        setdep(i, nu);
-    }
-}
-
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
+    // freopen("input.inp", "r", stdin);
+    // freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    for (int i = 1; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
+    int n, test;
+    cin >> n >> test;
+    vector <iii> ls;
+    while(test--){
+        int t;
+        cin >> t;
+        if (t == 1){
+            int l, r, x;
+            cin >> l >> r >> x;
+            ls.push_back({{l,r},x});
+        }
+        else{
+            int res = 0;
+            int l, r;
+            cin >> l >> r;
+            // cout << "===ANS===" << endl;
+            for (auto i: ls){
+                int L = i.fi.fi;
+                int R = i.fi.se;
+                L = max(l, L);
+                R = min(r, R);
+                if (L > R){
+                    continue;
+                }
+                // cout << L << " " << R << endl;
+                int v = i.se;
+                if ((R - L + 1) % 2){
+                    res = res xor v;
+                }
+            }
+            cout << res << endl;
+            ls.clear();
+        }
     }
-
-    lvl[1] = 1;
-    getmdep(1,1);
-
-    dfs(1,1);
-
-    setdep(1,1);
-    
-    // for (int i = 1; i <= n; i++){
-    //     cout << i << ": " << dep[i] << endl;
-    // }
-
-    cout << ans << endl;
-
     return 0;
 }

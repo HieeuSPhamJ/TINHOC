@@ -46,17 +46,16 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = 20;
-    vector <int> ls;
-    ls.push_back(1);
-    ls.push_back(1);
-    cout << n << endl;
-    for (int i = 2; i <= n; i++){
-        random_shuffle(all(ls));
-        ls.pop_back();
-        cout << i << " " << ls.back() << endl;
-        ls.push_back(i);
-        ls.push_back(i);
-    }
+    int test = 31;
+    cout << n << ' ' << test + 1 << endl;
+    while(test--){
+        int l = random(1,n);
+        int r = random(l,n);
+        cout << 1 << " " << l << " " << r << " " << random(1,10) << endl;
+    } 
+    int l = random(1,n);
+    int r = random(l,n);
+    cout << 2 << " " << l << " " << r << endl;
 
     return 0;
 }

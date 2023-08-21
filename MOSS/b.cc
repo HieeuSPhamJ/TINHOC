@@ -1,86 +1,70 @@
+//#pragma GCC optimize("Ofast")
 #include <bits/stdc++.h>
 
 #define emotion "Chu he thoi dai"
 #define taskname "blabla"
 #define endl "\n"
-#define X first
-#define Y second
+#define fi first
+#define se second
+#define int long long
 #define FangIo_oI top1
 
 using namespace std;
-typedef pair <long long, int> ii;
-const long long oo = 1e18 + 6;
-const long long mod = 1e9 + 7; // 998244353
-const int N = 1e6 + 6;
+typedef pair <int, int> ii;
+typedef pair <ii, int> iii;
 
-int n, m, d, ans, id, cnt;
-int a[N], pre[N], suf[N];
+int n, q;
+bool f;
+deque <iii> ls;
 
-int main()
+signed main()
 {
-    // freopen (taskname".inp", "r", stdin);
-    // freopen (taskname".out", "w", stdout);
-
-    freopen ("test.inp", "r", stdin);
-    freopen ("test.out", "w", stdout);
-
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int Test;
-    cin >> Test;
-    for (int TestCase = 1; TestCase <= Test; ++ TestCase)
+    cin >> n >> q;
+    f = true;
+    for (int qeri = 1; qeri <= q; ++ qeri)
     {
-        cin >> n >> m >> d;
-        for (int i = 1; i <= m; ++ i)
+        int state;
+        cin >> state;
+        if (state == 1)
         {
-            cin >> a[i];
-        }
-        a[0] = 1;
-        pre[0] = 1;
-        a[m + 1] = n + 1;
-        if (a[1] == 1)
-        {
-            pre[1] = 1;
+            int l, r, x;
+            cin >> l >> r >> x;
+            if (f)
+            {
+                ls.push_front(iii(ii(l, r), x));
+            }
+            else
+            {
+                ls.push_back(iii(ii(l, r), x));
+            }
+            f = 1 - f;
         }
         else
         {
-            pre[1] = 2 + (a[1] - 2) / d;
-        }
-        for (int i = 2; i <= m + 1; ++ i)
-        {
-            pre[i] = pre[i - 1] + 1 + (a[i] - a[i - 1] - 1) / d;
-        }
-        -- pre[m + 1];
-        suf[m + 1] = 0;
-        for (int i = m; i >= 1; -- i)
-        {
-            suf[i] = suf[i + 1] + 1 + (a[i + 1] - a[i] - 1) / d;
-        }
-        int curr;
-        ans = n + 1;
-        cnt = 0;
-        for (int i = 1; i <= m; ++ i)
-        {
-            curr = pre[i - 1] + suf[i + 1];
-            curr = curr + (a[i + 1] - a[i - 1] - 1) / d;
-            // cout << i << endl;
-            // cout << pre[i - 1] << ' ' << suf[i + 1] << endl;
-            // cout << (a[i + 1] - a[i - 1] - 1) / d
-            if (curr < ans)
+            int res = 0, l, r;
+            cin >> l >> r;
+            for (int i = 0; i < ls.size(); ++ i)
             {
-                ans = curr;
-                cnt = 1;
+                int left = ls[i].fi.fi;
+                int right = ls[i].fi.se;
+                left = max(l, left);
+                right = min(r, right);
+                int v = ls[i].se;
+                if (left <= right && ((right - left) & 1) == 0)
+                {
+                    res = res ^ v;
+                }
             }
-            else if (curr == ans)
+            cout << res << endl;
+            while(!ls.empty())
             {
-                ++ cnt;
+                ls.pop_front();
             }
-            // cout << curr << ' ' << i << endl;
         }
-        cout << ans << ' ' << cnt << endl;
     }
-
     return 0;
 }

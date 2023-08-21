@@ -69,6 +69,7 @@ void dfs(int nu, int fa){
     // cout << "dep: " << dep[nu] << endl;
 }
 
+
 void setdep(int nu, int fa){
     if (dep[nu] <= 0){
         ans++;
