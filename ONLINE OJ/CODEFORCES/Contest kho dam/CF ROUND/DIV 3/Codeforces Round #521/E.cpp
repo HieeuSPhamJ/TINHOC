@@ -27,7 +27,45 @@ signed main(){
     for (auto i: cnt){
         ls.push_back(i.se);
     }
-    sort(rall(ls));
-    
+    sort(all(ls));
+    // for (auto i: ls){
+    //     cout << i << " ";
+    // }
+    // cout << endl;
+    int res = 0;
+
+    for (int st = 1; st <= ls.back(); st++){
+        int t = st;
+        int tres = 0;
+        // cout << "With: " << st << endl;
+        int l = 0;
+        while(1){
+            if (l >= ls.size()){
+                break;
+            }
+            int r = ls.size() - 1;
+            while(l < r){
+                int mid = (l + r) / 2;
+                if (ls[mid] < t){
+                    l = mid + 1;
+                }
+                else{
+                    r = mid;
+                }
+            }
+            // cout << t << " " << r << endl;
+            if (l < ls.size() and ls[r] >= t){
+                tres += t;
+                t *= 2;
+                l++;
+            }
+            else{
+                break;
+            }
+        }
+        // cout << " =>" << tres << endl;
+        res = max(res,tres);
+    }
+    cout << res << endl;
     return 0;
 }
