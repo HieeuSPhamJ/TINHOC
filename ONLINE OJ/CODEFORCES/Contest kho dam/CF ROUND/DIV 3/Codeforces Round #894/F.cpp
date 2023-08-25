@@ -47,7 +47,7 @@ signed main(){
         for (int s = 0; s <= sum; s++){
             if (dp[s]){
                 ii te = {s, sum - s};
-                int t =  max((nu.fi + te.fi - 1) / nu.fi, (nu.se + te.se - 1) / nu.se);
+                int t = max((nu.fi + te.fi - 1) / nu.fi, (nu.se + te.se - 1) / nu.se);
                 res = min(res, t);
             }
         }

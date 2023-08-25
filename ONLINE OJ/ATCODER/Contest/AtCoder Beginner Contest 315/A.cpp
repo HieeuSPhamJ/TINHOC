@@ -10,16 +10,16 @@ using namespace std;
 
 signed main(){
     //freopen("input.INP", "r", stdin);
-    freopen("nhap.txt", "w", stdout);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test = 100;
-    cout << test << endl;
-    while(test--){
-        cout << 2 << " " << 3 << endl;
-        cout << 1 << endl;
-        cout << "2" << endl; 
+    string s;
+    cin >> s;
+    for (int i = 0;  i < s.length(); i++){
+        if (s[i] != 'a' and s[i] != 'e' and s[i] != 'u' and s[i] != 'i' and s[i] != 'o'){
+            cout << s[i];
+        }
     }
     return 0;
 }

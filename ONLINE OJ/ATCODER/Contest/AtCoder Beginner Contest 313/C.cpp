@@ -9,8 +9,6 @@
 using namespace std;
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -29,8 +27,8 @@ signed main(){
     sum /= n;
     int res = 0;
     for (auto &i: ls){
-        if (i < sum){
-            res += (sum - i);
+        if (i <= sum){
+            res += (sum + 1 - i);
             i = sum;
         }
     }

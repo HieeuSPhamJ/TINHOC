@@ -1,70 +1,132 @@
-//#pragma GCC optimize("Ofast")
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+using namespace std;
 
-#define emotion "Chu he thoi dai"
-#define taskname "blabla"
-#define endl "\n"
+#define y1 as214
+#define ii pair < int , int >
+#define iii pair < int , ii >
+#define iv pair < ii , ii >
+
 #define fi first
 #define se second
+#define fr front()
+#define pb push_back
+#define pp pop_back()
 #define int long long
-#define FangIo_oI top1
 
-using namespace std;
-typedef pair <int, int> ii;
-typedef pair <ii, int> iii;
+#define FOR(i , x , n) for(int i = x ; i <= n ; ++i)
+#define REP(i , n) for(int i = 0 ; i < n ; ++i)
+#define FORD(i , x , n) for(int i = x ; i >= n ; --i)
 
-int n, q;
-bool f;
-deque <iii> ls;
+#define oo 1e18
+#define int long long
 
-signed main()
+const int N = 1e6 + 5;
+int n , q , x , y , z , m , d , w , f;
+int a[N] , b[N];
+string s = "vika";
+bool dp[N];
+
+void debug(multiset < int > s)
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cout << "======" << endl;
+    for(auto it = s.begin() ; it != s.end() ; it++)
+        cout << *(it) << " ";
+    cout << endl << "======" << endl;
+}
 
-    cin >> n >> q;
-    f = true;
-    for (int qeri = 1; qeri <= q; ++ qeri)
+main()
+{
+    //freopen("test.inp", "r", stdin);
+	//freopen("1.ans", "w", stdout);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int qq;
+    cin >> qq;
+    while(qq--)
     {
-        int state;
-        cin >> state;
-        if (state == 1)
+        cin >> n;
+        multiset < int > s , st;
+        FOR(i , 1 , n)
         {
-            int l, r, x;
-            cin >> l >> r >> x;
-            if (f)
-            {
-                ls.push_front(iii(ii(l, r), x));
-            }
-            else
-            {
-                ls.push_back(iii(ii(l, r), x));
-            }
-            f = 1 - f;
+            cin >> a[i];
+            s.insert(a[i]);
+            b[i] = a[i];
         }
-        else
+        sort(b + 1 , b + 1 + n);
+        FOR(i , 2 , n)
+            st.insert(b[i] - b[i - 1]);
+        cin >> q;
+//                    debug(s);
+//            debug(st);
+        FOR(i , 1 , q)
         {
-            int res = 0, l, r;
-            cin >> l >> r;
-            for (int i = 0; i < ls.size(); ++ i)
-            {
-                int left = ls[i].fi.fi;
-                int right = ls[i].fi.se;
-                left = max(l, left);
-                right = min(r, right);
-                int v = ls[i].se;
-                if (left <= right && ((right - left) & 1) == 0)
-                {
-                    res = res ^ v;
-                }
+            int pos , val;
+            cin >> pos >> val;
+            //cout << pos << " " << val << endl;
+            auto it = s.find(a[pos]);
+            int x = -1;
+            int y = -1;
+            if(it != s.begin()){
+                auto it1 = it;
+                it1--;
+                x = *it1;
             }
-            cout << res << endl;
-            while(!ls.empty())
+            auto it1 = it;
+            it1++;
+            if(it1 != s.end())
+                y = *(it1);
+            if(x != -1)
+                st.erase(st.find(a[pos] - x));
+            if(y != -1)
+                st.erase(st.find(y - a[pos]));
+            if(x != -1 && y != -1)
+                st.insert(y - x);
+            s.erase(s.find(a[pos]));
+//            cout << "cac" << endl;
+//            debug(s);
+//            debug(st);
+
+
+            a[pos] = val;
+            s.insert(a[pos]);
+
+            it = s.find(a[pos]);
+            x = -1;
+            y = -1;
+            if(it != s.begin())
             {
-                ls.pop_front();
+                auto it1 = it;
+                it1--;
+                x = *it1;
             }
+            it1 = it;
+            it1++;
+            if(it1 != s.end())
+                y = *(it1);
+            if(x != -1)
+                st.insert(a[pos] - x);
+            if(y != -1)
+                st.insert(y - a[pos]);
+            if(x != -1 && y != -1)
+                st.erase(st.find(y - x));
+
+//                            cout << "cac" << endl;
+//            debug(s);
+//            debug(st);
+
+            it = s.end();
+            it--;
+            int ans = *(it);
+            x = 0;
+            if(!st.empty())
+            {
+                auto it = st.end();
+                it--;
+                x = *it;
+            }
+            cout <<  ans + x << " ";
+            //cout << "cac" << endl;
         }
+        cout << "\n";
     }
-    return 0;
 }
