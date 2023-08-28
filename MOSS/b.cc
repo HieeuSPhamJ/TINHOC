@@ -1,132 +1,69 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+
+#define emotion "Chu he thoi dai"
+#define taskname "blabla"
+#define endl "\n"
+#define X first
+#define Y second
+#define int long long
+#define FangIo_oI top1
+
 using namespace std;
+typedef pair <long long, int> ii;
+const long long oo = 1e18 + 6;
+const long long mod = 1e9 + 7; // 998244353
+const int N = 4e4 + 6;
 
-#define y1 as214
-#define ii pair < int , int >
-#define iii pair < int , ii >
-#define iv pair < ii , ii >
+int n, n1;
+vector <int> qeri;
 
-#define fi first
-#define se second
-#define fr front()
-#define pb push_back
-#define pp pop_back()
-#define int long long
-
-#define FOR(i , x , n) for(int i = x ; i <= n ; ++i)
-#define REP(i , n) for(int i = 0 ; i < n ; ++i)
-#define FORD(i , x , n) for(int i = x ; i >= n ; --i)
-
-#define oo 1e18
-#define int long long
-
-const int N = 1e6 + 5;
-int n , q , x , y , z , m , d , w , f;
-int a[N] , b[N];
-string s = "vika";
-bool dp[N];
-
-void debug(multiset < int > s)
+signed main()
 {
-    cout << "======" << endl;
-    for(auto it = s.begin() ; it != s.end() ; it++)
-        cout << *(it) << " ";
-    cout << endl << "======" << endl;
-}
+    // freopen (taskname".inp", "r", stdin);
+    // freopen (taskname".out", "w", stdout);
 
-main()
-{
-    //freopen("test.inp", "r", stdin);
-	//freopen("1.ans", "w", stdout);
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    int qq;
-    cin >> qq;
-    while(qq--)
+    freopen ("test.inp", "r", stdin);
+    freopen ("test.out", "w", stdout);
+
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int Test;
+    cin >> Test;
+    for (int TestCase = 1; TestCase <= Test; ++ TestCase)
     {
         cin >> n;
-        multiset < int > s , st;
-        FOR(i , 1 , n)
+        n1 = n;
+        int bit = 0;
+        qeri.clear();
+        qeri.push_back(n);
+        while (n1 > 1)
         {
-            cin >> a[i];
-            s.insert(a[i]);
-            b[i] = a[i];
+            // cout << n1 << endl;
+            if (n1 & 1)
+            {
+                // cout << bit << endl;
+                qeri.push_back(n - (1 << bit));
+                n = n - (1 << bit);
+            }
+            ++ bit;
+            n1 = n1 >> 1;
         }
-        sort(b + 1 , b + 1 + n);
-        FOR(i , 2 , n)
-            st.insert(b[i] - b[i - 1]);
-        cin >> q;
-//                    debug(s);
-//            debug(st);
-        FOR(i , 1 , q)
+        n1 = (n1 << bit);
+        while (n1 != 0)
         {
-            int pos , val;
-            cin >> pos >> val;
-            //cout << pos << " " << val << endl;
-            auto it = s.find(a[pos]);
-            int x = -1;
-            int y = -1;
-            if(it != s.begin()){
-                auto it1 = it;
-                it1--;
-                x = *it1;
-            }
-            auto it1 = it;
-            it1++;
-            if(it1 != s.end())
-                y = *(it1);
-            if(x != -1)
-                st.erase(st.find(a[pos] - x));
-            if(y != -1)
-                st.erase(st.find(y - a[pos]));
-            if(x != -1 && y != -1)
-                st.insert(y - x);
-            s.erase(s.find(a[pos]));
-//            cout << "cac" << endl;
-//            debug(s);
-//            debug(st);
-
-
-            a[pos] = val;
-            s.insert(a[pos]);
-
-            it = s.find(a[pos]);
-            x = -1;
-            y = -1;
-            if(it != s.begin())
-            {
-                auto it1 = it;
-                it1--;
-                x = *it1;
-            }
-            it1 = it;
-            it1++;
-            if(it1 != s.end())
-                y = *(it1);
-            if(x != -1)
-                st.insert(a[pos] - x);
-            if(y != -1)
-                st.insert(y - a[pos]);
-            if(x != -1 && y != -1)
-                st.erase(st.find(y - x));
-
-//                            cout << "cac" << endl;
-//            debug(s);
-//            debug(st);
-
-            it = s.end();
-            it--;
-            int ans = *(it);
-            x = 0;
-            if(!st.empty())
-            {
-                auto it = st.end();
-                it--;
-                x = *it;
-            }
-            cout <<  ans + x << " ";
-            //cout << "cac" << endl;
+            qeri.push_back(n1 / 2);
+            n1 = n1 >> 1;
         }
-        cout << "\n";
+        qeri.pop_back();
+        cout << qeri.size() << endl;
+        for (int x : qeri)
+        {
+            cout << x << ' ';
+        }
+        cout << endl;
     }
+
+    return 0;
 }
