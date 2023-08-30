@@ -21,8 +21,6 @@ void mini(ii &v){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -30,29 +28,31 @@ signed main(){
     cout.tie(NULL);
     int n;
     cin >> n;
+    
     for (int i = 1; i <= n; i++){
         cin >> a[i].fi >> a[i].se;
     }
 
     int res = 0;
-
-    for (int i = 2; i <= n; i++){
-        for (int j = i + 1; j <= n; j++){
-            ii v = a[j];
-            v.fi -= a[i].fi;
-            v.se -= a[i].se;
-            mini(v);
-            res += sto[v];
+    for (int i = 1; i <= n; i++){
+    for (int j = 1; j < i; j++){
+    for (int k = 1; k < j; k++){
+    for (int z = 1; z < k; z++){
+        ii v = a[j];
+        v.fi -= a[i].fi;
+        v.se -= a[i].se;
+        ii u = a[z];
+        u.fi -= a[k].fi;
+        u.se -= a[k].se;
+        mini(u);
+        mini(v);
+        if (u != v){
+            res++;
         }
-        for (int j = i - 1; j >= 1; j--){
-            ii v = a[i];
-            v.fi -= a[j].fi;
-            v.se -= a[j].se;
-            mini(v);
-            sto[v]++;
-        }
+    }        
+    }   
     }
-    res = n * (n - 1) * (n - 2) * (n - 3) /  24 - res;
+    }
     cout << res << endl;
     return 0;
 }
