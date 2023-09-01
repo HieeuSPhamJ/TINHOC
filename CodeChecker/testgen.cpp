@@ -45,10 +45,8 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(1,100);
+    int n = random(2,1000);
     cout << n << endl;
-    for (int i = 1; i <= n; i++){
-        cout << random(1, 50) << " " << random(1,50) << endl;
-    }
+    randomTree(n);
     return 0;
 }

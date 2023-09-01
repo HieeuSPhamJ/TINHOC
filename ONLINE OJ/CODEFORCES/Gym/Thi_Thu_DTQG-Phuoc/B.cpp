@@ -8,7 +8,7 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-map <int,int> cnt[4];
+map <int,int> cnt[2];
 map <int,int> tres;
 
 signed main(){
@@ -25,7 +25,7 @@ signed main(){
         if (m % x){
             continue;
         }
-        cnt[1][x]++;
+        cnt[0][x]++;
     }
     for (int i = 1; i <= n; i++){
         int x;
@@ -33,19 +33,23 @@ signed main(){
         if (m % x){
             continue;
         }
-        cnt[2][x]++;
+        cnt[1][x]++;
     }
 
-    for (auto i: cnt[2]){
+    for (auto i: cnt[1]){
         int v = i.fi;
         int num = i.se;
         // cout << v << " " << num << endl;
-        for (int j = 1; v * j <= m; j++){
-            if (m % j){
+        for (auto j: cnt[0]){
+            ii t = j;
+            if (t.fi * v > m){
+                break;
+            }
+            if (m % t.fi){
                 continue;
             }
-            // cout << j * v << ": " << j << " " << v << " " << cnt[1][j] << " " << num << endl;
-            tres[j * v] += cnt[1][j] * num;
+            // cout << t.fi * v << ": " << t.fi << " " << v << " " << t.se << " " << num << endl;
+            tres[t.fi * v] += t.se * num;
         }
     }
 

@@ -15,6 +15,7 @@ int a[maxN];
 vector <int> adj[maxN];
 int dp[maxN];
 int dp2[maxN];
+int tdp[maxN];
 int child[maxN];
 int lvl[maxN];
 
@@ -32,18 +33,12 @@ void dfs(int nu, int fa){
     }
     dp[nu] += (child[nu] - 1);
 }
-int cnt = 0;
+
 void dfs2(int nu, int fa){
-    cnt++;
-    dp2[nu] += dp2[fa];
-    if (fa != nu){
-        for (auto i: adj[fa]){
-            if (i == nu or lvl[i] < lvl[fa]){
-                continue;
-            }
-            dp2[nu] += dp[i];
-        }
-        dp2[nu] += n - (child[nu] + 1);
+    if (nu != fa){
+        tdp[nu] = dp[nu] + tdp[fa] - dp[nu] - child[nu] + (n - child[nu]);
+        dp2[nu] = tdp[nu] - dp[nu];
+        // cout << nu << ": " << dp2[nu] << "|" << dp[nu] << " " << tdp[fa] << " " << dp[nu] << " " << child[nu] << endl;
     }
     for (auto i: adj[nu]){
         if (i == fa){
@@ -54,8 +49,6 @@ void dfs2(int nu, int fa){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -70,9 +63,25 @@ signed main(){
         adj[b].push_back(a);
     }
     dfs(1,1);
+    tdp[1] = dp[1];
     dfs2(1,1);
+    for (int i = 1; i <= n; i++){
+        // cout << i << ": " << tdp[i] << " " << dp[i] << " " << dp2[i] << endl;
+        dp[i] -= (child[i] - 1);
+        dp2[i] -= (n - child[i]);
+    }
 
-    cout << n << endl;
+    int res = 0;
+
+    for (int i = 1; i <= n; i++){
+        res += dp[i] + dp2[i];    
+    }
+
+    res /= 2;
+
+    res = n * (n - 1) * (n - 2) / 6 - res;
+
+    cout << res << endl;
 
     return 0;
 }

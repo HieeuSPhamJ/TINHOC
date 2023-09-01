@@ -1,72 +1,63 @@
-#include <iostream>
-#include <vector>
-
+#include<bits/stdc++.h>
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define int long long
+#define double long double
+#define endl '\n'
+#define all(x) x.begin(), x.end()
 using namespace std;
 
-int main() {
+unordered_map <int,int> cnt[4];
+unordered_map <int,int> tres;
+
+signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-
-    int t;
-    cin >> t;
-
-    while (t--) {
-        int n;
-        cin >> n;
-
-        vector<vector<char>> a(n, vector<char>(n));
-        for (int i = 0; i < n; i++) {
-            string st;
-            cin >> st;
-            for (int j = 0; j < n; j++) {
-                a[i][j] = st[j];
-            }
+    cout.tie(NULL);
+    int n, m;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++){
+        int x = i;
+        if (m % x){
+            continue;
         }
-
-        int ans = 0;
-        vector<vector<int>> arr(n + 1, vector<int>(n + 1, 0));
-        vector<vector<int>> mark(n + 1, vector<int>(n + 1, 0));
-        vector<vector<int>> neg(n + 1, vector<int>(n + 1, 0));
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (mark[i][j] != 0) {
-                    arr[i][j] += mark[i][j];
-                    int st = max(j - 1, 0);
-                    int en = min(n, j + 1);
-                    mark[i + 1][st] += mark[i][j];
-                }
-                if (neg[i][j] != 0) {
-                    arr[i][j] -= neg[i][j];
-                    int st = max(j - 1, 0);
-                    int en = min(n, j + 1);
-                    neg[i + 1][en] += neg[i][j];
-                }
-            }
-            for (int j = 1; j < n; j++) {
-                arr[i][j] += arr[i][j - 1];
-            }
-            for (int j = 0; j < n; j++) {
-                if (arr[i][j] % 2 == 1) {
-                    if (a[i][j] == '0') {
-                        a[i][j] = '1';
-                    } else {
-                        a[i][j] = '0';
-                    }
-                }
-            }
-            for (int j = 0; j < n; j++) {
-                if (a[i][j] == '1') {
-                    ans += 1;
-                    int st = max(j - 1, 0);
-                    int en = min(n, j + 1 + 1);
-                    mark[i + 1][st] += 1;
-                    neg[i + 1][en] += 1;
-                }
-            }
-        }
-        cout << ans << "\n";
+        cnt[1][x]++;
     }
-    
+    for (int i = 1; i <= n; i++){
+        int x = i;
+        if (m % x){
+            continue;
+        }
+        cnt[2][x]++;
+    }
+
+    for (auto i: cnt[2]){
+        int v = i.fi;
+        int num = i.se;
+        // cout << v << " " << num << endl;
+        for (int j = 1; v * j <= m; j++){
+            if (m % j){
+                continue;
+            }
+            // cout << j * v << ": " << j << " " << v << " " << cnt[1][j] << " " << num << endl;
+            tres[j * v] += cnt[1][j] * num;
+        }
+    }
+
+    int res = 0;
+
+    for (int i = 1; i <= n; i++){
+        int x = i;
+        if (m % x){
+            continue;
+        }
+        res += tres[m / x];
+    }
+
+    cout << res << endl;
+
     return 0;
 }
