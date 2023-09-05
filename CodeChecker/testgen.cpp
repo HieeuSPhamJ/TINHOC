@@ -38,6 +38,7 @@ string randomStr(const int len) {
     return tmp_s;
 }
 
+vector <int> adj[1000];
 
 signed main(){
     srand(time(0));
@@ -45,16 +46,49 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(1,5);
-    int m = random(1,5);
-    int k = random(0,n * m);
+<<<<<<< HEAD
+    int n = 5;
+    int m = random(1,10);
     set <ii> s;
-    while(k--){
-        s.insert({random(1,n), random(1,m)});
+    for (int i = 2; i <= n; i++){
+        s.insert({random(1,i-1), i});
     }
-    cout << n << " " << m << " " << s.size() << endl;
+
+    for (int i = 1; i <= m; i++){
+        int a = random(1,n - 1);
+        int b = random(a,n);
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+        s.insert({a,b});
+    }
+    int k = random(1,n);
+    vector <int> ls;
+    ls.push_back(1);
+    set <int> ts;
+    ts.insert(1);
+    for (int i = 1; k; k--){
+        int b = random(1,n);
+        if (i == b or ts.find(b) != ts.end()){
+            break;
+        }
+        ls.push_back(b);
+        ts.insert(b);
+        s.insert({min(i,b), max(i,b)});
+    }
+    m = s.size();
+    cout << n << " " << m << endl;
+    cout << random(1,n) << " " << random(1,n) << " " << random(0,20) << " " << ls.size() << endl;
+    for (auto i: ls){
+        cout << i << " ";
+    }
+    cout << endl;
     for (auto i: s){
-        cout << i.fi << " " << i.se << endl;
+        cout << i.fi << " " << i.se << " " << random(1,10) << endl;
     }
+=======
+    int n = random(2,1000);
+    cout << n << endl;
+    randomTree(n);
+>>>>>>> 504a6cc3a59da46aa77138bf91bb5be96c0834ff
     return 0;
 }
