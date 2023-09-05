@@ -3,9 +3,14 @@
 #define fi first
 #define se second
 #define int long long
+#define double long double
 #define endl '\n'
 #define all(x) x.begin(), x.end()
 using namespace std;
+
+const int maxN = 310;
+
+int a[maxN][maxN];
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -13,21 +18,12 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int what_day = 365;
-    int freq = 1;
-    int add = 20000;
-    double base = 0;
-    double rate = 6.0 / 365;
-    for (int day = 1; day <= what_day; day++){
-        if (day % freq == 0){
-            base += add;
+    int n, m;
+    cin >> n >> m;
+    for(int i = 1; i <= n; i++){
+        for (int j = 1; j <= m; j++){
+            cin >> a[i][j];
         }
-        base = base * (100 + rate) / 100;
-        cout << fixed << setprecision(2) << "Day " << day << ": " << base << endl;
     }
-    return 0;
+    return 0;   
 }
-
-/*
-
-*/

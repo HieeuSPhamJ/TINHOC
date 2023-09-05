@@ -17,14 +17,12 @@ int grid[maxN][maxN];
 int cal(int i, int j, int n){
     int sum = pre[i + n - 1][j + n - 1];
     // cout << sum << endl;
-    sum -= pre[i - 1][j] + pre[i][j - 1];
+    sum = sum - (pre[i + n - 1][j - 1] + pre[i - 1][j + n - 1]);
     sum += pre[i - 1][j - 1];
     return sum;
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -41,12 +39,14 @@ signed main(){
     for (int i = 1; i <= n; i++){
         for (int j = 1; j <= m; j++){
             pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + grid[i][j]; 
+            // cout << grid[i][j] << " ";
         }
+        // cout << endl;
     }
 
     int res = 0;
 
-    // cout << cal(1,2,2) << endl;
+    // cout << cal(2,2,2) << endl;
 
     for (int i = 1; i <= n; i++){
         for (int j = 1; j <= m; j++){
