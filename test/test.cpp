@@ -8,33 +8,20 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-int dp[300][300];
-
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    dp[0][0] = 1;
-    for (int i = 1; i <= n; i++){
-        char c;
-        cin >> c;
-        int x = (c == '1');
-        dp[i][i] = x;
-        for (int j = 1; j < i; j++){
-            dp[j][i] = !(dp[j][i - 1] & x);
-            // cout << j << " " << i << " " << dp[j][i] << endl;
-        }
-    }
-    for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= i; j++){
-            if (dp[j][i]){
-                cout << j << ' ' << i << endl;
-            }
-        }
-    }
+    // backtrack(0);
+    cout << 2.0/8 * 1.0/7
++1.0/8 * 1.0/7 * 1.0/6 * 2.0/5 * 1.0/4
++1.0/8 * 1.0/7 * 2.0/6 * 1.0/5
++1.0/8 * 1.0/7 * 2.0/6 * 1.0/5
++1.0/8 * 1.0/7 * 2.0/6 * 1.0/5
++1.0/8 * 2.0/7 * 1.0/6
++1.0/8 * 2.0/7 * 1.0/6
++1.0/8 * 2.0/7 * 1.0/6 << endl;
     return 0;
 }
