@@ -8,6 +8,25 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
+
+int cal(int l1, int r1, int l2, int r2){
+    int res = 0;
+    int l = max(l1,l2);
+    int r = min(r1,r2);
+    int n = r - l + 1;
+    if (l <= r){
+        res = n * (n - 1) / 2;
+        // cout << "m " << res << endl;
+    }
+    if (n * (l - l2) > 0){
+        res += n * (l - l2);
+        // cout << "l " << n * (l - l2) << endl;
+    }
+    res += (r1 - max(r,l1 - 1)) * (r2 - l2 + 1);
+    // cout << "r " << (r1 - max(r,l1 - 1)) * (r2 - l2 + 1) << endl;
+    return res;
+}
+
 signed main(){
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
@@ -16,40 +35,15 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    vector <int> ls;
-    int sum = 0;
-    for (int i = 1; i <= n; i++){
-        int x;
-        cin >> x;
-        ls.push_back(x);
-        sum += x;
-    }
-    sort(all(ls));
-    int l = -1;
-    int r = n;
+    int a,b,c,d;
+    cin >> a >> b >> c >> d;
     int res = 0;
-    // for (auto i: ls){
-    //     cout << i << " ";
-    // }
-    // cout << endl;
-    while(1){
-        while(sum > 0){
-            r--;
-            sum -= ls[r];
-            res++;
-        }
-        if (sum < 0){
-            l++;
-            sum -= ls[l];
-            res++;
-        }
-        else{
-            cout << res;
-            return 0;
-        }
+    for (int i = a; i <= b; i++){
+        // cout << "With: " << i << endl;
+        // cout << c - i << " " << d - i << endl;
+        int t = cal(b,c,c - i,d - i);
+        res += t;
     }
-
+    cout << res << endl;
     return 0;
 }

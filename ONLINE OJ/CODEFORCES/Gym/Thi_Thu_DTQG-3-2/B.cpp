@@ -14,9 +14,16 @@ int cal(int l1, int r1, int l2, int r2){
     int l = max(l1,l2);
     int r = min(r1,r2);
     int n = r - l + 1;
-    res = n * (n - 1) / 2;
-    res += n * (l - l2);
-    res += (r1 - r) * (r2 - l1 + 1);
+    if (l <= r){
+        res = n * (n - 1) / 2;
+        // cout << "m " << res << endl;
+    }
+    if (n * (l - l2) > 0){
+        res += n * (l - l2);
+        // cout << "l " << n * (l - l2) << endl;
+    }
+    res += (r1 - max(r,l1 - 1)) * (r2 - l2 + 1);
+    // cout << "r " << (r1 - max(r,l1 - 1)) * (r2 - l2 + 1) << endl;
     return res;
 }
 
@@ -30,7 +37,10 @@ signed main(){
     cin >> a >> b >> c >> d;
     int res = 0;
     for (int i = a; i <= b; i++){
-        res += cal(b,c,c - i,d - i);
+        // cout << "With: " << i << endl;
+        // cout << c - i << " " << d - i << endl;
+        int t = cal(b,c,c - i,d - i);
+        res += t;
     }
     cout << res << endl;
     return 0;

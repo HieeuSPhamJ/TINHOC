@@ -16,33 +16,21 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    vector <int> ls;
-    int sum = 0;
-    for (int i = 1; i <= n; i++){
-        int x;
-        cin >> x;
-        ls.push_back(x);
-        sum += x;
-    }
-    sort(all(ls));
-
-    int res = n;
-
-    for (int i = 0; i < n; i++){
-        for (int j = i; j < n; j++){
-            int s = 0;
-            for (int k = i; k <= j; k++){
-                s += ls[k];
-            }
-            if (s == 0){
-                res = min(res, n - (j - i + 1));
+    int a, b, c, d;
+    cin >> a >> b >> c >> d;
+    int res = 0;
+    for (int i = a; i <= b; i++){
+        int t = 0;
+        for (int j = b; j <= c; j++){
+            for (int k = c; k <= d; k++){
+                if (k < i + j){
+                    t++;
+                    res++;
+                }
             }
         }
+        // cout << i << ": " << t << endl;
     }
-
     cout << res << endl;
-
     return 0;
 }
