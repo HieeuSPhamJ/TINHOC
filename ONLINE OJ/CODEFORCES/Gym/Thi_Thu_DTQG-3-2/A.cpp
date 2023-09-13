@@ -9,8 +9,6 @@
 using namespace std;
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -27,22 +25,29 @@ signed main(){
         sum += x;
     }
     sort(all(ls));
-
-    int res = n;
-
-    for (int i = 0; i < n; i++){
-        for (int j = i; j < n; j++){
-            int s = 0;
-            for (int k = i; k <= j; k++){
-                s += ls[k];
-            }
-            if (s == 0){
-                res = min(res, n - (j - i + 1));
-            }
+    int l = -1;
+    int r = n;
+    int res = 0;
+    // for (auto i: ls){
+    //     cout << i << " ";
+    // }
+    // cout << endl;
+    while(1){
+        while(sum > 0){
+            r--;
+            sum -= ls[r];
+            res++;
+        }
+        if (sum < 0){
+            l++;
+            sum -= ls[l];
+            res++;
+        }
+        else{
+            cout << res;
+            return 0;
         }
     }
-
-    cout << res << endl;
 
     return 0;
 }

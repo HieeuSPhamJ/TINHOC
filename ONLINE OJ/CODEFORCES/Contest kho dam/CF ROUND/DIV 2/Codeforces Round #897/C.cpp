@@ -19,19 +19,21 @@ signed main(){
     while(test--){
         int n;
         cin >> n;
-        set <int> s;
+        vector <int> ls;
         set <int> res;
         for (int i = 1; i <= n; i++){
             int x;
             cin >> x;
-            s.insert(x);
+            ls.push_back(x);
             res.insert(i);
         }
         res.insert(0);
         res.insert(n + 1);
         
-        for (auto i: s){
-            res.erase(res.find(i));
+        for (auto i: ls){
+            if (res.find(i) != res.end()){
+                res.erase(res.find(i));
+            }
         }
         while(1){
             auto it = res.begin();

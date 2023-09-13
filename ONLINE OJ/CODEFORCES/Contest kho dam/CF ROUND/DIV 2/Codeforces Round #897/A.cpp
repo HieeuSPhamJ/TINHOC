@@ -4,9 +4,14 @@
 #define se second
 #define int long long
 #define double long double
-// #define endl '\n'
+#define endl '\n'
 #define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
 using namespace std;
+
+bool cmp(ii a, ii b){
+    return a.se < b.se;
+}
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -19,33 +24,22 @@ signed main(){
     while(test--){
         int n;
         cin >> n;
-        set <int> s;
-        set <int> res;
+        vector <ii> ls;
         for (int i = 1; i <= n; i++){
             int x;
             cin >> x;
-            s.insert(x);
-            res.insert(i);
+            ls.push_back({x,i});
         }
-        res.insert(0);
-        res.insert(n + 1);
-        
-        for (auto i: s){
-            res.erase(res.find(i));
+        sort(rall(ls));
+        for (int i = 0; i < n; i++){
+            ls[i].fi = i + 1;
         }
-        while(1){
-            auto it = res.begin();
-            cout << *it << endl;
-            res.erase(it);
-            int t;
-            cin >> t;
-            if (t != -1){
-                res.insert(t);
-                continue;
-            }
-            break;
-        }
+        sort(all(ls), cmp);
 
+        for (auto i: ls){
+            cout << i.fi << " ";
+        }
+        cout << endl;
     }
     return 0;
 }
