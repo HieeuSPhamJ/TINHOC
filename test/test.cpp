@@ -1,345 +1,93 @@
-13
-16
-17
-25
-30
-31
-32
-33
-34
-37
-39
-43
-45
-47
-49
-51
-55
-57
-58
-60
-61
-62
-64
-68
-69
-71
-72
-74
-76
-78
-80
-81
-82
-84
-85
-86
-87
-88
-89
-91
-92
-93
-96
-97
-100
-103
-104
-106
-107
-108
-110
-111
-113
-114
-115
-116
-117
-120
-122
-123
-124
-125
-126
-128
-130
-132
-136
-138
-139
-140
-141
-143
-144
-145
-146
-148
-150
-152
-154
-156
-157
-158
-159
-160
-162
-163
-164
-165
-166
-167
-169
-170
-171
-172
-173
-175
-177
-178
-179
-181
-182
-183
-184
-185
-187
-188
-189
-190
-191
-194
-195
-197
-198
-200
-201
-202
-203
-205
-206
-208
-211
-212
-213
-214
-215
-216
-218
-219
-220
-221
-223
-225
-226
-229
-230
-232
-233
-234
-235
-238
-240
-241
-243
-244
-245
-246
-247
-248
-249
-251
-253
-254
-256
-257
-260
-261
-262
-263
-265
-267
-268
-270
-271
-272
-273
-275
-276
-279
-280
-281
-282
-283
-284
-285
-286
-287
-289
-290
-291
-292
-294
-295
-296
-297
-298
-299
-301
-302
-303
-304
-305
-306
-307
-308
-310
-312
-313
-314
-316
-318
-319
-320
-321
-322
-323
-324
-325
-326
-328
-329
-330
-331
-332
-335
-336
-337
-339
-343
-344
-345
-346
-348
-350
-351
-352
-353
-354
-356
-357
-358
-359
-360
-361
-365
-366
-367
-368
-370
-371
-373
-374
-375
-376
-377
-379
-380
-381
-382
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-396
-397
-399
-400
-402
-404
-405
-406
-408
-409
-410
-411
-412
-414
-415
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-430
-431
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-448
-449
-450
-451
-453
-457
-459
-460
-461
-462
-463
-464
-465
-466
-468
-469
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480
-483
-484
-485
-486
-487
-488
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
+/*
+Good luck for those who are trying your best
+May the most glorious victory come
+File name: I.cpp
+Code by : acident / lckintrovert
+Created since : 12/09/2023 ~~ 12:23:43
+Literally the worst cp-er ever
+*/
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define int                 long long
+#define uint                unsigned long long
+#define dub                 double
+#define fi                  first
+#define se                  second
+#define endl                '\n'
+#define pb                  push_back
+#define pf                  push_front
+#define eb                  emplace_back
+#define ins                 insert
+#define mp                  make_pair
+#define all(a)              a.begin(), a.end()
+#define YES                 cout << "YES\n"
+#define NO                  cout << "NO\n"
+#define coutdub(x)          cout << fixed << setprecision(x)
+#define cerrdub(x)          cerr << fixed << setprecision(x)
+ 
+//#define _USE_MATH_DEFINES // If meth .__.
+ 
+template<class T1, class T2> void maximize(T1& a, T2 b) {a = max(a, b);}
+template<class T1, class T2> void minimize(T1& a, T2 b) {a = min(a, b);}
+template<class T1> T1 abs(T1 a) {return max(a, -a);}
+ 
+typedef vector<int>         vi;
+typedef vector<vi>          vvi;
+typedef pair<int, int>      pi;
+typedef pair<int, pi>       pii;
+int const mod       =       1e9 + 7;
+int const maxn      =       1e6 + 10;
+ 
+vi p(maxn);
+int find(int k) {
+    if(k == p[k]) return k;
+    return p[k] = find(p[k]);
+}
+void connect(int u, int v) {
+    u = find(u); v = find(v);
+    p[u] = v;
+}
+
+int r, c, x;
+priority_queue<pi, vector<pi>, greater<pi> > q;
+void solve() {
+    cin >> r >> c;
+    p.resize(r + c + 10);
+    for(int i = 1; i <= r + c; i++) p[i] = i;
+    for(int i = 1; i <= r; i++) {
+        for(int j = 0; j < c; j++) {
+            cin >> x;
+            q.push(mp(x, i * c + j));
+        }
+    }
+    int x, y, ans = 0, price;
+    while(!q.empty()) {
+        x = q.top().se / c; 
+        y = q.top().se % c + 1 + r;
+        price = q.top().fi;
+        q.pop();
+        if(find(x) == find(y)) continue;
+        else {
+            cout << x << " " << y << endl;
+            ans += price;
+            connect(x, y);
+        }
+    }
+    cout << ans;
+
+}
+signed main() {
+    ios_base:: sync_with_stdio(0);
+    cin.tie(NULL); cout.tie(NULL);
+    solve();
+}
+
+/*A place to scribble thoughts
+...O1
+....2
+.O.O3
+....4
+.O..5
+6789
+*/
