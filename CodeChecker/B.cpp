@@ -1,124 +1,75 @@
-#include<bits/stdc++.h>
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define int long long
-#define double long double
-#define endl '\n'
-#define all(x) x.begin(), x.end()
+/*
+Good luck for those who are trying your best
+May the most glorious victory come
+File name: TIEPTHI.cpp
+Code by : acident / lckintrovert
+Created since : 21/09/2023 ~~ 17:15:42
+Literally the worst cp-er ever
+*/
+#include <bits/stdc++.h>
 using namespace std;
 
-const int maxN = 1e5 + 10;
-const int inf = 1e18;
+#define int                  long long
+#define uint                 unsigned long long
+#define dub                  double
+#define fi                   first
+#define se                   second
+#define endl                 '\n'
+#define pb                   push_back
+#define pf                   push_front
+#define eb                   emplace_back
+#define ins                  insert
+#define mp                   make_pair
+#define all(a)               a.begin(), a.end()
+#define YES                  cout << "YES\n"
+#define NO                   cout << "NO\n"
+#define coutdub(x)           cout << fixed << setprecision(x)
+#define cerrdub(x)           cerr << fixed << setprecision(x)
 
-int n;
-int a[maxN];
-int seg[maxN * 4];
+//#define _USE_MATH_DEFINES // If meth .__.
 
+template<class T1, class T2> bool maximize(T1& a, T2 b) {if(b > a) {a = b; return 1;} return 0;}
+template<class T1, class T2> bool minimize(T1& a, T2 b) {if(b < a) {a = b; return 1;} return 0;}
+template<class T1> T1 abs(T1 a) {return max(a, -a);}
 
-void update(int i, int left, int right, int index, int val){
-    if (index < left or right < index){
-        return;
+typedef pair<int, int>       pi;
+typedef pair<int, pi>        pii;
+typedef vector<int>          vi;
+typedef vector<vi>           vvi;
+typedef vector<pi>           vp;
+const int mod       =        1e9 + 7;
+const int maxn      =        1e5 + 10;
+const int INF       =        1e15;
+
+int n, pre, u, v, cur = 0;
+map<int, int> m;
+vector<pi> a;
+inline void solve() {
+    cin >> n;
+    for(int i = 0; i < n; i++) {
+        cin >> u >> v;
+        m[u]++; m[v]--;
     }
-    if (left == right){
-        seg[i] += val;
-        return;
+    int ans = 0, pre = 0, couting;
+    for(auto s : m) {
+        cur += s.se;
+        if(maximize(ans, cur)) {
+            couting = s.fi;
+        }
+        if(pre != s.fi) a.pb(mp(pre, s.fi));
+        pre = s.fi;
     }
-    int mid = (left + right) / 2;
-
-    update(2 * i, left, mid, index, val);
-    update(2 * i + 1, mid + 1, right, index, val);
-    seg[i] = (seg[2 * i] + seg[2 * i + 1]);
+    cout << ans << endl;
+    for(auto s : a) if(s.fi == couting) {cout << s.fi << ' ' << s.se; return;}
 }
-
-int get(int i, int left, int right, int _left, int _right){
-    if (right < _left or _right < left){
-        return 0;
-    }
-    if (_left <= left and right <= _right){
-        return seg[i];
-    }
-
-    int mid = (left + right) / 2;
-
-    int t1 = get(2 * i, left, mid, _left, _right);
-    int t2 = get(2 * i + 1, mid + 1, right, _left, _right);
-    return (t1 + t2);
-}
-
-void update(int i, int v){
-    update(1,1,n,i,v);
-}
-
-int get(int l, int r){
-    if (r < l){
-        return 0;
-    }
-    return get(1,1,n,l,r);
-}
-
-int cal(vector <int> &ls){
-    int res = 0;
-    for (int i = 1; i <= 4 * n; i++){
-        seg[i] = 0;
-    }
-    for (auto i: ls){
-        res += get(i + 1, n);
-        update(i,1);
-    }
-    return res;
-}
-
-void nenso(){
-    set <int> s;
-    for (int i = 1; i <= n; i++){
-        s.insert(a[i]);
-    }
-    int cnt = 1;
-    map <int,int> cnv;
-    for (auto i: s){
-        cnv[i] = cnt;
-        cnt++;
-    }
-    for (int i = 1; i <= n; i++){
-        a[i] = cnv[a[i]];
-        // cout << a[i] << " ";
-    }
-    // cout << endl;
-}
-
-
-signed main(){
+signed main() {
+    ios_base:: sync_with_stdio(0);
+    cin.tie(NULL); cout.tie(NULL);
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-    //freopen("input.INP", "r", stdin); 
-    //freopen("output.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    cin >> n;
-    int k;
-    cin >> k;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
-    }
-    nenso();
-    int res = 0;
-    for (int i = 1; i <= n; i++){
-        for (int j = i + 1; j <= n; j++){
-            vector <int> ls;
-            for (int k = 1; k <= i; k++){
-                ls.push_back(a[k]);
-            }
-            for (int k = j; k <= n; k++){
-                ls.push_back(a[k]);
-            }
-            if (cal(ls) <= k){
-                // cout << i << " " << j << endl;
-                 res++;
-            }
-        }
-    }
-    cout << res << endl;
-    return 0;
+    solve();
 }
+
+/*A place to scribble thoughts
+
+*/

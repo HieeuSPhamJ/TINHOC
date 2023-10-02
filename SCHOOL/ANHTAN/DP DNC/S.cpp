@@ -20,18 +20,18 @@ int dp_before[maxN];
 
 
 int C(int i, int j){
-    return cost[j][j] - cost[i][j]; 
+    return cost[j][j] - cost[i - 1][j]; 
 }
 
 void cal(int l, int r, int optl, int optr){
-    if(l > r){
+    if (l > r){
         return;
     }
     int mid = (l + r) / 2;
     ii best = ii(1e9 , -1); 
     for(int k = optl; k <= min(mid,optr); k++){
-        if(best.fi > dp_before[k] + C(k,mid)){
-            best = {dp_before[k] + C(k,mid), k};
+        if(best.fi > dp_before[k - 1] + C(k,mid)){
+            best = {dp_before[k - 1] + C(k,mid), k};
         }
     }
     dp_curr[mid] = best.fi;
@@ -69,7 +69,7 @@ signed main(){
 
     dp_before[0] = 0;
     for (int i = 1; i <= m; i++){
-        cal(1,n,0,n - 1);
+        cal(1,n,1,n);
         for (int j = 1; j <= n; j++){
             dp_before[j] = dp_curr[j];
         }

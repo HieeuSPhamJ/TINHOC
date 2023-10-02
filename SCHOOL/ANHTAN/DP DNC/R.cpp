@@ -9,7 +9,7 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-const int maxN = 1e3 * 5 + 10;
+const int maxN = 5010;
 
 int n, m;
 int a[maxN];
@@ -21,20 +21,9 @@ int dp_before[maxN];
 int cnt[32];
 
 void cal(int l, int r, int optl, int optr){
-    if(l > r){
-        return;
-    }
-    int mid = (l + r) / 2;
-    ii best = ii(1e18 , -1); 
-    for(int k = optl; k <= min(mid,optr); k++){
-        if(best.fi > dp_before[k - 1] + cost[k][mid]){
-            best = {dp_before[k - 1] + cost[k][mid], k};
-        }
-    }
-    dp_curr[mid] = best.fi;
-    cal(l, mid - 1, optl, best.se); 
-    cal(mid + 1, r, best.se, optr); 
+
 }
+
 
 signed main(){
     //freopen("input.INP", "r", stdin);

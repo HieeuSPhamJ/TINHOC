@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\THI-2\\B.cpp","tests":[{"id":1695295411048,"input":"5\n1 3\n3 5\n3 6\n4 7\n3 7\n","output":"4\n4 5\n"},{"id":1695295619143,"input":"2\n1 3\n3 4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\Doi Tuyen Tin\\THI-2\\B.cpp","group":"local","local":true}

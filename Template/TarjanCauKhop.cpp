@@ -16,30 +16,29 @@ int khop;
 int cau;
 int cnt;
 
-void tarjan(int node, int father){
-    low[node] = num[node] = ++cnt;
-    int child = (node != father);
-    for (auto newNode: adj[node]){
-        if (newNode == father){
+void tarjan(int nu, int fa){
+    cnt++;
+    num[nu] = low[nu] = cnt;
+    int child = (nu != fa);
+    for (auto i: adj[nu]){
+        if (i == fa){
             continue;
         }
-
-        if (num[newNode]){
-            low[node] = min(low[node], num[newNode]);
+        if (num[i]){
+            low[nu] = min(low[nu], num[i]);
         }
-        else {  
-            tarjan(newNode, node);
-            low[node] = min(low[node], low[newNode]);
-            if (low[newNode] == num[newNode]){
-                cau++;
-            }
-            if (low[newNode] >= num[node]){
+        else{
+            tarjan(i, nu);
+            low[nu] = min(low[nu], low[i]);
+            if (low[i] >= num[nu]){
                 child++;
+            }
+            if (num[i] == low[i]){
+                cau++;
             }
         }
     }
     if (child >= 2){
-        // cout << node << endl;
         khop++;
     }
 }
