@@ -55,16 +55,24 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test;
-    cin >> test;
+    // int test;
+    // cin >> test;
     init();
-    while(test--){
+    // while(test--){
+    //     for (int i = 0; i < 90; i++){    
+    //         dp[i].clear();
+    //     }
+    //     int n;
+    //     cin >> n;
+    //     cout << backtrack(n,0) << endl;
+    // }
+
+    for (int n = 1; n <= 100; n++){
         for (int i = 0; i < 90; i++){    
             dp[i].clear();
         }
-        int n;
-        cin >> n;
         cout << backtrack(n,0) << endl;
+
     }
     return 0;
 }
