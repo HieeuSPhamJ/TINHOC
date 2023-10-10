@@ -17,8 +17,6 @@ void up(int &a, int b){
     a = min(a,b);
 }
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     // freopen("PLAN.INP", "r", stdin);
     // freopen("PLAN.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
@@ -59,6 +57,7 @@ signed main(){
     for (int i = 1; i <= n; i++){
         cout << pre[i][m] << " ";
     }
+    cout << endl;
 
     // for (int i = 1; i <= n; i++){
     //     for (int j = 0; j <= m; j++){

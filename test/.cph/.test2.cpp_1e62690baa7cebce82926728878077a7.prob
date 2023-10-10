@@ -1,1 +1,0 @@
-{"name":"Local: test2","url":"d:\\TINHOC\\test\\test2.cpp","tests":[{"id":1685712167763,"input":"4\n1 2 4 8","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\test\\test2.cpp","group":"local","local":true}

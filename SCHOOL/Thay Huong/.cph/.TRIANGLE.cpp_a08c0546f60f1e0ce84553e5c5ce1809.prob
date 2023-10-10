@@ -1,0 +1,1 @@
+{"name":"Local: TRIANGLE","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Huong/TRIANGLE.cpp","tests":[{"id":1696921374735,"input":"5\nr 10\ng 10\nb 12\nr 5\ng 6","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Huong/TRIANGLE.cpp","group":"local","local":true}
