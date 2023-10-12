@@ -48,11 +48,35 @@ int get(int l, int r){
     return get(1,1,n,l,r);
 }
 
+int getl(int i, int l, int r, int left, int k){
+    if (seg[i] > k){
+        return -1;
+    }
+    if (r < left){
+        return -1;
+    }
+    if (l == r){
+        return l;
+    }
+    int mid = (l + r) / 2;
+    if (seg[2 * i] <= k){
+        int t = getl(2 * i, l, mid, left, k);
+        if (t != -1){
+            return t;
+        }
+    }
+    return getl(2 * i + 1, mid + 1, r, left, k);
+}
+ 
+int getl(int l, int r, int k){
+    int t = getl(1,1,n,l, k);
+    if (t <= r){
+        return t;
+    }
+    return -1;
+}
+
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
@@ -70,17 +94,7 @@ signed main(){
         for (int i = 1; i <= n;){
             int l = i;
             int r = n;
-            int k = -1;
-            while(l <= r){
-                int mid = (l + r) / 2;
-                if (get(i, mid) <= x){
-                    r = mid - 1;
-                    k = mid;
-                }
-                else{
-                    l = mid + 1;
-                }
-            }
+            int k = getl(i,n,x);
             if (k == -1){
                 break;
             }
