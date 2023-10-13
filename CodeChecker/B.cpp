@@ -8,59 +8,53 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-const int maxN = 2e5 + 10;
+int n, k;
+int ans = 1e9;
+int a[200];
 
-vector <double> ls;
-vector <double> res;
-
-bool check(double k){
-    res.clear();
-    double la = ls.front();
-    res.push_back(la);
-    for (auto i: ls){
-        if (i <= la + 2 * k){
-            continue;
+void backtrack(int i, int open, int cover, int res){
+    if (cover > k){
+        return;
+    }
+    // cout << i << " " << open << " " << cover << " " << res << endl;
+    if (i >= n){
+        // cout << cover << " " << res << endl;
+        if (cover <= k){
+            ans = min(ans, res);
         }
-        else{
-            la = i;
-            res.push_back(i);
-        }   
+        return;
+    }
+    if (open){
+        backtrack(i + 1, 1, cover + 1, res);
+        if (a[i + 1] >= 20){
+            backtrack(i + 1, 0, cover, res + 1);
+        }
+    }
+    else{
+        backtrack(i + 1, 1, cover + 1, res + 1);
+        if (a[i + 1] >= 20){
+            backtrack(i + 1, 0, cover, res);
+        }
     }
 
-    return res.size() <= 3;
 }
 
 signed main(){
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
+    cin >> n >> k;
     for (int i = 1; i <= n; i++){
-        double x;
-        cin >> x;
-        ls.push_back(x);
+        cin >> a[i];
     }
-
-    sort(all(ls));
-
-    double l = 0;
-    double r = 1e9;
-    double ans = -1;
-    while(r - l >= 0.0000001){
-        double mid = (l + r) / 2;
-        if (check(mid)){
-            r = mid;
-            ans = mid;
-        }
-        else{
-            l = mid;
-        }
+    backtrack(0,0,0,0);
+    if (ans == 1e9){
+        ans = -1;
     }
-    // cout << check(0.1) << endl;
-    cout << fixed << setprecision(6) << ans << endl;
-    check(ans);
+    cout << ans << endl;
     return 0;
 }
