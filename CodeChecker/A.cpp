@@ -1,111 +1,68 @@
-#include<bits/stdc++.h>
-#define ii pair <int,int>
+#include <bits/stdc++.h>
+#define int long long
+#define ii pair<int, int>
+#define iii pair<int,ii>
+#define vii vector<ii>
 #define fi first
 #define se second
-#define int long long
-#define double long double
 #define endl '\n'
-#define all(x) x.begin(), x.end()
 using namespace std;
-
-const int maxN = 1e5 + 10;
-
-int n, test;
-int a[maxN];
-int b[maxN];
-int seg[maxN * 4];
-
-void build(int i, int l, int r){
-    if (l > r){
-        return;
-    }
-    if (l == r){
-        seg[i] = a[l];
-        return;
-    }
-    int mid = (l + r) / 2;
-    build(2 * i, l, mid);
-    build(2 * i + 1, mid + 1, r);
-    seg[i] = min(seg[2 * i], seg[2 * i + 1]);
-}
-
-int get(int i, int left, int right, int _left, int _right){
-    if (right < _left or _right < left){
-        return 1e18;
-    }
-    if (_left <= left and right <= _right){
-        return seg[i];
-    }
-
-    int mid = (left + right) / 2;
-
-    int t1 = get(2 * i, left, mid, _left, _right);
-    int t2 = get(2 * i + 1, mid + 1, right, _left, _right);
-    return min(t1, t2);
-}
-
-int get(int l, int r){
-    return get(1,1,n,l,r);
-}
-
-int getl(int i, int l, int r, int left, int k){
-    if (seg[i] > k){
-        return -1;
-    }
-    if (r < left){
-        return -1;
-    }
-    if (l == r){
-        return l;
-    }
-    int mid = (l + r) / 2;
-    if (seg[2 * i] <= k){
-        int t = getl(2 * i, l, mid, left, k);
-        if (t != -1){
-            return t;
+const double eps = 0.000001;
+const int mod = 998244353;
+const int N = 100001;
+const int MATRIX_SIZE = 3;
+int n,T[N],ans[4],ok1,ok2[4],l,r;
+vector <int> xet;
+int check(int x){
+    int cnt=0;
+    ans[1]=ans[2]=ans[3]=0;
+    xet.clear();
+    xet.push_back(T[1]);
+    for (int i=2;i<=n;++i){
+        if (T[i]-xet[0]>x){
+            // int tam=;
+            if (cnt==3) return false;
+            ans[++cnt]=xet.back()+xet[0];
+            // cout<<cnt<<' '<<xet.back()<<' '<<xet[0]<<endl;
+            xet.clear();
         }
+        xet.push_back(T[i]);
     }
-    return getl(2 * i + 1, mid + 1, r, left, k);
+    if (cnt==3&&!xet.empty()) return false;
+    // cout<<xet.back()<<' '<<xet[0]<<endl;
+    ans[3]=xet.back()+xet[0];
+    return true;
 }
- 
-int getl(int l, int r, int k){
-    int t = getl(1,1,n,l, k);
-    if (t <= r){
-        return t;
-    }
-    return -1;
-}
-
-signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    
-    cin >> n >> test;
-    for (int i = 1; i <= test; i++){
-        cin >> b[i];
-    }
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
-    }
-    build(1,1,n);
-    for (int t = 1; t <= test; t++){
-        int x = b[t];
-        for (int i = 1; i <= n;){
-            int l = i;
-            int r = n;
-            int k = getl(i,n,x);
-            if (k == -1){
-                break;
-            }
-            x %= a[k];
-            i = k + 1;
+void solve(){
+    cin>>n;
+    for (int i=1;i<=n;++i)
+        cin>>T[i];
+    sort(T+1,T+n+1);
+    l=0;
+    r=2e9;
+    // check(1);
+    while (l<=r){
+        int mid=l+r>>1;
+//        cout<<mid<<endl;
+        if (check(mid)){
+            ok1=mid;
+            ok2[1]=ans[1];
+            ok2[2]=ans[2];
+            ok2[3]=ans[3];
+            r=mid-1;
         }
-        cout << x << " ";
+        else l=mid+1;
     }
-
-
-    return 0;
+    cout<<ok1/2;
+    if (ok1%2) cout<<".500000"<<endl;
+    else cout<<".000000"<<endl;
+//     // if ()
+}
+signed main() {
+freopen("input.inp", "r", stdin);
+freopen("A.out", "w", stdout);
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+   
+        solve();
 }

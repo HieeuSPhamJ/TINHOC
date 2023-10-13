@@ -47,15 +47,9 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = random(1,100);
-    int m = random(1,100);
-    cout << n << " " << m << endl;
-    for (int i = 1; i <= m; i++){
-        cout << random(2,100) << " ";
+    cout << n << endl;
+    while(n--){
+        cout << random(1,1e9) << " ";
     }
-    cout << endl;
-    for (int i = 1; i <= n; i++){
-        cout << random(2,100) << " ";
-    }
-    cout << endl;
     return 0;
 }

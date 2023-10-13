@@ -31,8 +31,8 @@ bool check(double k){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
+    freopen("stations.INP", "r", stdin);
+    freopen("stations.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
@@ -62,5 +62,12 @@ signed main(){
     // cout << check(0.1) << endl;
     cout << fixed << setprecision(6) << ans << endl;
     check(ans);
+    for (auto i: res){
+        cout << fixed << setprecision(6) << i + ans << " ";
+    }
+    while(res.size() < 3){
+        cout << 1e9 << " ";
+        res.push_back(1e9);
+    }
     return 0;
 }
