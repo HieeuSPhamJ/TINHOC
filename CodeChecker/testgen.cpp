@@ -46,10 +46,6 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(3,5);
-    cout << n << " " << random(1,n) << endl;
-    while(n--){
-        cout << random(19,20) << " ";
-    }
+    cout << random(1,1000) << " " << random(1,4) << endl;
     return 0;
 }

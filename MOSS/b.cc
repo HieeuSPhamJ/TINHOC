@@ -1,58 +1,43 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-#define y1 as214
-#define ii pair < int , int >
-#define iii pair < int , ii >
-#define iv pair < ii , ii >
+ifstream fin("rufe.in");
+ofstream fout("rufe.out");
 
-#define fi first
-#define se second
-#define fr front()
-#define pb push_back
+int64_t sumAll(int64_t n) {
+   return n * (n + 1) / 2;
+}
 
-#define FOR(i , x , n) for(int i = x ; i <= n ; ++i)
-#define REP(i , n) for(int i = 0 ; i < n ; ++i)
-#define FORD(i , x , n) for(int i = x ; i >= n ; --i)
+int64_t sumOdd(int64_t n) {
+   return sumAll(n + 1) - 2 * sumAll((n + 1) / 2);
+}
 
-#define ll long long
-#define oo 1e9
-#define eps 1e-8
-#define div divv
-#define pow poww
-#define int long long
+int main() {
+   int64_t m, n, a, b, k;
+   fin >> m >> n >> a >> b >> k;
 
-const int N = 1e6 + 5;
-int n , m , x1 , x2 , y1 , y2 , q , k , x , K;
-int a[N] , b[N] , c[N] , p[N];
+   auto getArea = [&](int64_t len) {
+       int64_t area = 2 * sumOdd(2 * len - 1) + 2 * len + 1;
+       if (a - len < 1) area -= sumOdd(2 * len + 1 - 2 * a);
+       if (a + len > m) area -= sumOdd(2 * len + 1 - 2 * (m - a + 1));
+       if (b - len < 1) area -= sumOdd(2 * len + 1 - 2 * b);
+       if (b + len > n) area -= sumOdd(2 * len + 1 - 2 * (n - b + 1));
 
+       if (len >= a + b) area += sumAll(len - (a + b) + 1);
+       if (len >= a + n - b + 1) area += sumAll(len - (a + n - b + 1) + 1);
+       if (len >= m - a + 1 + b) area += sumAll(len - (m - a + 1 + b) + 1);
+       if (len >= m - a + 1 + n - b + 1) area += sumAll(len - (m - a + 1 + n - b + 1) + 1);
+       return area;
+   };
 
-
-main()
-{
-    //freopen("gen.inp","r",stdin);
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cin >> q;
-    while(q--)
-    {
-        cin >> n;
-        // 1 + 2 + 4
-
-        bool ok = false;
-        int x = n / 3;
-        for(int i = x - 10 ; i <= x + 10 ; i++)
-            for(int j = i + 1 ; j <= x + 10 ; j++)
-                for(int k = j + 1 ; k <= x + 10 ; k++)
-                    if(i > 0 && j > 0 && k > 0 && i % 3 != 0 && j % 3 != 0 && i != j && j != k && k % 3 != 0 && i + j + k == n)
-                    {
-                        cout << "YES" << "\n";
-                        cout << i << " " << j << " " << k <<  "\n";
-                        ok = true;
-                        goto l1;
-                    }
-        if(!ok)
-            cout << "NO" << "\n";
-        l1:;
-    }
+   int64_t lo = 0, hi = m + n;
+   while (hi - lo > 1) {
+       int64_t md = (lo + hi) / 2;
+       if (m * n - getArea(md) < k)
+           hi = md;
+       else
+           lo = md;
+   }
+   fout << hi << '\n';
+   return 0;
 }
