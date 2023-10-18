@@ -1,0 +1,1 @@
+{"name":"Local: lcs","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY PHONG/lcs.cpp","tests":[{"id":1697467605535,"input":"hocsinhgioi\nlopchin\n","output":""},{"id":1697467660677,"input":"asd\nasd","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY PHONG/lcs.cpp","group":"local","local":true}

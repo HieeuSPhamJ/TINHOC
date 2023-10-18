@@ -1,0 +1,1 @@
+{"name":"Local: lqdkh_minlr","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/CO CHAU/lqdkh_minlr.cpp","tests":[{"id":1697612804779,"input":"6\n1 3 5 4 2 8","output":"1 6\n2 4\n3 3\n3 4\n2 6\n6 6"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/CO CHAU/lqdkh_minlr.cpp","group":"local","local":true}
