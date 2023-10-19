@@ -95,6 +95,7 @@
         "__tuple": "cpp",
         "bit": "cpp",
         "compare": "cpp",
-        "concepts": "cpp"
+        "concepts": "cpp",
+        "cstdbool": "cpp"
     }
 }
