@@ -6,108 +6,65 @@
 #define double long double
 #define endl '\n'
 #define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
 const int maxN = 1e5 + 10;
 const int mod = 1e9 + 7;
 
-int n;
+int n, k;
 vector <int> adj[maxN];
-int dp[maxN];
-vector <int> ls;
+int vis[maxN];
+int res = 1;
 
-void dfs(int nu, int fa){
-    dp[nu] = 1;
+void tarjan(int nu){
+    vis[nu] = 1;
+    set <int> s;
     for (auto i: adj[nu]){
-        if (i == fa){
-            continue;
+        if (vis[i]){
+            s.insert(i);
         }
-        dfs(i,nu);
-        dp[nu] += dp[i];
     }
-    if (nu != 1){
-        ls.push_back((n - dp[nu]) * dp[nu]);
-        // cout << ls.back() << endl;
+    // cout << nu << ": " << s.size() << endl;
+    int color = (k - s.size());
+    if (color < 0){
+        color = 0;
     }
-}
+    (res = res * color) %= mod;
 
-int mul(int a, int b){
-    return ((a % mod) * (b % mod)) % mod;
+    for (auto i: adj[nu]){
+        if (vis[i] == 0){
+            tarjan(i);
+        }
+    }
 }
 
 signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
+    freopen("input.inp", "r", stdin);
+    freopen("A.out", "w", stdout);
+    // freopen("PALLET.INP", "r", stdin);
+    // freopen("PALLET.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
     
-    cin >> n;
-    for (int i = 1; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
-    }
-
-    dfs(1,1);
-
-    vector <int> st;
-    int m;
-    cin >> m;
-    for (int i = 1; i <= m; i++){
+    cin >> n >> k;
+    for (int i = 1; i <= n; i++){
         int x;
         cin >> x;
-        st.push_back(x);
-    }
-    multiset <int, greater <int>> s;
-    if (ls.size() <= st.size()){
-        sort(rall(st));
-        sort(rall(ls));
-        // for (auto i: st){
-        //     cout << i << " ";
-        // }
-        // cout << endl;
-        while(ls.size()){
-            s.insert(st.back() * ls.back());
-            // cout << ls.back() << " " << st.back() << endl;
-            ls.pop_back();
-            st.pop_back();
+        if (i == x){
+            continue;
         }
-    }
-    else{
-        sort(all(ls));
-        sort(all(st));
-        while(st.size()){
-            s.insert(ls.back() * st.back());
-            ls.pop_back();
-            st.pop_back();
-        }
-    }
-    for (auto i: ls){
-        s.insert(i);
+        adj[i].push_back(x);
+        adj[x].push_back(i);   
     }
 
-    auto it = s.begin();
-    int ma = *it;
-    s.erase(it);
-    for (auto i: st){
-        ma = mul(ma,i);
-    }
-    s.insert(ma);
-
-    int res = 0;
-    for (auto i: s){
-        (res += i) %= mod;
+    for (int i = 1; i <= n; i++){
+        if (vis[i] == 0){
+            tarjan(i);
+        }
     }
 
     cout << res << endl;
 
     return 0;
 }
-
-/*
-12 10 6 6 6 6
-2 2 3 3 4 5 5 7 13
-*/

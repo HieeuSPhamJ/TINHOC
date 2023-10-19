@@ -8,63 +8,51 @@
 #define all(x) x.begin(), x.end()
 using namespace std;
 
-const int maxN = 2e5 + 10;
+int n, k;
+int res = 0;
 
-int a[maxN];
-int pre[40][maxN];
-int pre0[40][maxN];
+int a[1000];
+int color[1000];
 
-int LOG2(int x){
-    if (x == 0){
-        return -1;
+void backtrack(int id){
+    if (id >= n){
+        for (int i = 1; i <= n; i++){
+            if (a[i] != i){
+                if (color[i] == color[a[i]]){
+                    return;
+                }
+            }
+        }
+        for (int i = 1; i <= n; i++){
+            cout << color[i] << " ";
+        }
+        cout << endl;
+        res++;
+        return;
     }
-    return log2(x);
+    for (int t = 1; t <= k; t++){
+        color[id + 1] = t;
+        backtrack(id + 1);
+    }
 }
 
 signed main(){
-	freopen("input.inp", "r", stdin);
-	freopen("B.out", "w", stdout);
+    freopen("input.inp", "r", stdin);
+    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
+    
+    cin >> n >> k;
+    // cout << n << " " << k << endl;
     for (int i = 1; i <= n; i++){
         cin >> a[i];
     }
 
-    int test;
-    cin >> test;
-    while(test--){
-        int l, r, x;
-        cin >> l >> r >> x;
-        int res = 0;
-		for (int i = l; i <= r; i++){
-			if ((a[i] xor x) > (a[i] & x)){
-				res++;
-			}
-		}
-        cout << res << endl;
-    }
+    backtrack(0);
+
+    cout << res << endl;
     return 0;
 }
-
-/*
-101 => 001 | 100
-100 => 000 | 100
-011 => 111 | 000 
-010 => 110 | 000
-001 => 101 | 000
-
-100
-
-101 => 111 | 000
-100 => 110 | 000
-011 => 001 | 010 
-010 => 000 | 010
-
-010
-
-*/
