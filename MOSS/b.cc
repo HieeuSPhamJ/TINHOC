@@ -1,43 +1,67 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
-ifstream fin("rufe.in");
-ofstream fout("rufe.out");
+template<class A, class B> bool maximize(A& x, B y) {if (x < y) return x = y, true; else return false;}
+template<class A, class B> bool minimize(A& x, B y) {if (x > y) return x = y, true; else return false;}
 
-int64_t sumAll(int64_t n) {
-   return n * (n + 1) / 2;
-}
+#define     all(a)                a.begin(), a.end()
+#define     pb                    push_back
+#define     pf                    push_front
+#define     fi                    first
+#define     se                    second
+// #define     int                   long long
 
-int64_t sumOdd(int64_t n) {
-   return sumAll(n + 1) - 2 * sumAll((n + 1) / 2);
-}
+typedef     long long             ll;
+typedef     unsigned long long    ull;
+typedef     double                db;
+typedef     long double           ld;
+typedef     pair<db, db>          pdb;
+typedef     pair<ld, ld>          pld;
+typedef     pair<int, int>        pii;
+typedef     pair<ll, ll>          pll;
+typedef     pair<ll, int>         plli;
+typedef     pair<int, ll>         pill;
 
-int main() {
-   int64_t m, n, a, b, k;
-   fin >> m >> n >> a >> b >> k;
+const int MAX_N = 1e4 + 10;
 
-   auto getArea = [&](int64_t len) {
-       int64_t area = 2 * sumOdd(2 * len - 1) + 2 * len + 1;
-       if (a - len < 1) area -= sumOdd(2 * len + 1 - 2 * a);
-       if (a + len > m) area -= sumOdd(2 * len + 1 - 2 * (m - a + 1));
-       if (b - len < 1) area -= sumOdd(2 * len + 1 - 2 * b);
-       if (b + len > n) area -= sumOdd(2 * len + 1 - 2 * (n - b + 1));
+int n;
+int a[100001];
+int g[MAX_N << 1];
+bool check[MAX_N << 1];
 
-       if (len >= a + b) area += sumAll(len - (a + b) + 1);
-       if (len >= a + n - b + 1) area += sumAll(len - (a + n - b + 1) + 1);
-       if (len >= m - a + 1 + b) area += sumAll(len - (m - a + 1 + b) + 1);
-       if (len >= m - a + 1 + n - b + 1) area += sumAll(len - (m - a + 1 + n - b + 1) + 1);
-       return area;
-   };
+signed main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-   int64_t lo = 0, hi = m + n;
-   while (hi - lo > 1) {
-       int64_t md = (lo + hi) / 2;
-       if (m * n - getArea(md) < k)
-           hi = md;
-       else
-           lo = md;
-   }
-   fout << hi << '\n';
-   return 0;
+    g[1] = 1;
+    check[1] = true;
+    for (int i = 2; i < MAX_N; i++) {
+        for (int j = 1; j < MAX_N; j++) {
+            check[j] = false;
+        }
+        for (int j = 1; j < i; j++) {
+            check[g[j]] = true;
+        }
+        for (int j = 1; j <= (i >> 1); j++) {
+            check[g[j] ^ g[i - j]] = true;
+        }
+        for (int j = 0; j < (MAX_N << 1); j++) {
+            if (!check[j]) {
+                g[i] = j;
+                break;
+            }
+        }
+    }
+
+    int sumXor = 0;
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        sumXor ^= g[a[i]];
+    }
+
+    cout << (sumXor ? "Alice" : "Bob");
+
+    return 0;
 }

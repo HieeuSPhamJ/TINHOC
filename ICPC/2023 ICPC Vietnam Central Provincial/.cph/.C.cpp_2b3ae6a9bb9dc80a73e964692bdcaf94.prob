@@ -1,0 +1,1 @@
+{"name":"Local: C","url":"d:\\TINHOC\\ICPC\\2023 ICPC Vietnam Central Provincial\\C.cpp","tests":[{"id":1697938153425,"input":"2\n3\n1 2 3\n5\n3 6 9 5 10","output":"31\n10"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\ICPC\\2023 ICPC Vietnam Central Provincial\\C.cpp","group":"local","local":true}
