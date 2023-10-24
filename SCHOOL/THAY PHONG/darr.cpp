@@ -9,9 +9,12 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
+const int maxN = 2e6 + 10;
+
+int mk[maxN];
+int le[maxN];
+
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -23,20 +26,41 @@ signed main(){
     cout.tie(NULL);
     int n;
     cin >> n;
-    vector <int> ls;
     for (int i = 1; i <= n; i++){
         int x;
         cin >> x;
-        ls.push_back(x);
+        mk[x] = 1;
+    }
+
+    for (int i = 1; i < maxN; i++){
+        if (mk[i - 1]){
+            le[i] = i - 1;
+        }
+        else{
+            le[i] = le[i - 1];
+        }
     }
     int res = 0;
-    for (auto i: ls){
-        for (int j: ls){
-            if (i > j){
-                res = max(res, i % j);
+    for (int i = 1; i < maxN; i++){
+        if (mk[i]){
+            for (int j = 2 * i; j < maxN; j += i){
+                // cout << j << ' ' << i << endl;
+                if (le[j] >= i){
+                    res = max(res, le[j] % i);
+                }
             }
         }
     }
+
     cout << res << endl;
+
     return 0;
 }
+
+/*
+a[i]
+a[j] % a[i] = k
+k < a[i]
+k 
+
+*/

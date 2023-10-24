@@ -46,25 +46,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << 5 << endl;
-    int n = random(2,3);
-    set <ii> s;
-    for (int i = 2; i <= n; i++){
-        s.insert({random(1,i - 1),i});
-    }
-    int m = random(1,n);
-    while(m--){
-        int a = random(1,n - 1);
-        s.insert({a, random(a,n)});
-    }
-
-    cout << n << " " << s.size() << endl;
+    int n = random(1,10);
+    cout << n << endl;
     for (int i = 1; i <= n; i++){
-        cout << i << " ";
-    }
-    cout << endl;
-    for (auto i: s){
-        cout << i.fi << " " << i.se << " " << random(1,5) << endl;
+        cout << random(1,100) << " ";
     }
     return 0;
 }
