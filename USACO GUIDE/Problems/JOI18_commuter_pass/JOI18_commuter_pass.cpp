@@ -13,14 +13,14 @@ const int maxN = 1e5 + 10;
 
 vector <ii> adj[maxN];
 int dist[5][maxN];
-vector <int> path[maxN];
+vector <int> path[5][maxN];
 int mk[maxN];
 int cntin[maxN];
 
 void dickcha(int s, int type){
     for (int i = 1; i < maxN; i++){
         dist[type][i] = 1e18;
-        path[i].clear();
+        path[type][i].clear();
     }
     priority_queue <ii, vector <ii>, greater <ii>> q;
     dist[type][s] = 0;
@@ -34,23 +34,23 @@ void dickcha(int s, int type){
         for (auto i: adj[t.se]){
             if (dist[type][i.se] > t.fi + i.fi){
                 dist[type][i.se] = t.fi + i.fi;
-                path[i.se].clear();
-                path[i.se].push_back(t.se);
+                path[type][i.se].clear();
+                path[type][i.se].push_back(t.se);
                 q.push({dist[type][i.se], i.se});
             }
             else if (dist[type][i.se] == t.fi + i.fi){
-                path[i.se].push_back(t.se);
+                path[type][i.se].push_back(t.se);
             }   
         }
     }
 }
 
 void dfs(int nu){
-    cntin[nu]++;
     mk[nu] = 1;
-    cout << nu << endl;
-    for (auto i: path[nu]){
-        if (mk[i] == 0){
+    // cout << nu << endl;
+    for (auto i: path[0][nu]){
+        cntin[i]++;
+        if (mk[i] == 0){      
             dfs(i);
         }
     }
@@ -58,36 +58,48 @@ void dfs(int nu){
 
 int dp[maxN];
 
-void solve(int t){
+
+int n, m, s, t, S, T;
+
+int solve(){
     dickcha(S,1);
     dickcha(T,2);
+    for (int i = 1; i <= n; i++){
+        mk[i] = 0;
+        cntin[i] = 0;
+    }
     dfs(t);
-    for (int i = 1; i < maxN; i++){
+    for (int i = 1; i <= n; i++){
+        // cout << i << ": " << cntin[i] << endl;
         dp[i] = 1e18;
     }
     queue <int> q;
     q.push(t);
-    dp[t] = dist[1][t];
-    cntin[t]--;
+    dp[t] = dist[2][t];
     while(q.size()){
         int te = q.front();
-        q.pop_back();
-        for (auto i: path[te]){
+        // cout << te << ": " << dp[te] << endl;
+        q.pop();
+        for (auto i: path[0][te]){
             cntin[i]--;
-            dp[i] = min(dist[1][i], dp[t]);
+            dp[i] = min({dp[i],dist[2][i], dp[te]});
             if (cntin[i] == 0){
                 q.push(i);
+                // cout << i << " ";
             }
         }
+        // cout << endl;
     }
 
-    int res = 1e18;
+    int res = dist[1][T];
 
     for (int i = 1; i <= n; i++){
-        res = min(res, dp[i] + dist[2][i]);
+        // cout << i << ": " << dp[i] << " " << dist[1][i] << endl;
+        res = min(res, dp[i] + dist[1][i]);
     }
+    // cout << endl;
 
-    cout << res << endl;
+    return res;
 }
 
 signed main(){
@@ -100,7 +112,6 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, m, s, t, S, T;
     cin >> n >> m;
     cin >> s >> t >> S >> T;
     for (int i = 1; i <= m; i++){
@@ -111,9 +122,11 @@ signed main(){
     }
 
     dickcha(s,0);
-    solve(t);
+    int res = solve();
+    swap(T,S); 
+    res = min(res,solve());
 
-
+    cout << res << endl;
 
     return 0;
 }
