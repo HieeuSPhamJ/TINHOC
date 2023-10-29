@@ -1,0 +1,1 @@
+{"name":"Local: SQUARE","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 1/SQUARE.cpp","tests":[{"id":1698541778895,"input":"2\n3\n..X\nXX.\nXX.\n3\n...\nXXX\nXX.","output":"POSSIBLE\nIMPOSSIBLE"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 1/SQUARE.cpp","group":"local","local":true}

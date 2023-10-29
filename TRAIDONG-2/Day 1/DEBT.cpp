@@ -18,8 +18,6 @@ vector <ii> adj[maxN];
 
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("DEBT.inp", "r")) {
@@ -55,6 +53,7 @@ signed main(){
     // cout << "===" << endl;
     // sort(all(ls));
     int res = 0;
+    int cntlim = 0;
     for (int i = l; i <= r; i++){
         for (auto j: ls){
             for (int g = 0; g < k; g++){
@@ -67,6 +66,10 @@ signed main(){
                 // cout << i - 1 << " " << j << " " << g << " " << cur[j][g] << endl; 
                 dp[j][g] = max(dp[j][g], cur[j][g]);
                 for (auto nj: adj[i]){
+                    cntlim++;
+                    if (cntlim > 2e8){
+                        goto bru;
+                    }
                     int ng = abs(i - nj.fi) + g;
                     if (j < nj.fi and ng <= k){
                         dp[nj.fi][ng] = max(dp[nj.fi][ng], cur[j][g] + nj.se);
@@ -77,7 +80,7 @@ signed main(){
             }
         }
     }
-
+    bru:;
     res = -res;
 
     for (int i = l; i <= r; i++){
