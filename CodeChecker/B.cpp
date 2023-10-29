@@ -1,119 +1,62 @@
-#include<bits/stdc++.h>
-#define int long long
-#define double long double
-#define ii pair <int,int>
+#include <bits/stdc++.h>
+// #define int long long
+#define ii pair<int, int>
+#define iii pair<int,ii>
+#define vii vector<ii>
 #define fi first
 #define se second
 #define endl '\n'
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
 using namespace std;
+const double eps = 0.000001;
+const int mod = 1000000007;
+const int N = 101;
+const int MATRIX_SIZE = 3;
+int n,dp[2][N][10001],dp2[2][N][10001],s=0,l,r,k,T[N],ans=1e9;
+void solve(){
+	cin>>n>>l>>r>>k;
+	for (int i=1;i<=n;++i){
+		cin>>T[i];
+		if (i>=l&&i<=r) s+=T[i];
+	}
+	for (int i=0;i<l;++i)
+		for (int j=l-1;j<=r;++j)
+			for (int time=0;time<=k;++time){
+				dp[i&1][j][time]=s;
+				if (j-i>time) continue;
+				if (i>0&&j>=l&&time>0){
+					dp[i&1][j][time]=min({dp[(i&1)^1][j-1][time-j+i]+(T[i]-T[j]),dp[i&1][j-1][time],dp[(i&1)^1][j][time],dp[i&1][j][time-1]});
+				for (int i2=r;i2<=n;++i2)
+					for (int j2=j;j2<=r;++j2)
+						for (int time2=0;time2<=k-time;++time2){
+							dp2[i2&1][j2][time2]=dp[i&1][j][time];
+							if (i2-j2>time2) continue;
+							if (i2>r&&j2>j&&time2>0)
+								dp2[i2&1][j2][time2]=min({dp2[(i2&1)^1][j2-1][time2-i2+j2]+T[i2]-T[j2],dp2[i2&1][j2-1][time2],dp2[(i2&1)^1][j2][time2],dp2[i2&1][j2][time2-1]});
+						}
+				ans=min(ans,dp2[n&1][r][k-time]);
+				}
+			}
+	for (int i2=r;i2<=n;++i2)
+		for (int j2=l-1;j2<=r;++j2)
+			for (int time2=0;time2<=k;++time2){
+				dp2[i2&1][j2][time2]=s;
+				if (i2-j2>time2) continue;
+				if (i2>r&&j2>=l&&time2>0){
+					dp2[i2&1][j2][time2]=min({dp2[(i2&1)^1][j2-1][time2-i2+j2]+T[i2]-T[j2],dp2[i2&1][j2-1][time2],dp2[(i2&1)^1][j2][time2],dp2[i2&1][j2][time2-1]});
+					// cout<<i2<<' '<<j2<<' '<<time2<<' '<<dp2[i2&1][j2][time2]<<endl;
+				}
 
-const int maxN = 110;
-
-int a[maxN];
-vector <pair<ii,int>> ts;
-int res = 0;
-int mk[maxN];
-int tres = 0;
-int k;
-// vector <int> les;
-void backtrack(int id){
-    if (id >= ts.size()){
-        // if (res < tres){
-        //     cout << tres << endl;
-        //     for (auto i: les){
-        //         cout << ts[i].fi.fi << " " << ts[i].fi.se << endl;
-        //     }
-        // }
-        res = max(res,tres);
-        return;
-    }
-    backtrack(id + 1);
-    auto cur = ts[id];
-    if (mk[cur.fi.fi] or mk[cur.fi.se] or k - abs(cur.fi.fi - cur.fi.se) < 0){
-        return;
-    }
-    k -= abs(cur.fi.fi - cur.fi.se);
-    tres += cur.se;
-    mk[cur.fi.fi] = 1;
-    mk[cur.fi.se] = 1;
-    // les.push_back(id);
-    // cout << "add " << cur.fi.fi << " " << cur.fi.se << endl;
-    backtrack(id + 1);
-    // les.pop_back();
-    // cout << "era " << cur.fi.fi << " " << cur.fi.se << endl;
-    k += abs(cur.fi.fi - cur.fi.se);
-    tres -= cur.se;
-    mk[cur.fi.fi] = 0;
-    mk[cur.fi.se] = 0;
+			}
+	ans=min(ans,dp2[n&1][r][k]);
+	cout<<ans << endl;
 }
-
-signed main(){
+signed main() {
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    if (fopen("DEBT.inp", "r")) {
-        freopen("DEBT.inp", "r", stdin);
-        freopen("DEBT.out", "w", stdout);
-    }
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n, l, r;
-    cin >> n >> l >> r >> k;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
-    }
-    vector <int> ls;
-    for (int i = 1; i <= n; i++){
-        if (i < l or r < i){
-            ls.push_back(i);
-        }
-    }
-    for (int i = l; i <= r; i++){
-        for (auto j: ls){
-            if (a[i] - a[j] > 0){
-                ts.push_back({{i,j}, a[i] - a[j]});
-            }
-            
-        }
-    }
-
-    backtrack(0);
-
-    res = -res;
-
-    for (int i = l; i <= r; i++){
-        res += a[i];
-    }
-
-    cout << res << endl;
-
-    return 0;
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	// cin>>t;
+	// while (t--)
+    solve();
 }
-
-/*
-dp[i][j][k]
-dp[i - 1][l][k]
-
-
-4 5 3 1 2 6
-
-3
-
-4 0 4
-4 1 3
-4 2 2
-4 3 1
-5 0 5
-5 1 4
-5 2 3
-5 3 2
-6 0 6
-6 1 5
-6 2 4
-6 3 3
-
-*/
+//dp[i][j][time]=min(dp[i-1][j-1][time-|i-j|],dp[i][j-1][time],dp[i-1][j-1][time])

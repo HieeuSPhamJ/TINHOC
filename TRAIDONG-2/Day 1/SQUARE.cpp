@@ -25,6 +25,9 @@ signed main(){
     int test;
     cin >> test;
     while(test--){
+        memset(hang,0,sizeof(hang));
+        memset(cot,0,sizeof(cot));
+        
         int n;
         cin >> n;
         for (int i = 1; i <= n; i++){
@@ -49,7 +52,7 @@ signed main(){
         }
         if (!(cnt1 == 1 and cnt2 == n - 1)){
             cout << "IMPOSSIBLE" << endl;
-            return 0;
+            continue;
         }
         cnt1 = 0;
         cnt2 = 0;
@@ -64,7 +67,7 @@ signed main(){
 
         if (!(cnt1 == 1 and cnt2 == n - 1)){
             cout << "IMPOSSIBLE" << endl;
-            return 0;
+            continue;
         }
 
         cout << "POSSIBLE" << endl;

@@ -1,0 +1,1 @@
+{"name":"Local: Cipher","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 1/Cipher.cpp","tests":[{"id":1698564855381,"input":"2\nBCB\nAOAAAN","output":"AMBIGUOUS\nBANANA"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 1/Cipher.cpp","group":"local","local":true}

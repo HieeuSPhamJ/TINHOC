@@ -53,7 +53,6 @@ signed main(){
     // cout << "===" << endl;
     // sort(all(ls));
     int res = 0;
-    int cntlim = 0;
     for (int i = l; i <= r; i++){
         for (auto j: ls){
             for (int g = 0; g < k; g++){
@@ -66,10 +65,6 @@ signed main(){
                 // cout << i - 1 << " " << j << " " << g << " " << cur[j][g] << endl; 
                 dp[j][g] = max(dp[j][g], cur[j][g]);
                 for (auto nj: adj[i]){
-                    cntlim++;
-                    if (cntlim > 2e8){
-                        goto bru;
-                    }
                     int ng = abs(i - nj.fi) + g;
                     if (j < nj.fi and ng <= k){
                         dp[nj.fi][ng] = max(dp[nj.fi][ng], cur[j][g] + nj.se);
@@ -97,7 +92,7 @@ signed main(){
 
 /*
 dp[i][j][k]
-dp[i - 1][l][k]
+-> dp[i + 1][nj][k + abs(i + 1 - nj)];
 
 
 4 5 3 1 2 6
@@ -116,5 +111,7 @@ dp[i - 1][l][k]
 6 1 5
 6 2 4
 6 3 3
+
+
 
 */

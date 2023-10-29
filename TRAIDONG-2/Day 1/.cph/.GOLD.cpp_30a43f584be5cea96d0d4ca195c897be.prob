@@ -1,0 +1,1 @@
+{"name":"Local: GOLD","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 1/GOLD.cpp","tests":[{"id":1698548623101,"input":"6 2\n1 2 2 0\n2 3 1 0\n2 4 2 0\n4 5 2 0\n4 6 1 0\n2\n1 3 6\n1 2 5","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 1/GOLD.cpp","group":"local","local":true}
