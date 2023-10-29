@@ -24,6 +24,10 @@ int find(int nu){
     return rt[nu] = find(rt[nu]);
 }
 
+bool cmp(ii x, ii y){
+    return max(a[x.fi], a[x.se]) < max(a[y.fi], a[y.se]);
+}
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
@@ -46,32 +50,25 @@ signed main(){
         s.push_back(i - 1);
     }
 
-    int res = 1e18;
-    while(1){
-        for (int i = 1; i <= n; i++){
-            rt[i] = i;
-            va[i] = a[i];
-        }
-        int tres = 0;
-        for (auto i: s){
-            int u = find(ls[i].fi);
-            int v = find(ls[i].se);
-            // cout << i << " " << ls[i].fi << " " << ls[i].se << endl;
-            if (u == v){
-                continue;
-            }
-            tres += va[u] + va[v];
-            if (tres > res){
-                break;
-            }
-            va[u] = max(va[u], va[v]);
-            rt[v] = u;
-        }
-        res = min(res,tres);
-        if (!next_permutation(all(s))){
-            break;
-        }
+    sort(all(ls), cmp);
+
+    for (int i = 1; i <= n; i++){
+        rt[i] = i;
+        va[i] = a[i];
     }
+    int res = 0;
+    for (auto i: s){
+        int u = find(ls[i].fi);
+        int v = find(ls[i].se);
+        // cout << i << " " << ls[i].fi << " " << ls[i].se << endl;
+        if (u == v){
+            continue;
+        }
+        res += va[u] + va[v];
+        va[u] = max(va[u], va[v]);
+        rt[v] = u;
+    }
+    
     cout << res << endl;
     return 0;
 }

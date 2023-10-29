@@ -8,7 +8,7 @@
 using namespace std;
 
 const int maxN = 1e6 + 10;
-const int base = 200;
+const int base = 74;
 const int mod =  1e9 + 7;
 
 int n, k;
@@ -67,6 +67,7 @@ signed main(){
     int ans = 0;
     for (int t = 0; t < (int)s.length(); t++){
     for (int c = 'a'; c <= 'z'; c++){
+        char old = s[t];
         s[t] = c;
         init();
         int res = 0;
@@ -100,6 +101,7 @@ signed main(){
             }
             res += tres;
         }
+        s[t] = old;
         ans = max(ans, res);
     }
     }

@@ -40,9 +40,6 @@ signed main(){
         for (int i = n - 1 - 2; i >= 1; i-=2){
             a[i] = (s[i + 1] - 'A' - a[i + 2] + 26) % 26;
         }
-        // for (int i = 1; i <= n; i++){
-        //     cout << a[i] << " ";
-        // }
         int ok = 1;
         for (int i = 1; i <= n; i++){
             if (a[i] == -1){
@@ -69,4 +66,5 @@ s1 = a2
 s2 = a1 + a3
 s3 = a2 + a4
 => a4 = s3 - a2
+a6 = s5 - a4
 */
