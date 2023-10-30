@@ -9,109 +9,36 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 110;
 
-int a[maxN];
-int dp[maxN][10010];
-int cur[maxN][10010];
-vector <ii> adj[maxN];
-
+int a[1000];
 
 signed main(){
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen("DEBT.inp", "r")) {
-        freopen("DEBT.inp", "r", stdin);
-        freopen("DEBT.out", "w", stdout);
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, l, r, k;
-    cin >> n >> l >> r >> k;
+    int n;
+    cin >> n;
     for (int i = 1; i <= n; i++){
         cin >> a[i];
     }
-    vector <int> ls;
-    ls.push_back(0);
-    for (int i = 1; i <= n; i++){
-        if (i < l or r < i){
-            ls.push_back(i);
-        }
-    }
-    for (int i = l; i <= r; i++){
-        for (auto j: ls){
-            if (a[i] - a[j] > 0){
-                // ls.push_back({{i,j}, a[i] - a[j]});
-                // cout << i << " " << j << " " << a[i] - a[j] << endl;
-                adj[i].push_back({j,a[i] - a[j]});
-            }
-            
-        }
-    }
-
-    // cout << "===" << endl;
-    // sort(all(ls));
     int res = 0;
-    for (int i = l; i <= r; i++){
-        for (auto j: ls){
-            for (int g = 0; g < k; g++){
-                cur[j][g] = dp[j][g];
-                dp[j][g] = 0;
-            }
-        }
-        for (auto j: ls){
-            for (int g = 0; g < k; g++){
-                // cout << i - 1 << " " << j << " " << g << " " << cur[j][g] << endl; 
-                dp[j][g] = max(dp[j][g], cur[j][g]);
-                for (auto nj: adj[i]){
-                    int ng = abs(i - nj.fi) + g;
-                    if (j < nj.fi and ng <= k){
-                        dp[nj.fi][ng] = max(dp[nj.fi][ng], cur[j][g] + nj.se);
-                        res = max(res, dp[nj.fi][ng]);
-                        // cout << " =>" << i << " " << nj.fi << " " << ng << " " << dp[nj.fi][ng] << endl;
-                    }
-                }
-            }
-        }
-    }
-
-    res = -res;
-
-    for (int i = l; i <= r; i++){
-        res += a[i];
+    for (int i = 2; i <= n; i+=2){
+        res += abs(a[i] - a[i - 1]);
     }
 
     cout << res << endl;
-    // for (auto i: ls){
-    //     cout << i.fi << " " << i.se.fi << " " << i.se.se << endl;
-    // }
-
     return 0;
 }
 
 /*
-dp[i][j][k]
-dp[i - 1][l][k]
-
-
-4 5 3 1 2 6
-
-3
-
-4 0 4
-4 1 3
-4 2 2
-4 3 1
-5 0 5
-5 1 4
-5 2 3
-5 3 2
-6 0 6
-6 1 5
-6 2 4
-6 3 3
+25 41 6 8 15 37 15 20 17 13 
 
 */

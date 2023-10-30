@@ -46,14 +46,11 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(40,50);
-    int l = random(1,n);
-    int r = random(l,n);
-
-    cout << n << " " << l << " " << r << " " << random(1,1000) << endl;
-
+    int n = random(3,10);
+    
+    cout << n << endl;
     for (int i = 1; i <= n; i++){
-        cout << random(1,100) << " ";
+        cout << random(1,50) << " ";
     }
 
     return 0;

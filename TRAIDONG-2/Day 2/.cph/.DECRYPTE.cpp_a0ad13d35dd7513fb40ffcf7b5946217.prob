@@ -1,0 +1,1 @@
+{"name":"Local: DECRYPTE","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 2/DECRYPTE.cpp","tests":[{"id":1698627601035,"input":"1 0 10","output":"0"},{"id":1698628101777,"input":"1 2 10","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 2/DECRYPTE.cpp","group":"local","local":true}
