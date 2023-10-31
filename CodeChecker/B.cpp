@@ -11,17 +11,40 @@ using namespace std;
 
 int n;
 int a[10000];
-int res = 0;
+int res;
 
-void backtrack(int id, int tres){
-	if (id >= n){
-		res = max(res,tres);
+// vector <ii> ls;
+
+void backtrack(int tres){
+	set <int> s[2];
+	for (int i = 1; i <= n; i++){
+		s[i % 2].insert(a[i]);
+	}
+	if (tres > n or (int)s[0].size() == 1 and (int)s[1].size() == 1){
+		// if (res > tres){
+		// 	cout << "====" << endl;
+		// 	for (int i = 1; i <= n; i++){
+		// 		cout << a[i] << " ";
+		// 	}
+		// 	cout << endl;
+		// 	for (auto x: ls){
+		// 		cout << x.fi << " " << x.se << endl;
+		// 	}
+		// }
+		res = min(res, tres);
 		return;
 	}
-	for (int i = id + 1, mi = 1e18, ma = 0; i <= n; i++){
-		mi = min(mi, a[i]);
-		ma = max(ma, a[i]);
-		backtrack(i,tres + ma - mi);
+	for (int i = 1; i <= n; i++){
+		for (int c = 1; c <= n; c++){
+			int old = a[i];
+			if (a[i - 1] != c and a[i + 1] != c){
+				a[i] = c;
+				// ls.push_back({i,c});
+				backtrack(tres + 1);
+				a[i] = old;
+				// ls.pop_back();
+			}
+		}
 	}
 }
 
@@ -38,10 +61,15 @@ signed main(){
 	cin.tie(NULL);
 	cout.tie(NULL);
 	cin >> n;
+	cin >> n;
 	for (int i = 1; i <= n; i++){
 		cin >> a[i];
 	}
-	backtrack(0,0);
+	res = n - 1;
+	backtrack(0);
 	cout << res << endl;
 	return 0;
 }
+
+/*
+*/
