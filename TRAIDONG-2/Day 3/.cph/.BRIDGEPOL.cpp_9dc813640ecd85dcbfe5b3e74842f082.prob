@@ -1,0 +1,1 @@
+{"name":"Local: BRIDGEPOL","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 3/BRIDGEPOL.cpp","tests":[{"id":1698715533500,"input":"6\n3 8 7 1 6 6\n0 -1 9 1 2 0\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 3/BRIDGEPOL.cpp","group":"local","local":true}
