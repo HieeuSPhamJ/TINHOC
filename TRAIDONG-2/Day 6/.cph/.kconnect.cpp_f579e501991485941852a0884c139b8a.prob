@@ -1,0 +1,1 @@
+{"name":"Local: kconnect","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 6/kconnect.cpp","tests":[{"id":1698975840627,"input":"4 4 2\n1 2\n2 3\n3 4\n1 4\n2 4\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 6/kconnect.cpp","group":"local","local":true}

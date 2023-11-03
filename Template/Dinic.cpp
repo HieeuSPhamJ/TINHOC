@@ -20,8 +20,8 @@ int nxt[maxN];
 int dist[maxN];
 
 void add(int a, int b, int w){
-    node u = {b,adj[b].size(), 0, w};
-    node v = {a,adj[a].size(), 0, 0};
+    node u = {b,(int)adj[b].size(), 0, w};
+    node v = {a,(int)adj[a].size(), 0, 0};
     adj[a].push_back(u);
     adj[b].push_back(v);
 }

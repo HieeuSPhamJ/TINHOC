@@ -19,6 +19,25 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-
+    int N = 50;
+    int cnt = 0;
+    for (int i1 = 1; i1 <= N; i1++){
+    for (int i2 = 1; i2 <= N; i2++){
+    for (int i3 = i1; i3 <= N; i3++){
+    for (int i4 = i2; i4 <= N; i4++){
+    for (int i5 = i1; i5 <= i3; i5++){
+    for (int i6 = i2; i6 <= i4; i6++){
+        cnt++;
+    }   
+    }   
+    }   
+    }   
+    }   
+    }
+    cout << cnt << endl;
     return 0;
 }
+
+/*
+488410000
+*/

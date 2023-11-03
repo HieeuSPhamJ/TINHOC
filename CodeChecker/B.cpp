@@ -9,67 +9,75 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-int n;
-int a[10000];
-int res;
+const int maxN = 3e5 + 10;
 
-// vector <ii> ls;
+int own[maxN];
+int child[maxN];
+int toUnder[maxN];
+int father[maxN];
+vector <int> adj[maxN];
+int sz[maxN];
 
-void backtrack(int tres){
-	set <int> s[2];
-	for (int i = 1; i <= n; i++){
-		s[i % 2].insert(a[i]);
-	}
-	if (tres > n or (int)s[0].size() == 1 and (int)s[1].size() == 1){
-		// if (res > tres){
-		// 	cout << "====" << endl;
-		// 	for (int i = 1; i <= n; i++){
-		// 		cout << a[i] << " ";
-		// 	}
-		// 	cout << endl;
-		// 	for (auto x: ls){
-		// 		cout << x.fi << " " << x.se << endl;
-		// 	}
-		// }
-		res = min(res, tres);
-		return;
-	}
-	for (int i = 1; i <= n; i++){
-		for (int c = 1; c <= n; c++){
-			int old = a[i];
-			if (a[i - 1] != c and a[i + 1] != c){
-				a[i] = c;
-				// ls.push_back({i,c});
-				backtrack(tres + 1);
-				a[i] = old;
-				// ls.pop_back();
-			}
-		}
-	}
+void dfs(int nu, int fa){
+    father[nu] = fa;
+    for (auto i: adj[nu]){
+        if (i == fa){
+            continue;
+        }    
+        dfs(i,nu);
+        sz[nu]++;
+        child[nu] += own[i];
+    }
 }
 
 signed main(){
-	freopen("input.inp", "r", stdin);
-	freopen("B.out", "w", stdout);
-	//freopen("input.INP", "r", stdin);
-	//freopen("output.OUT", "w", stdout);
-	if (fopen(".inp", "r")) {
-		freopen(".inp", "r", stdin);
-		freopen(".out", "w", stdout);
-	}
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
-	cin >> n;
-	cin >> n;
-	for (int i = 1; i <= n; i++){
-		cin >> a[i];
-	}
-	res = n - 1;
-	backtrack(0);
-	cout << res << endl;
-	return 0;
-}
+    freopen("input.inp", "r", stdin);
+    freopen("B.out", "w", stdout);
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
+    }
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int n, test;
+    cin >> n >> test;
+    for (int i = 1; i <= n; i++){
+        cin >> own[i];
+    }
+    for (int i = 1; i < n; i++){
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
 
-/*
-*/
+    while(test--){
+        int t;
+        cin >> t;
+        if (t == 1){
+            int x, c;
+            cin >> x >> c;
+            for (auto i: adj[x]){
+                own[i] += c;
+            }
+            own[x] += 2 * c;
+        }
+        else{
+            int x;
+            cin >> x;
+            int res = own[x];
+            for (auto i: adj[x]){
+                res += own[i];
+            }
+            cout << res << endl;
+        }
+        // cout << "====" << endl;
+        // for (int i = 1; i <= n; i++){
+        //     cout << own[i] << " " << child[i] << " " << toUnder[i] << endl;
+        // }
+    }
+    return 0;
+}

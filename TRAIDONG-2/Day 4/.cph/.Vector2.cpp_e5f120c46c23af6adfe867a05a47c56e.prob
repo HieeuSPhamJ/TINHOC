@@ -1,0 +1,1 @@
+{"name":"Local: Vector2","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 4/Vector2.cpp","tests":[{"id":1698831026411,"input":"4 3\n1 1 1\n1 2 3\n2 2 2\n1 1 2","output":"3\n1 1 \n2 2 3\n1 4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 4/Vector2.cpp","group":"local","local":true}

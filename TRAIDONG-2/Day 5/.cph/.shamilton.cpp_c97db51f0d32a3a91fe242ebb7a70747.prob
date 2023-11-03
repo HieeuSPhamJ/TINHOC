@@ -1,0 +1,1 @@
+{"name":"Local: shamilton","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 5/shamilton.cpp","tests":[{"id":1698911347611,"input":"3\nab\nba\nb","output":"1 3 2"},{"id":1698916131807,"input":"2\nab\nbc","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 5/shamilton.cpp","group":"local","local":true}
