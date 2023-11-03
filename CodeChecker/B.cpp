@@ -9,75 +9,49 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 3e5 + 10;
-
-int own[maxN];
-int child[maxN];
-int toUnder[maxN];
-int father[maxN];
-vector <int> adj[maxN];
-int sz[maxN];
-
-void dfs(int nu, int fa){
-    father[nu] = fa;
-    for (auto i: adj[nu]){
-        if (i == fa){
-            continue;
-        }    
-        dfs(i,nu);
-        sz[nu]++;
-        child[nu] += own[i];
-    }
-}
+int a[110];
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    if (fopen(".inp", "r")) {
-        freopen(".inp", "r", stdin);
-        freopen(".out", "w", stdout);
-    }
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n, test;
-    cin >> n >> test;
-    for (int i = 1; i <= n; i++){
-        cin >> own[i];
-    }
-    for (int i = 1; i < n; i++){
-        int a, b;
-        cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
-    }
-
-    while(test--){
-        int t;
-        cin >> t;
-        if (t == 1){
-            int x, c;
-            cin >> x >> c;
-            for (auto i: adj[x]){
-                own[i] += c;
-            }
-            own[x] += 2 * c;
-        }
-        else{
-            int x;
-            cin >> x;
-            int res = own[x];
-            for (auto i: adj[x]){
-                res += own[i];
-            }
-            cout << res << endl;
-        }
-        // cout << "====" << endl;
-        // for (int i = 1; i <= n; i++){
-        //     cout << own[i] << " " << child[i] << " " << toUnder[i] << endl;
-        // }
-    }
-    return 0;
+	freopen("input.inp", "r", stdin);
+	freopen("B.out", "w", stdout);
+	//freopen("input.INP", "r", stdin);
+	//freopen("output.OUT", "w", stdout);
+	if (fopen(".inp", "r")) {
+		freopen(".inp", "r", stdin);
+		freopen(".out", "w", stdout);
+	}
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	int n;
+	cin >> n;
+	for (int i = 1; i <= n; i++){
+		cin >> a[i];
+	}
+	int res = 0;
+	for (int i = 1; i <= n; i++){
+		for (int j = i - 1; j >= 1; j--){
+			map <int,int> cnt;
+			int ok = 1;
+			int sum = 0;
+			for (int k = j; k <= i; k++){
+				cnt[a[k]]++;
+				sum += a[k];
+			}
+			for (auto i: cnt){
+				if (i.se % 2){
+					ok = 0;
+				}
+			}
+			if (sum <= 0){
+				ok = 0;
+			}
+			// if (ok){
+			// 	cout << j << " " << i << endl;
+			// }
+			res += ok;
+		}
+	}
+	cout << res << endl;
+	return 0;
 }
