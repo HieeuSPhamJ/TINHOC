@@ -1,0 +1,1 @@
+{"name":"Local: fields","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 8/fields.cpp","tests":[{"id":1699235191196,"input":"1\n5 20 6\n1 2 10 12 14","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 8/fields.cpp","group":"local","local":true}

@@ -9,68 +9,13 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
+const int maxN = 2e5 + 10;
 
-
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-
-
-const int maxN = 1e5 + 10;
-map <int,vector<int>> ls;
-vector <int> a[maxN];
-
-struct dickcha{
-    int n;
-    vector <int> bit;
-    dickcha(int _n){
-        n = _n;
-        bit.resize(n + 1);
-    }
-    void update(int i, int v){
-        while(i <= n){
-            bit[i] += v;
-            i += (i & (-i));
-        }
-    }
-
-    int get(int i){
-        int res = 0;
-        while(i){
-            res += bit[i];
-            i -= (i & (-i));
-        }
-        return res;
-    }
-};
-
-void nenso(vector <int> &ts){
-    set <int> s;
-    for (auto i: ts){
-        s.insert(i);
-    }
-    int cnt = 1;
-    map <int,int> cv;
-    for (auto i: s){
-        cv[i] = cnt;
-        cnt++;
-    }
-    for (auto &i: ts){
-        i = cv[i];
-    }
-}
-
-int b[maxN];
-
-map <int,int> HASH;
-
-int random(int left, int right){
-    if (left >= right){
-        return left;
-    }
-    return (rng() % (right - left + 1)) + left;
-}
+bool dp[2000 * 2000 + 10];
+bool mk[maxN];
+int a[maxN];
 
 signed main(){
-    srand(time(0));
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
@@ -82,59 +27,75 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;
+    vector <int> ls;
     for (int i = 1; i <= n; i++){
-        cin >> b[i];
-        if (HASH[b[i]] == 0){
-            HASH[b[i]] = random(1,1e18);
+        cin >> a[i];
+        if (a[i] == 1){
+            cout << k + 1 << endl;
+            return 0; 
         }
     }
-
-    // for (int i = 1; i <= n; i++){
-    //     cout << HASH[b[i]] << " ";
-    // }
-
-    // cout << endl;
-
-    
-    ls[HASH[0]].push_back(0);
-    for (int i = 1, p = 0, x = 0; i <= n; i++){
-        int inp = b[i];
-        p += inp;
-        x = x xor HASH[inp];
-        ls[x].push_back(p);
-        // cout << i << " " << HASH[inp] << " " << x << " " << p << endl;
-    }
-    n = 0;
-    for (auto i: ls){
-        n++;
-        // cout << i.fi << ": ";
-        for (auto x: i.se){
-            // cout << x << " ";
-            a[n].push_back(x);
+    sort(a + 1, a + 1 + n);
+    int base = 1;
+    for (int i = 1; i <= n; i++){
+        if (mk[a[i]] == 0){
+            ls.push_back(a[i]);
+            base = a[i];
         }
-        // cout << endl;
+        for (int j = a[i]; j <= a[n]; j+=a[i]){
+            mk[j] = 1;
+        }
+    }
+    memset(mk,0,sizeof(mk));
+    ls.pop_back();
+    dp[0] = 1;
+    mk[0] = 1;
+    for (int j = 1; j < base * base; j++){
+        if (!mk[j % base]){
+            // cout << "With: " << j << endl;
+            for (auto i: ls){
+                if (j - i < 0){
+                    break;
+                }
+                if (mk[(j - i) % base]){
+                    dp[j] = mk[(j - i) % base];
+                    // cout << j - i << " " << (j - i) % base << endl;
+                    mk[j % base] = 1;
+                    break;
+                }
+            }
+        }
+    }
+    for (int i = 0; i <= base * base; i++){
+        if (dp[i]){
+            for (int j = i + base; j <= base * base; j += base){
+                dp[j] = 0;
+            }
+        }
     }
     int res = 0;
-    for (int t = 1; t <= n; t++){
-        dickcha BIT(a[t].size());
-        nenso(a[t]);
-        // for (auto i: a[t]){
-        //     cout << i << " ";
-        // }
-        // cout << endl;
-        for (auto i: a[t]){
-            res += BIT.get(i - 1);
-            BIT.update(i,1);
+    for (int i = 0; i <= base * base; i++){
+        if (dp[i]){
+            int st = 0;
+            int en = k / base;
+            if (i > k){
+                break;
+            }
+            while (i + en * base > k){
+                en--;
+            }
+            if (st <= en){
+                // cout << i << ": "; 
+                // for (int x = st; x <= en; x++){
+                //     cout << i + x * base << " ";
+                // }
+                // cout << endl;
+                res += en - st + 1;
+            }
         }
     }
     cout << res << endl;
     return 0;
 }
-
-/*
-
-2 -1 3 -2 5 -2 5 -4 3 2 
-
-*/

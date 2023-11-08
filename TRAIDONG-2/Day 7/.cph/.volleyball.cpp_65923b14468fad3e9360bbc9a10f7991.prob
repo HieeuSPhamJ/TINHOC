@@ -1,0 +1,1 @@
+{"name":"Local: volleyball","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 7/volleyball.cpp","tests":[{"id":1699058561521,"input":"3\n2 1 0\n3 4 3\n5 0 0\n","output":"1 1 5 \n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 7/volleyball.cpp","group":"local","local":true}

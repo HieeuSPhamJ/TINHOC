@@ -69,14 +69,14 @@ bool Try(int node){
 int cac(){
     while(canop()){
         // cout << "try" << endl;
-        for (int i = 0; i <= N; i++){
+        for (int i = 1; i <= N; i++){
             if (ml[i] == 0){
                 Try(i);
             }
         }
     }
     int res = 0;
-    for (int i = 0; i <= N; i++){
+    for (int i = 1; i <= N; i++){
         res += (ml[i] != 0);
     }
     return res;
@@ -111,7 +111,9 @@ void add(int i, int j, int u, int v){
         swap(i,u);
         swap(j,v);
     }
-    ls.push_back({(i - 1) * m + j,(u - 1) * m + j});
+    // cout << "add " << i << " " << j << " " << u << " " << v << endl;
+    ls.push_back({(i - 1) * m + j,(u - 1) * m + v});
+    // cout << ls.back().fi << " " << ls.back().se << endl;
 }
 
 signed main(){
@@ -141,7 +143,7 @@ signed main(){
         }
     }
 
-    k = (n * m - k) / 2;
+    k = (n * m - k) / 2 - 1;
     if (k == 0){
         cout << 0 << endl;
         return 0;
@@ -162,7 +164,11 @@ signed main(){
     }
 
     nenso();
-    int N = ln.size();
+    N = ln.size();
+    if (N / 2 * N / 2 >= 1e6){
+        cout << 1e6 << endl;
+        return 0;
+    }
     int res = 0;
     for (int i = 1; i <= N; i++){
         for (int j = 1; j < i; j++){
@@ -172,20 +178,23 @@ signed main(){
                 ml[t] = 0;
                 mr[t] = 0;
             }
-            cout << i << " " << j << ": " << endl;
+            // cout << i << " " << j << ": " << endl;
             for (auto x: ls){
                 if (x.fi != i and x.fi != j and x.se != i and x.se != j){
                     adj[x.fi].push_back(x.se);
-                    cout << x.fi << ' ' << x.se << endl;
+                    // cout << x.fi << ' ' << x.se << endl;
                 }
             }
             if (cac() < k){
+                // cout << cac() << endl;
                 res++;
             }
         }
     }
 
-    cout << res << endl;
+    cout << min((int)(1e6), res) << endl;
+    // adj[4].push_back(3);
+    // cout << cac();
 
     return 0;
 }

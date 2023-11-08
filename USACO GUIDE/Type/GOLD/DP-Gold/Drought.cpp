@@ -32,7 +32,6 @@ signed main(){
         for (int base = 0; base <= a[i]; base++){
             for (int h = base; h <= a[i]; h++){
                 int d = (h - base);
-                for (int k = h)
                 dp[i][base] += dp[i - 1][base];
                 dp[i][base] %= mod;
             }

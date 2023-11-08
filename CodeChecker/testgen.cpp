@@ -19,15 +19,35 @@ int random(int left, int right){
     return (rng() % (right - left + 1)) + left;
 }
 
+int rt[100000];
+
+int find(int nu){
+    if (nu == rt[nu]){
+        return nu;
+    }
+    return rt[nu] = find(rt[nu]);
+}
+
 void randomTree(int n){
-    for (int i = 2; i <= n; i++){
-        cout << random(1,i - 1) << " " << i << endl;
+    for (int i = 1; i <= n; i++){
+        rt[i] = i;
+    }
+    int com = n;
+    while(com > 1){
+        int u = random(1,n);
+        int v = random(1,n);
+        if (find(u) == find(v)){
+            continue;
+        }
+        com--;
+        rt[find(u)] = find(v);
+        cout << u << " " << v << endl;
     }
 }
 
 string randomStr(const int len) {
     static const char alphanum[] =
-        "10";
+        "abcde";
     std::string tmp_s;
     tmp_s.reserve(len);
 
@@ -37,7 +57,6 @@ string randomStr(const int len) {
     
     return tmp_s;
 }
-
 vector <int> adj[1000];
 
 signed main(){
@@ -46,10 +65,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = 100;
-    cout << n << endl;
+    int n = 2000;
+    cout << n << " " << random(1, 1e18) << endl;
     for (int i = 1; i <= n; i++){
-        cout << random(-10,10) << " ";
+        cout << random(1,2000) << " ";
     }
     return 0;
 }

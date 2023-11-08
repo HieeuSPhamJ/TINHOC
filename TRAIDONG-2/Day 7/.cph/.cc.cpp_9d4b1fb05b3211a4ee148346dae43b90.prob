@@ -1,0 +1,1 @@
+{"name":"Local: cc","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 7/cc.cpp","tests":[{"id":1699059570819,"input":"9\n1 4\n2 3\n3 4\n4 6\n6 7\n6 8\n6 9\n5 9","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 7/cc.cpp","group":"local","local":true}

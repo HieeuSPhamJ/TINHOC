@@ -1,0 +1,1 @@
+{"name":"Local: pseqp","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 6/pseqp.cpp","tests":[{"id":1698979814200,"input":"3 2\n1 2 3\n1 2 3\n1 3\n2 3","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 6/pseqp.cpp","group":"local","local":true}
