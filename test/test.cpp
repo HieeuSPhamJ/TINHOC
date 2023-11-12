@@ -19,6 +19,7 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    int n = 123;
     cout << 434 << endl;
     cout << 123 << endl;
     return 0;
