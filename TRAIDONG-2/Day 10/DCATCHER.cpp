@@ -20,17 +20,35 @@ bool cmp(int a, int b){
 }
 
 void dfs(int nu){
-    vector <ii> ls;
+    deque <ii> ls;
     for (auto i: adj[nu]){
         dfs(i);
         ls.push_back({dp[i],i});
     }
-    sort(rall(ls));
-    for (int i = 0; i < (int)ls.size(); i++){
-        dp[nu] = max(dp[nu], ls[i].fi + i);
-        mk[ls[i].se] = i;
+    if (adj[nu].size()){
+        dp[nu] = 1e18;
     }
-    sort(all(adj[nu]), cmp);
+    // cout << "With: " << nu << endl;
+    for (int t = 1; t <= (int)ls.size(); t++){
+        int tres = 0;
+        for (int i = 0; i < (int)ls.size(); i++){
+            tres = max(tres, ls[i].fi + i);
+        }
+        if (dp[nu] > tres){
+            dp[nu] = tres;
+            // cout << tres << ": ";
+            for (int i = 0; i < (int)ls.size(); i++){
+                // cout << ls[i].fi << ' ';
+                mk[ls[i].se] = i;
+            }
+            // cout << endl;
+        }
+
+        ls.push_back(ls.front());
+        ls.pop_front();
+    }
+    cout << nu << " " << dp[nu] << endl;
+    sort(all(adj[nu]),cmp);
 }
 
 void trace(int nu){
@@ -47,8 +65,6 @@ void trace(int nu){
 }
 
 signed main(){
-    freopen("A.out", "r", stdin);
-    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -58,13 +74,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int x;
-    cin >> x;
+    char c;
     int n = 0;
     vector <int> st;
-    string s;
-    cin >> s;
-    for (auto c: s){
+    while(cin >> c){
         n++;
         if (c == 'a'){
             dp[n] = 1;
@@ -81,13 +94,20 @@ signed main(){
         }
     }
 
-    dfs(n);
-    // cout << dp[n] << endl;
-    if ((dp[n] == x)){
-        cout << x << endl;
-        cout << s;
-        return 0;
+    for (int i = 1; i <= n; i++){
+        reverse(all(adj[i]));
     }
-    cout << -1 << endl;
+
+    dfs(n);
+
+    cout << dp[n] << endl;
+
+    trace(n);
     return 0;
 }
+
+/*
+2 3 1
+3 1 2
+1 2 3
+*/

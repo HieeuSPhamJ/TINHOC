@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#define int long long
+// #define int long long
 #define double long double
 #define ii pair <int,int>
 #define fi first
@@ -9,71 +9,67 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 1e6 + 10;
-const ii mod = {1e9 + 7, 1e9 + 9};
-const ii base = {50,24};
- 
-ii POW[maxN];
- 
-ii mul(ii a, ii b){
-    (a.fi *= b.fi) %= mod.fi;
-    (a.se *= b.se) %= mod.se;
-    return a;
-} 
- 
-ii add(ii a, ii b){
-    (a.fi += b.fi) %= mod.fi;
-    (a.se += b.se) %= mod.se;
-    return a;
-}
- 
- 
-ii subtr(ii a, ii b){
-    (a.fi = a.fi - b.fi + mod.fi) %= mod.fi;
-    (a.se = a.se - b.se + mod.se) %= mod.se;
-    return a;
-}
- 
-struct hashtype{
-    vector <char> s;
-    vector <ii> ha;
-    vector <int> turn;
-    int len(){
-        return s.size() - 1;
-    }
-    void init(string s0){
-        int l = s0.length();
-        s.push_back(' ');
-        ha.push_back({0,0});
-        turn.push_back(0);
-        for (int i = 0; i < l; i++){
-            s.push_back(s0[i]);
-            ha.push_back(add(mul(ha[i], base), {s0[i], s0[i]}));
+struct node{
+    int a[26];
+    bool isend;
+    node(){
+        isend = 1;
+        for (int i = 0; i < 26; i++){
+            a[i] = -1;
         }
-    }
-    void push(char c){
-        s.push_back(c);
-        ha.push_back(add(mul(ha.back(), base), {c,c}));
-    }
-    void pop(){
-        turn.pop_back();
-        s.pop_back();
-        ha.pop_back();
-    }
-    ii get(int l, int r){
-        if (r > len()){
-            return {-1,-1};
-        }
-        return subtr(ha[r], mul(ha[l - 1], POW[r - l + 1]));
     }
 };
 
-void print(ii x, char c = endl){
-    cout << x.fi << ' ' << x.se << c;
+struct trie{
+    vector <node> lists;
+    int cnt[26];
+    trie(){
+        memset(cnt,0,sizeof(cnt));
+        lists.push_back(node());
+    }
+    void add(string s){
+        int p = 0;
+        for (int i = 0; i < (int)s.length(); i++){
+            int c = s[i] - 'a';
+            if (lists[p].a[c] == -1){
+                lists[p].a[c] = lists.size();
+                lists.push_back(node());
+            }
+            p = lists[p].a[c];
+        }
+        lists[p].isend = 1;
+    }
+
+    void dfs(int nu = 0){
+        for (int i = 0; i < 26; i++){
+            if (lists[nu].a[i] == -1){
+                continue;
+            }
+            cnt[i]++;
+            // cout << nu << " " << lists[nu].a[i] << endl;
+            dfs(lists[nu].a[i]);
+        }
+    }
+};
+
+int res = 0;
+trie prefix;
+trie suffix;
+int check[26];
+
+void dfs(int nu = 0){
+    for (int i = 0; i < 26; i++){
+        if (prefix.lists[nu].a[i] != -1){
+            res += check[i] * (nu != 0);
+            dfs(prefix.lists[nu].a[i]);
+        }
+        else{
+            if (nu != 0){
+                res += suffix.cnt[i];
+            }
+        }
+    }
 }
-
-int a[maxN];
-
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -85,30 +81,33 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int test;
-    cin >> test;
-    while(test--){
-        POW[0] = {1,1};
-        for (int i = 1; i < maxN; i++){
-            POW[i] =  mul(POW[i - 1], base);
-        }
-
+    int n;
+    cin >> n;
+    set <int> ss;
+    for (int i = 1; i <= n; i++){
         string s;
         cin >> s;
-        hashtype HASH;
-        HASH.init(s);
-        int n = a[1] = HASH.len();
-        map <ii,bool> cnt;
-        for (int i = 1; i <= n; i++){
-            for (int j = 1; j <= n; j++){
-                cnt[add(mul(HASH.get(1,i), POW[n - j + 1]), HASH.get(j,n))] = 1;
-            }
+        if ((int)s.length() == 1){
+            ss.insert(s[0] - 'a');
         }
-        cout << cnt.size() << endl;
+        prefix.add(s);
+        reverse(all(s));
+        suffix.add(s);
+        check[s[0] - 'a'] = 1;
     }
+
+    suffix.dfs();
+
+    dfs();
+    cout << res + ss.size() << endl;
+
     return 0;
 }
 
 /*
-
+cccccc
+ccccc
+cccc
+ccc
+cc
 */

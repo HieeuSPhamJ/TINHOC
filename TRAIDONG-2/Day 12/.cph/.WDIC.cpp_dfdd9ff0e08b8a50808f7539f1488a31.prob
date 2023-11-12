@@ -1,0 +1,1 @@
+{"name":"Local: WDIC","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 12/WDIC.cpp","tests":[{"id":1699586871001,"input":"5 4\nTOI\nYEU\nVIET\nNAM\n","output":""},{"id":1699589266342,"input":"3 1\nAAA","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 12/WDIC.cpp","group":"local","local":true}

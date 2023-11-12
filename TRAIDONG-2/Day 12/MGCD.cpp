@@ -9,7 +9,7 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 100 + 10;
+const int maxN = 1e5 + 10;
 const int mod = 1e9 + 7;
 
 int fact[maxN];
@@ -58,8 +58,6 @@ int C(int n, int k){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -90,44 +88,16 @@ signed main(){
     }
 
     int res = 1;
-    // for (int i = 1; i <= MA; i++){
-    //     cout << i << " " << cnt[i] << endl;
-    // }
-    for (int i = 2; i <= MA; i++){
-        if (cnt[i]){
-            // cout << "With: " << i << endl;
-            int num = 1;
-            int temp = cnt[i];
-            int la = i;
-            for (int j = i + i; j <= MA; j += i){
-                if (cnt[j]){
-                    if (temp - cnt[j] <= 0){
-                        if (la == i){
-                            goto bru;
-                        }
-                        continue;
-                    }
-                    temp -= cnt[j]; 
-                    // cout << la << " " << temp << endl; 
-                    num = mul(num, fastpow(2,temp, mod - 1), mod - 1);
-                    // cout << "()" << la << " " << i << endl;
-                    if (la == i){
-                        // cout << num << endl;
-                        num = subtr(num, 1, mod - 1);
-                    }
-                    temp = cnt[j];
-                    la = j;
-                }
-            }
-            // cout << la << " " << temp << endl; 
-            num = mul(num, fastpow(2,temp, mod - 1), mod - 1);
-            if (la == i){
-                    num = subtr(num, 1, mod - 1);
-            }
-            // cout << num << endl;
-            res = mul(res, fastpow(i, num));
-            bru:;
+    for (int i = 1; i <= MA; i++){
+        cnt[i] = subtr(fastpow(2,cnt[i], mod - 1), 1, mod - 1);
+        // cout << i << ": " << cnt[i] << endl;
+    }
+    for (int i = MA; i >= 2; i--){
+        for (int j = i + i; j <= MA; j+=i){
+            cnt[i] = subtr(cnt[i], cnt[j], mod - 1);
         }
+        // cout << i << " " << cnt[i] << endl;
+        res = mul(res, fastpow(i, cnt[i]));
     }
 
     cout << res << endl;
@@ -135,9 +105,34 @@ signed main(){
 }
 
 /*
+
+10 1
+9 0
+8 0
+7 0
+6 0
+5 2
+4 1
+3 0
+2 1
+1 2
+2000
+
+
 2 4 6
 3 2 1
 1 1 1
 
 a^b = a^(b % (mod - 1))
+
+
+4 5 10
+
+4 => 4
+5 => 5
+10 => 10
+4 5 10 => 1
+4 5 =>  1
+5 10 => 5
+4 10 => 2
 */

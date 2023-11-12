@@ -1,0 +1,1 @@
+{"name":"Local: DOUBLEGAME","url":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 10/DOUBLEGAME.cpp","tests":[{"id":1699519100177,"input":"5 4\n1 2\n2 3\n3 4\n4 5\n5 4 3 3 1\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 10/DOUBLEGAME.cpp","group":"local","local":true}
