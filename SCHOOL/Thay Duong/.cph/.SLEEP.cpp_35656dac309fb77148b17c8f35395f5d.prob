@@ -1,0 +1,1 @@
+{"name":"Local: SLEEP","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Duong/SLEEP.cpp","tests":[{"id":1699860650598,"input":"3\n6\n1 2 3 1 1 1\n3\n2 2 3\n5\n0 0 0 0 0","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Duong/SLEEP.cpp","group":"local","local":true}

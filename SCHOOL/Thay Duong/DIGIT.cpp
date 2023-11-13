@@ -11,9 +11,15 @@ using namespace std;
 
 int nxt[100];
 
+int POW(int n, int a){
+    int res = 1;
+    while(a--){
+        res *= n;
+    }
+    return res;
+}
+
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("DIGIT.inp", "r")) {
@@ -24,13 +30,13 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     nxt[1] = 9;
-    // int t = 9;
-    for (int i = 2, t = 9; i <= 18; i++){
+    // int sum = 9;
+    for (int i = 2, t = 9; i <= 17; i++){
         nxt[i] = t * 10 * i;
         t *= 10;
-        // t += nxt[i];
+        // sum += nxt[i];
     }
-    // cout << t << endl;
+    // cout << sum << endl;
     int test;
     cin >> test;
     while(test--){
@@ -42,25 +48,24 @@ signed main(){
             t++;
         }
         // cout << n << " " << t << endl;
-        for (int s = pow(10,t - 1); 1; s++){
-            if (n - t > 0){
-                n -= t;
-                continue;
-            }
-            vector <int> ls;
-            while(s){
-                ls.push_back(s % 10);
-                s /= 10;
-            }
-            reverse(all(ls));
-            // cout << n - 1 << " ";
-            cout << ls[n - 1] << endl;
-            // for (auto i: ls){
-            //     cout << i;
-            // }
-            // cout << endl;
-            break;
+        // cout << nxt[t] << endl;
+        int s = POW(10,t - 1);
+        s += n / t;
+        n %= t;
+        if (n == 0){
+            n = t;
+            s--;
         }
+        // cout << s << " " << n << endl;
+
+        vector <int> ls;
+        while(s){
+            ls.push_back(s % 10);
+            s /= 10;
+        }
+        reverse(all(ls));
+        // cout << n - 1 << " ";
+        cout << ls[n - 1] << endl;
     }
     return 0;
 }
