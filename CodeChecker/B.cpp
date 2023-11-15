@@ -11,11 +11,22 @@ using namespace std;
 
 const int maxN = 1e5 + 10;
 
-map <char,char> cv;
+vector <ii> adj[maxN];
+int v[maxN];
+int p[maxN];
+int dep[maxN];
+int isdea[maxN];
 
-
-int cal(int n){
-    return n * (n - 1) / 2 + n;
+void dfs(int nu, int fa){
+    for (auto i: adj[nu]){
+        if (i.se == fa){
+            continue;
+        }
+        p[i.se] = nu;
+        v[i.se] = i.fi;
+        dep[i.se] = dep[nu] + 1;
+        dfs(i.se,nu);
+    }
 }
 
 signed main(){
@@ -23,59 +34,70 @@ signed main(){
     freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen("tbrackets.inp", "r")) {
-        freopen("tbrackets.inp", "r", stdin);
-        freopen("tbrackets.out", "w", stdout);
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cv['{'] = '!';
-    cv['['] = '!';
-    cv['('] = '!';
-    cv['<'] = '!';
-    cv['}'] = '{';
-    cv[']'] = '[';
-    cv[')'] = '(';
-    cv['>'] = '<';
-    
-    string s;
-    cin >> s;
-    int n = s.length();
-    s = " " + s;
-    int res = 0;
-    for (int i = 1; i <= n; i++){
-        vector <char> st;
-        // cout << "With: " << i << endl;
-        for (int j = i; j <= n; j++){
-            // cout << j << ":";
-            // for (auto i: st){
-            //     cout << i;
-            // }
-            // cout << endl;
-            if (cv[s[j]] == '!'){
-                // cout << "push" << endl;
-                st.push_back(s[j]);
-            }
-            else{
-                if (st.size() and st.back() == cv[s[j]]){
-                    // cout << "pop" << endl;
-                    st.pop_back();
-                }
-                else{
-                    // cout << "nhu l" << endl;
-                    break;
-                }
-            }
-            if (st.size() == 0){
-                // cout << i << " " << j << endl;
-                res++;
-            }
-        }
-
+    int n, test;
+    cin >> n >> test;
+    for (int i = 1; i < n; i++){
+        int a, b, w;
+        cin >> a >> b >> w;
+        adj[a].push_back({w,b});
+        adj[b].push_back({w,a});
+        
     }
-
-    cout << res << endl;
-
-    return 0;   
+    dfs(1,1);
+    while(test--){
+        int t;
+        cin >> t;
+        // for (int i = 1; i <= n; i++){
+        //     cout << v[i] << " ";
+        // }
+        // cout << endl; 
+        if (t == 2){
+            int x;
+            cin >> x;
+            isdea[x] = -1;
+        }
+        else{
+            int a, b;
+            cin >> a >> b;
+            if (dep[a] < dep[b]){
+                swap(a,b);
+            }
+            int res = 1e18;
+            while(dep[a] != dep[b]){
+                res = min({res, v[a]});
+                // cout << "!" << a << " " << b << " " << v[a] << " " << v[b] << " " << res << endl;
+                if (isdea[a] == -1){
+                    res = -1;
+                }
+                a = p[a];
+            }
+            while(a != b){
+                res = min({res, v[a], v[b]});
+                // cout << "@" << a << " " << b << " " << v[a] << " " << v[b] << " " << res << endl;
+                if (isdea[a] == -1){
+                    res = -1;
+                }
+                if (isdea[b] == -1){
+                    res = -1;
+                }
+                a = p[a];
+                b = p[b];
+            }
+            if (res == 1e18){
+                res = 0;
+            }
+            if (isdea[a] == -1){
+                res = -1;
+            }
+            cout << res << endl;
+        }
+    }
+    return 0;
 }

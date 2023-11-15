@@ -19,29 +19,10 @@ int random(int left, int right){
     return (rng() % (right - left + 1)) + left;
 }
 
-int rt[100000];
-
-int find(int nu){
-    if (nu == rt[nu]){
-        return nu;
-    }
-    return rt[nu] = find(rt[nu]);
-}
 
 void randomTree(int n){
-    for (int i = 1; i <= n; i++){
-        rt[i] = i;
-    }
-    int com = n;
-    while(com > 1){
-        int u = random(1,n);
-        int v = random(1,n);
-        if (find(u) == find(v)){
-            continue;
-        }
-        com--;
-        rt[find(u)] = find(v);
-        cout << u << " " << v << endl;
+    for (int i = 2; i <= n; i++){
+        cout << i << ' ' << random(1, i - 1) << endl;
     }
 }
 
@@ -65,6 +46,22 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << randomStr(random(1,10)) << endl;
+    int n = 10;
+    int test = random(1,10);
+    cout << n << " " << test << endl;
+    for (int i = 2; i <= n; i++){
+        cout << i << ' ' << random(1, i - 1) << " " << random(1,10) << endl;
+    }
+    while(test--){
+        int t = random(1,2);
+        cout << t << " ";
+        if (t == 2){
+            cout << random(1,n) << endl;
+        }
+        else{
+            int a = random(1,n);
+            cout << a << ' ' << random(1,n) << endl;
+        }
+    }
     return 0;
 }
