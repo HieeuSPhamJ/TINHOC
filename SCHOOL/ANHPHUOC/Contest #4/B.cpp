@@ -16,7 +16,7 @@ const int maxN = 1e6 + 10;
 int n, test;
 int nxt[maxV];
 int in[20];
-set <int> a[maxN];
+int a[maxN];
 
 void init(){
     for (int i = 2; i * i < maxV; i++){
@@ -43,6 +43,8 @@ bool cmp(pair<ii,int> a, pair<ii,int> b){
 }
 
 int res[maxN];
+int cnt[maxN];
+
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -56,14 +58,17 @@ signed main(){
     cout.tie(NULL);
     init();
     cin >> n >> test;
-    for (int i = 1; i <= n; i++){
+    map <set<int>,int> trash;
+    set <int> tmp;
+    tmp.insert(0);
+    trash[tmp] = 0;
+    for (int i = 1, count = 1; i <= n; i++){
         int x;
         cin >> x;
         // cout << x << ": ";
         set <int> s;
         if (x == 0){
-            s.insert(0);
-            a[i] = s;
+            a[i] = 0;
             continue;
         }
         if (x < 0){
@@ -97,9 +102,20 @@ signed main(){
         //     cout << j << " ";
         // }
         // cout << endl;
-
-        a[i] = s;
+        if (trash[s]){
+            a[i] = trash[s];
+        }
+        else{
+            a[i] = count;
+            trash[s] = count;
+            count++;
+        }
     }
+
+    // for (int i = 1; i <= n; i++){
+    //     cout << a[i] << " ";
+    // }
+    // cout << endl;
 
     vector <pair<ii,int>> ls;
 
@@ -110,12 +126,12 @@ signed main(){
     }
 
     sort(all(ls), cmp);
-    map <set<int>,int> cnt;
     int num = 0;
     int L = 1;
     int R = 1;
     num = 1;
     cnt[a[1]]++;
+
     for (auto i: ls){
         int l = i.fi.fi;
         int r = i.fi.se;
@@ -148,27 +164,14 @@ signed main(){
             R--;
         }
         res[i.se] = max(1, num);
+        if (cnt[0]){
+            res[i.se] = max(1, num - 1);
+        }
     }
 
     for (int i = 1; i <= test; i++){
         cout << res[i] << endl;
     }
 
-    // while(test--){
-    //     int l, r;
-    //     cin >> l >> r;
-    //     int zero = 0;
-    //     map <set<int>,bool> cnt;
-    //     for (int i = l; i <= r; i++){
-    //         if (a[i].size() and *a[i].begin() == 0){
-    //             zero++;
-    //             continue;
-    //         }
-    //         cnt[a[i]] = 1;
-    //     }
-    //     int res = cnt.size();
-    //     res = max(1, res);
-    //     cout << res << endl;
-    // }
     return 0;
 }

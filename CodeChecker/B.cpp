@@ -9,95 +9,86 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 1e5 + 10;
+const int maxN = 100;
 
-vector <ii> adj[maxN];
-int v[maxN];
-int p[maxN];
-int dep[maxN];
-int isdea[maxN];
+int a[maxN];
 
-void dfs(int nu, int fa){
-    for (auto i: adj[nu]){
-        if (i.se == fa){
-            continue;
+vector <int> ls;
+
+int sto[maxN];
+int res;
+
+void backtrack(int id, int ma = 0){
+    if (id >= ls.size()){
+        if (ma >= res){
+            return;
         }
-        p[i.se] = nu;
-        v[i.se] = i.fi;
-        dep[i.se] = dep[nu] + 1;
-        dfs(i.se,nu);
+        map<int,vector <int>> s;
+        for (int i = 0; i < ls.size(); i++){
+            s[sto[i]].push_back(ls[i]);
+        }
+        int ok = 1;
+        // cout << "----" << endl;
+        for (auto ss: s){
+            for (int ix = 0; ix < (int)ss.se.size(); ix++){
+                for (int iy = ix + 1; iy < (int)ss.se.size(); iy++){
+                    int c = ss.se[ix] * ss.se[iy];
+                    // cout << c << "|" << sqrtl(c) << " ";
+                    if (c < 0){
+                        ok = 0;
+                    }
+                    if ((int)sqrtl(c) * (int)sqrtl(c) == c){
+                        continue;
+                    }
+                    ok = 0;
+                }
+            }
+            // cout << endl;
+        }
+        if (ok == 0){
+            return;
+        }
+        // cout << "With:" << endl;
+        // for (auto ss: s){
+        //     for (auto x: ss.se){
+        //         cout << x << " ";
+        //     }
+        //     cout << endl;
+        // }
+        res = min(res, ma);
+        return;
+    }
+    for (int i = 1; i <= ma + 1; i++){
+        sto[id] = i;    
+        backtrack(id + 1, max(ma, i));
     }
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen(".inp", "r")) {
-        freopen(".inp", "r", stdin);
-        freopen(".out", "w", stdout);
+    if (fopen("input.inp", "r")) {
+        freopen("input.inp", "r", stdin);
+        freopen("B.out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
     int n, test;
     cin >> n >> test;
-    for (int i = 1; i < n; i++){
-        int a, b, w;
-        cin >> a >> b >> w;
-        adj[a].push_back({w,b});
-        adj[b].push_back({w,a});
-        
+    for (int i = 1; i <= n; i++){
+        cin >> a[i];
     }
-    dfs(1,1);
     while(test--){
-        int t;
-        cin >> t;
-        // for (int i = 1; i <= n; i++){
-        //     cout << v[i] << " ";
-        // }
-        // cout << endl; 
-        if (t == 2){
-            int x;
-            cin >> x;
-            isdea[x] = -1;
+        int l, r;
+        cin >> l >> r;
+        ls.clear();
+        res = 1e18;
+        for (int i = l; i <= r; i++){
+            ls.push_back(a[i]);
         }
-        else{
-            int a, b;
-            cin >> a >> b;
-            if (dep[a] < dep[b]){
-                swap(a,b);
-            }
-            int res = 1e18;
-            while(dep[a] != dep[b]){
-                res = min({res, v[a]});
-                // cout << "!" << a << " " << b << " " << v[a] << " " << v[b] << " " << res << endl;
-                if (isdea[a] == -1){
-                    res = -1;
-                }
-                a = p[a];
-            }
-            while(a != b){
-                res = min({res, v[a], v[b]});
-                // cout << "@" << a << " " << b << " " << v[a] << " " << v[b] << " " << res << endl;
-                if (isdea[a] == -1){
-                    res = -1;
-                }
-                if (isdea[b] == -1){
-                    res = -1;
-                }
-                a = p[a];
-                b = p[b];
-            }
-            if (res == 1e18){
-                res = 0;
-            }
-            if (isdea[a] == -1){
-                res = -1;
-            }
-            cout << res << endl;
-        }
+        backtrack(0,0);
+        cout << res << endl;
     }
     return 0;
 }
