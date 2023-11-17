@@ -134,8 +134,6 @@ namespace sub2{
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("ICECREAM.inp", "r")) {
@@ -146,12 +144,7 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     cin >> n >> ma;
-    if (n <= 16 and 1 != 1){
         sub1::solve();
-    }
-    else{
-        sub2::solve();
-    }
 
     return 0;
 }
