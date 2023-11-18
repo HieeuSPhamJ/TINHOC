@@ -9,9 +9,12 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
+const int maxN = 2e5 + 10;
+
+int pre[maxN];
+
+
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -26,19 +29,25 @@ signed main(){
     while(test--){
         int n;
         cin >> n;
-        int res = -1e18;
-        for (int i = 1, la = -1, sum = -1e18; i <= n; i++){
+        for (int i = 1; i <= n; i++){
             int x;
-            cin >> x;
-            if (la != -1 and x % 2 != la){
-                sum = max({sum + x, x});
+            cin >> x;   
+            pre[i] = pre[i - 1] + x;
+        }
+
+        int res = 0;
+
+        for (int k = 1; k <= n; k++){
+            if (n % k == 0){
+                int mi = 1e18;
+                int ma = 0;
+                for (int i = 1; i * k <= n; i++){
+                    int t = pre[i * k] - pre[i * k - k];
+                    ma = max(ma, t);
+                    mi = min(mi, t);
+                }
+                res = max(res, ma - mi);
             }
-            else{
-                sum = x;
-            }
-            // cout << i << " "<< sum << endl;
-            res = max(res, sum);
-            la = abs(x) % 2;
         }
 
         cout << res << endl;

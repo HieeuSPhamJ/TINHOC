@@ -10,8 +10,6 @@
 using namespace std;
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -30,7 +28,7 @@ signed main(){
         for (int i = 1, la = -1, sum = -1e18; i <= n; i++){
             int x;
             cin >> x;
-            if (la != -1 and x % 2 != la){
+            if (la != -1 and abs(x) % 2 != la){
                 sum = max({sum + x, x});
             }
             else{

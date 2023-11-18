@@ -10,8 +10,6 @@
 using namespace std;
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -26,22 +24,12 @@ signed main(){
     while(test--){
         int n;
         cin >> n;
-        int res = -1e18;
-        for (int i = 1, la = -1, sum = -1e18; i <= n; i++){
-            int x;
-            cin >> x;
-            if (la != -1 and x % 2 != la){
-                sum = max({sum + x, x});
-            }
-            else{
-                sum = x;
-            }
-            // cout << i << " "<< sum << endl;
-            res = max(res, sum);
-            la = abs(x) % 2;
+        if (n % 3 != 0){
+            cout << "First" << endl;
         }
-
-        cout << res << endl;
+        else{
+            cout << "Second" << endl;
+        }
     }
     return 0;
 }

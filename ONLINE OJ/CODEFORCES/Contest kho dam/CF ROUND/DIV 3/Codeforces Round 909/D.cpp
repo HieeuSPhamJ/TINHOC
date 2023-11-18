@@ -9,9 +9,11 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
+int C(int n){
+    return n * (n - 1) / 2;
+}
+
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -26,22 +28,23 @@ signed main(){
     while(test--){
         int n;
         cin >> n;
-        int res = -1e18;
-        for (int i = 1, la = -1, sum = -1e18; i <= n; i++){
+        map <int,int> cnt;
+        for (int i = 1; i <= n; i++){
             int x;
             cin >> x;
-            if (la != -1 and x % 2 != la){
-                sum = max({sum + x, x});
-            }
-            else{
-                sum = x;
-            }
-            // cout << i << " "<< sum << endl;
-            res = max(res, sum);
-            la = abs(x) % 2;
+            cnt[x]++;
         }
-
+        int res = 0;
+        for (auto x: cnt){
+            // cout << x.fi << ": " << x.se << endl;
+            res += C(x.se);
+        }
+        res += cnt[2] * cnt[1];
         cout << res << endl;
     }
     return 0;
 }
+
+/*
+
+*/
