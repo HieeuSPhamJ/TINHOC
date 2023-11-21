@@ -73,7 +73,7 @@ void solve(){
             q.pop();
             update(t.se.fi, t.se.se, t.fi.se);
         }
-        int cur = get(x,y) + 1;
+        int cur = get(x - 1,y - 1) + 1;
         // cout << x << " " << y << " " << cur << endl;
         res = max(res, cur);
         q.push({{w,cur}, {x,y}});
@@ -82,8 +82,6 @@ void solve(){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {

@@ -1,118 +1,94 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define int long long
+#define double long double
+#define endl '\n'
+#define all(x) x.begin(), x.end()
 using namespace std;
-#define lll pair<pair<long, long>, long>
-#define st first
-#define nd second
-const long N = 1e7 + 7;
-const long M = 3e5 + 10;
-const long oo = (1 << 19);
-long n, q, A[M], F[N], ans[50007], l, r, x, y, dem, B[oo + 10], pos0;
-map<long, long> pos;
-vector<long> ds, d;
-lll Q[50007];
-void update(long a, long val)
-{
-    for (; a <= oo; a += a & (-a))
-        B[a] += val;
-}
-long get(long a)
-{
-    if (!a)
-        return 0;
-    long cnt = 0;
-    for (; a >= 1; a -= a & (-a))
-        cnt += B[a];
-    return cnt;
-}
-long xuly(long a)
-{
-    if (!a)
-        return 0;
-    long so = 1;
-    while (a > 1)
-    {
-        if (ds.empty() || F[a] != ds.back())
-        {
-            ds.push_back(F[a]);
-            d.push_back(1);
-        }
-        else
-            d[d.size() - 1]++;
-        a /= F[a];
-    }
-    for (long i = 0; i < ds.size(); i++)
-    {
-        if (d[i] % 2 != 0)
-        {
-            so *= ds[i];
-        }
-    }
-    ds.clear();
-    d.clear();
-    return so;
-}
-bool cmp(lll a, lll b)
-{
-    return a.st.nd < b.st.nd;
-}
-int main()
-{
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    F[1] = 1;
-    for (long i = 2; i * i <= 10000000; i++)
-    {
-        if (!F[i])
-        {
-            for (long j = i * i; j <= 10000000; j += i)
-            {
-                if (!F[j])
-                    F[j] = i;
-                else
-                    F[j] = min(F[j], i);
-            }
-        }
-    }
-    for (long i = 2; i <= 10000000; i++)
-    {
-        if (!F[i])
-            F[i] = i;
-    }
-    cin >> n >> q;
-    for (long i = 1; i <= n; i++)
-    {
-        cin >> A[i];
-        if (A[i] < 0)
-            A[i] = -xuly(abs(A[i]));
-        else
-            A[i] = xuly(A[i]);
-    }
-    for (long i = 1; i <= q; i++)
-    {
-        cin >> Q[i].st.st >> Q[i].st.nd;
-        Q[i].nd = i;
-    }
-    sort(Q + 1, Q + q + 1, cmp);
-    l = 1;
-    for (long i = 1; i <= n; i++)
-    {
-        if (pos[A[i]])
-        {
-            update(pos[A[i]], -1);
-        }
-        update(i, 1);
-        pos[A[i]] = i;
-        pos0 = pos[0];
-        while (l <= q && Q[l].st.nd == i)
-        {
-            ans[Q[l].nd] = get(Q[l].st.nd) - get(Q[l].st.st - 1);
-            if (Q[l].st.st <= pos0 && ans[Q[l].nd] > 1)
-                ans[Q[l].nd]--;
-            l++;
-        }
-    }
-    for (long i = 1; i <= q; i++)
-        cout << ans[i] << '\n';
 
+const int maxN = 2e5 + 10;
+
+int seg[maxN * 4];
+
+void update(int i, int left, int right, int index, int val){
+    if (index < left or right < index){
+        return;
+    }
+    if (left == right){
+        seg[i]+=val;
+        return;
+    }
+    int mid = (left + right) / 2;
+
+    update(2 * i, left, mid, index, val);
+    update(2 * i + 1, mid + 1, right, index, val);
+    seg[i] = (seg[2 * i] + seg[2 * i + 1]);
+}
+
+int get(int i, int left, int right, int _left, int _right){
+    if (right < _left or _right < left){
+        return 0;
+    }
+    if (_left <= left and right <= _right){
+        return seg[i];
+    }
+
+    int mid = (left + right) / 2;
+
+    int t1 = get(2 * i, left, mid, _left, _right);
+    int t2 = get(2 * i + 1, mid + 1, right, _left, _right);
+    return (t1 + t2);
+}
+
+int n;
+int a[maxN];
+
+int cal(){
+    for (int i = 1; i <= 4 * n; i++){
+        seg[i] = 0;
+    }   
+    int res = 0;
+    for (int i = 1; i <= n; i++){
+        res += get(1,1,n,a[i] + 1, n);
+        update(1,1,n,a[i],1);
+    }
+    reverse(a + 1, a + 1 + n);
+    return res;
+}
+
+void nenso(){
+    set <int> s;
+    for (int i = 1; i <= n; i++){
+        s.insert(a[i]);
+    }
+    int cnt = 0;
+    map <int,int> cv;
+    for(auto i: s){
+        cnt++;
+        cv[i] = cnt;
+    }
+    for (int i = 1; i <= n; i++){
+        a[i] = cv[a[i]];
+    }
+}
+
+signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    cin >> n;
+    for (int i = 1; i <= n; i++){
+        cin >> a[i];
+    }
+    nenso();
+    // for (int i = 1; i <= n; i++){
+    //     cout << a[i] << " ";
+    // }
+    // cout << endl;
+    cout << cal();
     return 0;
 }

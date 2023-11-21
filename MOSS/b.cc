@@ -1,67 +1,93 @@
-#include <bits/stdc++.h>
-
+#include<bits/stdc++.h>
 using namespace std;
 
-template<class A, class B> bool maximize(A& x, B y) {if (x < y) return x = y, true; else return false;}
-template<class A, class B> bool minimize(A& x, B y) {if (x > y) return x = y, true; else return false;}
+#define y1 as214
+#define ii pair < int , int >
+#define iii pair < int , ii >
+#define iv pair < ii , ii >
 
-#define     all(a)                a.begin(), a.end()
-#define     pb                    push_back
-#define     pf                    push_front
-#define     fi                    first
-#define     se                    second
-// #define     int                   long long
+#define fi first
+#define se second
+#define fr front()
+#define pb push_back
 
-typedef     long long             ll;
-typedef     unsigned long long    ull;
-typedef     double                db;
-typedef     long double           ld;
-typedef     pair<db, db>          pdb;
-typedef     pair<ld, ld>          pld;
-typedef     pair<int, int>        pii;
-typedef     pair<ll, ll>          pll;
-typedef     pair<ll, int>         plli;
-typedef     pair<int, ll>         pill;
+#define FOR(i , x , n) for(int i = x ; i <= n ; ++i)
+#define REP(i , n) for(int i = 0 ; i < n ; ++i)
+#define FORD(i , x , n) for(int i = x ; i >= n ; --i)
 
-const int MAX_N = 1e4 + 10;
+#define ll long long
+#define oo 1e18
+#define int long long
 
-int n;
-int a[100001];
-int g[MAX_N << 1];
-bool check[MAX_N << 1];
+const int N = 1e6 + 5;
+int q , n;
+int a[N] , b[N];
+vector < ii > g1 , g2 , g3;
 
-signed main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+bool cmp(ii a , ii b)
+{
+    return a.second < b.second;
+}
 
-    g[1] = 1;
-    check[1] = true;
-    for (int i = 2; i < MAX_N; i++) {
-        for (int j = 1; j < MAX_N; j++) {
-            check[j] = false;
+main()
+{
+    //freopen("gen.inp","r",stdin);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cin >> q;
+    while(q--)
+    {
+        int sum = 0;
+        cin >> n;
+        FOR(i , 1 , n)
+            cin >> a[i];
+        int ans = 0;
+        FOR(i , 1 , n)
+        {
+            cin >> b[i];
+            if(a[i] - b[i] >= 0)
+                g1.push_back(ii(a[i] , b[i]));
+            else if(a[i] - b[i] < 0)
+                g2.push_back(ii(a[i] , b[i]));
+            ans += abs(a[i] - b[i]);
         }
-        for (int j = 1; j < i; j++) {
-            check[g[j]] = true;
+        sort(g1.begin() , g1.end());
+        if(!g1.empty())
+        {
+            g3.push_back(g1[0]);
+            g3.push_back(g1.back());
         }
-        for (int j = 1; j <= (i >> 1); j++) {
-            check[g[j] ^ g[i - j]] = true;
+        sort(g1.begin() , g1.end() , cmp);
+        if(!g1.empty())
+        {
+            g3.push_back(g1[0]);
+            g3.push_back(g1.back());
         }
-        for (int j = 0; j < (MAX_N << 1); j++) {
-            if (!check[j]) {
-                g[i] = j;
-                break;
+        sort(g2.begin() , g2.end());
+        if(!g2.empty())
+        {
+            g3.push_back(g2[0]);
+            g3.push_back(g2.back());
+        }
+        sort(g2.begin() , g2.end() , cmp);
+        if(!g2.empty())
+        {
+            g3.push_back(g2[0]);
+            g3.push_back(g2.back());
+        }
+        int res = ans;
+        REP(s , g3.size())
+            REP(s1 , g3.size())
+            {
+                int a1 = g3[s].fi;
+                int b1 = g3[s].se;
+                int a2 = g3[s1].fi;
+                int b2 = g3[s1].se;
+                res = max(res , ans - abs(a1 - b1) - abs(a2 - b2) + abs(a1 - b2) + abs(a2 - b1));
             }
-        }
+        cout << res << "\n";
+        g1.clear();
+        g2.clear();
+        g3.clear();
     }
-
-    int sumXor = 0;
-    cin >> n;
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-        sumXor ^= g[a[i]];
-    }
-
-    cout << (sumXor ? "Alice" : "Bob");
-
-    return 0;
 }
