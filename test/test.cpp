@@ -1,94 +1,44 @@
-#include<bits/stdc++.h>
+#include"bits/stdc++.h"
+#define int long long
+#define double long double
 #define ii pair <int,int>
 #define fi first
 #define se second
-#define int long long
-#define double long double
 #define endl '\n'
 #define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 2e5 + 10;
-
-int seg[maxN * 4];
-
-void update(int i, int left, int right, int index, int val){
-    if (index < left or right < index){
-        return;
-    }
-    if (left == right){
-        seg[i]+=val;
-        return;
-    }
-    int mid = (left + right) / 2;
-
-    update(2 * i, left, mid, index, val);
-    update(2 * i + 1, mid + 1, right, index, val);
-    seg[i] = (seg[2 * i] + seg[2 * i + 1]);
-}
-
-int get(int i, int left, int right, int _left, int _right){
-    if (right < _left or _right < left){
-        return 0;
-    }
-    if (_left <= left and right <= _right){
-        return seg[i];
-    }
-
-    int mid = (left + right) / 2;
-
-    int t1 = get(2 * i, left, mid, _left, _right);
-    int t2 = get(2 * i + 1, mid + 1, right, _left, _right);
-    return (t1 + t2);
-}
-
-int n;
-int a[maxN];
-
-int cal(){
-    for (int i = 1; i <= 4 * n; i++){
-        seg[i] = 0;
-    }   
-    int res = 0;
-    for (int i = 1; i <= n; i++){
-        res += get(1,1,n,a[i] + 1, n);
-        update(1,1,n,a[i],1);
-    }
-    reverse(a + 1, a + 1 + n);
-    return res;
-}
-
-void nenso(){
-    set <int> s;
-    for (int i = 1; i <= n; i++){
-        s.insert(a[i]);
-    }
-    int cnt = 0;
-    map <int,int> cv;
-    for(auto i: s){
-        cnt++;
-        cv[i] = cnt;
-    }
-    for (int i = 1; i <= n; i++){
-        a[i] = cv[a[i]];
-    }
-}
+const int MOD = 1e9 + 7;
 
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
+    if (fopen("hanhan.inp", "r")) {
+        freopen("hanhan.inp", "r", stdin);
+        freopen("hanhan.out", "w", stdout);
+    }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    int n, h[101];
     cin >> n;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
+    for (int i = 1; i <= n; i++) cin >> h[i];
+    int dp[1001], pref[1001];
+    for (int i = 0; i <= h[1]; i++) pref[i] = i + 1;
+    for (int i = h[1] + 1; i <= 1000; i++) pref[i] = h[1] + 1;
+    for (int i = 2; i <= n; i++) {
+        memset(dp, 0, sizeof dp);
+        for (int j = 0; j <= h[i]; j++) {
+            dp[j] = pref[h[i] - j];
+            if (dp[j] >= MOD) dp[j] -= MOD;
+        }
+        for (int j = 0; j <= 1000; j++) {
+            pref[j] = dp[j];
+            if (j) pref[j] += pref[j - 1];
+            if (pref[j] >= MOD) pref[j] -= MOD;
+        }
     }
-    nenso();
-    // for (int i = 1; i <= n; i++){
-    //     cout << a[i] << " ";
-    // }
-    // cout << endl;
-    cout << cal();
+    cout << pref[0];
     return 0;
 }

@@ -74,8 +74,6 @@ void print(int n){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("vaduong.inp", "r")) {
@@ -107,7 +105,9 @@ signed main(){
         if (i >= 2){
             for (int g = 0; g <= n; g++){
                 pre[i - 1][g] = min(pre[i - 2][g], dp[i - 1][g]);
-                precheo[i - 1 - g].update(i - 1, dp[i - 1][g]);
+                if (i - 1 - g >= 0){
+                    precheo[i - 1 - g].update(i - 1, dp[i - 1][g]);
+                }
             }
         }
         // cout << "With: " << i - 1 << endl;
