@@ -1,44 +1,70 @@
-#include"bits/stdc++.h"
-#define int long long
-#define double long double
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define endl '\n'
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
+#include <bits/stdc++.h>
+
+#define N 100005
+
 using namespace std;
 
-const int MOD = 1e9 + 7;
+int n;
+int a[N];
+int max_l[N], max_r[N], min_l[N], min_r[N];
+long long ans = 0;
 
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    if (fopen("hanhan.inp", "r")) {
-        freopen("hanhan.inp", "r", stdin);
-        freopen("hanhan.out", "w", stdout);
+void solve(int l, int r) {
+    if (l == r) {
+        ans++;
+        return;
+    }  
+    int mid = (l + r) >> 1;
+    solve(l, mid);
+    solve(mid + 1, r);
+
+    max_l[mid] = min_l[mid] = a[mid];
+    for (int i = mid - 1; i >= l; i--) {
+        max_l[i] = max(max_l[i + 1], a[i]);
+        min_l[i] = min(min_l[i + 1], a[i]);
     }
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n, h[101];
+    max_r[mid + 1] = min_r[mid + 1] = a[mid + 1];
+    for (int i = mid + 2; i <= r; i++) {
+        max_r[i] = max(max_r[i - 1], a[i]);
+        min_r[i] = min(min_r[i - 1], a[i]);
+    }
+
+    int cnt[2] = {0, 0};
+    for (int i = mid, j1 = mid + 1, j2 = mid + 1; i >= l; i--) {
+        while (j2 <= r && max_l[i] >= max_r[j2]) {
+            cnt[min_r[j2] & 1]++;
+            j2++;
+        }
+        while (j1 <= r && max_l[i] >= max_r[j1] && min_l[i] <= min_r[j1]) {
+            cnt[min_r[j1] & 1]--;
+            j1++;
+        }
+        ans += (((max_l[i] ^ min_l[i]) & 1) == 0) * (j1 - mid - 1);
+        ans += cnt[max_l[i] & 1];
+        // cout << "left:: " << l << " " << mid << " " << r << " " << i << " " << j1 << " " << j2 << " " << ((((max_l[i] ^ min_l[i]) & 1) == 0) * (j1 - mid)) << " " << cnt[max_l[i] & 1] << "\n";
+    }
+
+    cnt[0] = cnt[1] = 0;
+    for (int i1 = mid, i2 = mid, j = mid + 1; j <= r; j++) {
+        while (i2 >= l && max_l[i2] < max_r[j]) {
+            cnt[min_l[i2] & 1]++;
+            i2--;
+        }
+        while (i1 >= l && max_l[i1] < max_r[j] && min_l[i1] >= min_r[j]) {
+            cnt[min_l[i1] & 1]--;
+            i1--;
+        }
+        ans += (((max_r[j] ^ min_r[j]) & 1) == 0) * (mid - i1);
+        ans += cnt[max_r[j] & 1];
+        // cout << "right:: " << l << " " << mid << " " << r << " " << i2 << " " << i1 << " " << j << " " << ((((max_r[j] ^ min_r[j]) & 1) == 0) * (mid - i1 + 1)) << " " << cnt[max_r[j] & 1] << "\n";
+    }
+}
+
+int main() {
     cin >> n;
-    for (int i = 1; i <= n; i++) cin >> h[i];
-    int dp[1001], pref[1001];
-    for (int i = 0; i <= h[1]; i++) pref[i] = i + 1;
-    for (int i = h[1] + 1; i <= 1000; i++) pref[i] = h[1] + 1;
-    for (int i = 2; i <= n; i++) {
-        memset(dp, 0, sizeof dp);
-        for (int j = 0; j <= h[i]; j++) {
-            dp[j] = pref[h[i] - j];
-            if (dp[j] >= MOD) dp[j] -= MOD;
-        }
-        for (int j = 0; j <= 1000; j++) {
-            pref[j] = dp[j];
-            if (j) pref[j] += pref[j - 1];
-            if (pref[j] >= MOD) pref[j] -= MOD;
-        }
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
     }
-    cout << pref[0];
-    return 0;
+    solve(1, n);
+    cout << ans;
 }

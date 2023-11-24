@@ -103,13 +103,11 @@ namespace sub2{
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen("EVENSUB.inp", "r")) {
-        freopen("EVENSUB.inp", "r", stdin);
-        freopen("EVENSUB.out", "w", stdout);
+    if (fopen("evensub.inp", "r")) {
+        freopen("evensub.inp", "r", stdin);
+        freopen("evensub.out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
