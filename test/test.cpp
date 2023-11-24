@@ -1,70 +1,59 @@
-#include <bits/stdc++.h>
-
-#define N 100005
-
+#include"bits/stdc++.h"
+#define int long long
+#define double long double
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define endl '\n'
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-int n;
-int a[N];
-int max_l[N], max_r[N], min_l[N], min_r[N];
-long long ans = 0;
-
-void solve(int l, int r) {
-    if (l == r) {
-        ans++;
-        return;
-    }  
-    int mid = (l + r) >> 1;
-    solve(l, mid);
-    solve(mid + 1, r);
-
-    max_l[mid] = min_l[mid] = a[mid];
-    for (int i = mid - 1; i >= l; i--) {
-        max_l[i] = max(max_l[i + 1], a[i]);
-        min_l[i] = min(min_l[i + 1], a[i]);
+signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
     }
-    max_r[mid + 1] = min_r[mid + 1] = a[mid + 1];
-    for (int i = mid + 2; i <= r; i++) {
-        max_r[i] = max(max_r[i - 1], a[i]);
-        min_r[i] = min(min_r[i - 1], a[i]);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int test;
+    cin >> test;
+    while(test--){
+        int n;
+        cin >> n;
+        set <int> s;
+        for (int i = 1; i <= n; i++){
+            int x = 1e9 / i;
+            s.insert(x);
+        }
+        vector <int> res;
+        while(s.size() > 1){
+            if (*s.rbegin() % 2 == 0 and *s.begin() % 2 == 1){
+                res.push_back(1);
+            }
+            else{
+                res.push_back(0);
+            }
+            set <int> ts;
+            for (auto i: s){
+                ts.insert((i + res.back()) / 2);
+            }
+            swap(ts,s);
+        }
+        cout << res.size() << endl;
+        if (res.size() <= n){
+            for (auto i: res){
+                cout << i << " ";
+            }
+            if (res.size()){
+                cout << endl;
+            }
+        }
     }
-
-    int cnt[2] = {0, 0};
-    for (int i = mid, j1 = mid + 1, j2 = mid + 1; i >= l; i--) {
-        while (j2 <= r && max_l[i] >= max_r[j2]) {
-            cnt[min_r[j2] & 1]++;
-            j2++;
-        }
-        while (j1 <= r && max_l[i] >= max_r[j1] && min_l[i] <= min_r[j1]) {
-            cnt[min_r[j1] & 1]--;
-            j1++;
-        }
-        ans += (((max_l[i] ^ min_l[i]) & 1) == 0) * (j1 - mid - 1);
-        ans += cnt[max_l[i] & 1];
-        // cout << "left:: " << l << " " << mid << " " << r << " " << i << " " << j1 << " " << j2 << " " << ((((max_l[i] ^ min_l[i]) & 1) == 0) * (j1 - mid)) << " " << cnt[max_l[i] & 1] << "\n";
-    }
-
-    cnt[0] = cnt[1] = 0;
-    for (int i1 = mid, i2 = mid, j = mid + 1; j <= r; j++) {
-        while (i2 >= l && max_l[i2] < max_r[j]) {
-            cnt[min_l[i2] & 1]++;
-            i2--;
-        }
-        while (i1 >= l && max_l[i1] < max_r[j] && min_l[i1] >= min_r[j]) {
-            cnt[min_l[i1] & 1]--;
-            i1--;
-        }
-        ans += (((max_r[j] ^ min_r[j]) & 1) == 0) * (mid - i1);
-        ans += cnt[max_r[j] & 1];
-        // cout << "right:: " << l << " " << mid << " " << r << " " << i2 << " " << i1 << " " << j << " " << ((((max_r[j] ^ min_r[j]) & 1) == 0) * (mid - i1 + 1)) << " " << cnt[max_r[j] & 1] << "\n";
-    }
+    return 0;
 }
-
-int main() {
-    cin >> n;
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-    solve(1, n);
-    cout << ans;
-}
+/*
+*/

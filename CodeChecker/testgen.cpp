@@ -49,7 +49,7 @@ signed main(){
     int n = random(1,10);
     cout << n << endl;
     for (int i = 1; i <= n; i++){
-        cout << random(1,n) << " ";
+        cout << random(1,20) << " ";
     }
     return 0;
 }

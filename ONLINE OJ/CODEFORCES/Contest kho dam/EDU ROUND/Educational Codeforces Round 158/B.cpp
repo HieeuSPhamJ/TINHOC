@@ -24,36 +24,21 @@ signed main(){
     while(test--){
         int n;
         cin >> n;
-        set <int> s;
+        vector <int> ls;
         for (int i = 1; i <= n; i++){
             int x;
             cin >> x;
-            s.insert(x);
+            ls.push_back(x);
         }
-        int ma = *s.begin();
-        int mi = *s.rbegin();
-        vector <int> res;
-        while(ma != mi){
-            if (mi % 2 == 0 and ma % 2 == 1){
-                res.push_back(1);
+        int la = 1;
+        int res = 0;
+        for (auto i: ls){
+            if(la < i){
+                res += (i - la);
             }
-            else{
-                res.push_back(0);
-            }
-            mi = (mi + res.back()) / 2;
-            ma = (ma + res.back()) / 2;
+            la = i;
         }
-        cout << res.size() << endl;
-        if (res.size() <= n){
-            for (auto i: res){
-                cout << i << " ";
-            }
-            if (res.size()){
-                cout << endl;
-            }
-        }
+        cout << res << endl;
     }
     return 0;
 }
-/*
-*/

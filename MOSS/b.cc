@@ -11,23 +11,23 @@ using namespace std;
 #define fr front()
 #define pb push_back
 
-#define FOR(i , x , n) for(int i = x ; i <= n ; ++i)
-#define REP(i , n) for(int i = 0 ; i < n ; ++i)
-#define FORD(i , x , n) for(int i = x ; i >= n ; --i)
+#define FOR(i , x , n) for(ll i = x ; i <= n ; ++i)
+#define REP(i , n) for(ll i = 0 ; i < n ; ++i)
+#define FORD(i , x , n) for(ll i = x ; i >= n ; --i)
 
 #define ll long long
-#define oo 1e18
+#define oo INT_MAX
+#define eps 1e-8
+#define div divv
+#define pow poww
 #define int long long
 
 const int N = 1e6 + 5;
-int q , n;
-int a[N] , b[N];
-vector < ii > g1 , g2 , g3;
-
-bool cmp(ii a , ii b)
-{
-    return a.second < b.second;
-}
+int q , m , k , n , x , y , x1 , x2 , y1 , y2;
+int a[N] , b[N] , c[N] , cnt[N] , pre[N];
+string s;
+char f1[N] , f[N] , f2[N];
+map < int , int > mp;
 
 main()
 {
@@ -37,57 +37,37 @@ main()
     cin >> q;
     while(q--)
     {
-        int sum = 0;
         cin >> n;
         FOR(i , 1 , n)
             cin >> a[i];
-        int ans = 0;
-        FOR(i , 1 , n)
+        int mini = *min_element(a + 1 , a + 1 + n);
+        int maxi = *max_element(a + 1 , a + 1 + n);
+        int cnt = 0;
+        vector < int > ans;
+        while(mini != maxi)
         {
-            cin >> b[i];
-            if(a[i] - b[i] >= 0)
-                g1.push_back(ii(a[i] , b[i]));
-            else if(a[i] - b[i] < 0)
-                g2.push_back(ii(a[i] , b[i]));
-            ans += abs(a[i] - b[i]);
-        }
-        sort(g1.begin() , g1.end());
-        if(!g1.empty())
-        {
-            g3.push_back(g1[0]);
-            g3.push_back(g1.back());
-        }
-        sort(g1.begin() , g1.end() , cmp);
-        if(!g1.empty())
-        {
-            g3.push_back(g1[0]);
-            g3.push_back(g1.back());
-        }
-        sort(g2.begin() , g2.end());
-        if(!g2.empty())
-        {
-            g3.push_back(g2[0]);
-            g3.push_back(g2.back());
-        }
-        sort(g2.begin() , g2.end() , cmp);
-        if(!g2.empty())
-        {
-            g3.push_back(g2[0]);
-            g3.push_back(g2.back());
-        }
-        int res = ans;
-        REP(s , g3.size())
-            REP(s1 , g3.size())
+            if(maxi % 2 == 0 && mini % 2 == 1)
             {
-                int a1 = g3[s].fi;
-                int b1 = g3[s].se;
-                int a2 = g3[s1].fi;
-                int b2 = g3[s1].se;
-                res = max(res , ans - abs(a1 - b1) - abs(a2 - b2) + abs(a1 - b2) + abs(a2 - b1));
+                mini = (mini + 1) / 2;
+                maxi = (maxi + 1) / 2;
+                cnt++;
+                ans.push_back(1);
             }
-        cout << res << "\n";
-        g1.clear();
-        g2.clear();
-        g3.clear();
+            else
+            {
+                mini /= 2;
+                maxi /= 2;
+                cnt++;
+                ans.push_back(0);
+            }
+        }
+        cout << cnt << "\n";
+        if(!ans.empty() && ans.size() <= n)
+        {
+            REP(s , ans.size())
+                cout << ans[s] << " ";
+            cout << "\n";
+        }
     }
 }
+
