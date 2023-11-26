@@ -1,86 +1,60 @@
-#include"bits/stdc++.h"
-#define int long long
-#define double long double
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define endl '\n'
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
+#include <bits/stdc++.h>
+#define ii pair<int, int>
+#define iiii pair<pair<int, int> , pair<int, int> >
+#define X first
+#define Y second
+const int xxx = 33333;
+const int Open = 1;
+const int Close = -1;
 using namespace std;
+vector<iiii> event;
+ii it[8*xxx];
+int n, res;
 
-const int maxN = 3e5 + 10;
-const int inf = 1e18;
-
-int n;
-
-int seg[maxN * 4];
-
-void update(int i, int left, int right, int index, int val){
-    if (index < left or right < index){
-        return;
+void Enter() {
+    //freopen("AREA.inp", "r", stdin);
+    scanf("%d\n", &n);
+    int i, x1, y2, x2, y1;
+    for(i=1; i<=n; i++) {
+        scanf("%d %d %d %d\n", &x1, &y1, &x2, &y2);
+        event.push_back(iiii(ii(x1, Open), ii(y1, y2)));
+        event.push_back(iiii(ii(x2, Close), ii(y1, y2)));
     }
-    if (left == right){
-        seg[i] += val;
-        return;
-    }
-    int mid = (left + right) / 2;
-
-    update(2 * i, left, mid, index, val);
-    update(2 * i + 1, mid + 1, right, index, val);
-    seg[i] = max(seg[2 * i], seg[2 * i + 1]);
+    sort(event.begin(), event.end());
 }
 
-int get(int i, int left, int right, int _left, int _right){
-    if (right < _left or _right < left){
-        return 0;
+void Upd(int k, int l, int r, int i, int j, int v) {
+    if (r<=i || j<=l) return;
+    if (i<=l && r<=j )
+        it[k].X += v;
+    else {
+        int m = (l+r) >> 1;
+        Upd(k << 1, l, m, i, j, v);
+        Upd((k << 1) | 1, m, r, i, j, v);
     }
-    if (_left <= left and right <= _right){
-        return seg[i];
+    if (it[k].X == 0)
+        it[k].Y = it[k << 1].Y + it[(k << 1) | 1].Y;
+    else it[k].Y = r - l;
+}
+
+void SweepLine() {
+    int i, y1, y2, type, len, d;
+    for(i=0; i<(event.size()-1); i++) {
+        y1 = event[i].Y.X; y2 = event[i].Y.Y;
+        type = event[i].X.Y;
+        Upd(1, 0, xxx, y1, y2, type);
+        len = event[i+1].X.X - event[i].X.X;
+        d = it[1].Y;
+        res += len * d;
     }
-
-    int mid = (left + right) / 2;
-
-    int t1 = get(2 * i, left, mid, _left, _right);
-    int t2 = get(2 * i + 1, mid + 1, right, _left, _right);
-    return max(t1, t2);
 }
 
-void update(int i, int v){
-    update(1,1,n,i,v);
-}
-
-int get(int l, int r){
-    return get(1,1,n,l,r);
-}
-
-signed main(){
+int main()
+{
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    if (fopen(".inp", "r")) {
-        freopen(".inp", "r", stdin);
-        freopen(".out", "w", stdout);
-    }
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    cin >> n;
-    vector <int> ls;
-    for (int i = 1; i <= n; i++){
-        int x;
-        cin >> x;
-        ls.push_back(x);
-        update(i, x + i - 1);
-    }
-    int res = inf;
-    res = min(res, get(1,n));
-    for (int i = 1; i < ls.size(); i++){
-        update(i + 1, - get(i + 1, i + 1) + ls[i]);
-        update(i, n - i);
-        res = min(res, get(1,n));
-    }
-    cout << res << endl;
+    Enter();
+    SweepLine();
+    printf("%d", res);
     return 0;
 }
