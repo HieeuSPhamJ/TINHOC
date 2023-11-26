@@ -46,31 +46,14 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(1,8);
-    vector <pair<ii,int>> ls;
-    int m = random(1,4);
-    while(m--){
-        int l = random(1,n);
-        ls.push_back({{l, random(l,n)}, 1});
-        // cout << ls.back().fi.fi << " " << ls.back().fi.se << " " << 1 << endl;
-    }
-
-    int q = random(1,4);
-    cout << n << " " << q + 2 * ls.size() << endl;
-    while(q + ls.size()){
-        if ((random(0,1) and q) or ls.size() == 0){
-            cout << 2 << endl;
-            q--;
-        }
-        else{
-            auto la = ls.back();
-            ls.pop_back();
-            cout << 1 << " " << la.fi.fi << " " << la.fi.se << " " << la.se << endl;
-            if (la.se == 1){
-                ls.push_back({la.fi, -1});
-            }
-            random_shuffle(all(ls));
-        }
+    int n = 1;
+    cout << n << " " << random(1, n) << endl;
+    int mav = 1000;
+    while(n--){
+        int x = random(1,mav);
+        int y = random(1,mav);
+        cout << x << " " << y << " ";
+        cout << random(x,mav) << " " << random(y,mav) << endl;
     }
     
     return 0;

@@ -16,6 +16,10 @@ int N,k;
 const int mod = 1e9 + 7;
 
 int f[maxN];
+int fact[maxN];
+int nfact[maxN];
+int infact[maxN];
+int innfact[maxN];
 
 int add(int a, int b){
     return (a + b) % mod;
@@ -23,6 +27,10 @@ int add(int a, int b){
 
 int mul(int a, int b){
     return (a * b) % mod;
+}
+
+int sub(int a, int b){
+    return (a - b + mod) % mod;
 }
 
 int fastpow(int n, int k){
@@ -44,31 +52,29 @@ int divi(int a, int b){
     return mul(a, fastpow(b,mod - 2));
 }
 
-int cal(int n, int k){
-    return f[n];
+int cal(int n){
+    // cout << endl;
+    if (n <= k + 2){
+        return f[n];
+    }
+    int tu = 1;
+    for (int i = 1; i <= k + 2; i++){
+        tu = mul(tu, n - i);
+    }
     int res = 0;
     for (int i = 1; i <= k + 2; i++){
         int p = 1;
-        // cout << "With: " << i << endl;
-        for (int j = 1; j <= k + 2; j++){
-            if (i != j){
-                // cout << n - j << "/" << i - j << endl;
-                p = mul(p, divi(n - j, i - j));
-            }
-        }
-        // cout << f[i] << " " << p << endl;
-        res = add(res, mul(f[i], p));
+        int mau = n - i;
+        mau = mul(mau, innfact[k + 2 - i]);
+        mau = mul(mau, infact[i - 1]);
+        res = add(res, mul(f[i], divi(tu, mau)));
     }
     return res;
 }
 
-int cal(int x){
-    return cal(x,k);
-}
-
 int cost(int l, int r){
     // return r - l + 1;
-    return cal(r) - cal(l - 1);
+    return sub(cal(r), cal(l - 1));
 }
 
 struct node{
@@ -137,11 +143,27 @@ struct seg{
 
 } seg;
 
+void init(){
+    fact[0] = 1;
+    nfact[0] = 1;
+    for (int i = 1; i <= k + 2; i++){
+        fact[i] = mul(fact[i - 1], i);
+        nfact[i] = mul(nfact[i - 1], -i);
+        f[i] = f[i - 1] + fastpow(i, k);
+    }
+    infact[k + 2] = divi(1,fact[k + 2]);
+    innfact[k + 2] = divi(1,nfact[k + 2]);
+    for (int i = k + 1; i >= 1; i--){
+        infact[i] = mul(infact[i + 1], i + 1);
+        innfact[i] = mul(innfact[i + 1], i + 1);
+    }
+}
+
 vector <pair<ii,int>> sto[maxN];
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
+    // freopen("input.inp", "r", stdin);
+    // freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("AREA.inp", "r")) {
@@ -162,9 +184,7 @@ signed main(){
         N = max(N, r);
         n = max(n,y + 1);
     }
-    for (int i = 1; i <= N; i++){
-        f[i] = add(f[i - 1], fastpow(i,k));
-    }
+    init();
     seg.build();
     int res = 0;
     for (int i = 1; i <= n; i++){

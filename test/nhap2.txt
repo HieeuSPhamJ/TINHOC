@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\Themis\gcc\bin\g++.exe" -o"%NAME%.exe" "%NAME%%EXT%" -O2 -s -static -lm -x c++|@WorkDir=%PATH%

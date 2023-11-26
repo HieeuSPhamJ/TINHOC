@@ -9,17 +9,30 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 1e6 + 10;
+const int maxN = 1e5 + 10;
+
+int k;
+
 const int mod = 1e9 + 7;
 
 int f[maxN];
+int fact[maxN];
+int nfact[maxN];
+int infact[maxN];
+int innfact[maxN];
 
 int add(int a, int b){
     return (a + b) % mod;
 }
+
 int mul(int a, int b){
     return (a * b) % mod;
 }
+
+int sub(int a, int b){
+    return (a - b + mod) % mod;
+}
+
 int fastpow(int n, int k){
     if (k == 0){
         return 1;
@@ -34,25 +47,45 @@ int fastpow(int n, int k){
     }
     return t;
 }
+
 int divi(int a, int b){
     return mul(a, fastpow(b,mod - 2));
 }
 
-int cal(int n, int k){
-    for (int i = 1; i <= k + 1; i++){
-        f[i] = f[i - 1] + fastpow(i, k);
+int cal(int n){
+    if (n <= k + 2){
+        return f[n];
+    }
+    int tu = 1;
+    for (int i = 1; i <= k + 2; i++){
+        tu = mul(tu, n - i);
     }
     int res = 0;
-    for (int i = 1; i <= k + 1; i++){
+    for (int i = 1; i <= k + 2; i++){
         int p = 1;
-        for (int j = 1; j <= k + 1; j++){
-            if (i != j){
-                p = mul(p, divi(n - i, i - j));
-            }
-        }
-        res = add(res, mul(f[i], p));
+        int mau = divi(1,n - i);
+        mau = n - i;
+        mau = mul(mau, nfact[k + 2 - i]);
+        mau = mul(mau, fact[i - 1]);
+        res = add(res, mul(f[i], divi(tu, mau)));
     }
     return res;
+}
+
+void init(){
+    fact[0] = 1;
+    nfact[0] = 1;
+    for (int i = 1; i <= k + 2; i++){
+        fact[i] = mul(fact[i - 1], i);
+        nfact[i] = mul(nfact[i - 1], sub(0,i));
+        f[i] = f[i - 1] + fastpow(i, k);
+    }
+    infact[k + 2] = divi(1,fact[k + 2]);
+    innfact[k + 2] = divi(1,nfact[k + 2]);
+    for (int i = k + 1; i >= 1; i--){
+        infact[i] = mul(infact[i + 1], i + 1);
+        innfact[i] = mul(innfact[i + 1], sub(0, (i + 1)));
+    }
 }
 
 signed main(){
@@ -65,8 +98,9 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, k;
+    int n;
     cin >> n >> k;
-    cout << cal(n, k);
+    init();
+    cout << cal(n);
     return 0;
 }
