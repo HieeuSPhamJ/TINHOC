@@ -9,7 +9,7 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 1e5 + 10;
+const int maxN = 1e6 + 10;
 
 int k;
 
