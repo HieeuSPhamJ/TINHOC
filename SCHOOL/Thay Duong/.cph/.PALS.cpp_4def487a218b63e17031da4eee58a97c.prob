@@ -1,1 +1,0 @@
-{"name":"Local: PALS","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Duong/PALS.cpp","tests":[{"id":1690938647487,"input":"3\n4\n20\n44\n","output":"1"},{"id":1690938657444,"input":"4\n32\n51\n123\n282","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/Thay Duong/PALS.cpp","group":"local","local":true}

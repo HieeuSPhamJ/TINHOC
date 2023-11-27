@@ -1,106 +1,18 @@
-#include"bits/stdc++.h"
-#define int long long
-#define double long double
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define endl '\n'
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
+#include <iostream>
 using namespace std;
 
-const int maxN = 1e6 + 10;
+int main() {
+    int N, L, total_scores = 0, passes_count = 0;
 
-int k;
+    cin >> N >> L; // Number of students
 
-const int mod = 1e9 + 7;
-
-int f[maxN];
-int fact[maxN];
-int nfact[maxN];
-int infact[maxN];
-int innfact[maxN];
-
-int add(int a, int b){
-    return (a + b) % mod;
-}
-
-int mul(int a, int b){
-    return (a * b) % mod;
-}
-
-int sub(int a, int b){
-    return (a - b + mod) % mod;
-}
-
-int fastpow(int n, int k){
-    if (k == 0){
-        return 1;
+    for(int i = 1; i <= N; ++i){
+        int score;
+        cin >> score; // Students scores (Ai)
+        if(score >= L){
+            total_scores += score; // Sum of the passing scores
+            passes_count++; // Count the number of students who passed
+        }
     }
-    if (k == 1){
-        return n;
-    }
-    int t = fastpow(n, k / 2);
-    t = mul(t,t);
-    if (k % 2){
-        t = mul(t,n);
-    }
-    return t;
-}
-
-int divi(int a, int b){
-    return mul(a, fastpow(b,mod - 2));
-}
-
-int cal(int n){
-    if (n <= k + 2){
-        return f[n];
-    }
-    int tu = 1;
-    for (int i = 1; i <= k + 2; i++){
-        tu = mul(tu, n - i);
-    }
-    int res = 0;
-    for (int i = 1; i <= k + 2; i++){
-        int p = 1;
-        int mau = divi(1,n - i);
-        mau = n - i;
-        mau = mul(mau, nfact[k + 2 - i]);
-        mau = mul(mau, fact[i - 1]);
-        res = add(res, mul(f[i], divi(tu, mau)));
-    }
-    return res;
-}
-
-void init(){
-    fact[0] = 1;
-    nfact[0] = 1;
-    for (int i = 1; i <= k + 2; i++){
-        fact[i] = mul(fact[i - 1], i);
-        nfact[i] = mul(nfact[i - 1], sub(0,i));
-        f[i] = f[i - 1] + fastpow(i, k);
-    }
-    infact[k + 2] = divi(1,fact[k + 2]);
-    innfact[k + 2] = divi(1,nfact[k + 2]);
-    for (int i = k + 1; i >= 1; i--){
-        infact[i] = mul(infact[i + 1], i + 1);
-        innfact[i] = mul(innfact[i + 1], sub(0, (i + 1)));
-    }
-}
-
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    if (fopen(".inp", "r")) {
-        freopen(".inp", "r", stdin);
-        freopen(".out", "w", stdout);
-    }
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n;
-    cin >> n >> k;
-    init();
-    cout << cal(n);
-    return 0;
+    cout << passes_count << endl;
 }
