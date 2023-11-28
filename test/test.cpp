@@ -1,18 +1,23 @@
-#include <iostream>
+#include"bits/stdc++.h"
+#define int long long
+#define double long double
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define endl '\n'
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-int main() {
-    int N, L, total_scores = 0, passes_count = 0;
-
-    cin >> N >> L; // Number of students
-
-    for(int i = 1; i <= N; ++i){
-        int score;
-        cin >> score; // Students scores (Ai)
-        if(score >= L){
-            total_scores += score; // Sum of the passing scores
-            passes_count++; // Count the number of students who passed
-        }
+signed main(){
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
     }
-    cout << passes_count << endl;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    return 0;
 }

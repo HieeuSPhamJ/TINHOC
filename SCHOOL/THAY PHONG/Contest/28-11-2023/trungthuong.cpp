@@ -1,5 +1,5 @@
 #include"bits/stdc++.h"
-#define int long long
+// #define int long long
 #define double long double
 #define ii pair <int,int>
 #define fi first
@@ -87,16 +87,21 @@ namespace sub3{
             if (u > v){
                 return 0;
             }
-            if (v < l or r < u) {
+            if (v < l or r < u){
                 return 0;
             }
-            if (u <= l and r <= v) {
+            if (seg[id].empty()){
+                return 0;
+            }
+            if (seg[id].front() > k){
+                return 0;
+            }
+            if (u <= l and r <= v){
+                if (seg[id].back() <= k){
+                    // cout << l << " " << r << " " << seg[id].size() << endl;
+                    return seg[id].size();
+                }
                 int t = upper_bound(all(seg[id]), k) - seg[id].begin();
-                // cout << l << " " << r << ": " << t << endl;
-                // for (auto i: seg[id]){
-                //     cout << i << " ";
-                // }
-                // cout << endl;
                 return t;
             }
             int mid = (l + r) / 2;
@@ -104,14 +109,9 @@ namespace sub3{
         }
     } Tree;
 
-    int cal(){
-        // cout << "With: " << endl;
-        // for (int i = 1; i <= n; i++){
-        //     cout << a[i] << " ";
-        // }
-        // cout << endl;
+    long long cal(){
 
-        a[n + 1] = -1e18;
+        a[n + 1] = -1e9;
         fr[n + 1] = n + 1;
         for (int i = n; i >= 1; i--){
             int t = i;
@@ -120,7 +120,7 @@ namespace sub3{
             }
             fr[i] = t;
         }
-        a[0] = 1e18;
+        a[0] = 1e9;
         for (int i = 1; i <= n; i++){
             int t = i;
             while(a[t - 1] <= a[i]){
@@ -128,27 +128,23 @@ namespace sub3{
             }
             fl[i] = t;
         }
-        // for (int i = 1; i <= n; i++){
-        //     cout << fr[i] << " ";
-        // }
-        // cout << endl;
+
+        Tree.build(1,1,n);
+
+        long long res = 0;
+
         // for (int i = 1; i <= n; i++){
         //     cout << fl[i] << " ";
         // }
         // cout << endl;
 
-        Tree.build(1,1,n);
-
-        int res = 0;
-
-        // cout << Tree.get(1,1,n,2,3,1) << endl;
+        // cout << Tree.get(1,1,n,2,2,1) << endl;
 
         for (int i = 1; i <= n; i++){
             int t = Tree.get(1,1,n,i + 1, fr[i], i);
             res += t;
-            // cout << i << ": " << t << endl;
+            // cout << i + 1 << " " << fr[i] << " " << i << " " << t << endl;
         }
-        // cout << endl;
 
         return res;
     }
@@ -158,14 +154,14 @@ namespace sub3{
             cin >> a[i];
         }
 
-        int res = 0;
+        long long res = 0;
         res += cal();
         reverse(a + 1, a + 1 + n);
         res += cal();
 
         for (int i = 1, la = 1; i <= n; i++){
             if (a[la] != a[i + 1]){
-                int l = i - la + 1;
+                long long l = i - la + 1;
                 res -= l * (l - 1) / 2;
                 la = i + 1;
             }
@@ -183,8 +179,6 @@ namespace sub3{
 */
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
