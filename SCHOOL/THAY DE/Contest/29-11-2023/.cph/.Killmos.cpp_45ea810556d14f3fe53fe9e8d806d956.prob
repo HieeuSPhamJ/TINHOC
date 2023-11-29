@@ -1,0 +1,1 @@
+{"name":"Local: Killmos","url":"d:\\TINHOC\\SCHOOL\\THAY DE\\Contest\\29-11-2023\\Killmos.cpp","tests":[{"id":1701241901162,"input":"7 6 4\n......\n.*.*.*\n......\n.*.*..\n..*...\n..*...\n*....*","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\THAY DE\\Contest\\29-11-2023\\Killmos.cpp","group":"local","local":true}

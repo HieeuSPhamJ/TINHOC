@@ -38,6 +38,12 @@ string randomStr(const int len) {
     
     return tmp_s;
 }
+
+void random_pair(int n, char en = endl){
+    int l = random(1,n);
+    cout << l << " " << random(l,n) << en;
+}
+
 vector <int> adj[1000];
 
 signed main(){
@@ -46,10 +52,11 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = 6;
-    cout << n << endl;
-    for (int i = 1; i <= n; i++){
-        cout << random(1,n) << " ";
+    int n = 3;
+    cout << n << " " << random(1,n) << endl;
+    for (int i = 1, la = 0; i <= n; i++){
+        la = random(la + 1, 1e3);
+        cout << random(1,n) << " " << random(1,n) << " " << la << endl;
     }
     return 0;
 }
