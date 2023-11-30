@@ -18,8 +18,6 @@ bool cmp(ii a, ii b){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("QUALUUNIEM.inp", "r")) {
@@ -128,3 +126,9 @@ signed main(){
     cout << res << endl;
     return 0;
 }
+
+/*
+2 7
+3 8
+1 2
+*/
