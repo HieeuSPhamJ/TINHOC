@@ -92,14 +92,24 @@ void dfs(int nu, int fa){
     }
 }
 
+int getcnt(int nu){
+    int res = 1;
+    num[nu] = -1;
+    for (auto i: adj[nu]){
+        if (num[i] != -1){
+            res += getcnt(i);
+        }
+    }
+    return res;
+}
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
         freopen(".inp", "r", stdin);
         freopen(".out", "w", stdout);
-    }freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
+    }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
@@ -126,7 +136,10 @@ signed main(){
         return 0;
     }
     if (isconnected > 1){
-        isconnected = 0;
+        int x = getcnt(1);
+        // cout << x << endl;
+        cout << (int)ls.size() * (n - x) * x << endl;
+        return 0;
     }
     for (int i = 1; i <= n; i++){
         adj[i].clear();
@@ -158,13 +171,6 @@ signed main(){
         int x = ls.size();
         res += x * (n * (n - 1) / 2 - m);
         // cout << x << endl;
-    }
-    else{
-        for (auto i: ls){
-            int a = find(i.fi);
-            res += ((n - va[a]) * va[a]);
-            // cout << i.fi << " " << i.se << ": " << (n - va[a]) * va[a] << endl;
-        }
     }
 
     

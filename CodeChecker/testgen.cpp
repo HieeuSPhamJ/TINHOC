@@ -53,9 +53,16 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = 5;
-    cout << n << " " << random(1,10) << endl;
-    for (int i = 1, la = 0; i <= n; i++){
-        cout << random(1,3) << " " << random(1,10) << endl;
+    int m = random(1, 2 * n);
+    map <ii,bool> cnt;
+    while(m--){
+        int a = random(1,n - 1);
+        int b = random(a + 1,n);
+        cnt[{a,b}] = 1;
+    }
+    cout << n << " " << cnt.size() << endl;
+    for (auto i: cnt){
+        cout << i.fi.fi << ' ' << i.fi.se << endl;
     }
     return 0;
 }

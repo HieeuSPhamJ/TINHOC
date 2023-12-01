@@ -20,9 +20,8 @@ priority_queue<ii,vector <ii>, greater <ii>> q;
 
 
 void add(int a, int b, int c){
-    cout << a << " " << b << " " << c << endl;
+    // cout << a << " " << b << " " << c << endl;
     adj[a].push_back({c,b});
-    adj[b].push_back({c,a});
 }
 
 int costmin(int a, int b){
@@ -59,14 +58,17 @@ signed main(){
     sort(node + 1, node + 1 + n);
     for (int i = 2; i <= n; i++){
         add(node[i].se, node[i - 1].se, costmin(i, i - 1));
+        add(node[i - 1].se, node[i].se, costmin(i, i - 1));
     }
     sort(node + 1, node + 1 + n, cmp);
     for (int i = 2; i <= n; i++){
-        add(node[i].se, node[i - 1].se, (i, i - 1));
+        add(node[i].se, node[i - 1].se, costmin(i, i - 1));
+        add(node[i - 1].se, node[i].se, costmin(i, i - 1));
     }
     for (int i = 1; i <= n; i++){
-        add(node[i].se, s, costmin(i, s)); 
-        add(node[i].se, t, costmin(i, t)); 
+        // cout << node[s].fi.fi << " " << node[s].fi.se << " " << node[i].fi.fi << " " << node[i].fi.se << endl;
+        add(s, node[i].se, costmin(i, s)); 
+        add(node[i].se, t, cost(i, t)); 
     }
     memset(dist, 0x3f, sizeof(dist));
     dist[s] = 0;
