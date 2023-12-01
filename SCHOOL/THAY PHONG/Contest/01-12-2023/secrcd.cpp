@@ -19,7 +19,7 @@ void init(){
     notprime[1] = 1;
     for (int i = 2; i * i < maxN; i++){
         if (notprime[i] == 0){
-            for (int j = 2 * i; j < maxN; j += i){
+            for (int j = i * i; j < maxN; j += i){
                 notprime[j] = 1;
                 nxt[j] = i;
             }
