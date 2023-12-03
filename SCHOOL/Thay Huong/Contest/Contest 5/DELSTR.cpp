@@ -12,42 +12,42 @@ using namespace std;
 const int maxN = 1e3 + 10;
 
 int a[maxN];
-int dp[maxN][maxN];
+int dp[maxN][maxN][2];
 int nxtl[maxN];
 int nxtr[maxN];
 
-int cal(int l, int r){
-    if (dp[l][r] != 0){
-        return dp[l][r];
+int cal(int l, int r, int cost = 1){
+    if (dp[l][r][cost] != 0){
+        return dp[l][r][cost];
     }
     if (l > r){
         return 0;
     }
     if (l == r){
-        return dp[l][r] = 1;
+        return dp[l][r][cost] = 1;
     }
-    int &res = dp[l][r] = min(cal(l + 1, r), cal(l, r - 1)) + 1;
+    int &res = dp[l][r][cost] = min(cal(l + 1, r), cal(l, r - 1)) + 1;
     // cout << l << " " << r << ": " << res << endl;
-    for (int mid = l; mid <= r; mid++){
+    for (int mid = l + 1; mid <= r; mid++){
         if (a[l] == a[mid]){
-            int tres = cal(l + 1, mid - 1) + 1 + cal(mid + 1, r) - (a[l] == a[r] and mid != r);
-            // cout << l << " " << mid << ' ' << r << ": " << tres << endl;
+            int tres = cal(l + 1, mid - 1) + cost + min(cal(mid, r, 0),  cal(mid + 1, r));
+            // cout << l << " " << mid << ' ' << r << " " << cost << ": " << tres << endl;
+            // cout << " " << cal(l + 1, mid - 1) + cost << " " << cal(mid, r, 0) << endl;
             res = min(res, tres); 
         }
     }
-    // cout << l << ' ' << r << ": " << res << endl;
     return res;
 }
 
 /*
-1234567
+12345678
 010212
 3031323
+14151232
+
 */
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("DELSTR.inp", "r")) {
