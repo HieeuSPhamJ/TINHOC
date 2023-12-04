@@ -1,0 +1,1 @@
+{"name":"Local: taming","url":"d:\\TINHOC\\USACO GUIDE\\Type\\GOLD\\DP-Gold\\taming.cpp","tests":[{"id":1701703243686,"input":"6\n1 1 2 0 0 1","output":"4\n2\n1\n2\n3\n4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\USACO GUIDE\\Type\\GOLD\\DP-Gold\\taming.cpp","group":"local","local":true}
