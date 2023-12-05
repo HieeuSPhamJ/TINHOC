@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"d:\\TINHOC\\OI\\Bedao OI\\Bedao OI Contest 3 day 1\\A.cpp","tests":[{"id":1701784801236,"input":"10\n7 5 w\n6 7 w\n8 7 b\n1 8 v\n3 7 f\n2 8 a\n4 6 y\n9 3 m\n10 5 q","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\OI\\Bedao OI\\Bedao OI Contest 3 day 1\\A.cpp","group":"local","local":true}

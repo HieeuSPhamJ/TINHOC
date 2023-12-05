@@ -1,0 +1,1 @@
+{"name":"Local: substr","url":"d:\\TINHOC\\ONLINE OJ\\VNOJ\\Problems\\substr\\substr.cpp","tests":[{"id":1701783298698,"input":"aaaaa\naa\n","output":"1 2 3 4\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\ONLINE OJ\\VNOJ\\Problems\\substr\\substr.cpp","group":"local","local":true}

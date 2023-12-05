@@ -12,9 +12,14 @@ using namespace std;
 
 int cnt[32];
 
+class Compare{
+public:
+    bool operator()(node a, node b){
+        return a.fi.fi < b.fi.fi;
+    }
+};
+
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("mexquery.inp", "r")) {
@@ -26,7 +31,7 @@ signed main(){
     cout.tie(NULL);
     int n;
     cin >> n;
-    set<node> s;
+    set<node, Compare> s;
     for (int i = 1; i <= n; i++){
         int x;
         cin >> x;
@@ -36,7 +41,7 @@ signed main(){
     cin >> test;
     while(test--){
         // for (auto i: s){
-        //     cout << i.fi.fi << ' ' << i.fi.se << ' ' << i.se << endl;
+        //     cout << i.fi.se - i.fi.fi + 1 << ' ' << i.se << endl;
         // }
         int t;
         cin >> t;
@@ -67,6 +72,7 @@ signed main(){
             s.erase(it);
             if (x.fi.se > r){
                 s.insert({{r + 1, x.fi.se}, x.se});
+                x.fi.se = r;
             }
             // cout << "+" << x.fi.fi << ' ' << x.fi.se << " " << x.se << endl;
             ls.push_back(x);
@@ -144,3 +150,21 @@ signed main(){
     }
     return 0;
 }
+
+/*
+1234567890
+0101211223 
+0101112223 
+
+1 0
+1 1
+1 0
+1 1
+1 2
+1 1
+1 1
+1 2
+1 2
+1 3
+
+*/
