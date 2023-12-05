@@ -9,7 +9,7 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 1e5 + 10;
+const int maxN = 1e6 + 10;
 
 int n, mod;
 vector <ii> adj[maxN];
@@ -28,6 +28,12 @@ int add(int a, int b){
 }
 
 void dfs(int nu, int fa){
+    // static int lim = 0;
+    // lim++;
+    // if (lim > 30){
+    //     exit(1);
+    // }
+    // cout << nu << endl;
     for (auto i: adj[nu]){
         if (i.se == fa){
             continue;
@@ -41,13 +47,12 @@ void dfs(int nu, int fa){
 
 void init(){
     dep[0] = -1;
-    for (int j = 1, base = 1; j <= lg[n]; j++){
-        base = mul(base,10);
+    for (int j = 1; j <= lg[n]; j++){
         for (int i = 1; i <= n; i++){
             father[i][j] = father[father[i][j - 1]][j - 1];
             int fa = father[i][j - 1];
-            up[i][j] = add(mul(up[fa][j - 1], base), up[i][j - 1]);
-            down[i][j] = add(mul(down[i][j - 1], base), down[fa][j - 1]);
+            up[i][j] = add(mul(up[fa][j - 1], po[1 << (j - 1)]), up[i][j - 1]);
+            down[i][j] = add(mul(down[i][j - 1], po[1 << (j - 1)]), down[fa][j - 1]);
         }
     }
 }
@@ -73,10 +78,11 @@ int LCA(int a, int b){
     return father[a][0];
 }
 
+
 int getdown(int a, int lca){
     int res = 0;
     // cout << a << "=" << lca << endl;
-    for (int i = lg[a]; i >= 0; i--){
+    for (int i = lg[dep[a]]; i >= 0; i--){
         if (dep[father[a][i]] >= dep[lca]){
             res = add(down[a][i],mul(res, po[1 << i]));
             // cout << a << " " << i << " " << down[a][i] << " " << po[(1 << i) - 1] << endl;
@@ -90,7 +96,7 @@ int getup(int a, int lca){
     int res = 0;
     // cout << a << "=" << lca << endl;
     int t = 0;
-    for (int i = lg[a]; i >= 0; i--){
+    for (int i = lg[dep[a]]; i >= 0; i--){
         if (dep[father[a][i]] >= dep[lca]){
             res = add(res,mul(up[a][i], po[t]));
             // cout << a << " " << i << " " << up[a][i] << " " << po[t] << endl;
@@ -101,30 +107,7 @@ int getup(int a, int lca){
     return res;
 }
 
-int dist[maxN];
-
-void bfs(int st){
-    queue <int> q;
-    q.push(st);
-    memset(dist, -1, sizeof(dist));
-    dist[st] = 0;
-    while(q.size()){
-        int t = q.front();
-        q.pop();
-        // cout << t << " " << endl;
-        for (auto i: adj[t]){
-            if (dist[i.se] != -1){
-                continue;
-            }
-            dist[i.se] = add(mul(dist[t], 10),i.fi);
-            q.push(i.se);
-        }
-    }
-}
-
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -136,13 +119,14 @@ signed main(){
     cout.tie(NULL);
     cin >> n >> mod;
     po[0] = 1;
-    for (int i = 1; i <= n; i++){
-        lg[i] = log2(i);
+    for (int i = 1; i < maxN; i++){
+        lg[i] = 19;
         po[i] = mul(po[i - 1], 10);
     }
     for (int i = 1; i < n; i++){
         int a, b, w;
         cin >> a >> b >> w;
+        // cout << a << " " << b << " " << w << endl;
         adj[a].push_back({w,b});
         adj[b].push_back({w,a});
     }
@@ -154,8 +138,13 @@ signed main(){
     while(test--){
         int a, b;
         cin >> a >> b;
-        bfs(a);
-        cout << dist[b] << endl;
+        swap(a,b);
+        int lca = LCA(a,b);
+        int goup = getdown(b, lca);
+        int godown = getup(a,lca);
+        // cout << goup << " " << godown << " " << dep[a] - dep[lca] << endl;
+        cout << add(mul(goup, po[dep[a] - dep[lca]]), godown) << endl;
+        // break;
     }
 
     return 0;

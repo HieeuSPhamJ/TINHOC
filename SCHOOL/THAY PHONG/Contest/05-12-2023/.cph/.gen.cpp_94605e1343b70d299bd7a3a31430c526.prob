@@ -1,0 +1,1 @@
+{"name":"Local: gen","url":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY PHONG/Contest/05-12-2023/gen.cpp","tests":[{"id":1701765952103,"input":"2 1\n1 2\n4 4\n1 2\n2 3\n3 4\n4 1","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/hieuphamdinhtrung/TINHOC/SCHOOL/THAY PHONG/Contest/05-12-2023/gen.cpp","group":"local","local":true}

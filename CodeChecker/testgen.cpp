@@ -52,8 +52,15 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = 10;
-    cout << n << endl;
-    cout << randomStr(n) << endl;
+    int n = 1000;
+    cout << n << " " << random(1,10000000000) << endl;
+    for (int i = 2; i <= n; i++){
+        cout << random(1, i - 1) << ' ' << i << " " << random(0,9) << endl;
+    }
+    int test = random(1,1);
+    cout << test << endl;
+    while(test--){
+        cout << random(1,n) << " " << random(1,n) << endl;
+    }
     return 0;
 }

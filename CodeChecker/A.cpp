@@ -9,76 +9,137 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 1e3 + 10;
+const int maxN = 1e5 + 10;
 
-int a[maxN];
-int dp[maxN][maxN];
-int nxtl[maxN];
-int nxtr[maxN];
+int n, mod;
+vector <ii> adj[maxN];
+int up[maxN][20];
+int down[maxN][20];
+int lg[maxN];
+int dep[maxN];
+int father[maxN][20];
+int po[maxN];
 
-int cal(int l, int r){
-    if (dp[l][r] != 0){
-        return dp[l][r];
+int mul(int a, int b){
+    return (a * b) % mod;
+}
+int add(int a, int b){
+    return (a + b) % mod;
+}
+
+void dfs(int nu, int fa){
+    for (auto i: adj[nu]){
+        if (i.se == fa){
+            continue;
+        }
+        dep[i.se] = dep[nu] + 1;
+        up[i.se][0] = down[i.se][0] = i.fi;
+        father[i.se][0] = nu;
+        dfs(i.se, nu);
     }
-    if (l > r){
-        return 0;
-    }
-    if (l == r){
-        return dp[l][r] = 1;
-    }
-    int &res = dp[l][r] = min(cal(l + 1, r), cal(l, r - 1)) + 1;
-    // cout << l << " " << r << ": " << res << endl;
-    for (int mid = l; mid <= r; mid++){
-        if (a[l] == a[mid]){
-            int tres = cal(l + 1, mid - 1) + 1 + cal(mid + 1, r) - (a[l] == a[r] and mid != r);
-            // cout << l << " " << mid << ' ' << r << ": " << tres << endl;
-            res = min(res, tres); 
+}
+
+void init(){
+    dep[0] = -1;
+    for (int j = 1, base = 1; j <= lg[n]; j++){
+        base = mul(base,10);
+        for (int i = 1; i <= n; i++){
+            father[i][j] = father[father[i][j - 1]][j - 1];
+            int fa = father[i][j - 1];
+            up[i][j] = add(mul(up[fa][j - 1], base), up[i][j - 1]);
+            down[i][j] = add(mul(down[i][j - 1], base), down[fa][j - 1]);
         }
     }
-    // cout << l << ' ' << r << ": " << res << endl;
+}
+
+int LCA(int a, int b){
+    if (dep[a] < dep[b]){
+        swap(a,b);
+    }
+    for (int i = lg[dep[a]]; dep[a] != dep[b]; i--){
+        if (dep[father[a][i]] >= dep[b]){
+            a = father[a][i];
+        }
+    }
+    if (a == b){
+        return a;
+    }
+    for (int i = lg[dep[a]]; i >= 0; i--){
+        if (father[a][i] != father[b][i]){
+            a = father[a][i];
+            b = father[b][i];
+        }
+    }
+    return father[a][0];
+}
+
+int getdown(int a, int lca){
+    int res = 0;
+    // cout << a << "=" << lca << endl;
+    for (int i = lg[a]; i >= 0; i--){
+        if (dep[father[a][i]] >= dep[lca]){
+            res = add(down[a][i],mul(res, po[1 << i]));
+            // cout << a << " " << i << " " << down[a][i] << " " << po[(1 << i) - 1] << endl;
+            a = father[a][i];
+        }
+    }
     return res;
 }
 
-/*
-1234567
-010212
-3031323
-*/
+int getup(int a, int lca){
+    int res = 0;
+    // cout << a << "=" << lca << endl;
+    int t = 0;
+    for (int i = lg[a]; i >= 0; i--){
+        if (dep[father[a][i]] >= dep[lca]){
+            res = add(res,mul(up[a][i], po[t]));
+            // cout << a << " " << i << " " << up[a][i] << " " << po[t] << endl;
+            a = father[a][i];
+            t += (1 << i);
+        }
+    }
+    return res;
+}
 
 signed main(){
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen("DELSTR.inp", "r")) {
-        freopen("DELSTR.inp", "r", stdin);
-        freopen("DELSTR.out", "w", stdout);
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    int cnt = 1;
-    a[0] = a[n + 1] = -1;
+    cin >> n >> mod;
+    po[0] = 1;
     for (int i = 1; i <= n; i++){
-        char c;
-        cin >> c;
-        a[cnt] = c - 'a';
-        if (a[cnt - 1] != a[cnt]){
-            cnt++;
-        }
+        lg[i] = log2(i);
+        po[i] = mul(po[i - 1], 10);
     }
-    n = cnt - 1;
-    // for (int i = 1; i <= n; i++){
-    //     cout << a[i];
-    // }
-    // cout << endl;
-    cout << cal(1,n) << endl;
+    for (int i = 1; i < n; i++){
+        int a, b, w;
+        cin >> a >> b >> w;
+        adj[a].push_back({w,b});
+        adj[b].push_back({w,a});
+    }
+    dfs(1,1);
+    init();
+
+    int test;
+    cin >> test;
+    while(test--){
+        int a, b;
+        cin >> a >> b;
+        swap(a,b);
+        int lca = LCA(a,b);
+        int goup = getdown(b, lca);
+        int godown = getup(a,lca);
+        // cout << goup << " " << godown << " " << dep[a] - dep[lca] << endl;
+        cout << add(mul(goup, po[dep[a] - dep[lca]]), godown) << endl;
+    }
+
     return 0;
 }
-
-/*
-1234567890
-abaaaccbcc
-*/

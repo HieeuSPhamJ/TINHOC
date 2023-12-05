@@ -70,6 +70,7 @@ signed main(){
         add(s, node[i].se, costmin(i, s)); 
         add(node[i].se, t, cost(i, t)); 
     }
+    add(s,t,cost(s,t));
     memset(dist, 0x3f, sizeof(dist));
     dist[s] = 0;
     q.push({0,s});
