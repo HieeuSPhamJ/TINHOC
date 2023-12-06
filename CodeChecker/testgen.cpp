@@ -52,15 +52,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = 10;
-    cout << n << " " << random(1,n - 1) << endl;
+    int n = 5;
+    cout << n << endl;
     for (int i = 1; i <= n; i++){
-        cout << random(1,n) << " ";
-    }
-    cout << endl;
-
-    for (int i = 1; i <= n; i++){
-        cout << random(1,n) << " ";
+        cout << random(1,4) << " ";
     }
     return 0;
 }

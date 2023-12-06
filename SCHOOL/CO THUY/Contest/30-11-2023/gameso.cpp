@@ -32,10 +32,8 @@ bool minimize(int &a, int b){
 }
 
 signed main(){
-    if (fopen("input.inp", "r")) {
-        freopen("input.inp", "r", stdin);
-        freopen("A.out", "w", stdout);
-    }
+    // freopen("262144.in", "r", stdin);
+    // freopen("262144.out", "w", stdout);
     if (fopen("gameso.inp", "r")) {
         freopen("gameso.inp", "r", stdin);
         freopen("gameso.out", "w", stdout);
@@ -75,7 +73,7 @@ signed main(){
             }
             dp[i][j] = len / 2;
             if (ok){
-                dp[i][j] +=dp[last[i][j - 1]][j];
+                dp[i][j] += dp[last[i][j - 1]][j];
             }
             if (dp[i][j] and len / 2){
                 res = max(res, j);
@@ -84,12 +82,12 @@ signed main(){
                 break;
             }
             if (ok){
-                last[i][j] = min(last[i][j - 1], last[last[i - 1][j - 1]][j]);   
+                last[i][j] = min(last[i][j - 1], last[last[i][j - 1]][j]);   
             }
             else{
                 last[i][j] = i;
             }
-            // cout << " " << j << ": " << dp[i][j] << " " << last[i][j] << endl;
+            // cout << " " << j << ": " << dp[i][j] << " " << last[i][j] << " " << ok << endl;
         }
     }
     cout << res << endl;
@@ -97,5 +95,5 @@ signed main(){
 }
 
 /*
-3 1 1 1 2 
+4 3 2 1 1 
 */

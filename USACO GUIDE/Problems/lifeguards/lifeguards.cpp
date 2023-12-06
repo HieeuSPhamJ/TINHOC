@@ -49,6 +49,7 @@ signed main(){
         ii cur = a[i];
         for (int j = 0; j <= k; j++){
             // cout << "with: " << i << ' ' << j << ": " << endl;
+            for (int g = 0; g <= k; g++){
             for (int g = 0; i - g - 1 >= 0 and j - g >= 0; g++){
                 ii la = a[i - g - 1];
                 int cost = cur.se - cur.fi + 1;
