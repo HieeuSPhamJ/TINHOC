@@ -53,23 +53,14 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = 10;
-    cout << n << endl;
+    cout << n << " " << random(1,n - 1) << endl;
     for (int i = 1; i <= n; i++){
-        cout << random(0, 3) << " ";
+        cout << random(1,n) << " ";
     }
     cout << endl;
-    int test = random(1,n);
-    cout << test << endl;
-    while(test--){
-        int t = random(1,2);
-        cout << t << " ";
-        if (t == 2){
-            random_pair(n);
-        }
-        else{
-            random_pair(n, ' ');
-            cout << random(1,2) << endl;
-        }
+
+    for (int i = 1; i <= n; i++){
+        cout << random(1,n) << " ";
     }
     return 0;
 }

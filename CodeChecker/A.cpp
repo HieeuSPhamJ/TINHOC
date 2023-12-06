@@ -7,140 +7,96 @@
 #define endl '\n'
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
-#define node pair<ii,int>
 using namespace std;
 
-int cnt[32];
+const int maxN = 110;
+
+ii a[maxN];
+int dp[510][maxN];
+
+bool maximize(int &a, int b){
+    if (a < b){
+        a = b;
+        return 1;
+    }
+    return 0;
+}
+
+bool minimize(int &a, int b){
+    if (a > b){
+        a = b;
+        return 1;
+    }
+    return 0;
+}
 
 signed main(){
     freopen("input.inp", "r", stdin);
     freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen("mexquery.inp", "r")) {
-        freopen("mexquery.inp", "r", stdin);
-        freopen("mexquery.out", "w", stdout);
+    if (fopen("SELL.inp", "r")) {
+        freopen("SELL.inp", "r", stdin);
+        freopen("SELL.out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
-    cin >> n;
-    set<node> s;
+    int n, K;
+    cin >> n >> K;
+    K = min(K, n - K);
+    int total = 0;
     for (int i = 1; i <= n; i++){
-        int x;
-        cin >> x;
-        s.insert({{i,i}, x});
+        cin >> a[i].fi;
+        total += a[i].fi;
     }
-    int test;
-    cin >> test;
-    while(test--){
-        // for (auto i: s){
-        //     cout << i.fi.fi << ' ' << i.fi.se << ' ' << i.se << endl;
-        // }
-        int t;
-        cin >> t;
-        int l, r;
-        cin >> l >> r;
-
-        // cout << "Solve: " << l << " " << r << endl;
-
-        vector <node> ls;
-        auto it = s.lower_bound({{l,l},0});
-        if (it != s.begin()){
-            it--;
-            node tmp = *it;
-            if (tmp.fi.se >= l){
-                ls.push_back({{l, tmp.fi.se}, tmp.se});
-                s.erase(it);
-                tmp.fi.se = l - 1;
-                s.insert(tmp);
-            }
-        }
-        while(1){   
-            it = s.lower_bound({{l,l},0});
-            if (it == s.end() or (*it).fi.fi > r){
-                break;
-            }
-
-            node x = *it;
-            s.erase(it);
-            if (x.fi.se > r){
-                s.insert({{r + 1, x.fi.se}, x.se});
-            }
-            // cout << "+" << x.fi.fi << ' ' << x.fi.se << " " << x.se << endl;
-            ls.push_back(x);
-        }
-
-        for (int i = 0; i <= 31; i++){
-            cnt[i] = 0;
-        }
-
-        if (t == 2){
-            for (auto i: ls){
-                cnt[i.se] = 1;
-                // cout << i.se << endl;
-            }
-            for (int i = 0; i <= 31; i++){
-                int x = cnt[i];
-                if (x == 0){
-                    cout << i << endl;
-                    break;
-                }
-            }
-            vector <node> ts;
-
-            for (auto i: ls){
-                if (ts.empty()){
-                    ts.push_back(i);
-                    continue;
-                }
-                if (ts.back().se == i.se){
-                    ts[ts.size() - 1].fi.se = i.fi.se;
-                }
-                else{
-                    ts.push_back(i);
-                }
-            }
-
-            for (auto x: ts){
-                s.insert(x);
-            }
-        }
-        else{
-            for (auto i: ls){
-                cnt[i.se] += i.fi.se - i.fi.fi + 1;
-                // cout << i.se << endl;
-            }
-            ls.clear();
-            vector <ii> ts;
-            for (int i = 0; i <= 31; i++){
-                if (cnt[i]){
-                    ts.push_back({i,cnt[i]});
-                }
-            }
-            int te;
-            cin >> te;
-            if (te == 1){
-                sort(all(ts));
-            }
-            else{
-                sort(rall(ts));
-            }
-
-            int la = l;
-
-            for (auto i: ts){
-                ls.push_back({{la, la + i.se - 1}, i.fi});
-                la = la + i.se;
-            }
-
-            for (auto x: ls){
-                s.insert(x);
-            }
-
-        }
-        // break;
+    int price = 0;
+    for (int i = 1; i <= n; i++){
+        cin >> a[i].se;
+        price += a[i].se;
     }
+    for (int i = 0; i <= total; i++){
+        for (int j = 0; j <= n; j++){
+            dp[i][j] = 1e18;
+        }
+    }
+    dp[0][0] = 0;
+    for (int i = 1; i <= n; i++){
+        for (int j = total; j >= a[i].fi; j--){
+            for (int k = K; k >= 1; k--){
+                minimize(dp[j][k], dp[j - a[i].fi][k - 1] + a[i].se);
+                // cout << i << ' ' << j << " " << k << ": " << dp[j][k] << endl;
+            }
+        }
+    }
+
+    double res = 1e18;
+    for (int i = 1; i <= total; i++){
+        if (dp[i][K] != 1e18 and dp[i][K] != 0){
+            double tu = (double) dp[i][K] * (price - dp[i][K]);
+            double mau = (double) i * (total - i);
+            res = min(res, tu / mau);
+            // cout << k << " " << i << "/" << dp[i][k] << " " << total - i << "/" << price - dp[i][k] << endl;
+        }
+    }
+
+    cout << fixed << setprecision(3) << res << endl;
+
     return 0;
 }
+
+/*
+a * c
+-----
+b * d
+
+a * (sum - a)
+------------
+b * (price - b)
+
+-a^2 + a*sum
+------------
+-b^2 + b*price 
+
+
+*/
