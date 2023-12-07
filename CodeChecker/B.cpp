@@ -1,41 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 300000;
-const long long INF = (long long)300000 * 1000000000;
-const long double EPS = 1e-3;
+#define f first
+#define s second
 
-int n, k, a[N + 1];
-pair<long double, int> dp[N + 1][2];
+void setIO(string name) {
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	freopen((name+".in").c_str(),"r",stdin);
+	freopen((name+".out").c_str(),"w",stdout);
+}
 
-bool check(long double lambda) {
-	dp[0][0] = {0, 0}, dp[0][1] = {-INF, 0};
-	for (int i = 1; i <= n; ++i) {
-		dp[i][0] = max(dp[i - 1][0], dp[i - 1][1]);
-		dp[i][1] =
-		    max(make_pair(dp[i - 1][1].first + a[i], dp[i - 1][1].second),
-		        make_pair(dp[i - 1][0].first + a[i] - lambda,
-		                  dp[i - 1][0].second + 1));
-	}
-	return max(dp[n][0], dp[n][1]).second >= k;
-};
+const int MX = 1e5+5;
 
+int N,P;
+map<int,int> m;
+int ans[MX];
+ 
+void ins(int y, int v) {
+	auto it = prev(m.upper_bound(y));
+	if (it->s <= v) return;
+	it ++;
+	while (it != end(m) && it->s > v) m.erase(it++);
+	m[y] = v;
+}
+ 
 int main() {
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
-	scanf("%d%d", &n, &k);
-	for (int i = 1; i <= n; ++i) scanf("%d", a + i);
-	long double lower = 0, upper = INF;
-	while (lower + EPS < upper) {
-		long double mid = (lower + upper) / 2;
-		if (check(mid)) {
-			lower = mid;
+	freopen("input.inp", "r", stdin);
+	freopen("B.out", "w", stdout);
+	cin >> N >> P; m[0] = 0;
+	vector<pair<pair<int,int>,pair<int,int>>> ev;
+	for (int i = 0; i < P; ++i) {
+		pair<int,int> a,b; 
+		cin >> a.f >> a.s >> b.f >> b.s;
+		ev.push_back({a,{i,-1}}); // start point
+		ev.push_back({b,{i,1}}); // end point
+	}
+	sort(begin(ev),end(ev));
+	for (auto& t: ev) {
+		if (t.s.s == -1) {
+			ans[t.s.f] = t.f.f+t.f.s+prev(m.upper_bound(t.f.s))->s;
 		} else {
-			upper = mid;
+			ins(t.f.s,ans[t.s.f]-t.f.f-t.f.s);
 		}
 	}
-	long double lambda = lower;
-	check(lambda);
-	printf("%lld\n",
-	       (long long)round(lambda * k + max(dp[n][0], dp[n][1]).first));
+	cout << m.rbegin()->s+2*N;
 }

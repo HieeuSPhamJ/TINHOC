@@ -26,7 +26,7 @@ void add(int a, int b, int c){
         return;
     }
     adj[a].push_back({c,b});
-    // cout << a << " " << b << " " << c << endl;
+    cout << a << " " << b << " " << c << endl;
 }
 
 int cost(int a, int b){
@@ -42,8 +42,6 @@ bool cmpy(int a, int b){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("boards.in", "r")) {
@@ -62,52 +60,35 @@ signed main(){
     int t = k + k + 1;
     add(s,t,cost(s,t));
 
-    vector <int> ls1, ls2;
+    set <pair<ii,int>> ls1, ls2;
 
     for (int i = 1; i <= k; i++){
         cin >> node[i].fi >> node[i].se >> node[i + k].fi >> node[i + k].se;
         add(i, i + k, 0);
         add(s, i, cost(s,i));   
         add(i + k, t, cost(i + k, t));   
-        ls1.push_back(i + k);
-        ls2.push_back(i);
+        ls1.insert({node[i + k], i + k});
+        ls2.insert({node[i],i});
     }
 
-    sort(all(ls1), cmpx);
-    sort(all(ls2), cmpx);
-    for (int i = 1; i < ls2.size(); i++){
-        add(ls2[i],ls2[i - 1],cost(ls2[i],ls2[i - 1]));
-        add(ls2[i - 1],ls2[i],cost(ls2[i],ls2[i - 1]));
-    }
-    for (int i = 0, j = 0; i < ls1.size(); i++){
-        while(node[ls1[i]].fi >= node[ls2[j]].fi and j + 1 > ls2.size()){
-            j++;
+    for (int i = 1; i <= k; i++){
+        auto it1 = ls1.upper_bound({node[i],i});
+        if (it1 != ls1.end()){
+            add(i, (*it1).se, cost(i,(*it1).se));
         }
-        add(ls1[i],ls2[j],cost(ls1[i],ls2[j]));
-        if (j){
-            add(ls1[i],ls2[j - 1],cost(ls1[i],ls2[j - 1]));
-        }
-        if (j + 1 < ls2.size()){
-            add(ls1[i],ls2[j + 1],cost(ls1[i],ls2[j + 1]));
+        it1++;
+        if (it1 != ls1.end()){
+            add(i, (*it1).se, cost(i,(*it1).se));
         }
     }
-
-    sort(all(ls1), cmpy);
-    sort(all(ls2), cmpy);
-    for (int i = 1; i < ls2.size(); i++){
-        add(ls2[i],ls2[i - 1],cost(ls2[i],ls2[i - 1]));
-        add(ls2[i - 1],ls2[i],cost(ls2[i],ls2[i - 1]));
-    }
-    for (int i = 0, j = 0; i < ls1.size(); i++){
-        while(node[ls1[i]].se > node[ls2[j]].se and j + 1 > ls2.size()){
-            j++;
+    for (int i = k + 1; i <= 2 * k; i++){
+        auto it1 = ls1.upper_bound({node[i],i});
+        if (it1 != ls1.end()){
+            add(i, (*it1).se, cost(i,(*it1).se));
         }
-        add(ls1[i],ls2[j],cost(ls1[i],ls2[j]));
-        if (j){
-            add(ls1[i],ls2[j - 1],cost(ls1[i],ls2[j - 1]));
-        }
-        if (j + 1 < ls2.size()){
-            add(ls1[i],ls2[j + 1],cost(ls1[i],ls2[j + 1]));
+        it1++;
+        if (it1 != ls1.end()){
+            add(i, (*it1).se, cost(i,(*it1).se));
         }
     }
 
@@ -123,7 +104,7 @@ signed main(){
         for (auto i: adj[nu.se]){
             if (dist[i.se] > nu.fi + i.fi){
                 dist[i.se] = nu.fi + i.fi;
-                // cout << nu.se << " " << i.se << ' ' << i.fi << " " << dist[i.se] << endl;
+                // cout << nu.se << " " << i.se << ' ' << i.fi << endl;
                 q.push({dist[i.se], i.se});
             }
         }

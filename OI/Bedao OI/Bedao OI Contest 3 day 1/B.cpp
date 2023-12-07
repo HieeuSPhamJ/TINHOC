@@ -1,23 +1,99 @@
 #include"bits/stdc++.h"
 #define int long long
-#define double long double
+//#define double long double
 #define ii pair <int,int>
 #define fi first
 #define se second
 #define endl '\n'
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
-#define node pair<ii,int>
 using namespace std;
 
-int cnt[32];
+const int maxN = 3e5 + 10;
 
-class Compare{
-public:
-    bool operator()(node a, node b){
-        return a.fi.fi < b.fi.fi;
+int n;
+int a[maxN];
+
+struct segmenttree{
+    int seg[maxN * 4];
+    int lazy[maxN * 4];
+    segmenttree(){
+        memset(lazy, -1, sizeof(lazy));
+        memset(seg, 0, sizeof(seg));
+        
     }
-};
+    void setLazy(int i, int l, int r){
+        int val = lazy[i];
+        lazy[i] = -1;
+        if (val == -1){
+            return;
+        }
+        int mid = (l + r) / 2;
+        seg[2 * i] = val * (mid - l + 1);
+        seg[2 * i + 1] = val * (r - mid);
+        lazy[2 * i] = val;
+        lazy[2 * i + 1] = val;
+    }
+
+    void update(int i, int left, int right, int _left, int _right, int val){
+        if (right < _left or _right < left){
+            return;
+        }
+        if (_left <= left and right <= _right){
+            seg[i] = (right - left + 1) * val;
+            lazy[i] = val;
+            return;
+        }
+
+        setLazy(i, left, right);
+
+        int mid = (left + right) / 2;
+
+        update(2 * i, left, mid, _left, _right, val);
+        update(2 * i + 1, mid + 1, right, _left, _right, val);
+        seg[i] = (seg[2 * i] + seg[2 * i + 1]);
+    }
+
+    int get(int i, int left, int right, int _left, int _right){
+        if (right < _left or _right < left){
+            return 0;
+        }
+        if (_left <= left and right <= _right){
+            return seg[i];
+        }
+
+        setLazy(i, left, right);
+
+        int mid = (left + right) / 2;
+
+        int t1 = get(2 * i, left, mid, _left, _right);
+        int t2 = get(2 * i + 1, mid + 1, right, _left, _right);
+        return t1 + t2;
+    }
+
+    void update(int l, int r, int v){
+        update(1,1,n,l,r,v);
+    }
+
+    int get(int l, int r){
+        return get(1,1,n,l,r);
+    }
+
+} Tree[31];
+
+
+void print(){
+    cout << "===!===" << endl;
+    for (int t = 0; t <= 4; t++){
+        cout << t << ":";
+        for (int i = 1; i <= n; i++){
+            cout << Tree[t].get(i,i);
+        }
+        cout << endl;
+    }
+}
+
+int tmp[32];
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -29,142 +105,64 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n;
     cin >> n;
-    set<node, Compare> s;
     for (int i = 1; i <= n; i++){
-        int x;
-        cin >> x;
-        s.insert({{i,i}, x});
+        cin >> a[i];
+        Tree[a[i]].update(i,i,1);
     }
+
     int test;
     cin >> test;
     while(test--){
-        // for (auto i: s){
-        //     cout << i.fi.se - i.fi.fi + 1 << ' ' << i.se << endl;
-        // }
-        int t;
-        cin >> t;
+        int te;
+        cin >> te;
         int l, r;
         cin >> l >> r;
-
-        // cout << "Solve: " << l << " " << r << endl;
-
-        vector <node> ls;
-        auto it = s.lower_bound({{l,l},0});
-        if (it != s.begin()){
-            it--;
-            node tmp = *it;
-            if (tmp.fi.se >= l){
-                ls.push_back({{l, tmp.fi.se}, tmp.se});
-                s.erase(it);
-                tmp.fi.se = l - 1;
-                s.insert(tmp);
-            }
+        for (int i = 0; i <= 30; i++){
+            tmp[i] = Tree[i].get(l,r);
         }
-        while(1){   
-            it = s.lower_bound({{l,l},0});
-            if (it == s.end() or (*it).fi.fi > r){
-                break;
-            }
-
-            node x = *it;
-            s.erase(it);
-            if (x.fi.se > r){
-                s.insert({{r + 1, x.fi.se}, x.se});
-                x.fi.se = r;
-            }
-            // cout << "+" << x.fi.fi << ' ' << x.fi.se << " " << x.se << endl;
-            ls.push_back(x);
-        }
-
-        for (int i = 0; i <= 31; i++){
-            cnt[i] = 0;
-        }
-
-        if (t == 2){
-            for (auto i: ls){
-                cnt[i.se] = 1;
-                // cout << i.se << endl;
-            }
+        if (te == 2){
             for (int i = 0; i <= 31; i++){
-                int x = cnt[i];
-                if (x == 0){
+                // cout << i << " " << tmp[i] << endl;
+                if (tmp[i] == 0){
                     cout << i << endl;
-                    break;
+                    goto bru;
                 }
-            }
-            vector <node> ts;
-
-            for (auto i: ls){
-                if (ts.empty()){
-                    ts.push_back(i);
-                    continue;
-                }
-                if (ts.back().se == i.se){
-                    ts[ts.size() - 1].fi.se = i.fi.se;
-                }
-                else{
-                    ts.push_back(i);
-                }
-            }
-
-            for (auto x: ts){
-                s.insert(x);
             }
         }
         else{
-            for (auto i: ls){
-                cnt[i.se] += i.fi.se - i.fi.fi + 1;
-                // cout << i.se << endl;
-            }
-            ls.clear();
-            vector <ii> ts;
-            for (int i = 0; i <= 31; i++){
-                if (cnt[i]){
-                    ts.push_back({i,cnt[i]});
+            int t;
+            cin >> t;
+            // cout << l << ' ' << r << " " << t << endl;
+            // print();
+            if (t == 1){
+                for (int i = 0, la = l; i <= 30; i++){
+                    Tree[i].update(l,r,0);
+                    if (tmp[i]){
+                        // cout << " add "<< i << " " << la << " " << la + tmp[i] - 1 << endl;
+                        Tree[i].update(la, la + tmp[i] - 1, 1);
+                    }
+                    la += tmp[i];
                 }
             }
-            int te;
-            cin >> te;
-            if (te == 1){
-                sort(all(ts));
-            }
             else{
-                sort(rall(ts));
+                for (int i = 30, la = l; i >= 0; i--){
+                    Tree[i].update(l,r,0);
+                    if (tmp[i]){
+                        // cout << " add "<< i << " " << la << " " << la + tmp[i] - 1 << endl;
+                        Tree[i].update(la, la + tmp[i] - 1, 1);
+                    }
+                    la += tmp[i];
+                }
             }
-
-            int la = l;
-
-            for (auto i: ts){
-                ls.push_back({{la, la + i.se - 1}, i.fi});
-                la = la + i.se;
-            }
-
-            for (auto x: ls){
-                s.insert(x);
-            }
-
+            // print();
         }
-        // break;
+        bru:;
     }
     return 0;
 }
 
 /*
-1234567890
-0101211223 
-0101112223 
-
-1 0
-1 1
-1 0
-1 1
-1 2
-1 1
-1 1
-1 2
-1 2
-1 3
-
+1 3 2 0 4
+0 1 2 3 4
 */
