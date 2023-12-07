@@ -53,9 +53,9 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = 5;
-    cout << n << endl;
+    cout << n << " " << random(1,n) << endl;
     for (int i = 1; i <= n; i++){
-        cout << random(1,4) << " ";
+        cout << random(-4,4) << " ";
     }
     return 0;
 }

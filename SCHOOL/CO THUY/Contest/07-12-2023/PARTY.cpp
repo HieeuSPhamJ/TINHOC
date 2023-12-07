@@ -14,8 +14,6 @@ const int maxN = 2010;
 int dp[maxN][maxN];
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("PARTY.inp", "r")) {
@@ -58,14 +56,15 @@ signed main(){
     //     cout << i << " ";
     // }
     // cout << endl;
-
+    int res = 0;
     for (int i = 0; i < (int)ls.size(); i++){
         for (int j = 1; j <= k; j++){
             dp[i + 1][j] = max(dp[i + 1][j], dp[i][j] + ls[i]);
             dp[i + 1][j + 1] = max(dp[i + 1][j + 1], dp[i][j]);
+            res = max({res, dp[i + 1][j], dp[i + 1][j + 1]});
         }
     }
 
-    cout << dp[ls.size()][k] << endl;
+    cout << res << endl;
     return 0;
 }
