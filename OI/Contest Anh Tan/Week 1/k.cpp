@@ -13,7 +13,6 @@ const int maxN = 3e5 + 10;
 
 int n, k, p;
 int dp[maxN];
-int pre[maxN];
 
 void init(){
     dp[0] = 1;
@@ -31,8 +30,8 @@ void init(){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
+    // freopen("input.inp", "r", stdin);
+    // freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {

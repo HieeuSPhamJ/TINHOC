@@ -52,29 +52,24 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = 10;
-    int k = random(1,3);
-    cout << n << " " << k << endl;
-    set <ii> s;
-    s.insert({0,0});
-    s.insert({n,n});
-    
-    while(k){
-        int x = random(1,n);
-        int y = random(1,n);
-        int u = random(x,n);
-        int v = random(y,n);
-        if (s.find({x,y}) != s.end()){
-            continue;
+    int n = 20;
+    int p = random(0,10);
+    cout << n << ' ' << random(1,n * n) << " " << p << endl;
+    for (int i = 1, la = 0; i <= n; i++){
+        if (la >= p){
+            if (random(0,1)){
+                cout << 1;
+                la = 0;
+            }
+            else{
+                cout << 0;
+                la++;
+            }
         }
-        if (s.find({u,v}) != s.end()){
-            continue;
+        else{
+            cout << 0;
+            la++;
         }
-        s.insert({x,y});
-        s.insert({u,v});
-        
-        cout << x << " " << y << " " << u << " " << v << endl;
-        k--;
     }
     return 0;
 }

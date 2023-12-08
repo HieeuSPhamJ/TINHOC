@@ -1,106 +1,144 @@
-#include"bits/stdc++.h"
-#define int long long
-#define double long double
-#define ii pair <int,int>
-#define fi first
-#define se second
-#define endl '\n'
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
+#include<bits/stdc++.h>
+
 using namespace std;
 
-const int maxN = 1e6 + 10;
+const int N = 3e5 + 5;
 
-ii a[maxN];
+int n , k , a[N] , cnt[N] , Pre[N] , vt[N] , pre[N][3];
 
-bool cmp(int x, int y){
-    if (a[x].se != a[y].se){
-        return a[x].se < a[y].se;
+int st[4 * N];
+
+void update(int id , int l , int r , int u , int v){
+    if(u > r || u < l) return;
+    if(l == r){
+        st[id] += v;
+        return;
     }
-    if (a[x].fi != a[y].fi){
-        return a[x].fi > a[y].fi;
-    }
-    return x < y;
+    int mid = l + r >> 1;
+    update(id * 2 , l , mid , u , v);
+    update(id * 2 + 1 , mid + 1 , r , u , v);
+    st[id] = st[id * 2] + st[id * 2 + 1];
 }
 
-signed main(){
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    if (fopen(".inp", "r")) {
-        freopen(".inp", "r", stdin);
-        freopen(".out", "w", stdout);
+int get(int id , int l , int r , int u , int v){
+    if(u > r || v < l) return 0;
+    if(u <= l && v >= r){
+        return st[id];
     }
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n;
-    cin >> n;
-    int ok = 0;
-    for (int i = 1; i <= n; i++){
-        int x;
-        cin >> x;
-        a[i + n].fi = a[i].fi = x;
-        ok += x;
-    }
-    if (ok < n){
-        cout << -1 << endl;
-        return 0;
-    }
-    vector <int> ls;
-    for (int i = 1; i <= n; i++){
-        int x;
-        cin >> x;
-        a[i + n].se = a[i].se = x;
-        if (a[i].fi){
-            ls.push_back(i);
-        }
-    }
-
-    sort(all(ls), cmp);
-
-    // for (auto i: ls){
-    //     cout << a[i].se << " ";
-    // }
-    // cout << endl;
-    int res = 1e18;
-    int can = 0;
-    priority_queue <ii, vector <ii>, greater <ii>> q;
-    for (auto st: ls){
-        while(q.size()){
-            q.pop();
-        }
-        int tres = 0;
-        // cout << "with: " << st << endl;
-        for (int i = st; i < st + n; i++){
-            can++;
-            if (can > 2e6){
-                cout << res << endl;
-                return 0;
-            }
-            if (a[i].fi){
-                q.push({a[i].se, a[i].fi});
-            }
-            if (q.size()){
-                ii t = q.top();
-                q.pop();
-                t.se--;
-                if (t.se){
-                    q.push(t);
+    int mid = l + r >> 1;
+    return get(id * 2 , l , mid , u, v) + get(id * 2 + 1,  mid + 1 , r , u , v);
+}
+int32_t main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);cout.tie(0);
+    cin >> n >> k;
+    for(int i = 1 ; i <= n ; i++) cin >> a[i];
+    if(n <= 3000 && k <= 3000){
+        int res = 0;
+        for(int i = 1 ; i <= n ; i++){
+            set<pair<int , int>> s;
+            for(int j = i ; j <= n ; j++){
+                if(cnt[a[j]] == 0){
+                    cnt[a[j]]++;
+                    s . insert({cnt[a[j]] , a[j]});
                 }
-                // cout << t.fi << endl;
-                tres += t.fi;
+                else{
+                    auto it = s . find({cnt[a[j]] , a[j]});
+                    s . erase(it);
+                    cnt[a[j]]++;
+                    s . insert({cnt[a[j]] , a[j]});
+                }
+                auto it = s . begin();
+                int x = (*it) . first;
+                it = (s . end());
+                it--;
+                int y = (*it) . first;
+                if(x == k && y == k) res++;
             }
-            else{
-                goto bru;
+            for(int j = 1 ; j <= n ; j++) cnt[j] = 0;
+        }
+        cout << res;
+    }
+    else if(k == 1){
+        long long res = 0;
+        for(int i = 1 ; i <= n ; i++){
+            update(1 , 1 , n , Pre[a[i]] , -1);
+            update(1 , 1 , n , i , 1);
+            Pre[a[i]] = i;
+            int l = 1 , r = i;
+            int j = i;
+            while(l <= r){
+                int mid = l + r >> 1;
+                if(get(1 , 1 , n , mid , i) == (i - mid + 1)){
+                    r = mid - 1;
+                    j = mid;
+                }
+                else{
+                    l = mid + 1;
+                }
+            }
+            res += (i - j + 1);
+        }
+        cout << res;
+    }
+    else{
+        for(int i = 1 ; i <= n ; i++){
+            for(int j = 1 ; j <= 2 ; j++){
+                pre[i][j] = pre[i - 1][j] + (a[i] == j ? 1 : 0);
             }
         }
-        res = min(res, tres);
-        bru:;
+        for(int i = 1 ; i <= n ; i++){
+            int j = a[i];
+            int l = 1 , r = i;
+            int res = i;
+            if(pre[i][j] < k) continue;
+            while(l <= r){
+                int mid = l + r >> 1;
+                if(pre[i][j] - pre[mid - 1][j] >= k){
+                    res = mid;
+                    l = mid + 1;
+                }
+                else{
+                    r = mid - 1;
+                }
+            }
+            vt[i] = res;
+        }
+        int res = 0;
+        for(int i = 1 ; i <= n ; i++){
+            int j = vt[i];
+            if(vt[i] == 0) continue;
+            if(i - j + 1 == k){
+              //  cout << i << ' ' << j << "\n";
+                res++;
+            }
+            int x = (a[i] == 1 ? 2 : 1);
+            int l = 1 , r = i;
+            while(l <= r){
+                int mid = l + r >> 1;
+                if(pre[i][x] - pre[mid - 1][x] >= k){
+                    l = mid + 1;
+                    j = mid;
+                }
+                else{
+                    r = mid - 1;
+                }
+            }
+            if(i - j + 1 == 2 * k && pre[i][a[i]] - pre[j - 1][a[i]] == k){
+                //cout << i << ' ' << j << "\n";
+                res++;
+            }
+            if(j > vt[i] && i - vt[i] + 1 == 2 * k ){
+                res++;
+            }
+
+
+        }
+        cout << res;
     }
-    if (res == 1e18){
-        cout << -1 << endl;
-        return 0;
-    }
-    cout << res << endl;
+
     return 0;
 }
+/*┌─────────────────────────────────────────────────────────────────────────┐ 
+  │ Just believe in yourself and try your best. Flower will pray for you... │ 
+  └─────────────────────────────────────────────────────────────────────────┘*/

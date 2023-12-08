@@ -1,47 +1,52 @@
-#include <bits/stdc++.h>
+#include"bits/stdc++.h"
+#define int long long
+//#define double long double
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define endl '\n'
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-#define f first
-#define s second
-
-void setIO(string name) {
-	ios_base::sync_with_stdio(0); cin.tie(0);
-	freopen((name+".in").c_str(),"r",stdin);
-	freopen((name+".out").c_str(),"w",stdout);
-}
-
-const int MX = 1e5+5;
-
-int N,P;
-map<int,int> m;
-int ans[MX];
- 
-void ins(int y, int v) {
-	auto it = prev(m.upper_bound(y));
-	if (it->s <= v) return;
-	it ++;
-	while (it != end(m) && it->s > v) m.erase(it++);
-	m[y] = v;
-}
- 
-int main() {
+signed main(){
 	freopen("input.inp", "r", stdin);
 	freopen("B.out", "w", stdout);
-	cin >> N >> P; m[0] = 0;
-	vector<pair<pair<int,int>,pair<int,int>>> ev;
-	for (int i = 0; i < P; ++i) {
-		pair<int,int> a,b; 
-		cin >> a.f >> a.s >> b.f >> b.s;
-		ev.push_back({a,{i,-1}}); // start point
-		ev.push_back({b,{i,1}}); // end point
+	//freopen("input.INP", "r", stdin);
+	//freopen("output.OUT", "w", stdout);
+	if (fopen(".inp", "r")) {
+		freopen(".inp", "r", stdin);
+		freopen(".out", "w", stdout);
 	}
-	sort(begin(ev),end(ev));
-	for (auto& t: ev) {
-		if (t.s.s == -1) {
-			ans[t.s.f] = t.f.f+t.f.s+prev(m.upper_bound(t.f.s))->s;
-		} else {
-			ins(t.f.s,ans[t.s.f]-t.f.f-t.f.s);
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	int n, k, p;
+	cin >> n >> k >> p;
+	string s;
+	cin >> s;
+	int mask = 0;
+	for (int i = 1; i <= n; i++){
+		if (s[i - 1] == '1'){
+			mask += (1 << (n - i));
 		}
 	}
-	cout << m.rbegin()->s+2*N;
+	for (int cnt = -1;mask < (1 << n);mask++){
+		int ok = 1;
+		for (int i = 1; i <= p; i++){
+			if (mask & (mask << i)){
+				ok = 0;
+			}
+		}
+		cnt+=ok;
+        if (ok){
+			// cout << bitset<5>(mask) << endl;
+        }
+		if (cnt == k){
+			cout << bitset<20>(mask) << endl;
+			return 0;
+		}
+	}
+    cout << -1 << endl;
+	return 0;
 }
