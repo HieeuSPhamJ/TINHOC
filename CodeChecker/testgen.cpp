@@ -52,24 +52,6 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = 20;
-    int p = random(0,10);
-    cout << n << ' ' << random(1,n * n) << " " << p << endl;
-    for (int i = 1, la = 0; i <= n; i++){
-        if (la >= p){
-            if (random(0,1)){
-                cout << 1;
-                la = 0;
-            }
-            else{
-                cout << 0;
-                la++;
-            }
-        }
-        else{
-            cout << 0;
-            la++;
-        }
-    }
+    cout << random(1, 1000 - 1) << endl;
     return 0;
 }

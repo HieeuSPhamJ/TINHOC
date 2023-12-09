@@ -21,32 +21,31 @@ signed main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
-	int n, k, p;
-	cin >> n >> k >> p;
-	string s;
-	cin >> s;
-	int mask = 0;
-	for (int i = 1; i <= n; i++){
-		if (s[i - 1] == '1'){
-			mask += (1 << (n - i));
-		}
-	}
-	for (int cnt = -1;mask < (1 << n);mask++){
-		int ok = 1;
-		for (int i = 1; i <= p; i++){
-			if (mask & (mask << i)){
-				ok = 0;
-			}
-		}
-		cnt+=ok;
-        if (ok){
-			// cout << bitset<5>(mask) << endl;
+    int n;
+    cin >> n;
+    int res = 0;
+    for (int i = pow(10, (int)log10(n)); i <= n; i++){
+        int a = i;
+        int b = n - i;
+        if ((int)log10(b) != (int)log10(n)){
+            break;
         }
-		if (cnt == k){
-			cout << bitset<20>(mask) << endl;
-			return 0;
-		}
-	}
-    cout << -1 << endl;
+        for (int la = -1; a; a/=10){
+            if (la == a % 10){
+                goto bru;
+            }
+            la = a % 10;
+        }
+        for (int la = -1; b; b/=10){
+            if (la == b % 10){
+                goto bru;
+            }
+            la = b % 10;
+        }
+        // cout << i << " " << n - i << endl;
+        res++;
+        bru:;
+    }
+    cout << res << endl;
 	return 0;
 }

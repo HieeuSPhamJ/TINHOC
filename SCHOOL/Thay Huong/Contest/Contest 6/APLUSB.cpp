@@ -10,13 +10,12 @@
 using namespace std;
 
 const int maxN = 10010;
+const int mod = 1e9 + 7;
 
 int a[maxN];
 int dp[maxN][10][10][2][2];
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("APLUSB.inp", "r")) {
@@ -45,51 +44,35 @@ signed main(){
         }
     }
 
-    // dp[1][2][1][0][0] = 1;
-
     for (int i = 1; i < n; i++){
     for (int d1 = 0; d1 <= 9; d1++){
     for (int d2 = 0; d2 <= 9; d2++){
     for (int laRem = 0; laRem <= 1; laRem++){
     for (int rem = 0; rem <= 1; rem++){
         int cur = dp[i][d1][d2][laRem][rem];
-        if (cur == 0){
-            continue;
-        }
-        // cout << i << " " << d1 << " " << d2 << " " << laRem << " " << rem << ": " << cur << endl;
-        for (int nd = 0; nd <= 9; nd++){
-            int d = 10 * rem + a[i + 1];
-            // cout << d << " " << nd << " " << d - nd << endl;
-            if (nd == d1){
-                continue;
-            }
-            if (0 <= d - nd and d - nd <= 9 and d - nd != d2){
-                dp[i + 1][nd][d - nd][rem][0] += cur;
-                // cout << " =>" << i + 1 << " " << nd << " " << d - nd << " " << rem << " " << 0 << endl;
-            }
-            if (0 <= d - nd - 1 and d - nd - 1 <= 9 and d - nd - 1 != d2){
-                dp[i + 1][nd][d - nd - 1][rem][1] += cur;
-                // cout << " =>" << i + 1 << " " << nd << " " << d - nd - 1 << " " << rem << " " << 1 << endl;
+        if (cur){
+            for (int nd = 0; nd <= 9; nd++){
+                int d = 10 * rem + a[i + 1];
+                if (nd != d1){
+                    if (0 <= d - nd and d - nd <= 9 and d - nd != d2){
+                        (dp[i + 1][nd][d - nd][rem][0] += cur) %= mod;
+                    }
+                    if (0 <= d - nd - 1 and d - nd - 1 <= 9 and d - nd - 1 != d2){
+                        (dp[i + 1][nd][d - nd - 1][rem][1] += cur) %= mod;
+                    }
+                }
             }
         }
-    }
-    }
-    }
-    }
-    }
+    }}}}}
 
-    // cout << "==Get res==" << endl;
     int res = 0;
     for (int i = 0; i <= 9; i++){
         if (a[n] - i >= 0){
-            res += dp[n][i][a[n] - i][0][0];
-            // cout << n << " " << i << " " << a[n] - i << " " << 0 << " " << 0 << ": " << dp[n][i][a[n] - i][0][0] << endl;
+            (res += dp[n][i][a[n] - i][0][0]) %= mod;
         }
         if (a[n] + 10 - i <= 9){
-            res += dp[n][i][a[n] + 10 - i][1][0];
-            // cout << n << " " << i << " " << a[n] + 10 - i << " " << 1 << " " << 0 << ": " << dp[n][i][a[n] + 10 - i][1][0] << endl;
+            (res += dp[n][i][a[n] + 10 - i][1][0]) %= mod;
         }
-        
     }
 
     cout << res << endl;
