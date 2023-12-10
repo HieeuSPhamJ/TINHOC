@@ -13,6 +13,7 @@ const int maxN = 3e5 + 10;
 
 int n, k, p;
 int dp[maxN];
+int a[maxN];
 
 void init(){
     dp[0] = 1;
@@ -22,6 +23,9 @@ void init(){
         if (i - p - 1 >= 0){
             dp[i] += dp[i - p - 1] - 1;
             // cout << i << " " << i - k - 1 << endl;
+        }
+        if (dp[i] >= 1e9){
+            break;
         }
     }
     // for (int i = 0; i <= n; i++){
@@ -45,31 +49,14 @@ signed main(){
     init();
     string s;
     cin >> s;
-    int k0 = 1;
-    for (int i = 0; i < n; i++){
-        if (s[i] == '1'){
-            k0 += dp[n - i - 1];
-            // cout << i << " " << dp[n - i - 1] << endl;
-        }
+    for (int i = 1; i <= n; i++){
+        a[i] = (s[n - i] == '1');
     }
-    k += k0;
-    // cout << "target: " << k << " " << k0 << endl;
-    if (dp[n] < k){
-        cout << -1 << endl;
-        return 0;
+    int ok = 1;
+    for (int i = n; i >= 1; i--){
+        
     }
-    for (int i = n, cnt = 1; i >= 1; i--){
-        // cout << i << " " << cnt << " " << dp[i - 1] << endl;
-        if (cnt + dp[i - 1] <= k){
-            cout << 1;
-            cnt += dp[i - 1];
-        }
-        else{
-            cout << 0;
-        }
-        // cout << endl;
-    }
-    cout << endl;
+
     return 0;
 }
 

@@ -60,8 +60,6 @@ int cal(){
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen("paintbarn.in", "r")) {
@@ -80,7 +78,7 @@ signed main(){
         b[u][y]--;
         b[u][v]++;
     }
-    n = 205;
+    n = 199;
     for (int i = 0; i <= n; i++){
         for (int j = 0; j <= n; j++){
             t[j] += b[i][j];
@@ -93,6 +91,7 @@ signed main(){
     int sum = 0;
     for (int i = 0; i <= n; i++){
         for (int j = 0; j <= n; j++){
+            // cout << a[i][j] << " ";
             if (a[i][j] == k){
                 a[i][j] = -1;
                 sum++;
@@ -104,7 +103,6 @@ signed main(){
             else{
                 a[i][j] = 0;
             }
-            // cout << a[i][j] << " ";
         }
         // cout << endl;
     }
