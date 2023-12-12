@@ -1,80 +1,73 @@
-#include <bits/stdc++.h>
-
+#include"bits/stdc++.h"
+#define int long long
+//#define double long double
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define endl '\n'
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-typedef long long ll;
-typedef pair<int, int> pii;
-typedef pair<pii, int> ppiii;
+const int mod = 1e9 + 7;
 
-int dp[201][201];
-int actual[201][201];
-
-int rectangleSum(int a, int b, int x, int y) {
-  return actual[a+x][b+y] - actual[a][b+y] - actual[a+x][b] + actual[a][b];
-}
-
-int topDP[201];
-int bottomDP[201];
-int leftDP[201];
-int rightDP[201];
-
-int main() {
+signed main(){
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-  int n, k;
-  cin >> n >> k;
-  while(n--) {
-    int a, b, c, d;
-    cin >> a >> b >> c >> d;
-    dp[a][b]++;
-    dp[a][d]--;
-    dp[c][b]--;
-    dp[c][d]++;
-  }
-  int currAmt = 0;
-  int ret = 0;
-  for(int i = 0; i < 200; i++) {
-    for(int j = 0; j < 200; j++) {
-      if(i) dp[i][j] += dp[i-1][j];
-      if(j) dp[i][j] += dp[i][j-1];
-      if(i && j) dp[i][j] -= dp[i-1][j-1];
-      if(dp[i][j] == k-1) actual[i+1][j+1] = 1;
-      if(dp[i][j] == k) {
-        currAmt++;
-        actual[i+1][j+1] = -1;
-      }
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
     }
-  }
-  for(int i = 1; i <= 200; i++) {
-    for(int j = 1; j <= 200; j++) {
-      actual[i][j] += actual[i-1][j];
-      actual[i][j] += actual[i][j-1];
-      actual[i][j] -= actual[i-1][j-1];
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int n, k;
+    cin >> n >> k;
+    vector <ii> ls;
+    for (int i = 1; i <= n; i++){
+        int x;
+        cin >> x;
+        int t = 1;
+        if (x == 1){
+            t = 0;
+        }
+        for (int j = 2; j * j <= x; j++){
+            if (x % j == 0){
+                t = 0;
+                break;
+            }
+        }
+        ls.push_back({x,t});
     }
-  }
-  for(int lhs = 0; lhs <= 200; lhs++) {
-    for(int len = 1; lhs + len <= 200; len++) {
-      int topSum = 0;
-      int leftSum = 0;
-      int rightSum = 0;
-      int bottomSum = 0;
-      for(int i = 1; i <= 200; i++) {
-        ret = max(ret, topDP[i] = max(topDP[i], topSum = max(0, topSum + rectangleSum(i-1, lhs, 1, len))));
-        ret = max(ret, leftDP[i] = max(leftDP[i], leftSum = max(0, leftSum + rectangleSum(lhs, i-1, len, 1))));
-        ret = max(ret, rightDP[i] = max(rightDP[i], rightSum = max(0, rightSum + rectangleSum(lhs, 200-i, len, 1))));
-        ret = max(ret, bottomDP[i] = max(bottomDP[i], bottomSum = max(0, bottomSum + rectangleSum(200-i, lhs, 1, len))));
-      }
+
+    int res = 0;
+
+    for (int mask = 1; mask < (1 << n); mask++){
+        if (__builtin_popcount(mask) != k){
+            continue;
+        }
+        map <int,int> cnt;
+        for (int i = 0; i < n; i++){
+            if (mask & (1 << i)){
+                if (ls[i].se){
+                    cnt[ls[i].fi]++;
+                }
+            }
+        }
+        for (auto i: cnt){
+            if (i.se > 1){
+                goto bru;
+            }
+        }
+
+        (res += 1) %= mod;
+
+        bru:;
     }
-  }
-  for(int i = 2; i <= 200; i++) {
-    topDP[i] = max(topDP[i], topDP[i-1]);
-    leftDP[i] = max(leftDP[i], leftDP[i-1]);
-    rightDP[i] = max(rightDP[i], rightDP[i-1]);
-    bottomDP[i] = max(bottomDP[i], bottomDP[i-1]);
-  }
-  for(int i = 1; i <= 199; i++) {
-    ret = max(ret, topDP[i] + bottomDP[200-i]);
-    ret = max(ret, leftDP[i] + rightDP[200-i]);
-  }
-  cout << ret + currAmt << "\n";
+
+    cout << res << endl;
+
+    return 0;
 }

@@ -102,11 +102,13 @@ signed main(){
 
     
     // cout << cnt << endl;
-
+    int pre = 1;
     for (auto i: ls){
         // cout << i << " " << cnt << endl;
-        res = add(res, C(cnt + i - 2,k - 2));
+        int cur = mul(pre, C(cnt + i - 2,k - 2));
+        res = add(res, cur);
         cnt += 2;
+        pre = mul(pre, i + 1);
     }
 
 
