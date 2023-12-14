@@ -10,12 +10,13 @@
 using namespace std;
 
 bool cmp(ii a, ii b){
+    if (a.fi * b.se == b.fi * a.se){
+        return a.fi > b.fi;
+    }
     return a.fi * b.se < b.fi * a.se;
 }
 
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -39,7 +40,6 @@ signed main(){
     while(k--){
         res.fi += ls.back().fi;
         res.se += ls.back().se;
-        cout << ls.back().fi << " " << ls.back().se << endl;
         ls.pop_back();
     }
 
@@ -51,3 +51,12 @@ signed main(){
     cout << res.fi << " " << res.se << endl;
     return 0;
 }
+
+/*
+(a1 + a2) / (b1 + b2) > (a1 + a3) / (b1 + b3)
+(a1 + a2) * (b1 + b3) > (a1 + a3) * (b1 + b2)
+a1b3 + a2b1 + a2b3 > a1b2 + a3b1 + a3b2
+b3*(a1 + a2) + b1*(a2 + a3) > b2*(a1 + a3) 
+
+
+*/

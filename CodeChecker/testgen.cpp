@@ -53,15 +53,9 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     int n = 5;
-    cout << n << endl;
+    cout << n << " " << random(1,n) << endl;
     for (int i = 1; i <= n; i++){
-        int x = random(-5,5);
-        int y = random(-5,5);
-        if (x * y == 0){
-            i--;
-            continue;
-        }
-        cout << x << " " << y << endl;
+        cout << random(1,10) << " " << random(1,10) << endl;
     }
     return 0;
 }

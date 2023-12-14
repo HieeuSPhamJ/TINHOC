@@ -9,7 +9,9 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int mod = 1e9 + 7;
+bool cmp(ii a, ii b){
+    return a.fi * b.se < b.fi * a.se;
+}
 
 signed main(){
     freopen("input.inp", "r", stdin);
@@ -23,51 +25,45 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    vector <ii> ls;
     int n, k;
     cin >> n >> k;
-    vector <ii> ls;
     for (int i = 1; i <= n; i++){
-        int x;
-        cin >> x;
-        int t = 1;
-        if (x == 1){
-            t = 0;
-        }
-        for (int j = 2; j * j <= x; j++){
-            if (x % j == 0){
-                t = 0;
-                break;
-            }
-        }
-        ls.push_back({x,t});
+        int x, y;
+        cin >> x >> y;
+        ls.push_back({x,y});
     }
 
-    int res = 0;
+    ii res = {0,1};
 
     for (int mask = 1; mask < (1 << n); mask++){
         if (__builtin_popcount(mask) != k){
             continue;
         }
-        map <int,int> cnt;
+        ii tres = {0,0};
         for (int i = 0; i < n; i++){
             if (mask & (1 << i)){
-                if (ls[i].se){
-                    cnt[ls[i].fi]++;
-                }
+                tres.fi += ls[i].fi;
+                tres.se += ls[i].se;
+                // cout << ls[i].fi << " " << ls[i].se << endl;
             }
         }
-        for (auto i: cnt){
-            if (i.se > 1){
-                goto bru;
-            }
+        if (cmp(res, tres)){
+            // cout << bitset<5>(mask) << endl;
+            // for (int i = 0; i < n; i++){
+            // if (mask & (1 << i)){
+            //     cout << ls[i].fi << " " << ls[i].se << endl;
+            // }
+        // }
+            res = tres;
         }
-
-        (res += 1) %= mod;
-
-        bru:;
     }
 
-    cout << res << endl;
+    // int g = __gcd(res.fi, res.se);
 
+    // res.fi /= g;
+    // res.se /= g;
+
+    cout << res.fi << " " << res.se << endl;
     return 0;
 }

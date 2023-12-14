@@ -1,0 +1,1 @@
+{"name":"Local: plant","url":"d:\\TINHOC\\SCHOOL\\THAY PHONG\\Contest\\14-12-2023\\plant.cpp","tests":[{"id":1702555260493,"input":"7\n+ 0\n+ 0\n- 1\n? 0\n+ 2\n- 3\n? 2","output":"2\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\SCHOOL\\THAY PHONG\\Contest\\14-12-2023\\plant.cpp","group":"local","local":true}
