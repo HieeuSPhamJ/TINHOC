@@ -31,9 +31,9 @@ bool minimize(int &a, int b){
 
 int dp[110][110];
 int a[110][110];
+int grid[110][110];
+
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
     if (fopen(".inp", "r")) {
@@ -64,9 +64,11 @@ signed main(){
         }
         res += dp[n][m];
         ii t = {n,m};
+        // memset(grid, 0, sizeof(grid));
         while(t != ii(1,1)){
             int la = dp[t.fi][t.se] - a[t.fi][t.se];
             a[t.fi][t.se] = 0;
+            grid[t.fi][t.se] = 1;
             if (dp[t.fi - 1][t.se] == la){
                 t.fi--;
                 continue;
@@ -77,7 +79,15 @@ signed main(){
             }
             // cout << t.fi << " " << t.se << " " << la << endl;
         }
+        grid[1][1] = 1;
         a[1][1] = 0;
+        // cout << "======" << endl;
+        // for (int i = 1; i <= n; i++){
+        //     for (int j = 1; j <= m; j++){
+        //         cout << grid[i][j];
+        //     }
+        //     cout << endl;
+        // }
     }
     cout << res << endl;
     return 0;
