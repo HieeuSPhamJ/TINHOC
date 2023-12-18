@@ -9,206 +9,169 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-<<<<<<< HEAD
+const int maxN = 3e5 + 10;
+const int mod = 1e9 + 7;
+int n;
+
 struct node{
-    int p1,p2,p3,p4;
+    int lz, va3, va2, va1;
 };
 
-bool maximize(int &a, int b){
-    if (a < b){
-        a = b;
-        return 1;
-    }
-    return 0;
+int add(int a, int b){
+    return (a + b) % mod;
+}
+int mul(int a, int b){
+    return (a * b) % mod;
 }
 
-bool minimize(int &a, int b){
-    if (a > b){
-        a = b;
-        return 1;
-    }
-    return 0;
+
+void merge(node &a, node &b){
+    a.va1 = add(a.va1, b.va1);
+    a.va2 = add(a.va2, b.va2);
+    a.va3 = add(a.va3, b.va3);
 }
 
-int a[110][110];
-ii id[110][110];
-vector <ii> adj[210][110];
 
-int Hash(node x){
-    int ha = x.p1;
-    ha *= 1000;
-    ha += x.p2;
-    ha *= 1000;
-    ha += x.p3;
-    ha *= 1000;
-    ha += x.p4;
-    return ha;
+void merge(node &a, node &b, node &c){
+    a.va1 = add(b.va1, c.va1);
+    a.va2 = add(b.va2, c.va2);
+    a.va3 = add(b.va3, c.va3);
 }
 
-node deHash(int x){
-    node res;
-    res.p4 = x % 1000;
-    x /= 1000;
-    res.p3 = x % 1000;
-    x /= 1000;
-    res.p2 = x % 1000;
-    x /= 1000;
-    res.p1 = x % 1000;
-    return res;
+void nxt(node &a, int x, int l, int r){
+    int le = r - l + 1;
+    // cout << l << " " << r << " " << x << " " << a.va1 << " " << a.va2 << " " << a.va3 << endl;
+    // a.va3 += 3*a.va2*x + 3*a.va1*x*x + x*x*x*le;
+    // a.va2 += 2*a.va1*x + x*x*le;
+    a.va3 = add(a.va3, mul(3 * x, a.va2) + mul(3*a.va1, mul(x,x)) + mul(x,mul(x,mul(x,le))));
+    a.va2 = add(a.va2, mul(2*a.va1, x) + mul(x,mul(x,le)));
+    a.va1 = add(a.va1, x * le);
+    // cout << a.va1 << " " << a.va2 << " " << a.va3 << endl;
 }
 
-void print(node x, char en = endl){
-    cout << x.p1 << " " << x.p2 << " " << x.p3 << " " << x.p4 << en;
-=======
-int dp[310][310];
-int a[310];
+/*
+a^3 + 3*a^2x +  3*a*x^2 + x^3
 
-int cal(int l, int r){
-    int &res = dp[l][r];
-    if (res != -1){
-        return res;
-    }
 
-    if (l >= r){
-        return res = 0;
-    }
-    if (r - l == 1){
-        if (abs(a[l] - a[r]) <= 1){
-            return res = 2;
+a^3 + 3*a^2x +  3*a*x^2 + x^3
+b^3 + 3*b^2x +  3*b*x^2 + x^3
+
+*/
+
+struct segmenttree{
+    node seg[maxN * 4];
+
+    void setLazy(int i, int l, int r){
+        int lz = seg[i].lz;
+
+        seg[i].lz = 0;
+        if (lz == 0){
+            return;
         }
-        else{
-            return res = 0;
+        int mid = (l + r) / 2;
+        // cout << "lz " << l << " " << r << endl;
+        nxt(seg[2 * i], lz, l, mid);
+        nxt(seg[2 * i + 1], lz, mid + 1, r);
+        // cout << seg[2 * i].va3 << " " << seg[2 * i + 1].va3 << endl;
+        seg[2 * i].lz += lz;
+        seg[2 * i + 1].lz += lz;
+    }
+
+    void update(int id, int left, int right, int _left, int _right){
+        if (right < _left or _right < left){
+            return;
         }
+        if (_left <= left and right <= _right){
+            // cout << "!" << left << " " << right << endl;
+            nxt(seg[id], 1, left, right);
+            seg[id].lz++;
+            return;
+        }
+
+        setLazy(id, left, right);
+
+        int mid = (left + right) / 2;
+
+        update(2 * id, left, mid, _left, _right);
+        update(2 * id + 1, mid + 1, right, _left, _right);
+        merge(seg[id], seg[2 * id], seg[2 * id + 1]);
     }
 
-    if (abs(a[l] - a[r]) <= 1 and cal(l + 1, r - 1) == r - l - 1){
-        res = r - l + 1;
-        // cout << l << " " << r << " " << res << endl;
-    }   
+    int get(int i, int left, int right, int _left, int _right){
+        if (right < _left or _right < left){
+            return 0;
+        }
+        if (_left <= left and right <= _right){
+            return seg[i].va3;
+        }
 
-    for (int i = l; i < r; i++){
-        res = max(res, cal(l, i) + cal(i + 1, r));
+        setLazy(i, left, right);
+
+        int mid = (left + right) / 2;
+
+        int t1 = get(2 * i, left, mid, _left, _right);
+        int t2 = get(2 * i + 1, mid + 1, right, _left, _right);
+        return add(t1, t2);
     }
-    // cout << l << " " << r << " " << res << endl;
-    return res;
->>>>>>> 1c3fc3d43b04e0ee5a2fdac54a286c985133144b
-}
+
+    void update(int l, int r){
+        // cout << l << " " << r << endl;
+        update(1,1,n,l,r);
+    }
+
+    int get(int l, int r){
+        return get(1,1,n,l,r);
+    }
+
+    void print(char en = endl){
+        for (int i = 1; i <= n; i++){
+            cout << get(i,i) << " ";
+        }
+        cout << en;
+    }
+
+} Tree;
+
+
+/*
+x^2
+(x + 1)^2
+x^2 + 2*x + 1
+*/
+
+int la[maxN];
 
 signed main(){
+    freopen("input.inp", "r", stdin);
+    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-<<<<<<< HEAD
-    if (fopen("input.inp", "r")) {
-        freopen("input.inp", "r", stdin);
-        freopen("A.out", "w", stdout);
-=======
-    if (fopen("daruma.inp", "r")) {
-        freopen("daruma.inp", "r", stdin);
-        freopen("daruma.out", "w", stdout);
->>>>>>> 1c3fc3d43b04e0ee5a2fdac54a286c985133144b
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-<<<<<<< HEAD
-    int n, m;
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= m; j++){
-            cin >> a[i][j];
+    int test;
+    cin >> n >> test;
+    while(test--){
+        int t;
+        cin >> t;
+        int l, r;
+        cin >> l >> r;
+        if (t == 0){
+            Tree.update(l,r);
+        }
+        else{
+            cout << Tree.get(l,r) << endl;
         }
     }
-    int cntlay = 1;
-    for (int i = 1; i <= n; i++){
-        int x = i;
-        int y = 1;
-        for (int cnt = 1;x >= 0 and y <= m; x--, y++){
-            id[x][y] = {cnt, cntlay};
-            cnt++;
-        }
-        cntlay++;
-    }
-
-    for (int i = 2; i <= m; i++){
-        int x = n;
-        int y = i;
-        for (int cnt = 1; x >= 0 and y <= m; x--, y++){
-            id[x][y] = {cnt, cntlay};
-            cnt++;
-        }
-        cntlay++;
-    }
-
-    for (int i = 1; i <= n; i++){
-        for (int j = 1; j <= m; j++){
-            if (i + 1 <= n){
-                // cout << id[i][j].se << " " << id[i][j].fi << " " << id[i + 1][j].fi << endl;
-                adj[id[i][j].se][id[i][j].fi].push_back({a[i + 1][j], id[i + 1][j].fi});
-            }
-            if (j + 1 <= m){
-                // cout << id[i][j].se << " " << id[i][j].fi << " " << id[i][j + 1].fi << endl;
-                adj[id[i][j].se][id[i][j].fi].push_back({a[i][j + 1], id[i][j + 1].fi});
-            }
-        }
-    }
-
-    cntlay--;
-    unordered_map<int, int> cur;
-    unordered_map<int, int> dp;
-    cur[Hash({1,1,1,1})] = a[1][1];
-    set <ii> s;
-    // node tmp = deHash(Hash({1,1,1,1}));
-    // cout << tmp.p1 << " " << tmp.p2 << " " << tmp.p3 << " " << tmp.p4 << endl;
-    for (int lay = 1; lay < cntlay; lay++){
-        for (auto x: cur){
-            node t = deHash(x.fi);
-            int dist = x.se;
-            // cout << "With: " << lay << " ";
-            // print(t, ':');
-            // cout << " " << dist << endl;
-            for (auto d1: adj[lay][t.p1]){
-            for (auto d2: adj[lay][t.p2]){
-            for (auto d3: adj[lay][t.p3]){
-            for (auto d4: adj[lay][t.p4]){
-                int nu = Hash({d1.se, d2.se, d3.se, d4.se});
-                s.clear();
-                s.insert(d1);
-                s.insert(d2);
-                s.insert(d3);
-                s.insert(d4);
-                int co = dist;
-                for (auto i: s){
-                    // cout << i.se << " " << i.fi << endl;
-                    co += i.fi;
-                }
-                // cout << "---" << endl;
-                // print(deHash(nu));
-                // cout << co << endl;
-                maximize(dp[nu], co);
-            }   
-            }   
-            }   
-            }
-        }
-        swap(cur, dp);
-        dp.clear();
-    }
-
-    cout << cur[Hash({1,1,1,1})] << endl;
-
-=======
-    while(1){
-        memset(dp,-1,sizeof(dp));
-        int n;
-        cin >> n;
-        if (n == 0){
-            return 0;
-        }
-        for (int i = 1; i <= n; i++){
-            cin >> a[i];
-        }
-        cout << cal(1,n) << endl;
-    }
->>>>>>> 1c3fc3d43b04e0ee5a2fdac54a286c985133144b
     return 0;
 }
+
+/*
+0 0 1 
+1 1 1
+2 2 1
+*/
