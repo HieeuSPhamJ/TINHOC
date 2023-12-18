@@ -9,11 +9,13 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-ii operator + (const ii &a, const ii &b){
-    return {a.fi + b.fi, a.se + b.se};
-}
-ii operator * (const ii &a, const ii &b){
-    return {a.fi * b.fi, a.se * b.se};
+const int maxN = 3e5 + 10;
+
+int a[maxN];
+int res = 0;
+
+void dnc(int l, int r){
+    
 }
 
 signed main(){
@@ -26,9 +28,15 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    ii a = {2,2};
-    ii b = {3,3};
-    ii c = (a + b) * a;
-    cout << c.fi << " " << c.se << endl;
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++){
+        cin >> a[i];
+    }
+
+    dnc(1,n);
+
+    cout << res << endl;
+
     return 0;
 }

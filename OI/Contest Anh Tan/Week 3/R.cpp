@@ -29,32 +29,6 @@ bool minimize(int &a, int b){
 }
 
 
-int cal(int l, int r){
-    int &res = dp[l][r];
-    if (l > r){
-        return 0;
-    }
-    if (res){
-        return res;
-    }
-    if (l == r){
-        res = a[l - 1] * a[l] * a[l + 1];
-        cout << l << " " << r << ": " << res << endl;
-        return res;
-    }
-    if (l + 1 == r){
-        res = max(a[l - 1] * a[l] * a[r] + a[l - 1] * a[r] * a[r + 1],
-                a[l] * a[r] * a[r + 1] + a[l - 1] * a[l] * a[r + 1]
-        );
-        cout << l << " " << r << ": " << res << endl;
-        return res;
-    }
-    for (int i = l + 1; i < r; i++){
-        maximize(res, cal(l, i - 1) + cal(i + 1, r) + a[l] * a[i] * a[r]);
-    }
-    cout << l << " " << r << ": " << res << endl;
-    return res;
-}
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -72,6 +46,13 @@ signed main(){
     for (int i = 1; i <= n; i++){
         cin >> a[i];
     }
-    cout << cal(1,n);
+    for (int r = 1; r <= n + 1; r++){
+        for (int l = r - 2; l >= 0; l--){
+            for (int i = l + 1; i < r; i++){
+                maximize(dp[l][r], dp[l][i] + dp[i][r] + a[l] * a[i] * a[r]);
+            }
+        }
+    }
+    cout << dp[0][n + 1] << endl;
     return 0;
 }
