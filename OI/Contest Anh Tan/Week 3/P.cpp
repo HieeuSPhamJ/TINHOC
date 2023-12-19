@@ -47,9 +47,9 @@ int co(int x){
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen("input.inp", "r")) {
-        freopen("input.inp", "r", stdin);
-        freopen("A.out", "w", stdout);
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -66,15 +66,22 @@ signed main(){
     for (int i = 1; i < n; i++){
         for (int j = - n; j <= n; j++){
             int cur = dp[i][co(j)];
-            if (cur == inf){
+            if (cur >= inf){
                 continue;
             }
+            // cout << i << " " << j << ": " << cur << endl;
             minimize(dp[i + 1][co(j - 1)], cur);
+            // cout << " =>" << i + 1 << " " << j - 1 << ": " << dp[i + 1][co(j - 1)] << endl;
             minimize(dp[i + 1][co(j + a[i + 1].fi)], cur + a[i + 1].se);
+            // cout << " =>" << i + 1 << " " << j + a[i + 1].fi << ": " << dp[i + 1][co(j + a[i + 1].fi)] << endl;
         }
     }
 
-    cout << dp[n][base] << endl;
-
+    int res = inf;
+    for (int i = 0; i <= n; i++){
+        res = min(res, dp[n][co(i)]);
+        // cout << i << " " << dp[n][co(i)] << endl;
+    }
+    cout << res << endl;
     return 0;
 }
