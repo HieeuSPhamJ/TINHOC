@@ -17,14 +17,20 @@ struct dt{
 int co[20][20];
 int dp[1 << 20];
 
+bool minimize(int &a, int b){
+    if (a > b){
+        a = b;
+        return 1;
+    }
+    return 0;
+}
+
 signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen(".inp", "r")) {
-        freopen(".inp", "r", stdin);
-        freopen(".out", "w", stdout);
+    if (fopen("input.inp", "r")) {
+        freopen("input.inp", "r", stdin);
+        freopen("A.out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -57,6 +63,10 @@ signed main(){
         }
     }
 
+    memset(dp, 0x3f, sizeof(dp));
+
+    dp[0] = 1;
+
     for (int mask = 1; mask < (1 << n); mask++){
         for (int i = 0; i < n; i++){
             if (mask & (1 << i)){
@@ -67,11 +77,14 @@ signed main(){
                         res = min(res, a[i].len - co[i][j]);
                     }
                 }   
-                dp[mask] = max(dp[mask], dp[laMask] + res);
+                if (minimize(dp[mask], dp[laMask] + res)){
+                    cout << bitset<3>(mask) << ": " << dp[mask] << endl;
+                    cout << " " << bitset<3>(laMask) << " " << dp[laMask] << endl;
+                }
             }
         }
     }
 
-    cout << dp[(1 << n) - 1] + 1;
+    cout << dp[(1 << n) - 1];
     return 0;
 }
