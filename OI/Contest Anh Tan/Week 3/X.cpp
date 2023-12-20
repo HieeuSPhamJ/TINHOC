@@ -11,7 +11,6 @@ using namespace std;
 
 const int maxN = 1e5 + 10;
 
-int a[maxN];
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -25,9 +24,23 @@ signed main(){
     cout.tie(NULL);
     int n;
     cin >> n;
+    vector <int> ls;
     for (int i = 1; i <= n; i++){
-        cin >> a[i];
+        int x;
+        cin >> x;
+        ls.push_back(x);
+    }
+    sort(rall(ls));
+    int sum = 0;
+    int temp = 0;
+    int res = 0;
+    for (auto i: ls){
+        sum += i;
+        temp += sum;
+        res = max(temp, res);
     }
     
+    cout << res << endl;
+
     return 0;
 }
