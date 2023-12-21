@@ -28,7 +28,7 @@ void randomTree(int n){
 
 string randomStr(const int len) {
     static const char alphanum[] =
-        "abcd";
+        "+-_0";
     std::string tmp_s;
     tmp_s.reserve(len);
 
@@ -52,10 +52,6 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(3,5);
-    cout << n << endl;
-    while(n--){
-        cout << randomStr(random(1,4)) << endl;
-    }
+    cout << randomStr(random(1,10));
     return 0;
 }
