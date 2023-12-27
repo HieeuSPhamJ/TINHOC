@@ -16,7 +16,11 @@ int random(int left, int right){
     if (left >= right){
         return left;
     }
-    return (rng() % (right - left + 1)) + left;
+    int t = 0;
+    for (int i = 1; i <= 4; i++){
+        t = (t << 15) xor (rand() & ((1ll << 15) - 1));
+    }
+    return (t % (right - left + 1)) + left;
 }
 
 
@@ -28,7 +32,7 @@ void randomTree(int n){
 
 string randomStr(const int len) {
     static const char alphanum[] =
-        "+-_0";
+        "abc";
     std::string tmp_s;
     tmp_s.reserve(len);
 
@@ -52,6 +56,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cout << randomStr(random(1,10));
+    int L = random(1,10);
+    int R = random(L,10);
+    
+    cout << L << " " << R << " " << 1 << endl;
+    cout << random(1,10) << " " << random(1,(R - L + 1) * (R - L + 1) * (R - L + 1) * (R - L + 1)) << endl;
     return 0;
 }

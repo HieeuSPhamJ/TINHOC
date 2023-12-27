@@ -1,0 +1,1 @@
+{"name":"Local: F","url":"d:\\TINHOC\\OI\\Contest Anh Tan\\Week 4\\F.cpp","tests":[{"id":1703596899569,"input":"4 3\n.#.\n.#.\n...\n..#","output":"4 0 3 \n5 0 5 \n7 7 6 \n7 5 0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\OI\\Contest Anh Tan\\Week 4\\F.cpp","group":"local","local":true}

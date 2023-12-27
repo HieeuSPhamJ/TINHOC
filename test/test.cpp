@@ -9,13 +9,6 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-ii operator + (const ii &a, const ii &b){
-    return {a.fi + b.fi, a.se + b.se};
-}
-ii operator * (const ii &a, const ii &b){
-    return {a.fi * b.fi, a.se * b.se};
-}
-
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
@@ -26,9 +19,6 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    ii a = {2,2};
-    ii b = {3,3};
-    ii c = (a + b) * a;
-    cout << c.fi << " " << c.se << endl;
+    cout << char(33) << endl;
     return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: D","url":"d:\\TINHOC\\OI\\CLAOJ IO\\claojre10\\D.cpp","tests":[{"id":1703339177199,"input":"4 6 2 1 2\n1 2 1\n1 3 1\n1 4 2\n2 3 2\n3 4 2\n2 4 2\n2\n3 4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\OI\\CLAOJ IO\\claojre10\\D.cpp","group":"local","local":true}

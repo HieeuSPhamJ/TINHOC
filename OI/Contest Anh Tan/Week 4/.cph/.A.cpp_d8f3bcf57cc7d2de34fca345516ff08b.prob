@@ -1,0 +1,1 @@
+{"name":"Local: A","url":"d:\\TINHOC\\OI\\Contest Anh Tan\\Week 4\\A.cpp","tests":[{"id":1703510125424,"input":"6\n7 1 5 3 6 4","output":"5"},{"id":1703510128614,"input":"5\n7 6 4 3 1","output":"0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\OI\\Contest Anh Tan\\Week 4\\A.cpp","group":"local","local":true}
