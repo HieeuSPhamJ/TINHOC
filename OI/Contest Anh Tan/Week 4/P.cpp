@@ -1,5 +1,5 @@
 #include"bits/stdc++.h"
-#define int long long
+// #define int long long
 //#define double long double
 #define ii pair <int,int>
 #define fi first
@@ -9,13 +9,21 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 1e5 + 10;
-const int inf = 1e18;
+const int maxN = 4e6 + 10;
+const int inf = 1e9;
 
 int n;
 
 bool minimize(int &a, int b){
     if (a > b){
+        a = b;
+        return 1;
+    }
+    return 0;
+}
+
+bool maximize(int &a, int b){
+    if (a < b){
         a = b;
         return 1;
     }
@@ -74,11 +82,8 @@ struct segmmenttree{
     }
 
     void update(int l, int r, int v){
-        l = max(0ll, l);
+        l = max(0, l);
         if (l > r){
-            return;
-        }
-        if (r == 0){
             return;
         }
         // cout << "up: " << l << " " << r << " " << v << endl;
@@ -86,11 +91,11 @@ struct segmmenttree{
     }
 
     int get(int l, int r){
-        l = max(0ll, l);
+        l = max(0, l);
         if (l > r){
             return inf;
         }
-        if (r == 0){
+        if (l == 0){
             return 0;
         }
         return get(1,1,maxN,l,r);
@@ -108,6 +113,47 @@ struct segmmenttree{
     }
 } Tree;
 
+struct Fenwick{
+    int bit[2][maxN];
+    Fenwick(){
+        for (int i = 0; i < maxN; i++){
+            bit[1][i] = inf;
+        }
+    }
+
+    void update(int t, int id, int v){
+        if (t == 1){
+            id = n - id + 1;
+        }
+        for (;id <= n; id += id & -id){
+            if (t == 0){
+                bit[t][id] = max(bit[t][id], v);
+            }
+            else{
+                bit[t][id] = min(bit[t][id], v);
+            }
+        }
+    }
+
+    int get(int t, int id){
+        if (t == 1){
+            id = n - id + 1;
+        }
+        if (t == 0){
+            int res = 0;
+            for (;id; id -= id & -id){
+                res = max(res, bit[t][id]);
+            }
+            return res;
+        }
+        int res = inf;
+        for (;id; id -= id & -id){
+            res = min(res, bit[t][id]);
+        }
+        return res;
+    }
+} Bit;
+
 int a[maxN];
 int l[maxN];
 int r[maxN];
@@ -115,9 +161,9 @@ int r[maxN];
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen(".inp", "r")) {
-        freopen(".inp", "r", stdin);
-        freopen(".out", "w", stdout);
+    if (fopen("input.inp", "r")) {
+        freopen("input.inp", "r", stdin);
+        freopen("A.out", "w", stdout);
     }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -128,27 +174,39 @@ signed main(){
     }
 
     for (int i = 1; i <= n; i++){
-        l[i] = i;
-        l[i] = l[max(1ll, i - a[i] + 1)];
+        l[i] = i; 
+        minimize(l[i], Bit.get(1, max(1, i - a[i] + 1)));
+        Bit.update(1, i, l[i]);
+
     }
     for (int i = n; i >= 1; i--){
         r[i] = i;
-        r[i] = r[min(n, i + a[i] - 1)];
+        maximize(r[i], Bit.get(0, min(n, i + a[i] - 1)));
+        Bit.update(0, i, r[i]);
     }
 
+    // for (int i = 1; i <= n; i++){
+    //     cout << l[i] << " ";
+    // }
+    // cout << endl;
+    // for (int i = 1; i <= n; i++){
+    //     cout << r[i] << " ";
+    // }
+    // cout << endl;
+    // cout << "---------" << endl;
     for (int i = 1; i <= n; i++){
-        cout << l[i] << " ";
-    }
-    cout << endl;
-    for (int i = 1; i <= n; i++){
-        cout << r[i] << " ";
-    }
-    cout << endl;
-    for (int i = 1; i <= n; i++){
-        int dp = Tree.get(i,i);
-        int dpr = Tree.get(l[i] - 1, i - 1) + 1;
-        Tree.update(i,r[i], dpr);
-        minimize(dp, dpr);
+        int dpl = inf;
+        int dpr = inf;
+        if (i == 1){
+            dpl = dpr = 1;   
+        }
+        else{
+            dpl = Tree.get(l[i] - 1, i) + 1;
+            dpr = Tree.get(i - 1, i - 1) + 1;
+        }
+        Tree.update(i, i, dpl);
+        Tree.update(i, r[i], dpr);
+        // cout << i << ": " << dpl << " " << dpr << endl;
         // Tree.print();
     }
 
