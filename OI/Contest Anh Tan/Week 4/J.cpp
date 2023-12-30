@@ -1,5 +1,5 @@
 #include"bits/stdc++.h"
-#define int long long
+// #define int long long
 //#define double long double
 #define ii pair <int,int>
 #define fi first
@@ -29,8 +29,8 @@ bool maximize(int &a, int b){
 }
 
 int a[maxN][maxN];
-int dp[maxN][maxN][maxN];
-unordered_map <int,vector <int>> st[maxN];
+int dp[maxN][maxN];
+int la[maxV];
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -47,8 +47,7 @@ signed main(){
     vector <int> ss;
     for (int i = 1; i <= n; i++){
         for (int j = 1; j <= m; j++){
-            // cin >> a[i][j];
-            a[i][j] = (i - 1) * m + j;
+            cin >> a[i][j];
             ss.push_back(a[i][j]);
         }
     }
@@ -58,38 +57,28 @@ signed main(){
     int mv = ss.size();
     for (int i = 1; i <= n; i++){
         for (int j = 1; j <= m; j++){
-            a[i][j] = lower_bound(all(ss), a[i][j]) - ss.begin();
-            st[j][a[i][j]].push_back(i);
+            a[i][j] = lower_bound(all(ss), a[i][j]) - ss.begin() + 1;
         }
     }
-
-    for (int t = 1; t <= mv; t++){
-        // cout << "with: " << t << endl;
-        for (int up = 1; up <= n; up++){
-            for (int down = up; down <= n; down++){
-                vector <int> &ls =  st[down][t];
-                int L = (int)ls.size() - 1;
-                for (int i = L, la = m; i >= 0; i--){
-                    dp[up][down][ls[i]] = la;
-                    la = ls[i];
-                }
-            }
-        }
-    }
-
-    // for (int up = 1; up <= n; up++){
-    //     for (int down = up; down <= n; down++){
-    //         cout << up << " - " << down << ": " << endl;
-    //         for (int i = 1; i <= m; i++){
-    //             cout << dp[up][down][i] << " ";
-    //         }
-    //         cout << endl;
-    //     }
-    // }
-
-
     int res = 0;
+    for (int up = 1; up <= n; up++){
+        for (int i = 1; i <= m; i++){
+            dp[up][i] = la[a[up][i]] + 1;
+            maximize(dp[up][i], dp[up][i - 1]);
+            res = max(res, dp[up][i]);
+        }
+        for (int down = up - 1; down >= 1; down--){
+            for (int i = 1; i <= m; i++){
+                if (a[down][i] == a[up][i]){
+                    dp[down][i] = i + 1;
+                    continue;
+                }
+                maximize(dp[down][i], dp[down + 1][i]);
+                
+            }
 
+        }
+    }
 
     cout << res << endl;
     return 0;

@@ -33,6 +33,6 @@ int main ()
     for (int j = 1; j <= m; j++)
       p[j][a[i][j]] = i;
   }
-  cout << ans;
+  cout << ans << endl;
   return 0;
 }

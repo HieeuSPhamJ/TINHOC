@@ -56,8 +56,8 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n = random(2,10);
-    int m = random(2,10);
+    int n = random(2,2);
+    int m = random(2,2);
     cout << n << " " << m << endl;
     for (int i = 1; i <= n; i++){
         for (int i = 1; i <= m; i++){
