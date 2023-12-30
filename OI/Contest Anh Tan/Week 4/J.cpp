@@ -10,7 +10,7 @@
 using namespace std;
 
 const int maxN = 510;
-const int maxV = 1e6 + 10;
+const int maxV = 500 * 500 + 10;
 
 bool minimize(int &a, int b){
     if (a > b){
@@ -29,8 +29,8 @@ bool maximize(int &a, int b){
 }
 
 int a[maxN][maxN];
-int dp[maxN];
-set <int> st[maxV];
+int dp[maxN][maxN][maxN];
+unordered_map <int,vector <int>> st[maxN];
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -44,54 +44,52 @@ signed main(){
     cout.tie(NULL);
     int n, m;
     cin >> n >> m;
+    vector <int> ss;
     for (int i = 1; i <= n; i++){
         for (int j = 1; j <= m; j++){
-            cin >> a[i][j];
+            // cin >> a[i][j];
+            a[i][j] = (i - 1) * m + j;
+            ss.push_back(a[i][j]);
         }
     }
 
-    int res = 0;
-    unordered_set <int> s;
-    for (int l = 1; l <= n; l++){
-        for (auto i: s){
-            st[i].clear();
-        }
-        s.clear();
-        for (int i = 1; i <= m + 1; i++){
-            dp[i] = m;
-        }
-        for (int r = l; r <= n; r++){
-            // cout << "With: " << l << " " << r << endl;
-            for (int i = 1; i <= m; i++){
-                int c = a[r][i];
-                auto it = st[c].upper_bound(i);
-                // cout << i << ": ";
-                // for (auto x: st[c]){
-                //     cout << x << " ";
-                // }
-                // cout << endl;
-                if (it != st[c].end()){
-                    minimize(dp[i], (*it) - 1);
-                }
-                if (it != st[c].begin()){
-                    it--;
-                    minimize(dp[*it], i - 1);
-                }
-                st[c].insert(i);
-                s.insert(c);
-            }
-            for (int i = m; i >= 1; i--){
-                minimize(dp[i], dp[i + 1]);
-                if (maximize(res, (dp[i] - i + 1) * (r - l + 1))){
-                    // cout << i << ": " << res << endl;
-                }
-            }
-            // for (int i = 1; i <= m; i++){
-            //     cout << dp[i] << " ";
-            // }
-            // cout << endl;
+    sort(all(ss));
+    ss.erase(unique(all(ss)), ss.end());
+    int mv = ss.size();
+    for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= m; j++){
+            a[i][j] = lower_bound(all(ss), a[i][j]) - ss.begin();
+            st[j][a[i][j]].push_back(i);
         }
     }
+
+    for (int t = 1; t <= mv; t++){
+        // cout << "with: " << t << endl;
+        for (int up = 1; up <= n; up++){
+            for (int down = up; down <= n; down++){
+                vector <int> &ls =  st[down][t];
+                int L = (int)ls.size() - 1;
+                for (int i = L, la = m; i >= 0; i--){
+                    dp[up][down][ls[i]] = la;
+                    la = ls[i];
+                }
+            }
+        }
+    }
+
+    // for (int up = 1; up <= n; up++){
+    //     for (int down = up; down <= n; down++){
+    //         cout << up << " - " << down << ": " << endl;
+    //         for (int i = 1; i <= m; i++){
+    //             cout << dp[up][down][i] << " ";
+    //         }
+    //         cout << endl;
+    //     }
+    // }
+
+
+    int res = 0;
+
 
     cout << res << endl;
     return 0;
