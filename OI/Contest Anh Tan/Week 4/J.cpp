@@ -54,7 +54,6 @@ signed main(){
 
     sort(all(ss));
     ss.erase(unique(all(ss)), ss.end());
-    int mv = ss.size();
     for (int i = 1; i <= n; i++){
         for (int j = 1; j <= m; j++){
             a[i][j] = lower_bound(all(ss), a[i][j]) - ss.begin() + 1;
@@ -63,20 +62,42 @@ signed main(){
     int res = 0;
     for (int up = 1; up <= n; up++){
         for (int i = 1; i <= m; i++){
+            la[a[up][i]] = 0;
+        }
+        // cout << "With: " << up << " " << up << endl;
+        for (int i = 1; i <= m; i++){
             dp[up][i] = la[a[up][i]] + 1;
             maximize(dp[up][i], dp[up][i - 1]);
-            res = max(res, dp[up][i]);
+            // cout << dp[up][i] << " ";
+            res = max(res, i - dp[up][i] + 1);
+            la[a[up][i]] = i;
         }
+        // cout << endl;
         for (int down = up - 1; down >= 1; down--){
+            for (int i = 1; i <= m; i++){
+                la[a[up][i]] = 0;
+                la[a[down][i]] = 0;
+            }
+            // cout << "With: " << down << " " << up << endl;
             for (int i = 1; i <= m; i++){
                 if (a[down][i] == a[up][i]){
                     dp[down][i] = i + 1;
-                    continue;
                 }
                 maximize(dp[down][i], dp[down + 1][i]);
-                
+                maximize(dp[down][i], la[a[down][i]] + 1);
+                maximize(dp[down][i], la[a[up][i]] + 1);
+                maximize(dp[down][i], dp[down][i - 1]);
+                la[a[down][i]] = i;
+                la[a[up][i]] = i;
             }
-
+            // for (int i = 1; i <= m; i++){
+            //     cout << dp[down][i] << " ";
+            // }
+            // cout << endl;
+            for (int i = 1; i <= m; i++){
+                maximize(res, (i - dp[down][i] + 1) * (up - down + 1));
+                // cout << " res: " << i << " " << res << endl;
+            }
         }
     }
 

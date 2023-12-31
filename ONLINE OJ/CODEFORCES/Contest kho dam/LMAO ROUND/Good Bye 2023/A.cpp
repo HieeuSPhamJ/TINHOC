@@ -19,23 +19,29 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, k;
-    cin >> n >> k;
-    int a[1000];
-    a[0] = 0;
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
-    }
-    int res = 0;
-    for (int i = 1; i <= n; i++){
-        for (int j = i, x = 0; j >= 1;j--){
-            x = x xor a[j];
-            if (x >= k){
-                cout << j << " " << i << endl;
-                res++;
-            }
+    int test;
+    cin >> test;
+    while(test--){
+        int n, k;
+        cin >> n >> k;
+        int t = 1;
+        for (int i = 1; i <= n; i++){
+            int x;
+            cin >> x;
+            t *= x;
         }
+        
+        if (2023 % t){
+            cout << "NO" << endl;
+            continue;
+        }
+
+        cout << "YES" << endl;
+        cout << 2023 / t << " ";
+        for (int i = 1; i < k; i++){
+            cout << 1 << " ";
+        }
+        cout << endl;
     }
-    cout << res << endl;
     return 0;
 }

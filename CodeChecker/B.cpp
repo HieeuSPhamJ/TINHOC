@@ -1,38 +1,100 @@
-#include <bits/stdc++.h>
-
+#include"bits/stdc++.h"
+#define int long long
+//#define double long double
+#define ii pair <int,int>
+#define fi first
+#define se second
+#define endl '\n'
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int N = 401;
-int n, a[N][N], m;
-short p[N][N*N], dp[N][N][N];
+const int maxN = 1e5 + 10;
+const int inf = 1e9 + 7;
 
-int main () 
-{
+int n, m, k;
+int gap;
+int a[maxN];
+vector <int> adj[maxN];
+int dp[maxN];
+int vis[maxN];
+
+int dfs(int nu, int ty){
+    if (vis[nu]){
+        return dp[nu];
+    }
+    if (a[nu] > gap){
+        return 0;
+    }
+    dp[nu] = 1;
+    vis[nu] = ty;
+    for (auto i: adj[nu]){
+        if (a[i] > gap){
+            continue;
+        }
+        if (vis[i] == ty){
+            dp[nu] = inf;
+            return dp[nu];
+        }
+        dp[nu] = max(dp[nu], dfs(i, ty) + 1);
+    }
+    return dp[nu];
+}
+
+
+bool check(){
+    for (int i = 1; i <= n; i++){
+        dp[i] = 0;
+        vis[i] = 0;
+    }
+    int res = 0;
+    for (int i = 1; i <= n; i++){
+        if (a[i] <= gap){
+            res = max(res, dfs(i,i));
+        }
+    }
+
+    return res >= k;
+}
+
+signed main(){
     freopen("input.inp", "r", stdin);
     freopen("B.out", "w", stdout);
-  ios_base::sync_with_stdio(false);
-  cin.tie(0); cout.tie(0);
-  cin >> n >> m;
-  for (int i = 1; i <= n; i++)
-    for (int j = 1; j <= m; j++)
-      cin >> a[i][j];
-  int ans = 0;
-  for (int i = 1; i <= n; i++) {
-    for (int l = m; l >= 1; l--)
-      for (int r = l; r <= m; r++) {
-        if (l == r) {
-          dp[i][l][r] = max(dp[i - 1][l][r], p[l][a[i][l]]);
+    //freopen("input.INP", "r", stdin);
+    //freopen("output.OUT", "w", stdout);
+    if (fopen(".inp", "r")) {
+        freopen(".inp", "r", stdin);
+        freopen(".out", "w", stdout);
+    }
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    cin >> n >> m >> k;
+    for (int i = 1; i <= n; i++){
+        cin >> a[i];
+    }
+    for (int i = 1; i <= m; i++){
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+    }
+
+    int res = 0;
+    int l = 0;
+    int r = 1e18;
+    while(l <= r){
+        int mid = (l + r) / 2;
+        gap = mid;
+        if (check()){
+            r = mid - 1;
+            res = mid;
         }
-        else {
-          dp[i][l][r] = max({dp[i][l + 1][r], dp[i][l][r - 1], dp[i - 1][l][r], p[r][a[i][l]], p[l][a[i][r]]});
-          if (a[i][l] == a[i][r])
-            dp[i][l][r] = i;
+        else{
+            l = mid + 1;
         }
-        ans = max(ans, (i - dp[i][l][r]) * (r - l + 1));
-      }
-    for (int j = 1; j <= m; j++)
-      p[j][a[i][j]] = i;
-  }
-  cout << ans << endl;
-  return 0;
+    }
+    // gap = 2;
+    // cout << check() << endl;
+    cout << res << endl;
+    return 0;
 }

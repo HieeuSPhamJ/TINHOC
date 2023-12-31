@@ -1,77 +1,27 @@
 #include"bits/stdc++.h"
-#define int long long
 //#define double long double
+#define int long long
 #define ii pair <int,int>
 #define fi first
 #define se second
 #define endl '\n'
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
+#define iiii pair<int,pair<int,ii>>
+#define cost1 fi
+#define cost2 se.fi
+#define turn se.se.fi
+#define node se.se.se
 using namespace std;
 
-const int maxN = 2e5 + 10;
+const int maxN = 44444 + 10;
+const int inf = 1e18 + 7;
 
-int n;
-
-struct segmmenttree{
-    ii seg[maxN * 4];
-
-    void setlz(int id){
-        int v = seg[id].se;
-        seg[id].se = 0;
-        seg[id * 2].fi += v;
-        seg[id * 2].se += v;
-        seg[id * 2 + 1].fi += v;
-        seg[id * 2 + 1].se += v;
-    }
-    
-    void update(int id, int l, int r, int L, int R, int v){
-        if (r < L or R < l){
-            return;
-        }
-        if (L <= l and r <= R){
-            seg[id].fi += v;
-            seg[id].se += v;
-            return;
-        }
-
-        setlz(id);
-
-        int mid = (l + r) / 2;
-
-        update(id * 2, l, mid, L, R, v);
-        update(id * 2 + 1, mid + 1, r, L, R, v);
-        seg[id].fi = max(seg[id * 2].fi, seg[id * 2 + 1].fi);
-    }
-
-    int get(int id, int l, int r, int L, int R){
-        if (r < L or R < l){
-            return 0;
-        }
-        if (L <= l and r <= R){
-            return seg[id].fi;
-        }
-
-        setlz(id);
-
-        int mid = (l + r) / 2;
-
-        return max(get(2 * id, l, mid, L, R), get(2 * id + 1, mid + 1, r, L, R));
-    }
-
-    void update(int l, int r, int v){
-        l = max(1ll, l);
-        if (l > r){
-            return;
-        }
-        // cout << "up: " << l << " " << r << " " << v << endl;
-        update(1,1,maxN,l,r,v);
-    }
-
-    int get(int l, int r){
-        return get(1,1,maxN,l,r);
-    }
-} Tree;
+int n, m, k;
+int vis[maxN][5][180];
+int vis2[maxN];
+vector <ii> adj[maxN];
+int final[maxN];
 
 signed main(){
     //freopen("input.INP", "r", stdin);
@@ -83,47 +33,61 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, m;
-    cin >> n >> m;
-    n++;
-    m++;
-    vector <ii> ls;
-    int k;
-    cin >> k;
-    for (int i = 1; i <= k; i++){
-        int x, y;
-        cin >> x >> y;
-        y += 1e5 + 1;
-        ls.push_back({x,y});
+    cin >> n >> m >> k;
+    for (int i = 1; i <= m; i++){
+        int a, b, w;
+        cin >> a >> b >> w;
+        adj[a].push_back({w,b});
+        adj[b].push_back({w,a});
     }
-    sort(all(ls));
-
-    queue <ii> q;
-    int res = 0;
-    for (auto i: ls){
-        while(q.size() and q.front().fi <= i.fi - n){
-            Tree.update(q.front().se - m + 1, q.front().se, -1);
-            q.pop();
+    // memset(vis, 0x3f, sizeof(vis));
+    // memset(final, 0x3f, sizeof(final));
+    for (int i = 0; i <= n; i++){
+        final[i] = inf;
+        for (int t = 0; t <= k; t++){
+            for (int j = 0; j < 180; j++){
+                vis[i][t][j] = inf;
+            }
         }
-        Tree.update(i.se - m + 1, i.se, 1);
-        q.push(i);
-        res = max(res, Tree.seg[1].fi);
+    }
+    priority_queue <iiii,vector<iiii>, greater<iiii>> q;
+    vis[1][0][0] = 0;
+    q.push({0,{0,{0,1}}});
+    while(q.size()){
+        iiii t = q.top();
+        q.pop();
+        if (vis[t.node][t.turn][t.cost2] != t.cost1){
+            continue;
+        }
+        // cout << "With: " << t.node << " " << t.turn << " " << t.cost2 << " " << t.cost1 << endl;
+        for (auto i: adj[t.node]){
+            int w1 = t.cost1;
+            int w2 = t.cost2 + i.fi;
+            if ((t.turn + 1) % k == 0){
+                w1 = w1 + pow(w2,k);
+                w2 = 0;
+            }
+            int &cvis = vis[i.se][(t.turn + 1) % k][w2];
+            iiii nu = {w1,{w2,{(t.turn + 1) % k, i.se}}};
+            if (cvis > w1 and w1 + pow(w2,k) < final[nu.node]){
+                cvis = w1;
+                if (nu.turn == k){
+                    final[nu.node] = w1;
+                }
+                q.push(nu);
+                // if (t.)
+                // cout << " " << nu.node << " " << nu.turn << " " << nu.cost2 << " " << cvis << endl;
+            }
+        }
     }
 
-    cout << res << endl;
+    for (int i = 1; i <= n; i++){
+        if (vis[i][0][0] >= inf){
+            cout << -1 << " ";
+            continue;
+        }
+        cout << vis[i][0][0] << " ";
+    }
+
     return 0;
 }
-
-/*
-1 1
-1 1
-1 2
-1 3
-2 1
-2 2
-2 3
-3 1
-3 2
-3 3
-4 4
-*/
