@@ -34,8 +34,8 @@ const int maxN = 1e6 + 10;
 
 int dp[maxN];
 int h[maxN];
-// unordered_map <int,line> seg;
-line seg[maxN * 4];
+unordered_map <int,line> seg;
+// line seg[maxN * 4];
 
 void update(int id, int l, int r, line cur){
     if (r - l == 1){

@@ -23,20 +23,24 @@ int C(int i, int j){
     return cost[j][j] - cost[i - 1][j]; 
 }
 
-void cal(int l, int r, int optl, int optr){
+void cal(int l ,int r, int optl, int optr){
     if (l > r){
         return;
     }
     int mid = (l + r) / 2;
-    ii best = ii(1e9 , -1); 
-    for(int k = optl; k <= min(mid,optr); k++){
-        if(best.fi > dp_before[k - 1] + C(k,mid)){
-            best = {dp_before[k - 1] + C(k,mid), k};
+    int opt = optl;
+    // cout << mid << ": " << endl;
+    for (int i = optl; i <= min(mid, optr); i++){
+        if (dp_curr[mid] > dp_before[i - 1] + C(i, mid)){
+            dp_curr[mid] = dp_before[i - 1] + C(i, mid);
+            opt = i;
+            // cout << i << endl;
         }
     }
-    dp_curr[mid] = best.fi;
-    cal(l, mid - 1, optl, best.se); 
-    cal(mid + 1, r, best.se, optr); 
+    // cout << opt << " " << dp_before[mid] << endl;
+
+    cal(l, mid - 1, optl, opt);
+    cal(mid + 1, r, opt, optr);
 }
 
 signed main(){
@@ -64,11 +68,14 @@ signed main(){
 
     
     for (int i = 1; i <= n; i++){
-        dp_before[i] = 1e9;
+        dp_curr[i] = dp_before[i] = 1e9;
+    
     }
+    
 
     dp_before[0] = 0;
     for (int i = 1; i <= m; i++){
+        // cout << "with: " << i << endl;
         cal(1,n,1,n);
         for (int j = 1; j <= n; j++){
             dp_before[j] = dp_curr[j];

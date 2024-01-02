@@ -57,15 +57,11 @@ signed main(){
     cin.tie(NULL);
     cout.tie(NULL);
     // int n = random(20,20);
-    int n = random(1,10);
-    int m = random(1,3 * n);
-    cout << n << " " << m << " " << random(1, n * m) << endl;
-    for (int i = 1; i <= n; i++){
-        cout << random(1,n) << " ";
-    }
-    cout << endl;
-    for (int i = 1; i <=  m; i++){
-        random_pair(n);
+    int n = 5;
+    cout << n << " " << 1 << endl;
+    for (int i = 1, la = 1; i <= n; i++){
+        cout << la << " ";
+        la = random(la + 1,la + 3);
     }
     return 0;
 }

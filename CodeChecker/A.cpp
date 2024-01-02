@@ -1,145 +1,115 @@
-#include"bits/stdc++.h"
-#define int long long
-//#define double long double
+#include<bits/stdc++.h>
 #define ii pair <int,int>
 #define fi first
 #define se second
+#define int long long
+#define double long double
 #define endl '\n'
 #define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
-const int maxN = 1e5 + 10;
-const int inf = 1e9 + 7;
+const int inf = 1e18;
 
-int n, m, k;
-int gap;
-int a[maxN];
-vector <int> adj[maxN];
+struct line{
+    int a, b;
+    line(){
+        a = 0;
+        b = inf;
+    }
+    line(int _a,int _b){
+        a = _a;
+        b = _b;
+    }
+    int operator ()(int x){
+        return a * x + b;
+    }
+};
+
+void print(line x, char en = endl){
+    cout << x.a << " " << x.b << en;
+}
+ 
+
+const int maxN = 1e6 + 10;
+
 int dp[maxN];
-int num[maxN];
-int low[maxN];
-int cnt;
-stack <int> ln;
+int h[maxN];
+line seg[maxN * 4];
 
-void tarjan(int nu){
-    ln.push(nu);
-    num[nu] = low[nu] = ++cnt;
-    for (auto i: adj[nu]){
-        if (a[i] > gap){
-            continue;
-        }
-        if (num[i]){
-            low[nu] = min(low[nu], num[i]);
+void update(int id, int l, int r, line cur){
+    if (r - l == 1){
+        seg[id] = cur;
+        return;
+    }
+    int mid = (l + r) / 2;
+    if (cur(mid) < seg[id](mid)){
+        seg[id] = cur;
+        if (cur(l) < seg[id](l)){
+            update(2 * id + 1, mid, r, cur);
         }
         else{
-            tarjan(i);
-            low[nu] = min(low[nu], low[i]);
+            update(2 * id, l, mid, cur);
         }
     }
-    if (num[nu] == low[nu]){
-        int Count = 1;
-        while(ln.top() != nu){
-            low[ln.top()] = num[ln.top()] = 1e18;
-            Count++;
-            dp[ln.top()] = inf;
-            ln.pop();
+    else{
+        if (cur(l) < seg[id](l)){
+            update(2 * id, l, mid, cur);
         }
-        low[ln.top()] = num[ln.top()] = 1e18;
-        if (Count > 1){
-            dp[ln.top()] = inf;
+        else{
+            update(2 * id + 1, mid, r, cur);
         }
-        ln.pop();
     }
 }
 
-int dfs(int nu){
-    if (a[nu] > gap){
-        return 0;
-    }
-    if (dp[nu] != 0){
-        return dp[nu];
-    }
-    dp[nu] = 1;
-    for (auto i: adj[nu]){
-        if (a[nu] > gap){
-            continue;
-        }
-        if (i == nu){
-            dp[nu] = inf;
-            return dp[nu];
-        }
-        dp[nu] = max(dp[nu], dfs(i) + 1);
-    }
-    // cout << nu << ": " << dp[nu] << endl;
-    return dp[nu];
+void update(line x){
+    // cout << "add: " << x.a << " " << x.b << endl;
+    update(1, 1, 1e6, x);
 }
 
-bool check(){
-    for (int i = 1; i <= n; i++){
-        dp[i] = 0;
-        low[i] = 0;
-        num[i] = 0;
+int get(int id, int l, int r, int x){
+    int mid = (l + r) / 2;
+    int res = seg[id](x);
+    if (r - l == 1){
+        return res;
     }
-    cnt = 0;
-    int res = 0;
-    for (int i = 1; i <= n; i++){
-        if (num[i] == 0 and a[i] <= gap){
-            tarjan(i);
-        }
+    if (x < mid){
+        return min(res, get(2 * id, l, mid, x));
     }
-    // cout << gap << ": " << endl;
-    for (int i = 1; i <= n; i++){
-        if (a[i] > gap){
-            continue;
-        }
-        // cout << "With " << i << ": " << endl;
-        res = max(res, dfs(i)); 
-    }
-    // for (int i = 1; i <= n; i++){
-    //     cout << dp[i] << " ";
-    // }
-    // cout << endl;
-    return res >= k;
+    return min(res, get(2 * id + 1, mid, r, x));
 }
+
+int get(int x){
+    return get(1, 1, 1e6, x);
+}
+
 
 signed main(){
+    freopen("input.inp", "r", stdin);
+    freopen("A.out", "w", stdout);
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
-    if (fopen("input.inp", "r")) {
-        freopen("input.inp", "r", stdin);
-        freopen("A.out", "w", stdout);
-    }
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cin >> n >> m >> k;
+    int n, k;
+    cin >> n >> k;
+    
     for (int i = 1; i <= n; i++){
-        cin >> a[i];
-    }
-    for (int i = 1; i <= m; i++){
-        int a, b;
-        cin >> a >> b;
-        adj[a].push_back(b);
+        cin >> h[i];
     }
 
-    int res = 0;
-    int l = 0;
-    int r = 1e9;
-    while(l <= r){
-        int mid = (l + r) / 2;
-        gap = mid;
-            // cout << mid << endl;
-        if (check()){
-            r = mid - 1;
-            res = mid;
-        }
-        else{
-            l = mid + 1;
-        }
+    dp[1] = 0;
+    update(line(-2 * h[1],dp[1] + h[1] * h[1]));
+
+    for (int i = 2; i <= n; i++){
+        dp[i] = get(h[i]) + k + h[i] * h[i];
+        update(line(-2 * h[i],dp[i] + h[i] * h[i]));
     }
-    // gap = 2;
-    // cout << check() << endl;
-    cout << res << endl;
+    cout << dp[n];
+
     return 0;
 }
+
+/*
+-1000000 * 1000000 + 250000000000 
+*/
