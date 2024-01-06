@@ -9,6 +9,38 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
+vector <int> a, b;
+int n = 40;
+int cnt = 0;
+
+void backtrack(int id){
+    if (id == 3){
+        cnt++;
+        return;
+    }
+
+    int s = 1;
+    if (a.size()){
+        s = a.back() + 1;
+    }
+    for (int i = s; i <= n; i++){
+        // cout << "Add a: " << i << endl;
+        a.push_back(i);
+        backtrack(id + 1);
+        a.pop_back();
+    }
+    s = 1;
+    if (b.size()){
+        s = b.back() + 1;
+    }
+    for (int i = s; i <= n; i++){
+        // cout << "Add b: " << i << endl;
+        b.push_back(i);
+        backtrack(id + 1);
+        b.pop_back();
+    }
+}
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
@@ -19,23 +51,9 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int n, k;
-    cin >> n >> k;
-    int a[1000];
-    a[0] = 0;
     for (int i = 1; i <= n; i++){
-        cin >> a[i];
+        backtrack(0);
     }
-    int res = 0;
-    for (int i = 1; i <= n; i++){
-        for (int j = i, x = 0; j >= 1;j--){
-            x = x xor a[j];
-            if (x >= k){
-                cout << j << " " << i << endl;
-                res++;
-            }
-        }
-    }
-    cout << res << endl;
+    cout << cnt << endl;
     return 0;
 }
