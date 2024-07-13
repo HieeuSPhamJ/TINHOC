@@ -32,7 +32,7 @@ void randomTree(int n){
 
 string randomStr(const int len) {
     static const char alphanum[] =
-        "abc";
+        "AB*";
     std::string tmp_s;
     tmp_s.reserve(len);
 
@@ -44,8 +44,8 @@ string randomStr(const int len) {
 }
 
 void random_pair(int n, char en = endl){
-    int l = random(1,n - 1);
-    cout << l << " " << random(l + 1,n) << en;
+    int l = random(1,n);
+    cout << l << " " << random(l,n) << en;
 }
 
 vector <int> adj[1000];
@@ -56,12 +56,10 @@ signed main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // int n = random(20,20);
-    int n = 5;
-    cout << n << " " << 1 << endl;
-    for (int i = 1, la = 1; i <= n; i++){
-        cout << la << " ";
-        la = random(la + 1,la + 3);
+    int test = random(1,3);
+    cout << test << endl;
+    while(test--){
+        random_pair(1000000);
     }
     return 0;
 }

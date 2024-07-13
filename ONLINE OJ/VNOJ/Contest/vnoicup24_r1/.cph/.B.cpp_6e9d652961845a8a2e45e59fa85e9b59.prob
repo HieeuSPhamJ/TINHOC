@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"d:\\TINHOC\\ONLINE OJ\\VNOJ\\Contest\\vnoicup24_r1\\B.cpp","tests":[{"id":1717334667673,"input":"4\n4\n1 1 4 5\n3 1 2 3\n2\n1 0\n0 1\n3\n1 1 1\n1 1 1\n1\n1\n100","output":"YES\nNO\nYES\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\TINHOC\\ONLINE OJ\\VNOJ\\Contest\\vnoicup24_r1\\B.cpp","group":"local","local":true}

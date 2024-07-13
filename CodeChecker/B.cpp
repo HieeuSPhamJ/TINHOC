@@ -1,104 +1,148 @@
 #include<bits/stdc++.h>
-#define ii pair <int,int>
+#define int long long
+#define pb push_back
+#define fast ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+#define MOD 1000000007
+#define inf 1e18
 #define fi first
 #define se second
-#define int long long
-#define double long double
+#define FOR(i,a,b) for(int i=a;i<=b;i++)
+#define FORD(i,a,b) for(int i=a;i>=b;i--)
+#define sz(a) ((int)(a).size())
 #define endl '\n'
-#define all(x) x.begin(), x.end()
+#define pi 3.14159265359
+#define TASKNAME "ngoacdung"
+template<typename T> bool maximize(T &res, const T &val) { if (res < val){ res = val; return true; }; return false; }
+template<typename T> bool minimize(T &res, const T &val) { if (res > val){ res = val; return true; }; return false; }
 using namespace std;
+typedef pair<int,int> ii;
+typedef pair<int,ii> iii;
+typedef vector<int> vi;
 
+int cnt[2][11][2][2], dp1[2][11][2][2], dp2[2][11][2][2];
+map<int, ii> solved;
 
-struct line{
-    int a, b;
-    line(int _a,int _b){
-        a = _a;
-        b = _b;
-    }
-    int val(int x){
-        return a * x + b;
-    }
-};
+//cnt[i][j][start][flag]
+string str;
 
-void print(line x, char en = endl){
-    cout << x.a << " " << x.b << en;
+int changeBalance(int x){
+    return ((x&1) ? -1 : 1);
 }
- 
-struct CHT{
-    vector<line> st;
- 
-    bool sus(line d1,line d2,line d3){
-        // print(d1);
-        // print(d2);
-        // print(d3);
-        // cout << (double)(d1.b - d3.b) / (d3.a - d1.a)<< " | " << (double)(d1.b - d2.b) / (d2.a - d1.a) << endl;
-        return  (double)(d1.b - d3.b) / (d3.a - d1.a) <= (double)(d1.b - d2.b) / (d2.a - d1.a);
+
+void add(int &a, int b){
+     a += b;
+     if (a >= MOD) a -= MOD;
+}
+
+int mul(int a, int b){
+    return (a * b) % MOD;
+}
+
+int cong(int a, int b){
+    return (a + b) % MOD;
+}
+
+int tru(int a, int b){
+    return ((a - b) % MOD + MOD) % MOD;
+}
+ii solve(int num){
+
+     str = to_string(num);
+
+
+     memset(cnt, 0, sizeof(cnt));
+     memset(dp1, 0, sizeof(dp1));
+     memset(dp2, 0, sizeof(dp2));
+     cnt[0][0][0][1] = 1;
+
+     dp1[0][0][0][1] = 0;
+     dp2[0][0][0][1] = 0;
+     int n = str.length();
+
+     for(int i = 0; i <= str.length(); i++){
+         int ii = i&1;
+         memset(cnt[!ii], 0, sizeof(cnt[!ii]));
+         memset(dp1[!ii], 0, sizeof(dp1[!ii]));
+         memset(dp2[!ii], 0, sizeof(dp2[!ii]));
+
+         for(int balance = 0; balance <= str.length() / 2 + 1; balance++){
+             for(int start = 0; start < 2; start++){
+                 for(int flag = 0; flag < 2; flag++){
+                     if (cnt[ii][balance][start][flag]){
+//                         cout << i << ' ' << balance << ' ' << start << ' ' << flag << ' '
+//                              << cnt[ii][balance][start][flag] << ' ' << dp1[ii][balance][start][flag] << ' ' << dp2[ii][balance][start][flag] << endl;
+
+                         if (i == str.length()) continue;
+                         int mnc = 0, mxc = 9;
+
+                         if (flag) mxc = (str[i] - '0');
+                         int nxtstart = 0, nxtbalance = 0, nxtflag = 0;
+
+
+                         for(int nxtc = mnc; nxtc <= mxc; nxtc++){
+                             nxtstart = ((nxtc > 0) ? 1 : start);
+
+                             if (nxtstart > 0) nxtbalance = balance + changeBalance(nxtc);
+
+                             nxtflag = (flag and mxc == nxtc);
+                             if (nxtbalance >= 0){
+                                 add(cnt[!ii][nxtbalance][nxtstart][nxtflag], cnt[ii][balance][start][flag]);
+                                 add(dp1[!ii][nxtbalance][nxtstart][nxtflag],
+                                     cong(mul(10, dp1[ii][balance][start][flag]), mul(cnt[ii][balance][start][flag], nxtc)));
+
+                                 int bonus1 = mul(100, dp2[ii][balance][start][flag]);
+                                 int bonus2 = mul(20, mul(nxtc, dp1[ii][balance][start][flag]));
+                                 int bonus3 = mul(cnt[ii][balance][start][flag], nxtc * nxtc);
+
+//                                 cout << bonus1 << ' ' << bonus2 << ' ' << bonus3 << endl;
+
+                                 add(dp2[!ii][nxtbalance][nxtstart][nxtflag], bonus1);
+                                 add(dp2[!ii][nxtbalance][nxtstart][nxtflag], bonus2);
+                                 add(dp2[!ii][nxtbalance][nxtstart][nxtflag], bonus3);
+
+                             }
+                         }
+                     }
+                 }
+             }
+         }
+     }
+
+     return ii(cong(cnt[str.length()&1][0][1][0], cnt[str.length()&1][0][1][1]),
+               cong(dp2[str.length()&1][0][1][0], dp2[str.length()&1][0][1][1]) );
+}
+main()
+{
+    fast;
+    if (fopen("input.inp","r")){
+        freopen("input.inp","r",stdin);
+        freopen("B.out","w",stdout);
     }
-    void add(line x){
-        // cout << "add: " << x.a << " " << x.b << endl;
-        while(st.size()>1 and sus(st[st.size()-2],st.back(),x)){
-            // cout << "pop: " << st.back().a << " " << st.back().b << endl;
-            st.pop_back();
-        }
-        st.push_back(x);
+    int t;
+
+    cin >> t;
+    while(t--){
+        int a, b;
+        cin >> a >> b;
+        ii solve1, solve2;
+//        solve2 = solve(b);
+//        solve1 = solve(a - 1);
+//        cout << solve1.fi << ' ' << solve1.se << endl;
+
+        auto it = solved.find(b);
+        if (it != solved.end()) solve2 = it->se;
+        else solve2 = solve(b);
+
+        solved[b] = solve2;
+
+
+        it = solved.find(a - 1);
+        if (it != solved.end()) solve1 = it->se;
+        else solve1 = solve(a - 1);
+
+        solved[a - 1] = solve1;
+
+
+        cout << tru(solve2.fi, solve1.fi) << ' ' << tru(solve2.se, solve1.se) << endl;
     }
-    int query(int x){
-        int l = 0;
-        int r = st.size()-1;
-        int ans = 1e18;
-        while(l <= r){
-            int mid = (l + r) / 2;
-            int now = st[mid].val(x);
-            ans = min(ans, now);
-            if (mid != 0 and now > st[mid-1].val(x)){
-                r = mid - 1;
-            }
-            else if (mid + 1 != st.size() and now > st[mid+1].val(x)){
-                l = mid + 1;
-            }
-            else{
-                break;
-            }
-        }
-        // cout << x << ": " << ans << endl;
-        return ans;
-    }
-};
-
-const int maxN = 2 * 1e5 + 10;
-
-int dp[maxN];
-int h[maxN];
-
-signed main(){
-    freopen("input.inp", "r", stdin);
-    freopen("B.out", "w", stdout);
-    //freopen("input.INP", "r", stdin);
-    //freopen("output.OUT", "w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n, k;
-    cin >> n >> k;
-    
-    for (int i = 1; i <= n; i++){
-        cin >> h[i];
-    }
-    CHT cvh;
-
-    dp[1] = 0;
-    cvh.add(line(-2 * h[1],dp[1] + h[1] * h[1]));
-
-    for (int i = 2; i <= n; i++){
-        // cout << "With: " << i << endl;
-        dp[i] = cvh.query(h[i]) + k + h[i] * h[i];
-        cvh.add(line(-2 * h[i],dp[i] + h[i] * h[i]));
-    }
-    // for (int i = 1; i <= n; i++){
-    //     cout << dp[i] << " ";
-    // }
-    // cout << endl;
-    cout << dp[n];
-
-    return 0;
 }

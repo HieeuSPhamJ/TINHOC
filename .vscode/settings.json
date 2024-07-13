@@ -114,7 +114,8 @@
         "xlocnum": "cpp",
         "xloctime": "cpp",
         "xmemory": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "*.ds_store": "cpp"
     },
     "godot_tools.scene_file_config": "/Users/hieuphamdinhtrung/TINHOC/TRAIDONG-2/Day 10/YENOM2.cpp"
 }
