@@ -9,6 +9,7 @@
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
 
+
 signed main(){
     //freopen("input.INP", "r", stdin);
     //freopen("output.OUT", "w", stdout);
